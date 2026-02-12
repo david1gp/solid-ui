@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "module": "Preserve",
     "target": "esnext",
     "skipLibCheck": true,
@@ -33,15 +29,9 @@
     // absolute import paths
     //
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "~ui/*": [
-        "lib/*"
-      ],
-      "~utils/*": [
-        "./node_modules/@adaptive-sm/utils/dist/*"
-      ],
+      "@/*": ["src/*"],
+      "~ui/*": ["lib/*"],
+      "~utils/*": ["./node_modules/@adaptive-ds/utils/dist/*"],
     },
     //
     // type imports - https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
@@ -61,22 +51,8 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
-  "include": [
-    "lib",
-    "src",
-    "test",
-  ],
-  "exclude": [
-    ".idea",
-    ".vscode",
-    "build",
-    "dist",
-    "out",
-    "data",
-    "docs",
-    "node_modules",
-    "public"
-  ]
+  "include": ["lib", "src", "test"],
+  "exclude": [".idea", ".vscode", "build", "dist", "out", "data", "docs", "node_modules", "public"],
 }

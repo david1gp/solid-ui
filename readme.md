@@ -9,8 +9,8 @@ A library of reusable UI components for Solid.js projects. Built with TypeScript
 
 Quick link
 
-- code - https://github.com/adaptive-shield-matrix/astro-ui
-- npm - https://www.npmjs.com/package/@adaptive-sm/astro-ui
+- code - https://github.com/david1gp/astro-ui
+- npm - https://www.npmjs.com/package/@adaptive-ds/astro-ui
 - component demo - https://adaptive-solid-ui.pages.dev/
 
 ## Features
@@ -27,13 +27,13 @@ Quick link
 Install the package using Bun (recommended) or npm:
 
 ```bash
-bun add @adaptive-sm/solid-ui
+bun add @adaptive-ds/solid-ui
 ```
 
 or
 
 ```bash
-npm install @adaptive-sm/solid-ui
+npm install @adaptive-ds/solid-ui
 ```
 
 Ensure you have the peer dependencies installed:
@@ -47,7 +47,7 @@ bun add solid-js clsx tailwind-merge valibot dayjs @solid-primitives/keyed @soli
 To ensure Tailwind scans the library's source files for classes (since components are published as source without a build step), add the following `@source` directive to your project's `src/layouts/tailwind.css` (or equivalent global stylesheet):
 
 ```css
-@source '/node_modules/@adaptive-sm/solid-ui/export/**/*.{astro,html,md,mdx,ts,tsx}';
+@source '/node_modules/@adaptive-ds/solid-ui/export/**/*.{astro,html,md,mdx,ts,tsx}';
 ```
 
 This tells Tailwind to include classes from the library's `.tsx`, `.ts`, and other relevant files in the purge process, preventing unused classes from being purged during the build. Without it, Tailwind might not detect classes used in imported components, leading to missing styles.
@@ -64,7 +64,7 @@ In your `tsconfig.json`, set up the `~` alias to point to the library:
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "~ui/*": ["./node_modules/@adaptive-sm/solid-ui/lib/*"]
+      "~ui/*": ["./node_modules/@adaptive-ds/solid-ui/lib/*"]
     }
   }
 }
@@ -83,7 +83,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": new URL("./src", import.meta.url).pathname,
-      "~ui": new URL("./node_modules/@adaptive-sm/solid-ui/lib", import.meta.url).pathname,
+      "~ui": new URL("./node_modules/@adaptive-ds/solid-ui/lib", import.meta.url).pathname,
     },
   },
   plugins: [solid(), tailwindcss()],
@@ -93,8 +93,8 @@ export default defineConfig({
 ## Usage Example
 
 ```tsx
-import { Button } from "@adaptive-sm/solid-ui/interactive/button/Button.tsx"
-import { buttonVariant } from "@adaptive-sm/solid-ui/interactive/button/buttonCva"
+import { Button } from "@adaptive-ds/solid-ui/interactive/button/Button.tsx"
+import { buttonVariant } from "@adaptive-ds/solid-ui/interactive/button/buttonCva"
 
 function MyComponent() {
   return (
@@ -111,45 +111,45 @@ The library includes a variety of UI components organized by category:
 
 ### Interactive
 
-- [Button](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/interactive/button) - Standard and icon buttons.
-- [Link](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/interactive/link) - Styled links and buttons.
-- [Toggle](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/interactive/toggle) - Toggle switches.
-- [Dialog](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/interactive/dialog) - Native dialogs.
-- [Toast](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/interactive/toast) - Notification toasts.
-- [Popover](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/interactive/popover) - Simple popovers.
-- [Tabs](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/interactive/tabs) - Tab navigation.
+- [Button](https://github.com/david1gp/solid-ui/tree/main/lib/interactive/button) - Standard and icon buttons.
+- [Link](https://github.com/david1gp/solid-ui/tree/main/lib/interactive/link) - Styled links and buttons.
+- [Toggle](https://github.com/david1gp/solid-ui/tree/main/lib/interactive/toggle) - Toggle switches.
+- [Dialog](https://github.com/david1gp/solid-ui/tree/main/lib/interactive/dialog) - Native dialogs.
+- [Toast](https://github.com/david1gp/solid-ui/tree/main/lib/interactive/toast) - Notification toasts.
+- [Popover](https://github.com/david1gp/solid-ui/tree/main/lib/interactive/popover) - Simple popovers.
+- [Tabs](https://github.com/david1gp/solid-ui/tree/main/lib/interactive/tabs) - Tab navigation.
 
 ### Input
 
-- [Input](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/input/input) - Text inputs.
-- [Textarea](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/input/textarea) - Multi-line textareas.
-- [Select](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/input/select) - Single and multi-selects.
-- [Radio](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/input/radio) - Radio switches.
-- [Form](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/input/form) - Form utilities.
+- [Input](https://github.com/david1gp/solid-ui/tree/main/lib/input/input) - Text inputs.
+- [Textarea](https://github.com/david1gp/solid-ui/tree/main/lib/input/textarea) - Multi-line textareas.
+- [Select](https://github.com/david1gp/solid-ui/tree/main/lib/input/select) - Single and multi-selects.
+- [Radio](https://github.com/david1gp/solid-ui/tree/main/lib/input/radio) - Radio switches.
+- [Form](https://github.com/david1gp/solid-ui/tree/main/lib/input/form) - Form utilities.
 
 ### Table
 
-- [Table](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/table) - Data tables with sorting, pagination, and filtering.
+- [Table](https://github.com/david1gp/solid-ui/tree/main/lib/table) - Data tables with sorting, pagination, and filtering.
   - Table1: Basic table.
   - Table2: Sortable table.
   - Table3: Advanced table with search and pagination.
 
 ### Static
 
-- [Container](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/static/container) - Layout wrappers and page containers.
-- [Loader](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/static/loaders) - Loading animations.
-- [Pages](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/static/pages) - Error and success pages.
-- [Img](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/static/img) - Optimized image component.
-- [Badge](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/static/badge) - Badge component.
-- [Timeline](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/static/timeline) - Timeline layout.
+- [Container](https://github.com/david1gp/solid-ui/tree/main/lib/static/container) - Layout wrappers and page containers.
+- [Loader](https://github.com/david1gp/solid-ui/tree/main/lib/static/loaders) - Loading animations.
+- [Pages](https://github.com/david1gp/solid-ui/tree/main/lib/static/pages) - Error and success pages.
+- [Img](https://github.com/david1gp/solid-ui/tree/main/lib/static/img) - Optimized image component.
+- [Badge](https://github.com/david1gp/solid-ui/tree/main/lib/static/badge) - Badge component.
+- [Timeline](https://github.com/david1gp/solid-ui/tree/main/lib/static/timeline) - Timeline layout.
 
 ### Utils
 
-- [Class Utilities](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/utils/ui) - `classMerge`, `classArr` for Tailwind class management.
-- [i18n](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/i18n) - Basic internationalization support.
-- [Arrays & Objects](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/lib/utils/arr) - Utility functions for data manipulation.
+- [Class Utilities](https://github.com/david1gp/solid-ui/tree/main/lib/utils/ui) - `classMerge`, `classArr` for Tailwind class management.
+- [i18n](https://github.com/david1gp/solid-ui/tree/main/lib/i18n) - Basic internationalization support.
+- [Arrays & Objects](https://github.com/david1gp/solid-ui/tree/main/lib/utils/arr) - Utility functions for data manipulation.
 
-For detailed API and props, see the [documentation](https://github.com/adaptive-shield-matrix/solid-ui/tree/main/docs) or check the source in `/lib`.
+For detailed API and props, see the [documentation](https://github.com/david1gp/solid-ui/tree/main/docs) or check the source in `/lib`.
 
 ## Development
 
@@ -158,7 +158,7 @@ For detailed API and props, see the [documentation](https://github.com/adaptive-
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/adaptive-shield-matrix/solid-ui.git
+   git clone https://github.com/david1gp/solid-ui.git
    cd solid-ui
    ```
 
@@ -216,4 +216,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Styled with [Tailwind CSS](https://tailwindcss.com/).
 - Icons from [MDI](https://pictogrammers.com/library/mdi/).
 
-For more information, visit the [GitHub repository](https://github.com/adaptive-shield-matrix/solid-ui).
+For more information, visit the [GitHub repository](https://github.com/david1gp/solid-ui).

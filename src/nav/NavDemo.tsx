@@ -17,8 +17,8 @@ export interface DemoNavProps extends DemoNavDataProps, ComponentProps<"nav"> {}
 
 export function NavDemo(p: DemoNavProps) {
   const [s, rest] = splitProps(p, ["class", "children", "category", "compName", "demoList", "demoPrefix"])
-  const githubUrl = "https://github.com/adaptive-shield-matrix/solid-ui"
-  const npmUrl = "https://www.npmjs.com/package/@adaptive-sm/solid-ui"
+  const githubUrl = "https://github.com/david1gp/solid-ui"
+  const npmUrl = "https://www.npmjs.com/package/@adaptive-ds/solid-ui"
   return (
     <nav
       class={classMerge("flex flex-wrap items-center justify-between p-1 gap-1 max-w-4xl mx-auto", s.class)}

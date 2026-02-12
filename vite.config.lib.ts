@@ -10,7 +10,7 @@ export default defineConfig({
     alias: {
       "@": new URL("./src", import.meta.url).pathname,
       "~ui": new URL("./lib", import.meta.url).pathname,
-      "~utils": new URL("././node_modules/@adaptive-sm/utils/dist", import.meta.url).pathname,
+      "~utils": new URL("././node_modules/@adaptive-ds/utils/dist", import.meta.url).pathname,
     },
   },
   plugins: [
@@ -44,7 +44,7 @@ export default defineConfig({
         "solid-js",
         "solid-js/web",
         "solid-js/store",
-        "@adaptive-sm/utils",
+        "@adaptive-ds/utils",
         "@mdi/js",
         "@solid-primitives/keyed",
         "@solid-primitives/scheduled",
