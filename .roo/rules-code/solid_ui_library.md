@@ -1,7 +1,7 @@
 # Available Solid.js UI Components and utility functions
 
 These components from @adaptive-ds/solid-ui can be imported using the `~ui/` alias.
-Generated at: 2026-02-12 21:09
+Generated at: 2026-02-12 22:01
 
 - ~/i18n/ttt.ts
 - ~/table/shared/DesktopTableClassNames.ts
