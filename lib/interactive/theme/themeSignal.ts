@@ -1,3 +1,4 @@
+import { isServer } from "solid-js/web"
 import * as v from "valibot"
 import { themeButtonTextDefault } from "~ui/interactive/theme/ThemeButtonText"
 import {
@@ -17,6 +18,7 @@ import { createSignalObject } from "~ui/utils/createSignalObject"
 export const themeSignal = createSignalObject<ThemeVariant>(themeVariant.os)
 
 export function themeInit() {
+  if (isServer) return // Skip during SSR
   const theme = getThemeFromStorageOrBrowserPref()
   themeSet(theme, false)
   themeRegisterStorageListener()
