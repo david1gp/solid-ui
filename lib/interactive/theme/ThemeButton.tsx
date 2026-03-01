@@ -1,12 +1,12 @@
-import { createEffect, onCleanup } from "solid-js"
+import { onCleanup, onMount } from "solid-js"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { ButtonIconOnly } from "~ui/interactive/button/ButtonIconOnly"
+import type { ThemeButtonText } from "~ui/interactive/theme/ThemeButtonText"
+import { themeButtonTextDefault } from "~ui/interactive/theme/ThemeButtonText"
 import { themeInit, themeRotate, themeSignal } from "~ui/interactive/theme/themeSignal"
 import { themeIcon } from "~ui/interactive/theme/themeVariant"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { ThemeButtonText } from "~ui/interactive/theme/ThemeButtonText"
-import { themeButtonTextDefault } from "~ui/interactive/theme/ThemeButtonText"
 
 export interface ThemeButtonProps extends MayHaveClass {
   showText?: boolean
@@ -14,13 +14,13 @@ export interface ThemeButtonProps extends MayHaveClass {
 }
 
 export function ThemeButton(p: ThemeButtonProps) {
-  createEffect(themeInit)
   const navigate = (to: string) => {}
   const handleGlobalKeyDown = createGlobalKeyHandler(navigate)
 
   const texts = p.texts ?? themeButtonTextDefault
 
-  createEffect(() => {
+  onMount(() => {
+    themeInit()
     window.addEventListener("keydown", handleGlobalKeyDown)
     onCleanup(() => window.removeEventListener("keydown", handleGlobalKeyDown))
   })
