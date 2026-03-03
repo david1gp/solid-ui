@@ -1,4 +1,4 @@
-import { buttonVariant, type ButtonVariant } from "~ui/interactive/button/buttonCva"
+import { type ButtonVariant } from "~ui/interactive/button/buttonCva"
 import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 
@@ -22,6 +22,7 @@ const baseClasses = classArr(
 )
 
 const buttonIconClasses = {
+  none: "",
   // transparent bg
   outline: classesBlackWhite,
   ghost: classesBlackWhite,
@@ -29,25 +30,25 @@ const buttonIconClasses = {
   // filled grayscale
   filled: classesBlackWhite,
   subtle: classesBlackWhite,
-  default: classArr(classesTextFillWhite, "dark:text-black dark:fill-black"),
+  contrast: classArr(classesTextFillWhite, "dark:text-black dark:fill-black"),
   // filled colors
-  primary: classArr(classesTextFillWhite, "dark:text-indigo-100 dark:fill-indigo-100"),
-  destructive: classesWhiteWhite,
-  warning: classesWhiteWhite,
-  success: classesWhiteWhite,
-  info: classesWhiteWhite,
+  filledYellow: classArr(classesTextFillWhite, "dark:text-yellow-100 dark:fill-yellow-100"),
+  filledOrange: classArr(classesTextFillWhite, "dark:text-orange-100 dark:fill-orange-100"),
+  filledAmber: classArr(classesTextFillWhite, "dark:text-amber-100 dark:fill-amber-100"),
+  filledRed: classArr(classesTextFillWhite, "dark:text-red-100 dark:fill-red-100"),
+
+  filledGreen: classesWhiteWhite,
+  filledBlue: classArr(classesTextFillWhite, "dark:text-blue-100 dark:fill-blue-100"),
+  filledIndigo: classArr(classesTextFillWhite, "dark:text-indigo-100 dark:fill-indigo-100"),
+  // outlineRed: classesWhiteWhite,
+  filledSky: classesWhiteWhite,
   // outlined colors
-  error: classArr(
-    "text-destructive dark:text-red-700", // text
-    "fill-destructive dark:fill-red-700", // fill
-  ),
+  outlineRed: classArr("text-red-500 fill-red-500 dark:text-red-700 dark:fill-red-700"),
 } as const satisfies Record<ButtonVariant, string>
 
-const defaultVariant = buttonVariant.default
-
 export function buttonIconCva(
-  variant: ButtonVariant | null = defaultVariant,
+  variant: ButtonVariant,
   ...customClasses: (string | boolean | undefined | null | 0 | 0n)[]
 ) {
-  return classMerge(baseClasses, buttonIconClasses[variant ?? defaultVariant], customClasses)
+  return classMerge(baseClasses, buttonIconClasses[variant], customClasses)
 }
