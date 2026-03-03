@@ -1,4 +1,4 @@
-import { type ButtonVariant } from "~ui/interactive/button/buttonCva"
+import { buttonVariant, type ButtonVariant } from "~ui/interactive/button/buttonCva"
 import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 
@@ -47,7 +47,7 @@ const buttonIconClasses = {
 } as const satisfies Record<ButtonVariant, string>
 
 export function buttonIconCva(
-  variant: ButtonVariant,
+  variant: ButtonVariant = buttonVariant.ghost,
   ...customClasses: (string | boolean | undefined | null | 0 | 0n)[]
 ) {
   return classMerge(baseClasses, buttonIconClasses[variant], customClasses)

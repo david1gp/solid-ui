@@ -62,7 +62,7 @@ function NestedDialogDemo() {
       <CorvuDialog variant={buttonVariant.outline} buttonChildren="Show Nested Dialog" title="Parent Dialog">
         <div class="space-y-4">
           <p>This is the parent dialog. Click the button below to open a nested dialog.</p>
-          <CorvuDialog variant={buttonVariant.primary} buttonChildren="Open Nested Dialog" title="Nested Dialog">
+          <CorvuDialog variant={buttonVariant.contrast} buttonChildren="Open Nested Dialog" title="Nested Dialog">
             <div>
               <p>This is a nested dialog inside the parent dialog!</p>
               <p class="mt-2">You can have multiple levels of nesting.</p>

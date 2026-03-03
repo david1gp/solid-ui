@@ -5,11 +5,11 @@ import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { ButtonIcon1 } from "~ui/interactive/button/ButtonIcon1"
 import { ButtonIconOnly } from "~ui/interactive/button/ButtonIconOnly"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
+import { toastAdd } from "~ui/interactive/toast/toastAdd"
+import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { ToggleButton } from "~ui/interactive/toggle/ToggleButton"
 import { ToggleButtonIconOnly } from "~ui/interactive/toggle/ToggleButtonIconOnly"
 import { createSignalObject } from "~ui/utils/createSignalObject"
-import { toastAdd } from "~ui/interactive/toast/toastAdd"
-import { toastVariant } from "~ui/interactive/toast/toastVariant"
 
 export function DemoButtons() {
   return (
@@ -95,7 +95,7 @@ function ButtonIconDemo() {
         <ButtonIcon icon={mdiLoading} isLoading={isLoading()} onClick={handleClick}>
           Save
         </ButtonIcon>
-        <ButtonIcon icon={mdiHeart} iconRight={mdiHeart} variant={buttonVariant.primary}>
+        <ButtonIcon icon={mdiHeart} iconRight={mdiHeart} variant={buttonVariant.contrast}>
           Heart
         </ButtonIcon>
       </div>
@@ -116,7 +116,7 @@ function ButtonIconOnlyDemo() {
         <ButtonIconOnly
           icon={mdiHeart}
           title="Favorite"
-          variant={buttonVariant.primary}
+          variant={buttonVariant.contrast}
           onClick={() => toastAdd({ title: "Favorited!", variant: toastVariant.success })}
         />
       </div>
@@ -145,7 +145,7 @@ function ButtonStatesDemo() {
       <h2 class="text-2xl font-bold mb-4">Button States</h2>
       <div class="flex flex-wrap gap-4">
         <Button disabled>Disabled</Button>
-        <Button variant={buttonVariant.primary} disabled>
+        <Button variant={buttonVariant.contrast} disabled>
           Disabled Primary
         </Button>
         <ButtonIcon isLoading icon={mdiLoading}>

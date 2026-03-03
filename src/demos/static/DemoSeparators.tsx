@@ -194,7 +194,7 @@ function SeparatorInFormsDemo() {
           </div>
         </div>
 
-        <Button variant={buttonVariant.default} class="w-full">
+        <Button variant={buttonVariant.contrast} class="w-full">
           Create Account
         </Button>
       </form>

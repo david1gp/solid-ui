@@ -28,7 +28,7 @@ function BasicLinkButtonDemo() {
         <LinkButton href="#about" variant={buttonVariant.outline}>
           About
         </LinkButton>
-        <LinkButton href="#contact" variant={buttonVariant.primary}>
+        <LinkButton href="#contact" variant={buttonVariant.contrast}>
           Contact
         </LinkButton>
       </div>
@@ -37,7 +37,7 @@ function BasicLinkButtonDemo() {
 }
 
 function LinkButtonVariantsDemo() {
-  const variants = [buttonVariant.default, buttonVariant.outline, buttonVariant.ghost, buttonVariant.primary]
+  const variants = Object.values(buttonVariant)
 
   return (
     <div>
@@ -79,19 +79,8 @@ function LinkButtonIconOnlyDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Icon-Only Link Buttons</h2>
       <div class="flex gap-4">
-        <LinkButtonIconOnly
-          href="#home"
-          icon={mdiHome}
-          title="Home"
-          aria-label="Go to home page"
-        />
-        <LinkButtonIconOnly
-          href="#github"
-          icon={mdiGithub}
-          title="GitHub"
-          variant={buttonVariant.primary}
-          newTab
-        />
+        <LinkButtonIconOnly href="#home" icon={mdiHome} title="Home" aria-label="Go to home page" />
+        <LinkButtonIconOnly href="#github" icon={mdiGithub} title="GitHub" variant={buttonVariant.contrast} newTab />
         <LinkButtonIconOnly
           href="#external"
           icon={mdiOpenInNew}
@@ -118,8 +107,13 @@ function ExternalLinksDemo() {
           </LinkButton>
         </div>
         <div class="text-sm text-muted-foreground">
-          <p>Links with <code>newTab=true</code> open in a new tab/window.</p>
-          <p>Icon-only links should have proper <code>title</code> and <code>aria-label</code> attributes for accessibility.</p>
+          <p>
+            Links with <code>newTab=true</code> open in a new tab/window.
+          </p>
+          <p>
+            Icon-only links should have proper <code>title</code> and <code>aria-label</code> attributes for
+            accessibility.
+          </p>
         </div>
       </div>
     </div>

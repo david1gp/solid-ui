@@ -169,7 +169,7 @@ export function buttonCva1(variant: ButtonVariant, ...customClasses: (string | b
 }
 
 export function buttonCva2(
-  variant: ButtonVariant,
+  variant: ButtonVariant = buttonVariant.ghost,
   size: ButtonSize | null = defaultSize,
   ...customClasses: (string | boolean | undefined | null | 0)[]
 ) {
@@ -188,7 +188,7 @@ function combinedClasses(variant: ButtonVariant, size: ButtonSize) {
 }
 
 export function buttonCvaIconOnly(
-  variant: ButtonVariant,
+  variant: ButtonVariant = buttonVariant.ghost,
   isLoading: boolean | undefined,
   isDisabled: boolean | undefined,
   ...customClasses: (string | boolean | undefined | null | 0)[]

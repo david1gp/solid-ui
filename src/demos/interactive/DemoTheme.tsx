@@ -69,7 +69,7 @@ function ThemeControlsDemo() {
       <div class="flex flex-wrap gap-2">
         {themes.map(theme => (
           <Button
-            variant={themeSignal.get() === theme ? buttonVariant.default : buttonVariant.outline}
+            variant={themeSignal.get() === theme ? buttonVariant.contrast : buttonVariant.outline}
             onClick={() => setTheme(theme)}
           >
             {getThemeName(theme)}
