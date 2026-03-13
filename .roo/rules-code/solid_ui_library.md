@@ -1,7 +1,7 @@
 # Available Solid.js UI Components and utility functions
 
 These components from @adaptive-ds/solid-ui can be imported using the `~ui/` alias.
-Generated at: 2026-03-03 11:58
+Generated at: 2026-03-14 04:06
 
 - ~/i18n/ttt.ts
 - ~/table/shared/DesktopTableClassNames.ts
@@ -135,7 +135,6 @@ Generated at: 2026-03-03 11:58
 - ~/generate_demo_list/parts/findDemoFilesRecursive.ts
 - ~/generate_demo_list/DemoListType.ts
 - ~/generate_demo_list/generateDemoList.ts
-- ~/generate_image_list/generateImageList.ts
 - ~/types.d.ts
 - ~/demo_pages/RouteConfig.ts
 - ~/demo_pages/pathDemos.ts
@@ -191,7 +190,6 @@ Generated at: 2026-03-03 11:58
 - ~/interactive/toast/toastAdd.ts
 - ~/interactive/toast/Toaster.tsx
 - ~/interactive/toast/GlobalToasterState.ts
-- ~/interactive/layout/SidebarLayout.tsx
 - ~/interactive/popover/InfoPopover.tsx
 - ~/interactive/popover/classesPopoverContent.ts
 - ~/interactive/popover/CorvuPopoverIcon.tsx
