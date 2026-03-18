@@ -1,4 +1,4 @@
-import { CardWrapper } from "~ui/static/container/CardWrapper"
+import { CardWrapper } from "~ui/static/card/CardWrapper"
 import { stylesBgCube } from "~ui/static/styles/stylesBgCube"
 import { stylesBgDotted } from "~ui/static/styles/stylesBgDotted"
 import { stylesBgGrid } from "~ui/static/styles/stylesBgGrid"

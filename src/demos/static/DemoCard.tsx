@@ -1,4 +1,4 @@
-import { CardWrapper } from "~ui/static/container/CardWrapper"
+import { CardWrapper } from "~ui/static/card/CardWrapper"
 
 export function DemoCard() {
   return (

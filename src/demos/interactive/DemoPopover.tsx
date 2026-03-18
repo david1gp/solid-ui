@@ -3,7 +3,7 @@ import { mdiDotsVertical } from "@mdi/js"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { CorvuPopover } from "~ui/interactive/popover/CorvuPopover"
 import { CorvuPopoverIcon } from "~ui/interactive/popover/CorvuPopoverIcon"
-import { classesGridCols3xl } from "~ui/static/container/classesGridCols"
+import { classesGridCols3xl } from "~ui/static/grid/classesGridCols"
 import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
