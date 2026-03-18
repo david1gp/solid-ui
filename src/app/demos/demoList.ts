@@ -116,6 +116,11 @@ const DemoBadges = lazy(async () => {
   return { default: c.DemoBadges }
 })
 
+const DemoCodeBlock = lazy(async () => {
+  const c = await import("@/demos/static/DemoCodeBlock")
+  return { default: c.DemoCodeBlock }
+})
+
 const DemoSolidComparingForVsIndex = lazy(async () => {
   const c = await import("@/demos/learning_solid/iteration/DemoSolidComparingForVsIndex")
   return { default: c.DemoSolidComparingForVsIndex }
@@ -252,6 +257,7 @@ export const demoList = {
     DemoFeatureGridSection: DemoFeatureGridSection,
     DemoTimeline: DemoTimeline,
     DemoBadges: DemoBadges,
+    DemoCodeBlock: DemoCodeBlock,
   },
   table: {
     DemoTablePagination2: DemoTablePagination2,
