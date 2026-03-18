@@ -1,4 +1,4 @@
-import { FeatureGridSection } from "~ui/static/grid/FeatureGridSection"
+import { FeatureGridSection } from "#ui/static/grid/FeatureGridSection"
 import { technicalFeatures } from "./technicalFeatures"
 
 export function DemoFeatureGridSection() {

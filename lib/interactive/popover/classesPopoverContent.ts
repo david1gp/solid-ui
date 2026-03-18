@@ -1,4 +1,4 @@
-import { classMerge } from "~ui/utils/classMerge"
+import { classMerge } from "#ui/utils/classMerge"
 
 export const classesPopoverContent = [
   "z-50", // positioning

@@ -106,7 +106,7 @@ export async function someMutationFn(ctx: MutationCtx, args: SomeEntityValidator
 Create transformation functions to convert database documents to your application models:
 
 ```typescript
-import type { UserProfile } from "@/auth/model/UserProfile"
+import type { UserProfile } from "#/auth/model/UserProfile"
 import type { Doc } from "../../_generated/dataModel"
 
 export function dbUsersToUserProfile(u: Doc<"users">): UserProfile {

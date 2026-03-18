@@ -1,10 +1,10 @@
 /* @refresh reload */
 
-import { demoList } from "@/app/demos/demoList"
-import { NavDemo } from "@/nav/NavDemo"
+import { demoList } from "#/app/demos/demoList"
+import { NavDemo } from "#/nav/NavDemo"
+import { generateDemoRoutes } from "#ui/demo_pages/generateDemoRoutes"
 import { Router } from "@solidjs/router"
 import { render } from "solid-js/web"
-import { generateDemoRoutes } from "~ui/demo_pages/generateDemoRoutes"
 import "./tailwind.css"
 
 const root = document.getElementById("root")

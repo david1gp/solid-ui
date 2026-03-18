@@ -1,4 +1,4 @@
-import { ttt, ttt1 } from "~ui/i18n/ttt"
+import { ttt, ttt1 } from "#ui/i18n/ttt"
 
 export type LoadingPageTexts = {
   loading: (item?: string) => string

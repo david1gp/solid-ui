@@ -1,7 +1,7 @@
+import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier"
+import { classMerge } from "#ui/utils/classMerge"
 import type { Component, ComponentProps } from "solid-js"
 import { splitProps } from "solid-js"
-import { classesDisabledModifier } from "~ui/classes/classesDisabledModifier"
-import { classMerge } from "~ui/utils/classMerge"
 
 export const Textarea: Component<ComponentProps<"textarea">> = (p) => {
   const [s, rest] = splitProps(p, ["class"])

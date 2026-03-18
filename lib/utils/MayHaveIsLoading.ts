@@ -1,4 +1,4 @@
-import type { ValueOrAccessor } from "~ui/utils/ValueOrAccessor"
+import type { ValueOrAccessor } from "#ui/utils/ValueOrAccessor"
 
 export type MayHaveIsLoading = {
   isLoading?: ValueOrAccessor<boolean>

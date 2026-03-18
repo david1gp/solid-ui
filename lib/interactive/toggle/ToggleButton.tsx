@@ -1,9 +1,9 @@
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { type MayHaveDisabledAccessor, isDisabled } from "#ui/utils/MayHaveDisabledAccessor"
+import type { SignalObject } from "#ui/utils/createSignalObject"
 import { type ComponentProps, splitProps } from "solid-js"
-import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
-import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { type MayHaveDisabledAccessor, isDisabled } from "~ui/utils/MayHaveDisabledAccessor"
-import type { SignalObject } from "~ui/utils/createSignalObject"
 
 /**
  * https://github.com/radix-ui/primitives/blob/main/packages/react/toggle/src/Toggle.tsx

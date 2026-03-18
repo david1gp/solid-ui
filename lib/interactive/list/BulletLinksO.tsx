@@ -1,5 +1,5 @@
+import { BulletLinks } from "#ui/interactive/list/BulletLinks"
 import { splitProps } from "solid-js"
-import { BulletLinks } from "~ui/interactive/list/BulletLinks"
 
 export interface BulletLinksOProps {
   urlObject: Record<string, string>

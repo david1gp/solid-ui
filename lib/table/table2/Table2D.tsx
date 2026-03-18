@@ -1,13 +1,13 @@
+import type { DesktopTableClassNames } from "#ui/table/shared/DesktopTableClassNames"
+import { sharedTableRowClassName } from "#ui/table/shared/sharedTableRowClassName"
+import type { TableColumnDef } from "#ui/table/shared/TableColumnDef"
+import type { Table2Signals } from "#ui/table/table2/createSortableTableSignals"
+import { sortData } from "#ui/table/table2/sortData"
+import { nextSortDir } from "#ui/table/table2/sortDir"
+import { Table2DSortButton } from "#ui/table/table2/Table2DSortButton"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import { For } from "solid-js"
-import type { DesktopTableClassNames } from "~ui/table/shared/DesktopTableClassNames"
-import { sharedTableRowClassName } from "~ui/table/shared/sharedTableRowClassName"
-import type { TableColumnDef } from "~ui/table/shared/TableColumnDef"
-import type { Table2Signals } from "~ui/table/table2/createSortableTableSignals"
-import { sortData } from "~ui/table/table2/sortData"
-import { nextSortDir } from "~ui/table/table2/sortDir"
-import { Table2DSortButton } from "~ui/table/table2/Table2DSortButton"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface SortableTableDProps<T> extends Table2Signals<T>, MayHaveClass {
   desktopClasses?: DesktopTableClassNames

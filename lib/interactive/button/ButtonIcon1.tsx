@@ -1,11 +1,11 @@
+import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly"
+import { buttonCva2, type ButtonCvaProps } from "#ui/interactive/button/buttonCva"
+import { buttonIconCva } from "#ui/interactive/button/buttonIconCva"
+import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation"
+import { Icon } from "#ui/static/icon/Icon"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import { type Accessor, type Component, type ComponentProps, splitProps } from "solid-js"
-import { classesDisabledDirectly } from "~ui/classes/classesDisabledDirectly"
-import { buttonCva2, type ButtonCvaProps } from "~ui/interactive/button/buttonCva"
-import { buttonIconCva } from "~ui/interactive/button/buttonIconCva"
-import { classesButtonClickAnimation } from "~ui/interactive/button/classesButtonClickAnimation"
-import { Icon } from "~ui/static/icon/Icon"
-import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface ButtonIcon1Props extends ComponentProps<"button">, ButtonCvaProps, MayHaveClass, MayHaveChildren {
   // icon

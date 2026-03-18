@@ -1,13 +1,13 @@
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
+import { classMerge } from "#ui/utils/classMerge"
+import type { SignalObject } from "#ui/utils/createSignalObject"
+import type { MayHaveButtonVariant } from "#ui/utils/MayHaveButtonVariant"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled"
+import type { MayHaveId } from "#ui/utils/MayHaveId"
+import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass"
 import { mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle } from "@mdi/js"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
-import { classMerge } from "~ui/utils/classMerge"
-import type { SignalObject } from "~ui/utils/createSignalObject"
-import type { MayHaveButtonVariant } from "~ui/utils/MayHaveButtonVariant"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { MayHaveDisabled } from "~ui/utils/MayHaveDisabled"
-import type { MayHaveId } from "~ui/utils/MayHaveId"
-import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
 
 export interface CheckBooleanProps
   extends MayHaveId,

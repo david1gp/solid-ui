@@ -5,7 +5,7 @@
 - If using `fetch`: always use `PromiseResult` return type, validate output with `valibot`
 
 ```ts
-import { type Result } from "~utils/result/Result"
+import { type Result } from "#utils/result/Result"
 
 function processRequest(req: Request): Result<User> {
   const validationResult = validateRequest(req)

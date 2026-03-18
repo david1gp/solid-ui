@@ -1,6 +1,6 @@
+import { Input } from "#ui/input/input/Input"
+import type { HasValueSignalString } from "#ui/utils/HasValueSignalString"
 import { type ComponentProps, type JSX, splitProps } from "solid-js"
-import { Input } from "~ui/input/input/Input"
-import type { HasValueSignalString } from "~ui/utils/HasValueSignalString"
 
 export interface InputSProps extends HasValueSignalString, ComponentProps<"input"> {}
 

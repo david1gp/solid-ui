@@ -29,9 +29,9 @@
     // absolute import paths
     //
     "paths": {
-      "@/*": ["src/*"],
-      "~ui/*": ["lib/*"],
-      "~utils/*": ["./node_modules/@adaptive-ds/utils/dist/*"],
+      "#/*": ["src/*"],
+      "#ui/*": ["lib/*"],
+      "#utils/*": ["./node_modules/@adaptive-ds/utils/dist/*"],
     },
     //
     // type imports - https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax

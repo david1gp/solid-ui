@@ -1,6 +1,6 @@
+import { classMerge } from "#ui/utils/classMerge"
 import type { Component, ComponentProps } from "solid-js"
 import { splitProps } from "solid-js"
-import { classMerge } from "~ui/utils/classMerge"
 
 export interface CodeBlockProps extends ComponentProps<"pre"> {}
 

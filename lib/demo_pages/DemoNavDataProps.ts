@@ -1,4 +1,4 @@
-import type { DemoListType } from "~ui/generate_demo_list/DemoListType"
+import type { DemoListType } from "#ui/generate_demo_list/DemoListType"
 
 export interface DemoNavDataProps {
   category?: string

@@ -63,8 +63,8 @@ In your `tsconfig.json`, set up the `~` alias to point to the library:
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "~ui/*": ["./node_modules/@adaptive-ds/solid-ui/lib/*"]
+      "#/*": ["src/*"],
+      "#ui/*": ["./node_modules/@adaptive-ds/solid-ui/lib/*"]
     }
   }
 }

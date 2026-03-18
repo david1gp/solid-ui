@@ -1,6 +1,4 @@
-import { isServer } from "solid-js/web"
-import * as v from "valibot"
-import { themeButtonTextDefault } from "~ui/interactive/theme/ThemeButtonText"
+import { themeButtonTextDefault } from "#ui/interactive/theme/ThemeButtonText"
 import {
   getThemeFromStorageOrBrowserPref,
   nextTheme2,
@@ -10,10 +8,12 @@ import {
   themeSchema,
   type ThemeVariant,
   themeVariant,
-} from "~ui/interactive/theme/themeVariant"
-import { toastAdd } from "~ui/interactive/toast/toastAdd"
-import { toastVariant } from "~ui/interactive/toast/toastVariant"
-import { createSignalObject } from "~ui/utils/createSignalObject"
+} from "#ui/interactive/theme/themeVariant"
+import { toastAdd } from "#ui/interactive/toast/toastAdd"
+import { toastVariant } from "#ui/interactive/toast/toastVariant"
+import { createSignalObject } from "#ui/utils/createSignalObject"
+import { isServer } from "solid-js/web"
+import * as v from "valibot"
 
 export const themeSignal = createSignalObject<ThemeVariant>(themeVariant.os)
 

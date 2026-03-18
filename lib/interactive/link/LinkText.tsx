@@ -1,7 +1,7 @@
+import { classesTextLink } from "#ui/classes/classesTextLink"
+import type { LinkTextProps } from "#ui/interactive/link/LinkTextProps"
+import { classMerge } from "#ui/utils/classMerge"
 import { splitProps } from "solid-js"
-import { classesTextLink } from "~ui/classes/classesTextLink"
-import type { LinkTextProps } from "~ui/interactive/link/LinkTextProps"
-import { classMerge } from "~ui/utils/classMerge"
 
 export function LinkText(p: LinkTextProps) {
   const [s, rest] = splitProps(p, ["class", "href"])

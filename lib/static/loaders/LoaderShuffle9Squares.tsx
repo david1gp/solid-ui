@@ -1,6 +1,5 @@
-import type { JSXElement } from "solid-js"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import styles from "./LoaderShuffle9Squares.module.css"
 
 /**

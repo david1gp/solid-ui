@@ -1,4 +1,4 @@
-import { ttt } from "~ui/i18n/ttt"
+import { ttt } from "#ui/i18n/ttt"
 
 export type TablePaginationText = {
   showing: string

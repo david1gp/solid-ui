@@ -1,5 +1,5 @@
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { classMerge } from "~ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { classMerge } from "#ui/utils/classMerge"
 import styles from "./LoaderSpin4Square.module.css"
 
 /**

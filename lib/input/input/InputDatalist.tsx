@@ -1,8 +1,8 @@
+import { Input } from "#ui/input/input/Input"
+import type { HasId } from "#ui/utils/HasId"
+import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren"
+import { generateId12 } from "#utils/ran/generateId12"
 import { splitProps, type ComponentProps } from "solid-js"
-import { Input } from "~ui/input/input/Input"
-import type { HasId } from "~ui/utils/HasId"
-import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
-import { generateId12 } from "~utils/ran/generateId12"
 
 export interface ResourceListSearchProps extends ComponentProps<"input"> {
   getOptions: () => string[]

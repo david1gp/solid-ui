@@ -1,6 +1,6 @@
-import type { SortableTableData } from "~ui/table/table2/SortableTableData"
-import { type SortDir } from "~ui/table/table2/sortDir"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import type { SortableTableData } from "#ui/table/table2/SortableTableData"
+import { type SortDir } from "#ui/table/table2/sortDir"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 
 export interface Table2MSortButtonProps<T> extends SortableTableData<T>, MayHaveClass {}
 

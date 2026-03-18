@@ -62,7 +62,7 @@ Incorrect Approach (String Templates):
 Correct Approach (ClassMerge + Grouped Arrays):
 
 ```tsx
-import { classMerge } from "@/ui/utils/classMerge"
+import { classMerge } from "#/ui/utils/classMerge"
 
 <div class={classMerge(
   "flex flex-col items-center justify-center", // layout
@@ -86,8 +86,8 @@ Never use `text-gray-400`, `text-gray-500` or `text-gray-600` - use `text-muted-
 Always include base utility types for exported general purpose components in "src/ui" folder:
 
 ```ts
-import type { MayHaveChildren } from "@/ui/utils/MayHaveChildren"
-import type { MayHaveClassName } from "@/ui/utils/MayHaveClassName"
+import type { MayHaveChildren } from "#/ui/utils/MayHaveChildren"
+import type { MayHaveClassName } from "#/ui/utils/MayHaveClassName"
 
 export interface ComponentProps extends MayHaveClassName, MayHaveChildren {
   // component-specific props

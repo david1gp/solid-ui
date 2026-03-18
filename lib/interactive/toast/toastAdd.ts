@@ -1,9 +1,9 @@
-import { generateToastId } from "~ui/interactive/toast/generateToastId"
-import { toastDismiss } from "~ui/interactive/toast/toastDismiss"
-import { toasterSettings } from "~ui/interactive/toast/toasterSettings"
-import { toasterState } from "~ui/interactive/toast/toasterState"
-import type { AddToastProps } from "~ui/interactive/toast/ToastProps"
-import { toastVariant, toastVariantIcon } from "~ui/interactive/toast/toastVariant"
+import { generateToastId } from "#ui/interactive/toast/generateToastId"
+import { toastDismiss } from "#ui/interactive/toast/toastDismiss"
+import { toasterSettings } from "#ui/interactive/toast/toasterSettings"
+import { toasterState } from "#ui/interactive/toast/toasterState"
+import type { AddToastProps } from "#ui/interactive/toast/ToastProps"
+import { toastVariant, toastVariantIcon } from "#ui/interactive/toast/toastVariant"
 
 export function toastAdd(addToast: AddToastProps, log: boolean = false): string {
   const op = "toastAdd"

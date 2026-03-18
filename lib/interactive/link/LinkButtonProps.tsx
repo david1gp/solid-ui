@@ -1,5 +1,5 @@
+import { type ButtonCvaProps } from "#ui/interactive/button/buttonCva"
 import type { ComponentProps } from "solid-js"
-import { type ButtonCvaProps } from "~ui/interactive/button/buttonCva"
 
 export interface CustomLinkButtonProps extends ButtonCvaProps {
   href: string

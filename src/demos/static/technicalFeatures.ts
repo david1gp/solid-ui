@@ -1,3 +1,4 @@
+import type { GridFeatureType } from "#ui/static/grid/GridFeatureType"
 import {
   mdiAccountKey,
   mdiMonitorCellphone,
@@ -9,7 +10,6 @@ import {
   mdiThemeLightDark,
   mdiWheelchair,
 } from "@mdi/js"
-import type { GridFeatureType } from "~ui/static/grid/GridFeatureType"
 
 export const technicalFeatures = [
   {

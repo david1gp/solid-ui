@@ -1,8 +1,8 @@
-import { For } from "solid-js"
+import { Icon } from "#ui/static/icon/Icon"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { classMerge } from "#ui/utils/classMerge"
 import { mdiCircle } from "@mdi/js"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { classMerge } from "~ui/utils/classMerge"
-import { Icon } from "~ui/static/icon/Icon"
+import { For } from "solid-js"
 import { TextOrLink } from "./TextOrLink"
 
 export interface BlackBulletPointsProps extends MayHaveClass {

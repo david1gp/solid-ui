@@ -1,9 +1,9 @@
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
+import type { MayHaveSubtitle } from "#ui/utils/MayHaveSubtitle"
+import type { MayHaveTitle } from "#ui/utils/MayHaveTitle"
 import type { Component, JSXElement } from "solid-js"
 import { splitProps } from "solid-js"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
-import type { MayHaveSubtitle } from "~ui/utils/MayHaveSubtitle"
-import type { MayHaveTitle } from "~ui/utils/MayHaveTitle"
 import { classesFieldset } from "./classesFieldset"
 
 export interface FieldsetProps extends MayHaveChildren, MayHaveTitle, MayHaveSubtitle {

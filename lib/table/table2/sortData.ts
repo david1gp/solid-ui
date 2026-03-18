@@ -1,5 +1,5 @@
-import type { TableColumnDef } from "~ui/table/shared/TableColumnDef"
-import { sortDir, type SortDir } from "~ui/table/table2/sortDir"
+import type { TableColumnDef } from "#ui/table/shared/TableColumnDef"
+import { sortDir, type SortDir } from "#ui/table/table2/sortDir"
 
 export function sortData<T>(data: T[], sortHeader: TableColumnDef<T>, dir: SortDir) {
   const sorted: T[] = [...data]

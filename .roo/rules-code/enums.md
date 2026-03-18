@@ -5,7 +5,7 @@
 - Generate validation schemas using `v.enum` from `valibot` library
 
 ```typescript
-import { getObjectValues } from "@/utils/obj/getObjectValues"
+import { getObjectValues } from "#/utils/obj/getObjectValues"
 import * as v from "valibot"
 
 // Type

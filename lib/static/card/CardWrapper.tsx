@@ -1,6 +1,6 @@
+import { classesCardWrapperP4 } from "#ui/static/card/classesCardWrapper"
+import { classMerge } from "#ui/utils/classMerge"
 import { splitProps, type ComponentProps } from "solid-js"
-import { classesCardWrapperP4 } from "~ui/static/card/classesCardWrapper"
-import { classMerge } from "~ui/utils/classMerge"
 
 export interface CardWrapperProps extends ComponentProps<"article"> {
   id?: string

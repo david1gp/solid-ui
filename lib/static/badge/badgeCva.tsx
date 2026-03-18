@@ -1,5 +1,5 @@
-import { classArr } from "~ui/utils/classArr"
-import { classMerge } from "~ui/utils/classMerge"
+import { classArr } from "#ui/utils/classArr"
+import { classMerge } from "#ui/utils/classMerge"
 
 export type BadgeVariant = keyof typeof badgeVariant
 

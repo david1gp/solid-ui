@@ -1,7 +1,7 @@
-import { ttt } from "~ui/i18n/ttt"
-import type { TableColumnDef } from "~ui/table/shared/TableColumnDef"
-import { Table1R } from "~ui/table/table1/Table1R"
-import { createPseudoRandomSec, type PseudoRandom } from "~utils/ran/createPseudoRandom"
+import { ttt } from "#ui/i18n/ttt"
+import type { TableColumnDef } from "#ui/table/shared/TableColumnDef"
+import { Table1R } from "#ui/table/table1/Table1R"
+import { createPseudoRandomSec, type PseudoRandom } from "#utils/ran/createPseudoRandom"
 
 export function DemoTable1R() {
   return (

@@ -1,214 +1,214 @@
+import { type DemoListType } from "#ui/generate_demo_list/DemoListType"
 import { lazy } from "solid-js"
-import { type DemoListType } from "~ui/generate_demo_list/DemoListType"
 
 const DemoTablePagination2 = lazy(async () => {
-  const c = await import("@/demos/table/DemoTablePagination2")
+  const c = await import("#/demos/table/DemoTablePagination2")
   return { default: c.DemoTablePagination2 }
 })
 
 const DemoTable2R = lazy(async () => {
-  const c = await import("@/demos/table/DemoTable2R")
+  const c = await import("#/demos/table/DemoTable2R")
   return { default: c.DemoTable2R }
 })
 
 const DemoTable1R = lazy(async () => {
-  const c = await import("@/demos/table/DemoTable1R")
+  const c = await import("#/demos/table/DemoTable1R")
   return { default: c.DemoTable1R }
 })
 
 const DemoTablePagination = lazy(async () => {
-  const c = await import("@/demos/table/DemoTablePagination")
+  const c = await import("#/demos/table/DemoTablePagination")
   return { default: c.DemoTablePagination }
 })
 
 const DemoCheckSingle = lazy(async () => {
-  const c = await import("@/demos/input/DemoCheckSingle")
+  const c = await import("#/demos/input/DemoCheckSingle")
   return { default: c.DemoCheckSingle }
 })
 
 const DemoSwitchSingle = lazy(async () => {
-  const c = await import("@/demos/input/DemoSwitchSingle")
+  const c = await import("#/demos/input/DemoSwitchSingle")
   return { default: c.DemoSwitchSingle }
 })
 
 const DemoCheckBoolean = lazy(async () => {
-  const c = await import("@/demos/input/DemoCheckBoolean")
+  const c = await import("#/demos/input/DemoCheckBoolean")
   return { default: c.DemoCheckBoolean }
 })
 
 const DemoInputS = lazy(async () => {
-  const c = await import("@/demos/input/DemoInputS")
+  const c = await import("#/demos/input/DemoInputS")
   return { default: c.DemoInputS }
 })
 
 const DemoNumberInput = lazy(async () => {
-  const c = await import("@/demos/input/DemoNumberInput")
+  const c = await import("#/demos/input/DemoNumberInput")
   return { default: c.DemoNumberInput }
 })
 
 const DemoSelectSingleNative = lazy(async () => {
-  const c = await import("@/demos/input/DemoSelectSingleNative")
+  const c = await import("#/demos/input/DemoSelectSingleNative")
   return { default: c.DemoSelectSingleNative }
 })
 
 const DemoCheckMultiple = lazy(async () => {
-  const c = await import("@/demos/input/DemoCheckMultiple")
+  const c = await import("#/demos/input/DemoCheckMultiple")
   return { default: c.DemoCheckMultiple }
 })
 
 const DemoCheckbox = lazy(async () => {
-  const c = await import("@/demos/input/DemoCheckbox")
+  const c = await import("#/demos/input/DemoCheckbox")
   return { default: c.DemoCheckbox }
 })
 
 const DemoInputDatalist = lazy(async () => {
-  const c = await import("@/demos/input/DemoInputDatalist")
+  const c = await import("#/demos/input/DemoInputDatalist")
   return { default: c.DemoInputDatalist }
 })
 
 const DemoSelectMultiple = lazy(async () => {
-  const c = await import("@/demos/input/DemoSelectMultiple")
+  const c = await import("#/demos/input/DemoSelectMultiple")
   return { default: c.DemoSelectMultiple }
 })
 
 const DemoStyles = lazy(async () => {
-  const c = await import("@/demos/static/DemoStyles")
+  const c = await import("#/demos/static/DemoStyles")
   return { default: c.DemoStyles }
 })
 
 const DemoIcons = lazy(async () => {
-  const c = await import("@/demos/static/DemoIcons")
+  const c = await import("#/demos/static/DemoIcons")
   return { default: c.DemoIcons }
 })
 
 const DemoBadge = lazy(async () => {
-  const c = await import("@/demos/static/DemoBadge")
+  const c = await import("#/demos/static/DemoBadge")
   return { default: c.DemoBadge }
 })
 
 const DemoCard = lazy(async () => {
-  const c = await import("@/demos/static/DemoCard")
+  const c = await import("#/demos/static/DemoCard")
   return { default: c.DemoCard }
 })
 
 const DemoSeparators = lazy(async () => {
-  const c = await import("@/demos/static/DemoSeparators")
+  const c = await import("#/demos/static/DemoSeparators")
   return { default: c.DemoSeparators }
 })
 
 const DemoLoaders = lazy(async () => {
-  const c = await import("@/demos/static/DemoLoaders")
+  const c = await import("#/demos/static/DemoLoaders")
   return { default: c.DemoLoaders }
 })
 
 const DemoFeatureGridSection = lazy(async () => {
-  const c = await import("@/demos/static/DemoFeatureGridSection")
+  const c = await import("#/demos/static/DemoFeatureGridSection")
   return { default: c.DemoFeatureGridSection }
 })
 
 const DemoTimeline = lazy(async () => {
-  const c = await import("@/demos/static/DemoTimeline")
+  const c = await import("#/demos/static/DemoTimeline")
   return { default: c.DemoTimeline }
 })
 
 const DemoBadges = lazy(async () => {
-  const c = await import("@/demos/static/DemoBadges")
+  const c = await import("#/demos/static/DemoBadges")
   return { default: c.DemoBadges }
 })
 
 const DemoCodeBlock = lazy(async () => {
-  const c = await import("@/demos/static/DemoCodeBlock")
+  const c = await import("#/demos/static/DemoCodeBlock")
   return { default: c.DemoCodeBlock }
 })
 
 const DemoSolidComparingForVsIndex = lazy(async () => {
-  const c = await import("@/demos/learning_solid/iteration/DemoSolidComparingForVsIndex")
+  const c = await import("#/demos/learning_solid/iteration/DemoSolidComparingForVsIndex")
   return { default: c.DemoSolidComparingForVsIndex }
 })
 
 const DemoSolidDerivedSignals = lazy(async () => {
-  const c = await import("@/demos/learning_solid/iteration/DemoSolidDerivedSignals")
+  const c = await import("#/demos/learning_solid/iteration/DemoSolidDerivedSignals")
   return { default: c.DemoSolidDerivedSignals }
 })
 
 const DemoAsync1 = lazy(async () => {
-  const c = await import("@/demos/learning_solid/async/DemoAsync1")
+  const c = await import("#/demos/learning_solid/async/DemoAsync1")
   return { default: c.DemoAsync1 }
 })
 
 const DemoSolidTodoApp = lazy(async () => {
-  const c = await import("@/demos/learning_solid/todo/DemoSolidTodoApp")
+  const c = await import("#/demos/learning_solid/todo/DemoSolidTodoApp")
   return { default: c.DemoSolidTodoApp }
 })
 
 const DemoSolidTodoApp2Store = lazy(async () => {
-  const c = await import("@/demos/learning_solid/todo/DemoSolidTodoApp2Store")
+  const c = await import("#/demos/learning_solid/todo/DemoSolidTodoApp2Store")
   return { default: c.DemoSolidTodoApp2Store }
 })
 
 const DemoSolidGlobalResourceApp = lazy(async () => {
-  const c = await import("@/demos/learning_solid/global_resource/DemoSolidGlobalResourceApp")
+  const c = await import("#/demos/learning_solid/global_resource/DemoSolidGlobalResourceApp")
   return { default: c.DemoSolidGlobalResourceApp }
 })
 
 const DemoUseSubmission2 = lazy(async () => {
-  const c = await import("@/demos/learning_solid/use_submission/DemoUseSubmission2")
+  const c = await import("#/demos/learning_solid/use_submission/DemoUseSubmission2")
   return { default: c.DemoUseSubmission2 }
 })
 
 const DemoUseSubmission1 = lazy(async () => {
-  const c = await import("@/demos/learning_solid/use_submission/DemoUseSubmission1")
+  const c = await import("#/demos/learning_solid/use_submission/DemoUseSubmission1")
   return { default: c.DemoUseSubmission1 }
 })
 
 const DemoToaster = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoToaster")
+  const c = await import("#/demos/interactive/DemoToaster")
   return { default: c.DemoToaster }
 })
 
 const DemoTabs = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoTabs")
+  const c = await import("#/demos/interactive/DemoTabs")
   return { default: c.DemoTabs }
 })
 
 const DemoLinks = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoLinks")
+  const c = await import("#/demos/interactive/DemoLinks")
   return { default: c.DemoLinks }
 })
 
 const DemoToggle = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoToggle")
+  const c = await import("#/demos/interactive/DemoToggle")
   return { default: c.DemoToggle }
 })
 
 const DemoTheme = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoTheme")
+  const c = await import("#/demos/interactive/DemoTheme")
   return { default: c.DemoTheme }
 })
 
 const DemoDetails = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoDetails")
+  const c = await import("#/demos/interactive/DemoDetails")
   return { default: c.DemoDetails }
 })
 
 
 const DemoDialog = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoDialog")
+  const c = await import("#/demos/interactive/DemoDialog")
   return { default: c.DemoDialog }
 })
 
 const DemoButtons = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoButtons")
+  const c = await import("#/demos/interactive/DemoButtons")
   return { default: c.DemoButtons }
 })
 
 const DemoPopover = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoPopover")
+  const c = await import("#/demos/interactive/DemoPopover")
   return { default: c.DemoPopover }
 })
 
 const DemoLists = lazy(async () => {
-  const c = await import("@/demos/interactive/DemoLists")
+  const c = await import("#/demos/interactive/DemoLists")
   return { default: c.DemoLists }
 })
 

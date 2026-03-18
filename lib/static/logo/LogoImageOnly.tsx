@@ -1,8 +1,8 @@
-import { buttonVariant, type ButtonVariant } from "~ui/interactive/button/buttonCva"
-import { LinkButtonIconOnly } from "~ui/interactive/link/LinkButtonIconOnly"
-import { Img } from "~ui/static/img/Img"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { classMerge } from "~ui/utils/classMerge"
+import { buttonVariant, type ButtonVariant } from "#ui/interactive/button/buttonCva"
+import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly"
+import { Img } from "#ui/static/img/Img"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { classMerge } from "#ui/utils/classMerge"
 
 export interface LogoImageOnlyProps extends MayHaveClass {
   href?: string

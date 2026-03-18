@@ -1,8 +1,8 @@
+import { buttonCva2 } from "#ui/interactive/button/buttonCva"
+import { buttonIconCva } from "#ui/interactive/button/buttonIconCva"
+import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps"
+import { Icon } from "#ui/static/icon/Icon"
 import { splitProps } from "solid-js"
-import { buttonCva2 } from "~ui/interactive/button/buttonCva"
-import { buttonIconCva } from "~ui/interactive/button/buttonIconCva"
-import type { LinkButtonProps } from "~ui/interactive/link/LinkButtonProps"
-import { Icon } from "~ui/static/icon/Icon"
 
 export function LinkButton(p: LinkButtonProps) {
   const [s, rest] = splitProps(p, [

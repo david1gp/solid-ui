@@ -1,13 +1,13 @@
+import { ttt } from "#ui/i18n/ttt"
+import { classArr } from "#ui/utils/classArr"
+import type { SignalObject } from "#ui/utils/createSignalObject"
+import type { HasGetOptions } from "#ui/utils/HasGetOptions"
+import type { HasValueSignalString } from "#ui/utils/HasValueSignalString"
+import type { MayHaveValueText } from "#ui/utils/HasValueText"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled"
+import type { MayHaveId } from "#ui/utils/MayHaveId"
 import { Key } from "@solid-primitives/keyed"
-import { ttt } from "~ui/i18n/ttt"
-import { classArr } from "~ui/utils/classArr"
-import type { SignalObject } from "~ui/utils/createSignalObject"
-import type { HasGetOptions } from "~ui/utils/HasGetOptions"
-import type { HasValueSignalString } from "~ui/utils/HasValueSignalString"
-import type { MayHaveValueText } from "~ui/utils/HasValueText"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { MayHaveDisabled } from "~ui/utils/MayHaveDisabled"
-import type { MayHaveId } from "~ui/utils/MayHaveId"
 
 /**
  * https://github.com/radix-ui/primitives/blob/main/packages/react/radio-group/src/Radio.tsx

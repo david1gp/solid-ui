@@ -1,5 +1,5 @@
+import { Details } from "#ui/interactive/details/Details"
 import { mdiAccount, mdiInformation } from "@mdi/js"
-import { Details } from "~ui/interactive/details/Details"
 
 export function DemoDetails() {
   return (

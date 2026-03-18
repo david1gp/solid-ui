@@ -1,14 +1,14 @@
+import { ttt } from "#ui/i18n/ttt"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import type { ToastPropsInternal, ToastTexts } from "#ui/interactive/toast/ToastProps"
+import { toastCva } from "#ui/interactive/toast/toastCva"
+import { toastDismiss } from "#ui/interactive/toast/toastDismiss"
+import { toastIconCva } from "#ui/interactive/toast/toastIconCva"
+import { Icon } from "#ui/static/icon/Icon"
+import { classMerge } from "#ui/utils/classMerge"
 import { mdiClose } from "@mdi/js"
 import { Show } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
-import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import type { ToastPropsInternal, ToastTexts } from "~ui/interactive/toast/ToastProps"
-import { toastCva } from "~ui/interactive/toast/toastCva"
-import { toastDismiss } from "~ui/interactive/toast/toastDismiss"
-import { toastIconCva } from "~ui/interactive/toast/toastIconCva"
-import { Icon } from "~ui/static/icon/Icon"
-import { classMerge } from "~ui/utils/classMerge"
 
 export function Toast(p: ToastPropsInternal) {
   const texts =

@@ -1,13 +1,13 @@
+import { Input } from "#ui/input/input/Input"
+import type { NumberInputText } from "#ui/input/number/NumberInputTexts"
+import { numberInputTextDefault } from "#ui/input/number/NumberInputTexts"
+import { buttonVariant, type ButtonVariant } from "#ui/interactive/button/buttonCva"
+import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly"
+import { classMerge } from "#ui/utils/classMerge"
+import type { SignalObject } from "#ui/utils/createSignalObject"
+import { safeParseInt } from "#utils/int/safeParseInt"
 import { mdiMinus, mdiMinusBox, mdiPlus, mdiPlusBox } from "@mdi/js"
 import { type ComponentProps, type JSX, splitProps } from "solid-js"
-import { Input } from "~ui/input/input/Input"
-import type { NumberInputText } from "~ui/input/number/NumberInputTexts"
-import { numberInputTextDefault } from "~ui/input/number/NumberInputTexts"
-import { buttonVariant, type ButtonVariant } from "~ui/interactive/button/buttonCva"
-import { ButtonIconOnly } from "~ui/interactive/button/ButtonIconOnly"
-import { classMerge } from "~ui/utils/classMerge"
-import type { SignalObject } from "~ui/utils/createSignalObject"
-import { safeParseInt } from "~utils/int/safeParseInt"
 
 export interface NumberInputSProps extends ComponentProps<"input"> {
   valueSignal: SignalObject<number>
