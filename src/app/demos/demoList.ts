@@ -76,6 +76,11 @@ const DemoStyles = lazy(async () => {
   return { default: c.DemoStyles }
 })
 
+const DemoCodeBlock = lazy(async () => {
+  const c = await import("#/demos/static/DemoCodeBlock")
+  return { default: c.DemoCodeBlock }
+})
+
 const DemoIcons = lazy(async () => {
   const c = await import("#/demos/static/DemoIcons")
   return { default: c.DemoIcons }
@@ -114,11 +119,6 @@ const DemoTimeline = lazy(async () => {
 const DemoBadges = lazy(async () => {
   const c = await import("#/demos/static/DemoBadges")
   return { default: c.DemoBadges }
-})
-
-const DemoCodeBlock = lazy(async () => {
-  const c = await import("#/demos/static/DemoCodeBlock")
-  return { default: c.DemoCodeBlock }
 })
 
 const DemoSolidComparingForVsIndex = lazy(async () => {
@@ -191,7 +191,6 @@ const DemoDetails = lazy(async () => {
   return { default: c.DemoDetails }
 })
 
-
 const DemoDialog = lazy(async () => {
   const c = await import("#/demos/interactive/DemoDialog")
   return { default: c.DemoDialog }
@@ -249,6 +248,7 @@ export const demoList = {
   },
   static: {
     DemoStyles: DemoStyles,
+    DemoCodeBlock: DemoCodeBlock,
     DemoIcons: DemoIcons,
     DemoBadge: DemoBadge,
     DemoCard: DemoCard,
@@ -257,7 +257,6 @@ export const demoList = {
     DemoFeatureGridSection: DemoFeatureGridSection,
     DemoTimeline: DemoTimeline,
     DemoBadges: DemoBadges,
-    DemoCodeBlock: DemoCodeBlock,
   },
   table: {
     DemoTablePagination2: DemoTablePagination2,
