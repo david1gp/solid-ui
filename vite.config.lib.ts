@@ -1,17 +1,13 @@
+import tailwindcss from "@tailwindcss/vite"
 import { glob } from "glob"
 import { resolve } from "path"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
 import solid from "vite-plugin-solid"
-import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
   resolve: {
-    alias: {
-      "@": new URL("./src", import.meta.url).pathname,
-      "~ui": new URL("./lib", import.meta.url).pathname,
-      "~utils": new URL("././node_modules/@adaptive-ds/utils/dist", import.meta.url).pathname,
-    },
+    tsconfigPaths: true,
   },
   plugins: [
     solid(),

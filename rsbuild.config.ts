@@ -1,7 +1,7 @@
 import { defineConfig } from "@rsbuild/core"
 import { pluginBabel } from "@rsbuild/plugin-babel"
-import { pluginSolid } from "@rsbuild/plugin-solid"
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
+import { pluginSolid } from "@rsbuild/plugin-solid"
 
 export default defineConfig({
   server: {
@@ -24,9 +24,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": new URL("./src", import.meta.url).pathname,
-      "~ui": new URL("./lib", import.meta.url).pathname,
-      "~utils": new URL("././node_modules/@adaptive-ds/utils/dist", import.meta.url).pathname,
+      "#": new URL("./src", import.meta.url).pathname,
+      "#ui": new URL("./lib", import.meta.url).pathname,
+      "#utils": new URL("././node_modules/@adaptive-ds/utils/dist", import.meta.url).pathname,
     },
   },
   plugins: [
