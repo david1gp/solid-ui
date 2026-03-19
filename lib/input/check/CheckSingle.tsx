@@ -1,3 +1,4 @@
+import { classesTextMuted } from "#ui/classes/classesTextMuted.js"
 import { buttonVariant } from "#ui/interactive/button/buttonCva"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
 import { classesGridCols3xl } from "#ui/static/grid/classesGridCols"
@@ -10,18 +11,17 @@ import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled"
 import type { MayHaveId } from "#ui/utils/MayHaveId"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass"
 import { mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle } from "@mdi/js"
-import { For } from "solid-js"
+import { For, Show, splitProps } from "solid-js"
 
 export interface CheckSingleProps<T extends string>
-  extends MayHaveId,
-    MayHaveButtonVariant,
-    MayHaveClass,
-    MayHaveInnerClass,
-    MayHaveDisabled {
+  extends MayHaveId, MayHaveButtonVariant, MayHaveClass, MayHaveInnerClass, MayHaveDisabled {
   // state
   valueSignal: SignalObject<T>
   getOptions: () => T[]
   valueText?: (value: T) => string
+  valueTextClass?: string
+  valueTextSubtitle?: (value: T) => string | undefined
+  valueTextSubtitleClass?: string
   // behavior
   disallowDeselection?: boolean
   // styling
@@ -29,6 +29,7 @@ export interface CheckSingleProps<T extends string>
 }
 
 export function CheckSingle<T extends string = string>(p: CheckSingleProps<T>) {
+  const [local, others] = splitProps(p, ["class"])
   return (
     <div
       id={p.id}
@@ -39,13 +40,17 @@ export function CheckSingle<T extends string = string>(p: CheckSingleProps<T>) {
         "rounded-md",
         "focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2",
         "flex flex-col justify-center gap-1", // layout
-        p.class,
+        local.class,
       )}
     >
       <OptionList
+        {...others}
         valueSignal={p.valueSignal}
         getOptions={p.getOptions}
         valueText={p.valueText}
+        valueTextClass={p.valueTextClass}
+        valueTextSubtitle={p.valueTextSubtitle}
+        valueTextSubtitleClass={p.valueTextSubtitleClass}
         variant={p.variant}
         disallowDeselection={p.disallowDeselection}
         optionClass={p.optionClass}
@@ -59,7 +64,9 @@ interface OptionListProps<T extends string> extends MayHaveButtonVariant, MayHav
   valueSignal: SignalObject<T>
   getOptions: () => T[]
   valueText?: (value: T) => string
-
+  valueTextClass?: string
+  valueTextSubtitle?: (value: T) => string | undefined
+  valueTextSubtitleClass?: string
   disallowDeselection?: boolean
   optionClass?: string
 }
@@ -73,6 +80,9 @@ function OptionList<T extends string>(p: OptionListProps<T>) {
             option={option}
             valueSignal={p.valueSignal}
             valueText={p.valueText}
+            valueTextClass={p.valueTextClass}
+            valueTextSubtitle={p.valueTextSubtitle}
+            valueTextSubtitleClass={p.valueTextSubtitleClass}
             optionClass={p.optionClass}
             variant={p.variant}
             disallowDeselection={p.disallowDeselection}
@@ -97,12 +107,16 @@ interface CheckOptionProps<T extends string> extends MayHaveButtonVariant, MayHa
   option: T
   valueSignal: SignalObject<T>
   valueText?: (value: T) => string
+  valueTextClass?: string
+  valueTextSubtitle?: (value: T) => string | undefined
+  valueTextSubtitleClass?: string
   disallowDeselection?: boolean
   optionClass?: string
 }
 
 function CheckOption<T extends string>(p: CheckOptionProps<T>) {
   const label = () => (p.valueText ? p.valueText(p.option) : p.option)
+  const subtitle = () => (p.valueTextSubtitle ? p.valueTextSubtitle(p.option) : undefined)
   const isSelected = () => p.valueSignal.get() === p.option
 
   return (
@@ -116,7 +130,12 @@ function CheckOption<T extends string>(p: CheckOptionProps<T>) {
       class={classMerge("justify-start text-left", p.optionClass)}
       disabled={p.disabled}
     >
-      {label()}
+      <span class="flex flex-col items-start">
+        <span class={p.valueTextClass}>{label()}</span>
+        <Show when={subtitle()}>
+          {(subtitle) => <span class={classMerge(classesTextMuted, p.valueTextSubtitleClass)}>{subtitle()}</span>}
+        </Show>
+      </span>
     </ButtonIcon>
   )
 }

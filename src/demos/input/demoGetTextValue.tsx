@@ -13,3 +13,19 @@ export function demoGetTextValue(value: string): string {
   }
   return texts[value] || `Option ${value}`
 }
+
+export function demoGetSubtitleValue(value: string): string | undefined {
+  const subtitles: Record<string, string> = {
+    "0": "Brief description",
+    "1": "More info here",
+    "2": "Detailed explanation of this option",
+    "3": "Quick tip",
+    "4": "Additional context",
+    "5": "More details below",
+    "6": "Note",
+    "7": "Help text",
+    "8": "Extended information",
+    "9": "Final note",
+  }
+  return subtitles[value]
+}

@@ -15,6 +15,7 @@ export function DemoCheckSingle() {
         valueSignal={singleValueSignal}
         getOptions={() => options10Strings}
         valueText={demoGetTextValue}
+        // valueTextSubtitle={demoGetSubtitleValue}
       />
     </PageWrapper>
   )
