@@ -27,7 +27,7 @@ export function Details(p: DetailsProps) {
       )}
     >
       <summary
-        class={classArr(
+        class={classMerge(
           "flex flex-col sm:flex-row items-center justify-between",
           "p-6",
           "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors",
