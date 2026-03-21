@@ -6,11 +6,9 @@
     "declaration": true,
     "declarationMap": true,
     "noEmit": false,
-    "allowImportingTsExtensions": false
+    "incremental": false,
   },
-  "include": [
-    "lib/**/*"
-  ],
+  "include": ["lib/**/*"],
   "exclude": [
     "node_modules",
     "export",
@@ -23,6 +21,6 @@
     "out",
     "data",
     ".idea",
-    ".vscode"
-  ]
+    ".vscode",
+  ],
 }
