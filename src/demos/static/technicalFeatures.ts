@@ -1,4 +1,4 @@
-import type { GridFeatureType } from "#ui/static/grid/GridFeatureType"
+import type { GridFeatureType } from "#ui/static/grid/GridFeatureType.js"
 import {
   mdiAccountKey,
   mdiMonitorCellphone,

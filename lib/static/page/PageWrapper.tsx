@@ -1,7 +1,7 @@
-import { classesBgGray } from "#ui/classes/classesBg"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classMerge } from "#ui/utils/classMerge"
+import { classesBgGray } from "#ui/classes/classesBg.jsx"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 
 export interface PageWrapperProps extends MayHaveChildren, MayHaveClass {
   innerClass?: string

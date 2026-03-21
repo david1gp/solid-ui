@@ -1,6 +1,6 @@
-import { LinkText } from "#ui/interactive/link/LinkText"
-import { BlueBulletPoint } from "#ui/static/lists/BlueBulletPoint"
-import { classMerge } from "#ui/utils/classMerge"
+import { LinkText } from "#ui/interactive/link/LinkText.jsx"
+import { BlueBulletPoint } from "#ui/static/lists/BlueBulletPoint.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
 
 export interface BulletLinksProps {
   urls: string[] | readonly string[]

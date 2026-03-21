@@ -1,7 +1,7 @@
-import { Checkbox } from "#ui/input/check/Checkbox"
-import { toastAdd } from "#ui/interactive/toast/toastAdd"
-import { toastVariant } from "#ui/interactive/toast/toastVariant"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { Checkbox } from "#ui/input/check/Checkbox.jsx"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { createSignal } from "solid-js"
 
 export function DemoCheckbox() {

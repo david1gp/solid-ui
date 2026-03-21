@@ -1,5 +1,5 @@
-import { Badge } from "#ui/static/badge/Badge"
-import { type BadgeVariant, badgeVariant } from "#ui/static/badge/badgeCva"
+import { Badge } from "#ui/static/badge/Badge.jsx"
+import { type BadgeVariant, badgeVariant } from "#ui/static/badge/badgeCva.jsx"
 
 export function DemoBadges() {
   const variants = Object.values(badgeVariant)

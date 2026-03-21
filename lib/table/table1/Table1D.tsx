@@ -1,10 +1,10 @@
-import type { DesktopTableClassNames } from "#ui/table/shared/DesktopTableClassNames"
-import { sharedTableRowClassName } from "#ui/table/shared/sharedTableRowClassName"
-import type { Table1DTexts } from "#ui/table/table1/Table1DTexts"
-import { table1DTextDefault } from "#ui/table/table1/Table1DTexts"
-import type { Table1Data } from "#ui/table/table1/Table1Data"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classMerge } from "#ui/utils/classMerge"
+import type { DesktopTableClassNames } from "#ui/table/shared/DesktopTableClassNames.js"
+import { sharedTableRowClassName } from "#ui/table/shared/sharedTableRowClassName.js"
+import type { Table1DTexts } from "#ui/table/table1/Table1DTexts.js"
+import { table1DTextDefault } from "#ui/table/table1/Table1DTexts.js"
+import type { Table1Data } from "#ui/table/table1/Table1Data.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 
 export interface Table1aDProps<T> extends Table1Data<T>, MayHaveClass {
   desktopClasses?: DesktopTableClassNames

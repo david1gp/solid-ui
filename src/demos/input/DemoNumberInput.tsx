@@ -1,6 +1,6 @@
-import { NumberInputS } from "#ui/input/number/NumberInputS"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
-import { createSignalObject } from "#ui/utils/createSignalObject"
+import { NumberInputS } from "#ui/input/number/NumberInputS.jsx"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import type { JSX } from "solid-js"
 
 export function DemoNumberInput() {

@@ -1,5 +1,5 @@
-import { InputDatalist } from "#ui/input/input/InputDatalist"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { InputDatalist } from "#ui/input/input/InputDatalist.jsx"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { createSignal } from "solid-js"
 
 const fruits = [

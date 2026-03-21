@@ -1,8 +1,8 @@
-import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { type MayHaveDisabledAccessor, isDisabled } from "#ui/utils/MayHaveDisabledAccessor"
-import type { SignalObject } from "#ui/utils/createSignalObject"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { type MayHaveDisabledAccessor, isDisabled } from "#ui/utils/MayHaveDisabledAccessor.js"
+import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import { type ComponentProps, splitProps } from "solid-js"
 
 /**

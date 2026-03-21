@@ -1,8 +1,8 @@
-import { demoGetTextValue, demoGetSubtitleValue } from "#/demos/input/demoGetTextValue"
-import { CheckMultiple } from "#ui/input/check/CheckMultiple"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
-import { createSignalObject } from "#ui/utils/createSignalObject"
-import { arrCreate } from "#utils/arr/arrCreate"
+import { demoGetTextValue, demoGetSubtitleValue } from "#src/demos/input/demoGetTextValue.jsx"
+import { CheckMultiple } from "#ui/input/check/CheckMultiple.jsx"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { arrCreate } from "#utils/arr/arrCreate.js"
 
 const options10Strings = arrCreate<string>(10, (i) => `${i}`)
 const multiValueSignal = createSignalObject<string[]>([])

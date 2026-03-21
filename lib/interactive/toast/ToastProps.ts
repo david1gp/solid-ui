@@ -1,9 +1,9 @@
-import type { ToastVariant } from "#ui/interactive/toast/toastVariant"
-import type { HasTitle } from "#ui/utils/HasTitle"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import type { MayHaveIcon } from "#ui/utils/MayHaveIcon"
-import type { MayHaveId } from "#ui/utils/MayHaveId"
+import type { ToastVariant } from "#ui/interactive/toast/toastVariant.js"
+import type { HasTitle } from "#ui/utils/HasTitle.js"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import type { MayHaveIcon } from "#ui/utils/MayHaveIcon.js"
+import type { MayHaveId } from "#ui/utils/MayHaveId.js"
 import type { JSXElement } from "solid-js"
 
 export interface AddToastProps extends MayHaveId, MayHaveIcon, HasTitle, MayHaveClass, MayHaveChildren {

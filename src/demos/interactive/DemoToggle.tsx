@@ -1,7 +1,7 @@
-import { toastAdd } from "#ui/interactive/toast/toastAdd"
-import { toastVariant } from "#ui/interactive/toast/toastVariant"
-import { ToggleButton } from "#ui/interactive/toggle/ToggleButton"
-import { createSignalObject } from "#ui/utils/createSignalObject"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
+import { ToggleButton } from "#ui/interactive/toggle/ToggleButton.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { mdiFormatAlignCenter, mdiFormatAlignLeft, mdiFormatAlignRight } from "@mdi/js"
 
 export function DemoToggle() {

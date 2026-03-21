@@ -1,5 +1,5 @@
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 
 export function SvgIconGoogle(p: MayHaveClass) {
   return (

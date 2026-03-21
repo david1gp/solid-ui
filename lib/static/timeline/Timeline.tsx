@@ -1,4 +1,4 @@
-import { classMerge } from "#ui/utils/classMerge"
+import { classMerge } from "#ui/utils/classMerge.js"
 import type { ComponentProps, ParentComponent } from "solid-js"
 import { type Component, type JSXElement, mergeProps, Show, splitProps } from "solid-js"
 

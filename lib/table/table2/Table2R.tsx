@@ -1,10 +1,10 @@
-import type { DesktopTableClassNames } from "#ui/table/shared/DesktopTableClassNames"
-import type { MobileTableClassNames } from "#ui/table/shared/MobileTableClassNames"
-import { tableVisibilityClasses } from "#ui/table/shared/tableVisibilityClasses"
-import type { Table2Signals } from "#ui/table/table2/createSortableTableSignals"
-import { Table2D } from "#ui/table/table2/Table2D"
-import { Table2M } from "#ui/table/table2/Table2M"
-import { type TailwindBreakpoint, tailwindBreakpoint } from "#ui/utils/tailwindBreakpoint"
+import type { DesktopTableClassNames } from "#ui/table/shared/DesktopTableClassNames.js"
+import type { MobileTableClassNames } from "#ui/table/shared/MobileTableClassNames.js"
+import { tableVisibilityClasses } from "#ui/table/shared/tableVisibilityClasses.js"
+import type { Table2Signals } from "#ui/table/table2/createSortableTableSignals.js"
+import { Table2D } from "#ui/table/table2/Table2D.jsx"
+import { Table2M } from "#ui/table/table2/Table2M.jsx"
+import { type TailwindBreakpoint, tailwindBreakpoint } from "#ui/utils/tailwindBreakpoint.js"
 import { splitProps } from "solid-js"
 
 export interface Table2RProps<T> extends Table2Signals<T> {

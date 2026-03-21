@@ -1,4 +1,4 @@
-import { createLocalStore } from "#ui/utils/createLocalStore"
+import { createLocalStore } from "#ui/utils/createLocalStore.js"
 import { createSignal, For } from "solid-js"
 
 //

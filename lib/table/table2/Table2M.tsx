@@ -1,9 +1,9 @@
-import { Separator } from "#ui/static/separator/Separator"
-import type { MobileTableClassNames } from "#ui/table/shared/MobileTableClassNames"
-import { Table1MEntry } from "#ui/table/table1/Table1MEntry"
-import type { Table2Signals } from "#ui/table/table2/createSortableTableSignals"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classMerge } from "#ui/utils/classMerge"
+import { Separator } from "#ui/static/separator/Separator.jsx"
+import type { MobileTableClassNames } from "#ui/table/shared/MobileTableClassNames.js"
+import { Table1MEntry } from "#ui/table/table1/Table1MEntry.jsx"
+import type { Table2Signals } from "#ui/table/table2/createSortableTableSignals.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 import { For } from "solid-js"
 
 export interface SortableTableMProps<T> extends Table2Signals<T>, MayHaveClass {

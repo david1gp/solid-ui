@@ -1,7 +1,7 @@
-import { Badge } from "#ui/static/badge/Badge"
-import { badgeVariant } from "#ui/static/badge/badgeCva"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
-import { objectValues } from "#utils/obj/objectValues"
+import { Badge } from "#ui/static/badge/Badge.jsx"
+import { badgeVariant } from "#ui/static/badge/badgeCva.jsx"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
+import { objectValues } from "#utils/obj/objectValues.js"
 
 export function DemoBadge() {
   const variants = objectValues(badgeVariant)

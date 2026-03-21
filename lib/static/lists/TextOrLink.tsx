@@ -1,6 +1,6 @@
-import { LinkText } from "#ui/interactive/link/LinkText"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classMerge } from "#ui/utils/classMerge"
+import { LinkText } from "#ui/interactive/link/LinkText.jsx"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 import { Show } from "solid-js"
 
 export interface TextOrLinkProps extends MayHaveClass {

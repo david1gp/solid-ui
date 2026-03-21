@@ -1,4 +1,4 @@
-import { type GlobalState } from "./GlobalState"
+import { type GlobalState } from "./GlobalState.js"
 
 export const fetchSongs = (): Promise<GlobalState["songs"]> => {
   return new Promise((resolve) => {

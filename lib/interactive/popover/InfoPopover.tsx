@@ -1,8 +1,8 @@
-import { ttt } from "#ui/i18n/ttt"
-import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva"
-import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover"
-import type { HasChildren } from "#ui/utils/HasChildren"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { ttt } from "#ui/i18n/ttt.js"
+import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
+import type { HasChildren } from "#ui/utils/HasChildren.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { mdiInformationOutline } from "@mdi/js"
 
 export interface InfoPopoverProps extends MayHaveClass, HasChildren {}

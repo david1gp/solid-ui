@@ -1,5 +1,5 @@
-import { classArr } from "#ui/utils/classArr"
-import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass"
+import { classArr } from "#ui/utils/classArr.js"
+import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass.js"
 
 export function SeparatorWithText(p: MayHaveChildrenAndClass) {
   return (

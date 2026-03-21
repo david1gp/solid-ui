@@ -1,7 +1,7 @@
-import { loadingPageTextsDefault, type LoadingPageTexts } from "#ui/static/loaders/LoadingPageTexts"
-import { RandomLoader } from "#ui/static/loaders/RandomLoader"
-import { classMerge } from "#ui/utils/classMerge"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { loadingPageTextsDefault, type LoadingPageTexts } from "#ui/static/loaders/LoadingPageTexts.js"
+import { RandomLoader } from "#ui/static/loaders/RandomLoader.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface LoadingPageProps extends MayHaveClass {
   loadingItem?: string

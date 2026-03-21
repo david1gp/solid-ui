@@ -1,5 +1,5 @@
-import type { ImageType } from "./ImageType"
-import { Img } from "./Img"
+import type { ImageType } from "./ImageType.js"
+import { Img } from "./Img.js"
 
 export interface TypedImgProps {
   img: ImageType

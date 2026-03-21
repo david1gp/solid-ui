@@ -1,6 +1,6 @@
-import { Icon } from "#ui/static/icon/Icon"
-import { classArr } from "#ui/utils/classArr"
-import { classMerge } from "#ui/utils/classMerge"
+import { Icon } from "#ui/static/icon/Icon.jsx"
+import { classArr } from "#ui/utils/classArr.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 import { splitProps, type ComponentProps } from "solid-js"
 
 export type GridFeatureType = {

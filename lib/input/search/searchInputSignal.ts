@@ -1,4 +1,4 @@
-import { createSignalObject } from "#ui/utils/createSignalObject"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { scheduleIdle } from "@solid-primitives/scheduled"
 
 

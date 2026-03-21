@@ -1,8 +1,8 @@
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
-import type { TableColumnDef } from "#ui/table/shared/TableColumnDef"
-import { sortDir, type SortDir } from "#ui/table/table2/sortDir"
-import { classMerge } from "#ui/utils/classMerge"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import type { TableColumnDef } from "#ui/table/shared/TableColumnDef.js"
+import { sortDir, type SortDir } from "#ui/table/table2/sortDir.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 import { mdiArrowDown, mdiArrowUp } from "@mdi/js"
 
 export interface Table2DSortButtonProps<T> {

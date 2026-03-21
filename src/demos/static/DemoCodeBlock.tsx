@@ -1,4 +1,4 @@
-import { CodeBlock } from "#ui/static/code/CodeBlock"
+import { CodeBlock } from "#ui/static/code/CodeBlock.jsx"
 
 export function DemoCodeBlock() {
   return (

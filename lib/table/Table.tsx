@@ -1,4 +1,4 @@
-import { classMerge } from "#ui/utils/classMerge"
+import { classMerge } from "#ui/utils/classMerge.js"
 import type { Component, ComponentProps } from "solid-js"
 import { splitProps } from "solid-js"
 

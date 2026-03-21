@@ -1,10 +1,10 @@
-import { Icon } from "#ui/static/icon/Icon"
-import type { HasTitle } from "#ui/utils/HasTitle"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import type { MayHaveIcon } from "#ui/utils/MayHaveIcon"
-import type { MayHaveSubtitle } from "#ui/utils/MayHaveSubtitle"
-import { classMerge } from "#ui/utils/classMerge"
+import { Icon } from "#ui/static/icon/Icon.jsx"
+import type { HasTitle } from "#ui/utils/HasTitle.js"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import type { MayHaveIcon } from "#ui/utils/MayHaveIcon.js"
+import type { MayHaveSubtitle } from "#ui/utils/MayHaveSubtitle.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 import { mdiAlertBoxOutline } from "@mdi/js"
 
 export interface ErrorPageProps extends HasTitle, MayHaveSubtitle, MayHaveIcon, MayHaveClass, MayHaveChildren {}

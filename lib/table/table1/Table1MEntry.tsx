@@ -1,7 +1,7 @@
-import type { MobileTableClassNames } from "#ui/table/shared/MobileTableClassNames"
-import type { TableColumnDef } from "#ui/table/shared/TableColumnDef"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
-import { classMerge } from "#ui/utils/classMerge"
+import type { MobileTableClassNames } from "#ui/table/shared/MobileTableClassNames.js"
+import type { TableColumnDef } from "#ui/table/shared/TableColumnDef.js"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 
 export type Table1aMEntryProps<T> = {
   row: T

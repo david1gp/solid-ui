@@ -1,12 +1,12 @@
-import { formatGeneratedCodeFile } from "#ui/generate_demo_list/parts/formatGeneratedCodeFile"
-import { objectKeys } from "#utils/obj/objectKeys"
+import { formatGeneratedCodeFile } from "#ui/generate_demo_list/parts/formatGeneratedCodeFile.js"
+import { objectKeys } from "#utils/obj/objectKeys.js"
 import { readdir, writeFile } from "node:fs/promises"
 import { join } from "node:path"
-import { findDemoFilesRecursive } from "./parts/findDemoFilesRecursive"
-import { removeDemoObjectValueQuotes } from "./parts/removeDemoObjectValueQuotes"
-import { serializeDemoComponentImport } from "./parts/serializeDemoComponentImport"
-import { sortDemoObjectKeys } from "./parts/sortDemoObjectKeys"
-import { transformDemoListToRecord } from "./parts/transformDemoListToRecord"
+import { findDemoFilesRecursive } from "./parts/findDemoFilesRecursive.js"
+import { removeDemoObjectValueQuotes } from "./parts/removeDemoObjectValueQuotes.js"
+import { serializeDemoComponentImport } from "./parts/serializeDemoComponentImport.js"
+import { sortDemoObjectKeys } from "./parts/sortDemoObjectKeys.js"
+import { transformDemoListToRecord } from "./parts/transformDemoListToRecord.js"
 
 type DemoPageListType = Record<string, string[]>
 
@@ -31,7 +31,7 @@ export async function generateDemoList(demoSearchDirRelative: string, outputFile
 
   let output = `
 import { lazy } from "solid-js"
-import { type DemoListType } from "#ui/generate_demo_list/DemoListType"\n\n`
+import { type DemoListType } from "#ui/generate_demo_list/DemoListType.js"\n\n`
 
   for (const category of objectKeys(demoPageList)) {
     const importPathComponents = demoPageList[category]

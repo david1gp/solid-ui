@@ -1,4 +1,4 @@
-import { badgeCva1, type BadgeVariant } from "#ui/static/badge/badgeCva"
+import { badgeCva1, type BadgeVariant } from "#ui/static/badge/badgeCva.jsx"
 import type { Component, ComponentProps } from "solid-js"
 import { splitProps } from "solid-js"
 

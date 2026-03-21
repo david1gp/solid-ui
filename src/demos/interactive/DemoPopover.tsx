@@ -1,10 +1,10 @@
-import { LongContent } from "#/demos/interactive/LongContent"
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover"
-import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon"
-import { classesGridCols3xl } from "#ui/static/grid/classesGridCols"
-import { classArr } from "#ui/utils/classArr"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { LongContent } from "#src/demos/interactive/LongContent.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
+import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon.jsx"
+import { classesGridCols3xl } from "#ui/static/grid/classesGridCols.js"
+import { classArr } from "#ui/utils/classArr.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { mdiDotsVertical } from "@mdi/js"
 
 export function DemoPopover() {

@@ -1,5 +1,5 @@
-import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier"
-import { classArr } from "#ui/utils/classArr"
+import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier.js"
+import { classArr } from "#ui/utils/classArr.js"
 
 export const classesInput = classArr(
   "inline-flex", // layout

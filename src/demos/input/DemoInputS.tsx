@@ -1,5 +1,5 @@
-import { InputS } from "#ui/input/input/InputS"
-import { createSignalObject } from "#ui/utils/createSignalObject"
+import { InputS } from "#ui/input/input/InputS.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import type { JSX } from "solid-js"
 
 export function DemoInputS() {

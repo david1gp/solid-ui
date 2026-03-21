@@ -1,8 +1,8 @@
-import { demoGetTextValue } from "#/demos/input/demoGetTextValue"
-import { SelectSingleNative } from "#ui/input/select/SelectSingleNative"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
-import { createSignalObject } from "#ui/utils/createSignalObject"
-import { arrCreate } from "#utils/arr/arrCreate"
+import { demoGetTextValue } from "#src/demos/input/demoGetTextValue.jsx"
+import { SelectSingleNative } from "#ui/input/select/SelectSingleNative.jsx"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { arrCreate } from "#utils/arr/arrCreate.js"
 import { createMemo, type Accessor } from "solid-js"
 
 const options100 = arrCreate<string>(100, (i) => "" + i)

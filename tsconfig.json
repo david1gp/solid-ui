@@ -1,23 +1,32 @@
 {
   "compilerOptions": {
-    "lib": ["esnext", "dom", "dom.iterable"],
-    "module": "Preserve",
     "target": "esnext",
-    "skipLibCheck": true,
-    // https://github.com/withastro/astro/blob/main/tsconfig.base.json
-    // Bundler mode configuration
-    "moduleResolution": "bundler",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "allowImportingTsExtensions": false,
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
+    //
+    // dom
+    //
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
+    //
+    // performance
+    //
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
     //
     // my configs
     //
     "allowJs": true,
-    "incremental": true,
-    "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": true,
@@ -25,14 +34,6 @@
     "baseUrl": ".",
     "moduleDetection": "force",
     "noUncheckedSideEffectImports": true,
-    //
-    // absolute import paths
-    //
-    "paths": {
-      "#/*": ["src/*"],
-      "#ui/*": ["lib/*"],
-      "#utils/*": ["./node_modules/@adaptive-ds/utils/dist/*"],
-    },
     //
     // type imports - https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
     //
@@ -51,8 +52,26 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["lib", "src", "test"],
-  "exclude": [".idea", ".vscode", "build", "dist", "out", "data", "docs", "node_modules", "public"],
+  "include": [
+    "lib",
+    "src",
+    "ui",
+    "test"
+  ],
+  "exclude": [
+    ".idea",
+    ".vscode",
+    "build",
+    "dist",
+    "out",
+    "data",
+    "docs",
+    "node_modules",
+    "ops",
+    "public",
+    "public-image-versions",
+    "public-images"
+  ]
 }

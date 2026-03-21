@@ -1,7 +1,7 @@
-import { Label } from "#ui/input/label/Label"
-import { LabelAsterix } from "#ui/input/label/LabelAsterix"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
-import { classMerge } from "#ui/utils/classMerge"
+import { Label } from "#ui/input/label/Label.jsx"
+import { LabelAsterix } from "#ui/input/label/LabelAsterix.jsx"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 
 export interface LabelWithSubtitleProps extends MayHaveChildren {
   title: string

@@ -1,5 +1,5 @@
-import { TabsTop } from "#ui/interactive/tabs/TabsTop"
-import { createSignalObject } from "#ui/utils/createSignalObject"
+import { TabsTop } from "#ui/interactive/tabs/TabsTop.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { createSignal } from "solid-js"
 
 export function DemoTabs() {

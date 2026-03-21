@@ -1,6 +1,6 @@
-import { classesTextLink } from "#ui/classes/classesTextLink"
-import type { LinkTextProps } from "#ui/interactive/link/LinkTextProps"
-import { classMerge } from "#ui/utils/classMerge"
+import { classesTextLink } from "#ui/classes/classesTextLink.js"
+import type { LinkTextProps } from "#ui/interactive/link/LinkTextProps.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
 import { splitProps } from "solid-js"
 
 export function LinkText(p: LinkTextProps) {

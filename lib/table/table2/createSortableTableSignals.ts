@@ -1,6 +1,6 @@
-import type { TableColumnDef } from "#ui/table/shared/TableColumnDef"
-import { sortDir, type SortDir } from "#ui/table/table2/sortDir"
-import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject"
+import type { TableColumnDef } from "#ui/table/shared/TableColumnDef.js"
+import { sortDir, type SortDir } from "#ui/table/table2/sortDir.js"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 
 export type Table2Signals<T> = {
   rows: SignalObject<T[]>

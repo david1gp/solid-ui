@@ -1,5 +1,5 @@
-import { classesDisabledModifierPeer } from "#ui/classes/classesDisabledModifierPeer"
-import { classArr } from "#ui/utils/classArr"
+import { classesDisabledModifierPeer } from "#ui/classes/classesDisabledModifierPeer.js"
+import { classArr } from "#ui/utils/classArr.js"
 
 export const classesLabel = classArr(
   "font-medium leading-none", // font

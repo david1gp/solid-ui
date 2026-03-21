@@ -1,9 +1,9 @@
-import { buttonCvaIconOnly } from "#ui/interactive/button/buttonCva"
-import { buttonIconCva } from "#ui/interactive/button/buttonIconCva"
-import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation"
-import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps"
-import { Icon } from "#ui/static/icon/Icon"
-import { isLoading } from "#ui/utils/MayHaveIsLoading"
+import { buttonCvaIconOnly } from "#ui/interactive/button/buttonCva.js"
+import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
+import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
+import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps.jsx"
+import { Icon } from "#ui/static/icon/Icon.jsx"
+import { isLoading } from "#ui/utils/MayHaveIsLoading.js"
 import { splitProps } from "solid-js"
 
 export function LinkButtonIconOnly(p: LinkButtonProps) {

@@ -1,9 +1,9 @@
-import { LongContent } from "#/demos/interactive/LongContent"
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { CorvuDialog } from "#ui/interactive/dialog/CorvuDialog"
-import { CorvuDialogIcon } from "#ui/interactive/dialog/CorvuDialogIcon"
-import { classesGridCols4xl } from "#ui/static/grid/classesGridCols"
-import { classArr } from "#ui/utils/classArr"
+import { LongContent } from "#src/demos/interactive/LongContent.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { CorvuDialog } from "#ui/interactive/dialog/CorvuDialog.jsx"
+import { CorvuDialogIcon } from "#ui/interactive/dialog/CorvuDialogIcon.jsx"
+import { classesGridCols4xl } from "#ui/static/grid/classesGridCols.js"
+import { classArr } from "#ui/utils/classArr.js"
 import { mdiCog } from "@mdi/js"
 
 export function DemoDialog() {

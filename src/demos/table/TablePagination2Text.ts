@@ -1,4 +1,4 @@
-import { ttt } from "#ui/i18n/ttt"
+import { ttt } from "#ui/i18n/ttt.js"
 
 export type TablePagination2Text = {
   page: string

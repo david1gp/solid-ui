@@ -1,4 +1,4 @@
-import type { ValueOrAccessor } from "#ui/utils/ValueOrAccessor"
+import type { ValueOrAccessor } from "#ui/utils/ValueOrAccessor.js"
 
 export interface MayHaveDisabledAccessor {
   disabled?: ValueOrAccessor<boolean>

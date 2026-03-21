@@ -1,7 +1,7 @@
-import { Toast } from "#ui/interactive/toast/Toast"
-import { toasterState } from "#ui/interactive/toast/toasterState"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classArr } from "#ui/utils/classArr"
+import { Toast } from "#ui/interactive/toast/Toast.jsx"
+import { toasterState } from "#ui/interactive/toast/toasterState.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classArr } from "#ui/utils/classArr.js"
 import { Key } from "@solid-primitives/keyed"
 import type { JSXElement } from "solid-js"
 

@@ -1,8 +1,8 @@
 /* @refresh reload */
 
-import { demoList } from "#/app/demos/demoList"
-import { NavDemo } from "#/nav/NavDemo"
-import { generateDemoRoutes } from "#ui/demo_pages/generateDemoRoutes"
+import { demoList } from "#src/app/demos/demoList.js"
+import { NavDemo } from "#src/nav/NavDemo.jsx"
+import { generateDemoRoutes } from "#ui/demo_pages/generateDemoRoutes.jsx"
 import { Router } from "@solidjs/router"
 import { render } from "solid-js/web"
 import "./tailwind.css"

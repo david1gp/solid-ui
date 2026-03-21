@@ -1,6 +1,6 @@
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { LinkButton } from "#ui/interactive/link/LinkButton"
-import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { mdiGithub, mdiHome, mdiOpenInNew } from "@mdi/js"
 import { For } from "solid-js"
 

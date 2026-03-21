@@ -1,4 +1,4 @@
-import { Details } from "#ui/interactive/details/Details"
+import { Details } from "#ui/interactive/details/Details.jsx"
 import { mdiAccount, mdiInformation } from "@mdi/js"
 
 export function DemoDetails() {

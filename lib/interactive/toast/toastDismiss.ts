@@ -1,5 +1,5 @@
-import { createToasterState } from "#ui/interactive/toast/GlobalToasterState"
-import { toasterState } from "#ui/interactive/toast/toasterState"
+import { createToasterState } from "#ui/interactive/toast/GlobalToasterState.js"
+import { toasterState } from "#ui/interactive/toast/toasterState.js"
 
 export function toastDismiss(toastId: string, log = false) {
   let op = "toastDismiss"

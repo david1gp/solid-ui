@@ -1,7 +1,7 @@
-import { BulletLinks } from "#ui/interactive/list/BulletLinks"
-import { BulletLinksO } from "#ui/interactive/list/BulletLinksO"
-import { toastAdd } from "#ui/interactive/toast/toastAdd"
-import { toastVariant } from "#ui/interactive/toast/toastVariant"
+import { BulletLinks } from "#ui/interactive/list/BulletLinks.jsx"
+import { BulletLinksO } from "#ui/interactive/list/BulletLinksO.jsx"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 
 export function DemoLists() {
   return (

@@ -1,6 +1,6 @@
-import { type LabelAsterixTexts, labelAsterixTextDefault } from "#ui/input/label/LabelAsterixTexts"
-import { classMerge } from "#ui/utils/classMerge"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { type LabelAsterixTexts, labelAsterixTextDefault } from "#ui/input/label/LabelAsterixTexts.js"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface LabelAsterixProps extends MayHaveClass {
   texts?: LabelAsterixTexts

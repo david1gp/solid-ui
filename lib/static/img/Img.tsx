@@ -1,7 +1,7 @@
-import { classesImgZoomInOnHover5 } from "#ui/static/img/classesImgZoomInOnHover5"
-import { classInvertBlack } from "#ui/static/img/classInvertBlack"
-import { classArr } from "#ui/utils/classArr"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { classesImgZoomInOnHover5 } from "#ui/static/img/classesImgZoomInOnHover5.js"
+import { classInvertBlack } from "#ui/static/img/classInvertBlack.js"
+import { classArr } from "#ui/utils/classArr.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface ImgProps extends MayHaveClass {
   src: string

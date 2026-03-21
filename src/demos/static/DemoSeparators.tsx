@@ -1,8 +1,8 @@
-import { Button } from "#ui/interactive/button/Button"
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { Separator } from "#ui/static/separator/Separator"
-import { SeparatorOr } from "#ui/static/separator/SeparatorOr"
-import { SeparatorWithText } from "#ui/static/separator/SeparatorWithText"
+import { Button } from "#ui/interactive/button/Button.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { Separator } from "#ui/static/separator/Separator.jsx"
+import { SeparatorOr } from "#ui/static/separator/SeparatorOr.jsx"
+import { SeparatorWithText } from "#ui/static/separator/SeparatorWithText.jsx"
 
 export function DemoSeparators() {
   return (

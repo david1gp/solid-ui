@@ -1,4 +1,4 @@
-import { classArr } from "#ui/utils/classArr"
+import { classArr } from "#ui/utils/classArr.js"
 
 /**
  * unused because it's a little to fancy

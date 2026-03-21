@@ -1,4 +1,4 @@
-import { classArr } from "#ui/utils/classArr"
+import { classArr } from "#ui/utils/classArr.js"
 
 /**
  * disable hover because popovers move with it

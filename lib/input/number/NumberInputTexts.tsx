@@ -1,4 +1,4 @@
-import { ttt1 } from "#ui/i18n/ttt"
+import { ttt1 } from "#ui/i18n/ttt.js"
 
 export type NumberInputText = {
   decreaseByX: (amount: number) => string

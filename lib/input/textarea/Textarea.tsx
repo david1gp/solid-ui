@@ -1,5 +1,5 @@
-import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier"
-import { classMerge } from "#ui/utils/classMerge"
+import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 import type { Component, ComponentProps } from "solid-js"
 import { splitProps } from "solid-js"
 

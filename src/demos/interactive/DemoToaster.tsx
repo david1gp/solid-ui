@@ -1,7 +1,7 @@
-import { Button } from "#ui/interactive/button/Button"
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { toastAdd } from "#ui/interactive/toast/toastAdd"
-import { toastVariant } from "#ui/interactive/toast/toastVariant"
+import { Button } from "#ui/interactive/button/Button.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 import { mdiHeart } from "@mdi/js"
 
 export function DemoToaster() {

@@ -1,4 +1,4 @@
-import { themeButtonTextDefault } from "#ui/interactive/theme/ThemeButtonText"
+import { themeButtonTextDefault } from "#ui/interactive/theme/ThemeButtonText.js"
 import {
   getThemeFromStorageOrBrowserPref,
   nextTheme2,
@@ -8,10 +8,10 @@ import {
   themeSchema,
   type ThemeVariant,
   themeVariant,
-} from "#ui/interactive/theme/themeVariant"
-import { toastAdd } from "#ui/interactive/toast/toastAdd"
-import { toastVariant } from "#ui/interactive/toast/toastVariant"
-import { createSignalObject } from "#ui/utils/createSignalObject"
+} from "#ui/interactive/theme/themeVariant.js"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { isServer } from "solid-js/web"
 import * as v from "valibot"
 

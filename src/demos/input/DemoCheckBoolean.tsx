@@ -1,7 +1,7 @@
-import { CheckBoolean } from "#ui/input/check/CheckBoolean"
-import { CheckBooleanSingle } from "#ui/input/check/CheckBooleanSingle"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
-import { createSignalObject } from "#ui/utils/createSignalObject"
+import { CheckBoolean } from "#ui/input/check/CheckBoolean.jsx"
+import { CheckBooleanSingle } from "#ui/input/check/CheckBooleanSingle.jsx"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 
 const booleanValueSignal = createSignalObject<boolean>(false)
 const booleanBothValueSignal = createSignalObject<boolean>(false)

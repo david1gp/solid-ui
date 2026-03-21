@@ -1,4 +1,4 @@
-import type { ToastPropsInternal } from "#ui/interactive/toast/ToastProps"
+import type { ToastPropsInternal } from "#ui/interactive/toast/ToastProps.js"
 
 export type GlobalToasterState = {
   toasts: ToastPropsInternal[]

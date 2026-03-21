@@ -1,5 +1,5 @@
-import { Textarea } from "#ui/input/textarea/Textarea"
-import type { SignalObject } from "#ui/utils/createSignalObject"
+import { Textarea } from "#ui/input/textarea/Textarea.jsx"
+import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import { type ComponentProps, type JSX, splitProps } from "solid-js"
 
 export interface TextAreaSProps extends ComponentProps<"textarea"> {

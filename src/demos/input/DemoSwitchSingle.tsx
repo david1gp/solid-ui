@@ -1,8 +1,8 @@
-import { demoGetTextValue } from "#/demos/input/demoGetTextValue"
-import { SwitchSingle } from "#ui/input/switch/SwitchSingle"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
-import { createSignalObject } from "#ui/utils/createSignalObject"
-import { arrCreate } from "#utils/arr/arrCreate"
+import { demoGetTextValue } from "#src/demos/input/demoGetTextValue.jsx"
+import { SwitchSingle } from "#ui/input/switch/SwitchSingle.jsx"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { arrCreate } from "#utils/arr/arrCreate.js"
 
 const options100 = arrCreate<string>(100, (i) => "" + i)
 const singleValueSignal = createSignalObject<string>("")

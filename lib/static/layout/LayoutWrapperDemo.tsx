@@ -1,7 +1,7 @@
-import { Toaster } from "#ui/interactive/toast/Toaster"
-import { TailwindIndicator } from "#ui/static/dev/TailwindIndicator"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
-import type { MayHaveTitle } from "#ui/utils/MayHaveTitle"
+import { Toaster } from "#ui/interactive/toast/Toaster.jsx"
+import { TailwindIndicator } from "#ui/static/dev/TailwindIndicator.jsx"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
+import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.js"
 import { createEffect } from "solid-js"
 
 export interface LayoutWrapperDemoProps extends MayHaveChildren, MayHaveTitle {}

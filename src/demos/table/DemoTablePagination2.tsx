@@ -1,14 +1,14 @@
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
-import { classMerge } from "#ui/utils/classMerge"
-import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js"
 import type { JSXElement } from "solid-js"
 import { createEffect, Show } from "solid-js"
-import type { TablePagination2Text } from "./TablePagination2Text"
-import { tablePagination2TextDefault } from "./TablePagination2Text"
+import type { TablePagination2Text } from "./TablePagination2Text.js"
+import { tablePagination2TextDefault } from "./TablePagination2Text.js"
 
 export interface AtomizedTablePaginationProps extends MayHaveClass {
   entriesPerPage: number

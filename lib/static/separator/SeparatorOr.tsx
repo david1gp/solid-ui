@@ -1,6 +1,6 @@
-import { ttt } from "#ui/i18n/ttt"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { SeparatorWithText } from "./SeparatorWithText"
+import { ttt } from "#ui/i18n/ttt.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { SeparatorWithText } from "./SeparatorWithText.js"
 
 export function SeparatorOr(p: MayHaveClass) {
   return (

@@ -1,4 +1,4 @@
-import { BulletLinks } from "#ui/interactive/list/BulletLinks"
+import { BulletLinks } from "#ui/interactive/list/BulletLinks.jsx"
 import { splitProps } from "solid-js"
 
 export interface BulletLinksOProps {

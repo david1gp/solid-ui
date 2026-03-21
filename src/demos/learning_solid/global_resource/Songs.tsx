@@ -1,5 +1,5 @@
 import { type Component, For } from "solid-js"
-import type { GlobalState } from "./GlobalState"
+import type { GlobalState } from "./GlobalState.js"
 
 export const Songs: Component<{ songs?: GlobalState["songs"] }> = (p) => (
   <For each={p.songs}>

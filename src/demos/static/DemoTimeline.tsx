@@ -1,5 +1,5 @@
-import { Icon } from "#ui/static/icon/Icon"
-import { Timeline } from "#ui/static/timeline/Timeline"
+import { Icon } from "#ui/static/icon/Icon.jsx"
+import { Timeline } from "#ui/static/timeline/Timeline.jsx"
 import { mdiBrain, mdiCodeTags, mdiPencilRuler, mdiRocketLaunch, mdiTestTube } from "@mdi/js"
 import type { JSXElement } from "solid-js"
 
