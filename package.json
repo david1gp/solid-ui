@@ -61,9 +61,9 @@
     "#src/*.js": "./src/*.ts",
     "#src/*.jsx": "./src/*.tsx",
     "#src/*": "./src/*",
-    "#ui/*.js": "./lib/*.ts",
-    "#ui/*.jsx": "./lib/*.tsx",
-    "#ui/*": "./lib/*",
+    "#ui/*.js": "./ui/*.ts",
+    "#ui/*.jsx": "./ui/*.tsx",
+    "#ui/*": "./ui/*",
     "#utils/*": "@adaptive-ds/utils/*"
   },
   "prettier": {
