@@ -1,12 +1,12 @@
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { ImageType } from "./ImageType.js"
 import { Img } from "./Img.js"
 
-export interface TypedImgProps {
+export interface TypedImgProps extends MayHaveClass {
   img: ImageType
   srcPrefix?: string
   zoomIn?: boolean
   invertColorsInDarkMode?: boolean
-  class?: string
 }
 
 export function TypedImg(p: TypedImgProps) {
