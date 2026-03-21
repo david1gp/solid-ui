@@ -27,9 +27,9 @@ export async function findDemoFilesInDir(path: string): Promise<string[]> {
   // const categoryPath = join(demosPath, category.name)
   const demoFiles = await readdir(path)
   const filtered = demoFiles
-    .filter((file) => file.startsWith("Demo"))
-    .filter((file) => file.endsWith(""))
-    .map((file) => path + "/" + file)
+    .filter((file: string) => file.startsWith("Demo"))
+    .filter((file: string) => file.endsWith(".ts") || file.endsWith(".tsx"))
+    .map((file: string) => `${path}/${file}`)
   // .map((file) => file.replace(/\.tsx$/, ""))
   return filtered
 }

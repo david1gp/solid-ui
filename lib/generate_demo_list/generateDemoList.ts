@@ -10,7 +10,11 @@ import { transformDemoListToRecord } from "./parts/transformDemoListToRecord.js"
 
 type DemoPageListType = Record<string, string[]>
 
-export async function generateDemoList(demoSearchDirRelative: string, outputFileRelative: string) {
+export async function generateDemoList(
+  demoSearchDirRelative: string,
+  outputFileRelative: string,
+  importPrefix = "#src",
+) {
   // const found = findDemoFilesRecursive("src")
   const demoPageList: DemoPageListType = {}
   const baseDir = process.cwd()
@@ -39,7 +43,7 @@ import { type DemoListType } from "#ui/generate_demo_list/DemoListType.js"\n\n`
     if (!importPathComponents) continue
     for (const importPathComponent of importPathComponents) {
       // console.log(importPathComponent)
-      output += serializeDemoComponentImport(importPathComponent, baseDir)
+      output += serializeDemoComponentImport(importPathComponent, baseDir, importPrefix)
     }
   }
 
