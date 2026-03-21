@@ -31,9 +31,11 @@
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": true,
     "downlevelIteration": true,
-    "baseUrl": ".",
     "moduleDetection": "force",
     "noUncheckedSideEffectImports": true,
+    "types": [
+      "bun"
+    ],
     //
     // type imports - https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
     //
