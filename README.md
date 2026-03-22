@@ -24,17 +24,22 @@ Quick link
 
 ## Installation
 
-Install the package using Bun (recommended) or npm:
+You can install the package metadata from npm:
 
 ```bash
 bun add @adaptive-ds/solid-ui
 ```
 
-or
+Then download the UI source locally into your project:
 
 ```bash
-npm install @adaptive-ds/solid-ui
+bunx degit https://github.com/david1gp/solid-ui/ui ui
 ```
+
+This is the recommended setup for two reasons:
+
+1. Some bundlers can end up pulling in duplicate `solid-js` instances when components are imported directly from `node_modules`.
+2. Keeping the components local makes them easy to tweak, restyle, and overwrite as your design evolves, in the same spirit as `shadcn/ui`.
 
 Ensure you have the peer dependencies installed:
 
@@ -52,43 +57,21 @@ To ensure Tailwind scans the library's source files for classes (since component
 
 This tells Tailwind to include classes from the library's `.tsx`, `.ts`, and other relevant files in the purge process, preventing unused classes from being purged during the build. Without it, Tailwind might not detect classes used in imported components, leading to missing styles.
 
-## Option Configuration: Import Aliases
+## Recommended: Absolute Import Alias
 
-### Typescript
-
-In your `tsconfig.json`, set up the `~` alias to point to the library:
+It is recommended to expose your local UI folder through `package.json` `imports`, so component imports stay stable and pleasant to read.
 
 ```json
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "#/*": ["src/*"],
-      "#ui/*": ["./node_modules/@adaptive-ds/solid-ui/lib/*"]
-    }
+  "imports": {
+    "#ui/*.js": "./ui/*.ts",
+    "#ui/*.jsx": "./ui/*.tsx",
+    "#ui/*": "./ui/*"
   }
 }
 ```
 
-### Vite
-
-In your `vite.config.ts`, set up the `~` alias to point to the library:
-
-```js
-import tailwindcss from "@tailwindcss/vite"
-import { defineConfig } from "vite"
-import solid from "vite-plugin-solid"
-
-export default defineConfig({
-  resolve: {
-    alias: {
-      "@": new URL("./src", import.meta.url).pathname,
-      "~ui": new URL("./node_modules/@adaptive-ds/solid-ui/lib", import.meta.url).pathname,
-    },
-  },
-  plugins: [solid(), tailwindcss()],
-})
-```
+That gives you a clean absolute import path for your local components, while still keeping the source fully editable.
 
 ## Usage Example
 
