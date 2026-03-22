@@ -1,14 +1,14 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./lib",
+    "rootDir": "./ui",
     "outDir": "./export",
     "declaration": true,
     "declarationMap": true,
     "noEmit": false,
     "incremental": false,
   },
-  "include": ["lib/**/*"],
+  "include": ["ui"],
   "exclude": [
     "node_modules",
     "export",

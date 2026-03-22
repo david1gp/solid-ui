@@ -12,13 +12,6 @@ export default defineConfig({
     },
     allowedHosts: ["solid-ui.com"],
   },
-  resolve: {
-    alias: {
-      "@": new URL("./src", import.meta.url).pathname,
-      "~ui": new URL("./lib", import.meta.url).pathname,
-      "~utils": new URL("././node_modules/@adaptive-ds/utils/dist", import.meta.url).pathname,
-    },
-  },
   // @ts-ignore
   plugins: [solid(), tailwindcss(), visualizer({ filename: "dist/bundle-size.html", gzipSize: true })],
   envPrefix: "PUBLIC_",

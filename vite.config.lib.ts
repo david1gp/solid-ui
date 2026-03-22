@@ -13,7 +13,7 @@ export default defineConfig({
     solid(),
     tailwindcss(),
     dts({
-      include: ["lib/**/*"],
+      include: ["ui/**/*"],
       outDir: "dist",
       // Use your tsconfig.lib.json for proper configuration
       tsconfigPath: "./tsconfig.lib.json",
@@ -23,8 +23,8 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       // Entry point(s) for your library
-      // entry: resolve(__dirname, "lib/**/*.{ts,tsx}"),
-      entry: glob.sync(resolve(__dirname, "lib/**/*.{ts,tsx}"), {
+      // entry: resolve(__dirname, "ui/**/*.{ts,tsx}"),
+      entry: glob.sync(resolve(__dirname, "ui/**/*.{ts,tsx}"), {
         ignore: ["**/*.test.ts", "**/*.test.tsx"],
       }),
       // Output formats - ESM is standard for modern libraries
@@ -55,7 +55,7 @@ export default defineConfig({
       output: {
         // Preserve module structure for better tree-shaking
         preserveModules: true,
-        preserveModulesRoot: "lib",
+        preserveModulesRoot: "ui",
       },
     },
   },

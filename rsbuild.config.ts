@@ -22,13 +22,6 @@ export default defineConfig({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
     },
   },
-  resolve: {
-    alias: {
-      "#": new URL("./src", import.meta.url).pathname,
-      "#ui": new URL("./lib", import.meta.url).pathname,
-      "#utils": new URL("././node_modules/@adaptive-ds/utils/dist", import.meta.url).pathname,
-    },
-  },
   plugins: [
     pluginNodePolyfill({
       // Whether to polyfill `node:` protocol imports.
