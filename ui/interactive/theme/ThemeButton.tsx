@@ -25,18 +25,15 @@ export function ThemeButton(p: ThemeButtonProps) {
     onCleanup(() => window.removeEventListener("keydown", handleGlobalKeyDown))
   })
 
-  const currentTheme = themeSignal.get()
-  const themeName = texts[currentTheme]
-
   return (
     <ButtonIconOnly
-      title={texts.currentTheme(themeName)}
-      icon={themeIcon(currentTheme)}
+      title={texts.currentTheme(texts[themeSignal.get()])}
+      icon={themeIcon(themeSignal.get())}
       variant={buttonVariant.ghost}
       class={classMerge(p.class)}
       onClick={themeRotate}
     >
-      {p.showText && themeName}
+      {p.showText && texts[themeSignal.get()]}
     </ButtonIconOnly>
   )
 }
