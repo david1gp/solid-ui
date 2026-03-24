@@ -26,5 +26,5 @@ export const linkIcons = {
   externalLink: mdiArrowTopRight,
   back: mdiArrowLeft,
   forward: mdiArrowRight,
-  register: mdiAccountPlus
+  register: mdiAccountPlus,
 } as const

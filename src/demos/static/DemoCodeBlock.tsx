@@ -17,9 +17,11 @@ function BasicCodeBlockDemo() {
   return (
     <div>
       <h2 class="text-2xl font-bold mb-4">Basic CodeBlock</h2>
-      <CodeBlock data={`function hello() {
+      <CodeBlock
+        data={`function hello() {
   console.log("Hello, World!")
-}`} />
+}`}
+      />
     </div>
   )
 }
@@ -39,10 +41,7 @@ function CodeBlockWithCustomClassDemo() {
   return (
     <div>
       <h2 class="text-2xl font-bold mb-4">With Custom Class Override</h2>
-      <CodeBlock
-        class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200"
-        data={data}
-      />
+      <CodeBlock class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200" data={data} />
     </div>
   )
 }

@@ -12,11 +12,7 @@ import type { JSXElement } from "solid-js"
 import { createUniqueId } from "solid-js"
 
 export interface TabsTopProps
-  extends HasValueSignalString,
-    HasGetOptions,
-    MayHaveValueText,
-    MayHaveChildren,
-    MayHaveClass {
+  extends HasValueSignalString, HasGetOptions, MayHaveValueText, MayHaveChildren, MayHaveClass {
   valueIcon?: (value: string) => string
   valueAmount?: (value: string) => number | undefined
   valueChildren: (value: string) => JSXElement

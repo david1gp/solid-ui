@@ -34,10 +34,7 @@ function DetailsWithIconDemo() {
   return (
     <div>
       <h2 class="text-2xl font-bold mb-4">Details with Icon</h2>
-      <Details
-        icon={mdiInformation}
-        title="Information Panel"
-      >
+      <Details icon={mdiInformation} title="Information Panel">
         <div class="p-6 border-t border-gray-200 dark:border-gray-700">
           <p>This details component includes an icon in the summary.</p>
           <p class="mt-2">Icons help users quickly identify the type of content.</p>
@@ -51,28 +48,16 @@ function DetailsWithSubtitleDemo() {
   return (
     <div>
       <h2 class="text-2xl font-bold mb-4">Details with Subtitle</h2>
-      <Details
-        icon={mdiAccount}
-        title="User Profile"
-        subtitle="View and edit your account information"
-      >
+      <Details icon={mdiAccount} title="User Profile" subtitle="View and edit your account information">
         <div class="p-6 border-t border-gray-200 dark:border-gray-700">
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-medium mb-1">Name</label>
-              <input
-                type="text"
-                placeholder="John Doe"
-                class="w-full p-2 border rounded-md"
-              />
+              <input type="text" placeholder="John Doe" class="w-full p-2 border rounded-md" />
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Email</label>
-              <input
-                type="email"
-                placeholder="john@example.com"
-                class="w-full p-2 border rounded-md"
-              />
+              <input type="email" placeholder="john@example.com" class="w-full p-2 border rounded-md" />
             </div>
           </div>
         </div>

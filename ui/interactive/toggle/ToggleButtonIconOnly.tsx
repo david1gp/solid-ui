@@ -12,7 +12,8 @@ import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import { type Component, type ComponentProps, splitProps } from "solid-js"
 
 export interface ToggleButtonIconOnlyProps
-  extends Omit<ComponentProps<"button">, "title" | "onClick">,
+  extends
+    Omit<ComponentProps<"button">, "title" | "onClick">,
     ButtonCvaProps,
     HasTitle,
     HasIcon,

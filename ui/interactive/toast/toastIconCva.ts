@@ -37,7 +37,5 @@ export function toastIconCva(
   variant: ToastVariant | null = defaultVariant,
   ...customClasses: (string | boolean | undefined | null | 0)[]
 ) {
-  return classMerge(
-    "size-6 min-w-6 min-h-6",
-    variants[variant ?? defaultVariant], ...customClasses)
+  return classMerge("size-6 min-w-6 min-h-6", variants[variant ?? defaultVariant], ...customClasses)
 }

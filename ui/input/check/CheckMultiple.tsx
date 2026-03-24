@@ -79,10 +79,7 @@ function OptionList<T extends string = string>(p: CheckMultipleProps<T>) {
   )
 }
 
-interface CheckOptionProps<T extends string>
-  extends MayHaveButtonVariant,
-    MayHaveDisabled,
-    MayHaveInnerClass {
+interface CheckOptionProps<T extends string> extends MayHaveButtonVariant, MayHaveDisabled, MayHaveInnerClass {
   option: T
   valueSignal: SignalObject<T[]>
   valueText?: (value: T) => string
@@ -110,7 +107,9 @@ function CheckOption<T extends string>(p: CheckOptionProps<T>) {
     >
       <span class="flex flex-col items-start">
         <span class={p.valueTextClass}>{label()}</span>
-        <Show when={subtitle()}>{(subtitle) => <span class={classMerge(classesTextMuted,p.valueTextSubtitleClass)}>{subtitle()}</span>}</Show>
+        <Show when={subtitle()}>
+          {(subtitle) => <span class={classMerge(classesTextMuted, p.valueTextSubtitleClass)}>{subtitle()}</span>}
+        </Show>
       </span>
     </ButtonIcon>
   )

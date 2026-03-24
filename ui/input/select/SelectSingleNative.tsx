@@ -14,7 +14,8 @@ import { Key } from "@solid-primitives/keyed"
 export type StringStringFn = (value: string) => string
 
 export interface SelectSingleNativeProps
-  extends HasValueSignalString,
+  extends
+    HasValueSignalString,
     HasGetOptions,
     MayHaveValueText,
     MayHaveClass,

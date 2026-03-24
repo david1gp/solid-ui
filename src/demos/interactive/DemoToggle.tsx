@@ -30,16 +30,14 @@ function BasicToggleDemo() {
           title="Toggle Bold"
           onPressedChange={(pressed) => {
             toastAdd({
-              title: `Toggle ${pressed ? 'pressed' : 'released'}`,
-              variant: toastVariant.info
+              title: `Toggle ${pressed ? "pressed" : "released"}`,
+              variant: toastVariant.info,
             })
           }}
         >
           Bold
         </ToggleButton>
-        <span class="text-sm text-muted-foreground">
-          State: {pressedSignal.get() ? 'Pressed' : 'Released'}
-        </span>
+        <span class="text-sm text-muted-foreground">State: {pressedSignal.get() ? "Pressed" : "Released"}</span>
       </div>
     </div>
   )
@@ -54,23 +52,14 @@ function TextFormattingDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Text Formatting</h2>
       <div class="flex items-center gap-2 p-4 border rounded-lg">
-        <ToggleButton
-          pressedSignal={boldPressed}
-
-
-          title="Bold"
-        />
-        <ToggleButton
-          pressedSignal={italicPressed}
-          title="Italic"
-        />
-        <ToggleButton
-          pressedSignal={underlinePressed}
-          title="Underline"
-        />
+        <ToggleButton pressedSignal={boldPressed} title="Bold" />
+        <ToggleButton pressedSignal={italicPressed} title="Italic" />
+        <ToggleButton pressedSignal={underlinePressed} title="Underline" />
       </div>
       <div class="mt-2 text-sm text-muted-foreground">
-        Formatting: {boldPressed.get() ? 'B' : ''}{italicPressed.get() ? 'I' : ''}{underlinePressed.get() ? 'U' : ''}
+        Formatting: {boldPressed.get() ? "B" : ""}
+        {italicPressed.get() ? "I" : ""}
+        {underlinePressed.get() ? "U" : ""}
       </div>
     </div>
   )
@@ -78,22 +67,22 @@ function TextFormattingDemo() {
 
 function MultipleToggleDemo() {
   const toggles = [
-    { id: 'left', pressed: createSignalObject(false), icon: mdiFormatAlignLeft, label: 'Left' },
-    { id: 'center', pressed: createSignalObject(false), icon: mdiFormatAlignCenter, label: 'Center' },
-    { id: 'right', pressed: createSignalObject(false), icon: mdiFormatAlignRight, label: 'Right' },
+    { id: "left", pressed: createSignalObject(false), icon: mdiFormatAlignLeft, label: "Left" },
+    { id: "center", pressed: createSignalObject(false), icon: mdiFormatAlignCenter, label: "Center" },
+    { id: "right", pressed: createSignalObject(false), icon: mdiFormatAlignRight, label: "Right" },
   ]
 
   const handleToggleChange = (toggleId: string, pressed: boolean) => {
     // Ensure only one alignment is selected at a time
-    toggles.forEach(toggle => {
+    toggles.forEach((toggle) => {
       if (toggle.id !== toggleId) {
         toggle.pressed.set(false)
       }
     })
 
     toastAdd({
-      title: `${toggleId} alignment ${pressed ? 'selected' : 'deselected'}`,
-      variant: toastVariant.info
+      title: `${toggleId} alignment ${pressed ? "selected" : "deselected"}`,
+      variant: toastVariant.info,
     })
   }
 
@@ -101,7 +90,7 @@ function MultipleToggleDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Multiple Toggle (Single Selection)</h2>
       <div class="flex items-center gap-2">
-        {toggles.map(toggle => (
+        {toggles.map((toggle) => (
           <ToggleButton
             pressedSignal={toggle.pressed}
             title={`Align ${toggle.label}`}
@@ -123,21 +112,15 @@ function ToggleWithStateDemo() {
       <h2 class="text-2xl font-bold mb-4">Toggle with Initial State</h2>
       <div class="space-y-4">
         <div class="flex items-center gap-4">
-          <ToggleButton
-            pressedSignal={pressedSignal}
-
-            title="Feature Toggle"
-          >
+          <ToggleButton pressedSignal={pressedSignal} title="Feature Toggle">
             Enable Feature
           </ToggleButton>
-          <span class="text-sm text-muted-foreground">
-            Feature is {pressedSignal.get() ? 'enabled' : 'disabled'}
-          </span>
+          <span class="text-sm text-muted-foreground">Feature is {pressedSignal.get() ? "enabled" : "disabled"}</span>
         </div>
 
         <div class="mt-4 p-4 border rounded-lg bg-gray-50 dark:bg-gray-900/20">
           <h3 class="font-semibold mb-2">Feature Content</h3>
-          <p>This content is {pressedSignal.get() ? 'visible' : 'hidden'} based on the toggle state.</p>
+          <p>This content is {pressedSignal.get() ? "visible" : "hidden"} based on the toggle state.</p>
         </div>
       </div>
     </div>

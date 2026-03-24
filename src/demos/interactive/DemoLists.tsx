@@ -19,11 +19,7 @@ export function DemoLists() {
 }
 
 function BasicBulletLinksDemo() {
-  const urls = [
-    "https://example.com/page1",
-    "https://example.com/page2",
-    "https://example.com/page3",
-  ]
+  const urls = ["https://example.com/page1", "https://example.com/page2", "https://example.com/page3"]
 
   return (
     <div>
@@ -34,11 +30,7 @@ function BasicBulletLinksDemo() {
 }
 
 function BulletLinksWithDisplayDemo() {
-  const urls = [
-    "https://example.com/about",
-    "https://example.com/contact",
-    "https://example.com/services",
-  ]
+  const urls = ["https://example.com/about", "https://example.com/contact", "https://example.com/services"]
   const display = ["About Us", "Contact", "Our Services"]
 
   return (
@@ -50,11 +42,7 @@ function BulletLinksWithDisplayDemo() {
 }
 
 function BulletLinksWithCustomClassesDemo() {
-  const urls = [
-    "https://example.com/docs",
-    "https://example.com/api",
-    "https://example.com/support",
-  ]
+  const urls = ["https://example.com/docs", "https://example.com/api", "https://example.com/support"]
 
   return (
     <div>
@@ -71,10 +59,10 @@ function BulletLinksWithCustomClassesDemo() {
 
 function BulletLinksOObjectDemo() {
   const urlObject = {
-    "Home": "https://example.com/",
-    "Blog": "https://example.com/blog",
-    "Portfolio": "https://example.com/portfolio",
-    "Resume": "https://example.com/resume",
+    Home: "https://example.com/",
+    Blog: "https://example.com/blog",
+    Portfolio: "https://example.com/portfolio",
+    Resume: "https://example.com/resume",
   }
 
   return (
@@ -86,16 +74,12 @@ function BulletLinksOObjectDemo() {
 }
 
 function BulletLinksWithClickDemo() {
-  const urls = [
-    "https://example.com/link1",
-    "https://example.com/link2",
-    "https://example.com/link3",
-  ]
+  const urls = ["https://example.com/link1", "https://example.com/link2", "https://example.com/link3"]
 
   const handleClick = () => {
     toastAdd({
       title: "Link clicked!",
-      variant: toastVariant.info
+      variant: toastVariant.info,
     })
   }
 
@@ -103,9 +87,7 @@ function BulletLinksWithClickDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Bullet Links with Click Handler</h2>
       <BulletLinks urls={urls} onClick={handleClick} />
-      <p class="text-sm text-muted-foreground mt-2">
-        Click any link to trigger a toast notification.
-      </p>
+      <p class="text-sm text-muted-foreground mt-2">Click any link to trigger a toast notification.</p>
     </div>
   )
 }

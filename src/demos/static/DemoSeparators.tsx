@@ -54,9 +54,7 @@ function SeparatorWithTextDemo() {
         </div>
 
         <SeparatorWithText>
-          <span class="px-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-            Continue Reading
-          </span>
+          <span class="px-4 text-sm font-medium text-gray-500 dark:text-gray-400">Continue Reading</span>
         </SeparatorWithText>
 
         <div class="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
@@ -116,7 +114,7 @@ function SeparatorStylesDemo() {
           <h3 class="text-lg font-semibold mb-2">Dotted Separator</h3>
           <div class="space-y-2">
             <div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded">Above</div>
-          <div class="w-full h-0.5 border-t-2 border-dotted border-blue-300 dark:border-blue-600"></div>
+            <div class="w-full h-0.5 border-t-2 border-dotted border-blue-300 dark:border-blue-600"></div>
             <div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded">Below</div>
           </div>
         </div>
@@ -133,19 +131,11 @@ function SeparatorInFormsDemo() {
         <div class="space-y-4">
           <div>
             <label class="block text-sm font-medium mb-1">Personal Information</label>
-            <input
-              type="text"
-              placeholder="Full Name"
-              class="w-full p-2 border rounded-md"
-            />
+            <input type="text" placeholder="Full Name" class="w-full p-2 border rounded-md" />
           </div>
 
           <div>
-            <input
-              type="email"
-              placeholder="Email Address"
-              class="w-full p-2 border rounded-md"
-            />
+            <input type="email" placeholder="Email Address" class="w-full p-2 border rounded-md" />
           </div>
         </div>
 
@@ -154,43 +144,25 @@ function SeparatorInFormsDemo() {
         <div class="space-y-4">
           <div>
             <label class="block text-sm font-medium mb-1">Account Settings</label>
-            <input
-              type="text"
-              placeholder="Username"
-              class="w-full p-2 border rounded-md"
-            />
+            <input type="text" placeholder="Username" class="w-full p-2 border rounded-md" />
           </div>
 
           <div>
-            <input
-              type="password"
-              placeholder="Password"
-              class="w-full p-2 border rounded-md"
-            />
+            <input type="password" placeholder="Password" class="w-full p-2 border rounded-md" />
           </div>
         </div>
 
         <SeparatorWithText>
-          <span class="px-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-            Optional
-          </span>
+          <span class="px-4 text-sm font-medium text-gray-500 dark:text-gray-400">Optional</span>
         </SeparatorWithText>
 
         <div class="space-y-4">
           <div>
-            <input
-              type="text"
-              placeholder="Company (Optional)"
-              class="w-full p-2 border rounded-md"
-            />
+            <input type="text" placeholder="Company (Optional)" class="w-full p-2 border rounded-md" />
           </div>
 
           <div>
-            <input
-              type="tel"
-              placeholder="Phone Number (Optional)"
-              class="w-full p-2 border rounded-md"
-            />
+            <input type="tel" placeholder="Phone Number (Optional)" class="w-full p-2 border rounded-md" />
           </div>
         </div>
 

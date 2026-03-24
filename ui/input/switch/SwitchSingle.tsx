@@ -13,12 +13,7 @@ import { Key } from "@solid-primitives/keyed"
  * https://github.com/radix-ui/primitives/blob/main/packages/react/radio-group/src/Radio.tsx
  */
 export interface SwitchSingleProps
-  extends HasValueSignalString,
-    HasGetOptions,
-    MayHaveValueText,
-    MayHaveId,
-    MayHaveDisabled,
-    MayHaveClass {
+  extends HasValueSignalString, HasGetOptions, MayHaveValueText, MayHaveId, MayHaveDisabled, MayHaveClass {
   texts?: SwitchSingleTexts
 }
 

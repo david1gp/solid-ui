@@ -24,7 +24,8 @@ import { For, mergeProps } from "solid-js"
  * https://github.com/radix-ui/primitives/blob/main/packages/react/checkbox/src/Checkbox.tsx
  */
 export interface SelectMultipleProps
-  extends HasValueSignalStringArray,
+  extends
+    HasValueSignalStringArray,
     HasGetOptions,
     MayHaveValueText,
     MayHaveId,
@@ -131,12 +132,7 @@ function SelectedValue(p: SelectedValueProps) {
 }
 
 interface OptionListProps
-  extends HasValueSignalStringArray,
-    HasGetOptions,
-    MayHaveValueText,
-    MayHaveId,
-    MayHaveInnerClass,
-    MayHaveDisabled {
+  extends HasValueSignalStringArray, HasGetOptions, MayHaveValueText, MayHaveId, MayHaveInnerClass, MayHaveDisabled {
   noItemsClass?: string
   listOptionClass?: string
   texts: SelectMultipleTexts

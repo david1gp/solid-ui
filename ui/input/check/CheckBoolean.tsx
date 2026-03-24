@@ -10,11 +10,7 @@ import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
 import { mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle } from "@mdi/js"
 
 export interface CheckBooleanProps
-  extends MayHaveId,
-    MayHaveButtonVariant,
-    MayHaveClass,
-    MayHaveInnerClass,
-    MayHaveDisabled {
+  extends MayHaveId, MayHaveButtonVariant, MayHaveClass, MayHaveInnerClass, MayHaveDisabled {
   valueSignal: SignalObject<boolean>
   valueText: (value: boolean) => string
   optionClass?: string

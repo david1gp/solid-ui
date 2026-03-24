@@ -1,3 +1,3 @@
 export type GlobalState = {
-  songs: { name: string, rating: number }[];
+  songs: { name: string; rating: number }[]
 }

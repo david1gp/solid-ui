@@ -3,7 +3,6 @@ import { classArr } from "#ui/utils/classArr.js"
 export const classesGridCols2ContentFr = "grid grid-cols-[max-content_1fr]"
 export const classesGridCols3MaxMinFr = "grid grid-cols-[max-content_min-content_1fr]"
 
-
 /**
  * 1280/2 = 640 px = 35.5 rem / col
  */
@@ -14,7 +13,6 @@ export const classesGridCols2lg = classArr("grid grid-cols-1", "lg:grid-cols-2")
  */
 export const classesGridCols2xl = classArr("grid grid-cols-1", "xl:grid-cols-2")
 export const classesGridCols2xl3 = classArr(classesGridCols2xl, "2xl:grid-cols-4", "3xl:grid-cols-6")
-
 
 /**
  * 1024/3 = 341 px = 19rem / col

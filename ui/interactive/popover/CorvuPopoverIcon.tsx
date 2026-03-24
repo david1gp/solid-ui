@@ -14,7 +14,8 @@ import Popover from "@corvu/popover"
 import { type Component, type ComponentProps, splitProps } from "solid-js"
 
 export interface CorvuPopoverIconProps
-  extends Omit<ComponentProps<"button">, "title">,
+  extends
+    Omit<ComponentProps<"button">, "title">,
     ButtonCvaProps,
     HasIcon,
     HasTitle,

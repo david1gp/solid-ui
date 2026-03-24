@@ -1,19 +1,15 @@
 import type { Signal } from "solid-js"
 import { unwrap } from "solid-js/store"
 
-function isCallable<U, T>(
-  value: U | ((prev: T) => U)
-): value is (prev: T) => U {
+function isCallable<U, T>(value: U | ((prev: T) => U)): value is (prev: T) => U {
   return typeof value === "function"
 }
 
 export function createResourceStorage<T>(
   accessor: () => T | undefined,
-  setter: (state: T | undefined) => void
+  setter: (state: T | undefined) => void,
 ): Signal<T | undefined> {
-  const _setter = (
-    newValue: T | undefined | ((prev: T | undefined) => T | undefined)
-  ) => {
+  const _setter = (newValue: T | undefined | ((prev: T | undefined) => T | undefined)) => {
     let updatedValue: T | undefined = undefined
 
     if (isCallable(newValue)) {

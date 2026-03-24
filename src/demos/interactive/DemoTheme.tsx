@@ -26,9 +26,7 @@ function ThemeButtonDemo() {
       <div class="flex items-center gap-4">
         <ThemeButton />
         <ThemeButton showText />
-        <span class="text-sm text-muted-foreground">
-          Current theme: {getThemeName()}
-        </span>
+        <span class="text-sm text-muted-foreground">Current theme: {getThemeName()}</span>
       </div>
     </div>
   )
@@ -53,13 +51,13 @@ function ThemeInfoDemo() {
 }
 
 function ThemeControlsDemo() {
-  const themes: ThemeVariant[] = ['light', 'dark', 'os']
+  const themes: ThemeVariant[] = ["light", "dark", "os"]
 
   const setTheme = (theme: ThemeVariant) => {
     themeSignal.set(theme)
     toastAdd({
       title: `Theme changed to ${getThemeName(theme)}`,
-      variant: toastVariant.info
+      variant: toastVariant.info,
     })
   }
 
@@ -67,7 +65,7 @@ function ThemeControlsDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Theme Controls</h2>
       <div class="flex flex-wrap gap-2">
-        {themes.map(theme => (
+        {themes.map((theme) => (
           <Button
             variant={themeSignal.get() === theme ? buttonVariant.contrast : buttonVariant.outline}
             onClick={() => setTheme(theme)}
@@ -77,9 +75,7 @@ function ThemeControlsDemo() {
         ))}
       </div>
       <div class="mt-4 p-4 border rounded-lg bg-gray-50 dark:bg-gray-900/20">
-        <p class="text-sm text-muted-foreground">
-          Use Alt+S to cycle through themes, or Alt+D to go to demos.
-        </p>
+        <p class="text-sm text-muted-foreground">Use Alt+S to cycle through themes, or Alt+D to go to demos.</p>
       </div>
     </div>
   )
@@ -88,9 +84,13 @@ function ThemeControlsDemo() {
 function getThemeName(theme?: ThemeVariant): string {
   const currentTheme = theme || themeSignal.get()
   switch (currentTheme) {
-    case 'light': return 'Light'
-    case 'dark': return 'Dark'
-    case 'os': return 'Auto'
-    default: return 'Unknown'
+    case "light":
+      return "Light"
+    case "dark":
+      return "Dark"
+    case "os":
+      return "Auto"
+    default:
+      return "Unknown"
   }
 }

@@ -18,7 +18,8 @@ import { mdiClose } from "@mdi/js"
 import { splitProps, type Component, type ComponentProps } from "solid-js"
 
 export interface CorvuDialogIconProps
-  extends Omit<ComponentProps<"button">, "title">,
+  extends
+    Omit<ComponentProps<"button">, "title">,
     ButtonCvaProps,
     HasIcon,
     HasTitle,

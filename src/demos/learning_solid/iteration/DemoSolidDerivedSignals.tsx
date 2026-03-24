@@ -27,8 +27,7 @@ export function DemoSolidDerivedSignals() {
       </ul>
       <button type="button" onClick={() => setShowLastX(SHOW_PER_PAGE)}>
         reset page
-      </button>
-      {" "}
+      </button>{" "}
       <button
         type="button"
         onClick={() => {
@@ -36,8 +35,7 @@ export function DemoSolidDerivedSignals() {
         }}
       >
         more items
-      </button>
-      {" "}
+      </button>{" "}
       <button type="button" onClick={() => setInputItems(ITEMS2)}>
         change input items
       </button>

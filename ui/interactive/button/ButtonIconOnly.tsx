@@ -11,7 +11,8 @@ import { isLoading, type MayHaveIsLoading } from "#ui/utils/MayHaveIsLoading.js"
 import { type Component, type ComponentProps, splitProps } from "solid-js"
 
 export interface ButtonIconOnlyProps
-  extends Omit<ComponentProps<"button">, "title">,
+  extends
+    Omit<ComponentProps<"button">, "title">,
     ButtonCvaProps,
     HasTitle,
     HasIcon,

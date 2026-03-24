@@ -10,7 +10,8 @@ import { type ComponentProps, splitProps } from "solid-js"
  * https://github.com/mui/base-ui/blob/master/packages/react/src/toggle/useToggle.ts
  */
 export interface ToggleButtonProps
-  extends ToggleButtonStateProps,
+  extends
+    ToggleButtonStateProps,
     MayHaveClass,
     MayHaveChildren,
     Omit<MayHaveDisabledAccessor, "disabled">,
