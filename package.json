@@ -2,7 +2,7 @@
   "name": "@adaptive-ds/solid-ui",
   "version": "0.14.0",
   "scripts": {
-    "dev": "bun run rsbuild:dev",
+    "dev": "bun run vite:dev",
     "build": "bun run build:lib",
     "build:site": "bun run vite:build",
     "build:lib": "clear ; rm -rf ./dist ; vite build --config vite.config.lib.ts",
