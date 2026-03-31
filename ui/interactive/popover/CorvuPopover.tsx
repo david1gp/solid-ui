@@ -14,6 +14,9 @@ import type { JSX } from "solid-js"
 export interface CorvuPopoverProps extends MayHaveClass, MayHaveInnerClass, MayHaveChildren, ButtonIcon1Props {
   // buttonProps: ButtonIcon1Props
   buttonChildren?: JSX.Element
+
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export function CorvuPopover(p: CorvuPopoverProps) {
@@ -25,6 +28,8 @@ export function CorvuPopover(p: CorvuPopoverProps) {
         flip: true,
         shift: true,
       }}
+      open={p.open}
+      onOpenChange={p.onOpenChange}
     >
       <Popover.Trigger
         class={buttonCva2(

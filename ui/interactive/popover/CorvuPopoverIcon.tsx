@@ -22,7 +22,10 @@ export interface CorvuPopoverIconProps
     MayHaveClass,
     MayHaveInnerClass,
     MayHaveChildren,
-    MayHaveIsLoading {}
+    MayHaveIsLoading {
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+}
 
 export const CorvuPopoverIcon: Component<CorvuPopoverIconProps> = (p) => {
   const [s, rest] = splitProps(p, [
@@ -40,6 +43,9 @@ export const CorvuPopoverIcon: Component<CorvuPopoverIconProps> = (p) => {
     // popover
     "innerClass",
     "children",
+    // state
+    "open",
+    "onOpenChange",
   ])
 
   return (
@@ -49,6 +55,8 @@ export const CorvuPopoverIcon: Component<CorvuPopoverIconProps> = (p) => {
         flip: true,
         shift: true,
       }}
+      open={s.open}
+      onOpenChange={s.onOpenChange}
     >
       <Popover.Trigger
         class={buttonCvaIconOnly(s.variant, isLoading(p), s.disabled, classesButtonClickAnimation, s.class)}
