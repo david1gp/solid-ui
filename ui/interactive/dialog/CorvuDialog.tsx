@@ -22,13 +22,16 @@ export interface CorvuDialogProps extends MayHaveClass, MayHaveInnerClass, MayHa
   titleClass?: string
   descriptionClass?: string
   texts?: CorcuDialogTexts
+
+  open?:boolean
+  onOpenChange?: ((open: boolean) => void)
 }
 
 export function CorvuDialog(p: CorvuDialogProps) {
   const texts = p.texts ?? corvuDialogTextDefault
 
   return (
-    <Dialog>
+    <Dialog open={p.open} onOpenChange={p.onOpenChange}>
       <Dialog.Trigger
         class={buttonCva2(
           p.variant,
@@ -47,7 +50,7 @@ export function CorvuDialog(p: CorvuDialogProps) {
       <Dialog.Portal>
         <Dialog.Overlay class={classesDialogOverlayMerge()} />
         <Dialog.Content class={classesDialogContentMerge(p.innerClass)}>
-          <header class="flex items-start justify-between mb-4">
+          <header class="flex items-center justify-between gap-2 mb-4">
             <div>
               <Dialog.Label class={classMerge("text-lg font-semibold", p.titleClass)}>{p.title}</Dialog.Label>
               {p.description && (
