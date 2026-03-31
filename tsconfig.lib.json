@@ -2,25 +2,27 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "rootDir": "./ui",
-    "outDir": "./export",
+    "outDir": "./dist",
     "declaration": true,
     "declarationMap": true,
     "noEmit": false,
     "incremental": false,
   },
-  "include": ["ui"],
+  "include": [
+    "ui"
+  ],
   "exclude": [
-    "node_modules",
-    "export",
-    "src",
-    "test",
-    "docs",
-    "public",
+    ".idea",
+    ".vscode",
     "build",
     "dist",
     "out",
     "data",
-    ".idea",
-    ".vscode",
-  ],
+    "docs",
+    "node_modules",
+    "ops",
+    "public",
+    "public-image-versions",
+    "public-images"
+  ]
 }

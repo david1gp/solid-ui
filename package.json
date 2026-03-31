@@ -3,7 +3,7 @@
   "version": "0.15.0",
   "scripts": {
     "dev": "bun run vite:dev",
-    "build": "bun run build:lib",
+    "build": "bun run build:site",
     "build:site": "bun run vite:build",
     "build:lib": "clear ; rm -rf ./dist ; vite build --config vite.config.lib.ts",
     "ts:build": "rm -rf ./export ; tsc -p ./tsconfig.lib.json",

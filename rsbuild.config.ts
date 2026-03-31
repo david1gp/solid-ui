@@ -34,7 +34,7 @@ export default defineConfig({
   ],
   output: {
     distPath: {
-      root: "dist",
+      root: "out",
       html: "",
       js: "assets",
       css: "assets",

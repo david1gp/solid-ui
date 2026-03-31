@@ -14,7 +14,7 @@ export default defineConfig({
     tailwindcss(),
     dts({
       include: ["ui/**/*"],
-      outDir: "dist",
+      outDir: "out",
       // Use your tsconfig.lib.json for proper configuration
       tsconfigPath: "./tsconfig.lib.json",
     }),
