@@ -25,7 +25,7 @@ export function NavDemo(p: DemoNavProps) {
       {...rest}
     >
       <div class={"flex flex-wrap gap-1"}>
-        <LogoImageText logoText="solid-ui" logoTextClass="text-lg font-semibold" class="sm:pl-0" />
+        <LogoImageText logoText="adaptive solid-ui" logoTextClass="text-lg font-semibold" class="sm:pl-0" />
         {/* <LogoImageOnly /> */}
         {s.category && (
           <>
