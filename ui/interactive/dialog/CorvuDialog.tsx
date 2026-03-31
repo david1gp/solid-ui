@@ -23,8 +23,8 @@ export interface CorvuDialogProps extends MayHaveClass, MayHaveInnerClass, MayHa
   descriptionClass?: string
   texts?: CorcuDialogTexts
 
-  open?:boolean
-  onOpenChange?: ((open: boolean) => void)
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export function CorvuDialog(p: CorvuDialogProps) {
