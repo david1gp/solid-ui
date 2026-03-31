@@ -5,7 +5,7 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import type { MayHaveButtonVariant } from "#ui/utils/MayHaveButtonVariant.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { mdiChevronLeft, mdiChevronRight, mdiClose, mdiMenu } from "@mdi/js"
+import { mdiChevronLeft, mdiChevronRight, mdiMenu } from "@mdi/js"
 
 export interface SidebarToggleProps
   extends SidebarState, SidebarToggleClasses, MayHaveChildren, MayHaveClass, MayHaveButtonVariant {
@@ -43,13 +43,13 @@ export function SidebarToggle(p: SidebarToggleProps) {
 }
 
 function getIcon(p: SidebarToggleProps): string {
-  if (p.isMobile) {
-    if (p.openMobile) {
+  if (p.isMobile.get()) {
+    if (p.openMobile.get()) {
       return p.iconMobileOpen ?? mdiMenu
     }
-    return p.iconMobileClose ?? mdiClose
+    return p.iconMobileClose ?? mdiMenu
   }
-  if (p.openDesktop) {
+  if (p.openDesktop.get()) {
     return p.iconDesktopOpen ?? mdiChevronLeft
   }
   return p.iconDesktopClose ?? mdiChevronRight
