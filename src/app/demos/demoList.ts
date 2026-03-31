@@ -1,5 +1,5 @@
-import { lazy } from "solid-js"
 import { type DemoListType } from "#ui/generate_demo_list/DemoListType.js"
+import { lazy } from "solid-js"
 
 const DemoTablePagination2 = lazy(async () => {
   const c = await import("#src/demos/table/DemoTablePagination2.jsx")
@@ -191,6 +191,10 @@ const DemoDetails = lazy(async () => {
   return { default: c.DemoDetails }
 })
 
+const DemoSidebar = lazy(async () => {
+  const c = await import("#src/demos/interactive/DemoSidebar.jsx")
+  return { default: c.DemoSidebar }
+})
 const DemoDialog = lazy(async () => {
   const c = await import("#src/demos/interactive/DemoDialog.jsx")
   return { default: c.DemoDialog }
@@ -231,6 +235,7 @@ export const demoList = {
     DemoToggle: DemoToggle,
     DemoTheme: DemoTheme,
     DemoDetails: DemoDetails,
+    DemoSidebar: DemoSidebar,
     DemoDialog: DemoDialog,
     DemoButtons: DemoButtons,
     DemoPopover: DemoPopover,
