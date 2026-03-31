@@ -26,8 +26,8 @@ export function Sidebar(p: SidebarProps) {
 
   onMount(() => {
     const checkMobile = debounce(
-      () => p.state.isMobile.set(window.innerWidth < (p.defaultWidth ?? 768)),
-      p.debounceMs ?? 200,
+      () => s.state.isMobile.set(window.innerWidth < (s.defaultWidth ?? 768)),
+      s.debounceMs ?? 100,
     )
     checkMobile()
     window.addEventListener("resize", checkMobile)
@@ -36,10 +36,10 @@ export function Sidebar(p: SidebarProps) {
 
   return (
     <>
-      <Show when={!p.state.isMobile.get() && p.state.openDesktop.get()}>{p.children}</Show>
-      <Show when={p.state.isMobile.get()}>
-        <SidebarMobileDrawer {...rest} open={p.state.openMobile}>
-          {p.children}
+      <Show when={!s.state.isMobile.get() && s.state.openDesktop.get()}>{s.children}</Show>
+      <Show when={s.state.isMobile.get()}>
+        <SidebarMobileDrawer {...rest} open={s.state.openMobile}>
+          {s.children}
         </SidebarMobileDrawer>
       </Show>
     </>

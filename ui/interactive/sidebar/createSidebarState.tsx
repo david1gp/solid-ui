@@ -3,7 +3,7 @@ import { createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export function createSidebarState(
   initialOpenDesktop = true,
-  initialOpenMobile = true,
+  initialOpenMobile = false,
   initialIsMobile = false,
 ): SidebarState {
   return {
