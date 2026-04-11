@@ -30,7 +30,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": true,
-    "downlevelIteration": true,
     "moduleDetection": "force",
     "noUncheckedSideEffectImports": true,
     "types": [
