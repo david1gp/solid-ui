@@ -71,6 +71,11 @@ const DemoSelectMultiple = lazy(async () => {
   return { default: c.DemoSelectMultiple }
 })
 
+const DemoSearchBox = lazy(async () => {
+  const c = await import("#src/demos/input/DemoSearchBox.jsx")
+  return { default: c.DemoSearchBox }
+})
+
 const DemoStyles = lazy(async () => {
   const c = await import("#src/demos/static/DemoStyles.jsx")
   return { default: c.DemoStyles }
@@ -227,6 +232,7 @@ export const demoList = {
     DemoCheckbox: DemoCheckbox,
     DemoInputDatalist: DemoInputDatalist,
     DemoSelectMultiple: DemoSelectMultiple,
+    DemoSearchBox: DemoSearchBox,
   },
   interactive: {
     DemoToaster: DemoToaster,
