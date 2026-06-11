@@ -42,6 +42,16 @@ const buttonIconClasses = {
   filledIndigo: classArr(classesTextFillWhite, "dark:text-indigo-100 dark:fill-indigo-100"),
   // outlineRed: classesWhiteWhite,
   filledSky: classesWhiteWhite,
+  // filled gradient colors (always white on colored gradient)
+  filledGreenGradient: classesWhiteWhite,
+  filledYellowGradient: classesWhiteWhite,
+  filledAmberGradient: classesWhiteWhite,
+  filledOrangeGradient: classesWhiteWhite,
+  filledRedGradient: classesWhiteWhite,
+  filledSkyGradient: classesWhiteWhite,
+  filledBlueGradient: classesWhiteWhite,
+  filledBlueGreenGradient: classesWhiteWhite,
+  filledIndigoGradient: classesWhiteWhite,
   // outlined colors
   outlineRed: classArr("text-red-500 fill-red-500 dark:text-red-700 dark:fill-red-700"),
 } as const satisfies Record<ButtonVariant, string>

@@ -23,6 +23,16 @@ export const buttonVariant = {
   filledSky: "filledSky",
   filledBlue: "filledBlue",
   filledIndigo: "filledIndigo",
+  // filled gradient colors
+  filledGreenGradient: "filledGreenGradient",
+  filledYellowGradient: "filledYellowGradient",
+  filledAmberGradient: "filledAmberGradient",
+  filledOrangeGradient: "filledOrangeGradient",
+  filledRedGradient: "filledRedGradient",
+  filledSkyGradient: "filledSkyGradient",
+  filledBlueGradient: "filledBlueGradient",
+  filledBlueGreenGradient: "filledBlueGreenGradient",
+  filledIndigoGradient: "filledIndigoGradient",
   // outlined colors
   outlineRed: "outlineRed",
 } as const
@@ -141,6 +151,73 @@ const variantClasses = {
     "bg-blue-500 dark:bg-blue-800 ", // bg
     "hover:bg-blue-700 dark:hover:bg-blue-600", // bg hover
     "focus:ring-blue-400 dark:focus:ring-blue-400", // focus
+  ),
+  //
+  // filled gradient colors
+  // fancy CTA gradients: two-tone fill, colored shadow, hover deepen
+  //
+  filledGreenGradient: classArr(
+    "text-white", // text
+    "bg-gradient-to-r from-green-500 to-emerald-600", // gradient bg
+    "hover:from-green-600 hover:to-emerald-700", // bg hover
+    "shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all", // shadow
+    "focus:ring-emerald-400 dark:focus:ring-emerald-400", // focus
+  ),
+  filledYellowGradient: classArr(
+    "text-white", // text
+    "bg-gradient-to-r from-yellow-400 to-yellow-700", // gradient bg (pure yellow)
+    "hover:from-yellow-500 hover:to-yellow-800", // bg hover
+    "shadow-lg shadow-yellow-500/25 hover:shadow-yellow-500/40 transition-all", // shadow
+    "focus:ring-yellow-400 dark:focus:ring-yellow-400", // focus
+  ),
+  filledAmberGradient: classArr(
+    "text-white", // text
+    "bg-gradient-to-r from-amber-400 to-amber-700", // gradient bg (pure amber)
+    "hover:from-amber-500 hover:to-amber-800", // bg hover
+    "shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all", // shadow
+    "focus:ring-amber-400 dark:focus:ring-amber-400", // focus
+  ),
+  filledOrangeGradient: classArr(
+    "text-white", // text
+    "bg-gradient-to-r from-orange-400 to-orange-700", // gradient bg (pure orange)
+    "hover:from-orange-500 hover:to-orange-800", // bg hover
+    "shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-all", // shadow
+    "focus:ring-orange-400 dark:focus:ring-orange-400", // focus
+  ),
+  filledRedGradient: classArr(
+    "text-white", // text
+    "bg-gradient-to-r from-red-400 to-red-700", // gradient bg (pure red)
+    "hover:from-red-500 hover:to-red-800", // bg hover
+    "shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transition-all", // shadow
+    "focus:ring-red-400 dark:focus:ring-red-400", // focus
+  ),
+  filledSkyGradient: classArr(
+    "text-white", // text
+    "bg-gradient-to-r from-sky-400 to-sky-700", // gradient bg (pure sky)
+    "hover:from-sky-500 hover:to-sky-800", // bg hover
+    "shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 transition-all", // shadow
+    "focus:ring-sky-400 dark:focus:ring-sky-400", // focus
+  ),
+  filledBlueGradient: classArr(
+    "text-white", // text
+    "bg-gradient-to-r from-blue-400 to-blue-700", // gradient bg (pure blue)
+    "hover:from-blue-500 hover:to-blue-800", // bg hover
+    "shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all", // shadow
+    "focus:ring-blue-400 dark:focus:ring-blue-400", // focus
+  ),
+  filledBlueGreenGradient: classArr(
+    "text-white", // text
+    "bg-gradient-to-r from-blue-600 to-emerald-500", // gradient bg
+    "hover:from-blue-700 hover:to-emerald-600", // bg hover
+    "shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all", // shadow
+    "focus:ring-blue-400 dark:focus:ring-blue-400", // focus
+  ),
+  filledIndigoGradient: classArr(
+    "text-white", // text
+    "bg-gradient-to-r from-indigo-400 to-indigo-700", // gradient bg (pure indigo)
+    "hover:from-indigo-500 hover:to-indigo-800", // bg hover
+    "shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all", // shadow
+    "focus:ring-indigo-400 dark:focus:ring-indigo-400", // focus
   ),
   //
   // outline toast colors
