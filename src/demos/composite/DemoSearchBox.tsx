@@ -1,5 +1,5 @@
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
-import { SearchBox } from "#ui/interactive/searchbox/index.js"
+import { SearchBox } from "#ui/composite/searchbox/index.js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { mdiMapMarker, mdiSort, mdiTag } from "@mdi/js"
 import { createMemo } from "solid-js"

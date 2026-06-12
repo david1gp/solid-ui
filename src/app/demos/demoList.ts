@@ -1,5 +1,5 @@
-import { type DemoListType } from "#ui/generate_demo_list/DemoListType.js"
 import { lazy } from "solid-js"
+import { type DemoListType } from "#ui/generate_demo_list/DemoListType.js"
 
 const DemoTablePagination2 = lazy(async () => {
   const c = await import("#src/demos/table/DemoTablePagination2.jsx")
@@ -69,11 +69,6 @@ const DemoInputDatalist = lazy(async () => {
 const DemoSelectMultiple = lazy(async () => {
   const c = await import("#src/demos/input/DemoSelectMultiple.jsx")
   return { default: c.DemoSelectMultiple }
-})
-
-const DemoSearchBox = lazy(async () => {
-  const c = await import("#src/demos/input/DemoSearchBox.jsx")
-  return { default: c.DemoSearchBox }
 })
 
 const DemoStyles = lazy(async () => {
@@ -166,6 +161,16 @@ const DemoUseSubmission1 = lazy(async () => {
   return { default: c.DemoUseSubmission1 }
 })
 
+const DemoSearchBox = lazy(async () => {
+  const c = await import("#src/demos/composite/DemoSearchBox.jsx")
+  return { default: c.DemoSearchBox }
+})
+
+const DemoCookieBanner = lazy(async () => {
+  const c = await import("#src/demos/composite/DemoCookieBanner.jsx")
+  return { default: c.DemoCookieBanner }
+})
+
 const DemoToaster = lazy(async () => {
   const c = await import("#src/demos/interactive/DemoToaster.jsx")
   return { default: c.DemoToaster }
@@ -200,6 +205,7 @@ const DemoSidebar = lazy(async () => {
   const c = await import("#src/demos/interactive/DemoSidebar.jsx")
   return { default: c.DemoSidebar }
 })
+
 const DemoDialog = lazy(async () => {
   const c = await import("#src/demos/interactive/DemoDialog.jsx")
   return { default: c.DemoDialog }
@@ -221,6 +227,10 @@ const DemoLists = lazy(async () => {
 })
 
 export const demoList = {
+  composite: {
+    DemoSearchBox: DemoSearchBox,
+    DemoCookieBanner: DemoCookieBanner,
+  },
   input: {
     DemoCheckSingle: DemoCheckSingle,
     DemoSwitchSingle: DemoSwitchSingle,
@@ -232,7 +242,6 @@ export const demoList = {
     DemoCheckbox: DemoCheckbox,
     DemoInputDatalist: DemoInputDatalist,
     DemoSelectMultiple: DemoSelectMultiple,
-    DemoSearchBox: DemoSearchBox,
   },
   interactive: {
     DemoToaster: DemoToaster,
