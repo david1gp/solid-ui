@@ -10,9 +10,12 @@ export function DemoSidebar() {
   const state = createSidebarState()
   return (
     <div class="flex">
-      <Sidebar state={state} title="Demo Sidebar">
-        <SidebarContent />
-      </Sidebar>
+      <Sidebar
+        state={state}
+        title="Demo Sidebar"
+        desktopChildren={<SidebarContent />}
+        mobileChildren={<SidebarContent />}
+      />
       <main class="flex h-screen w-full flex-col">
         <header class="flex items-center gap-4 border-b border-sidebar-border bg-sidebar p-2">
           <SidebarToggle openDesktop={state.openDesktop} openMobile={state.openMobile} isMobile={state.isMobile} />
