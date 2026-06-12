@@ -2,7 +2,6 @@ import type { DemoNavDataProps } from "#ui/demo_pages/DemoNavDataProps.js"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
-import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
 import { ThemeButton } from "#ui/interactive/theme/ThemeButton.jsx"
 import { iconGithub } from "#ui/static/icons/iconGithub.js"
 import { iconNpm } from "#ui/static/icons/iconNpm.js"
@@ -11,7 +10,14 @@ import { classMerge } from "#ui/utils/classMerge.js"
 import { objectEntries } from "#utils/obj/objectEntries.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
 import type { ComponentProps } from "solid-js"
-import { splitProps } from "solid-js"
+import { createSignal, lazy, onMount, Show, splitProps } from "solid-js"
+
+// `@corvu/popover` is precompiled to client-only DOM templates (`template()` at
+// module load), so it must stay out of the SSR import graph. Load it via a
+// dynamic import and render it only after mount on the client.
+const CorvuPopoverLazy = lazy(() =>
+  import("#ui/interactive/popover/CorvuPopover.jsx").then((m) => ({ default: m.CorvuPopover })),
+)
 
 export interface DemoNavProps extends DemoNavDataProps, ComponentProps<"nav"> {}
 
@@ -67,10 +73,21 @@ function ComponentPopover(
     .filter(([category, tree]) => category === s.category)
     .flatMap(([category, tree]) => objectKeys(tree).map((compName) => `${s.demoPrefix}/${category}/${compName}`))
   if (!links || links.length <= 0) return null
+  const [mounted, setMounted] = createSignal(false)
+  onMount(() => setMounted(true))
   return (
-    <CorvuPopover variant={buttonVariant.ghost} buttonChildren={s.compName}>
-      <LinkBlock header={s.category} removeUrlPrefix={`${s.demoPrefix}/${s.category}/`} links={links} />
-    </CorvuPopover>
+    <Show
+      when={mounted()}
+      fallback={
+        <LinkButton variant={buttonVariant.ghost} href={`${s.demoPrefix}/${s.category}/${s.compName}`}>
+          {s.compName}
+        </LinkButton>
+      }
+    >
+      <CorvuPopoverLazy variant={buttonVariant.ghost} buttonChildren={s.compName}>
+        <LinkBlock header={s.category} removeUrlPrefix={`${s.demoPrefix}/${s.category}/`} links={links} />
+      </CorvuPopoverLazy>
+    </Show>
   )
 }
 
