@@ -26,6 +26,6 @@ dist.solid-ui.com {
 	header {
 		Routed "astro-dist"
 	}
-	root * /home/david/Coding/adaptive-solid-ui/out
+	root * /home/david/Coding/adaptive-solid-ui/out/client
 	file_server
 }

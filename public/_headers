@@ -3,9 +3,17 @@
 # Syntax based on Netlify: https://docs.netlify.com/routing/headers/
 # 604800 seconds = 1 week
 # 31556952 seconds = 1 year
+# Static-but-mutable: short cache so updates propagate.
 /logo.svg
-  Cache-Control: public, max-age=604800, immutable
+  Cache-Control: public, max-age=604800
+/favicon.ico
+  Cache-Control: public, max-age=604800
+/og-image.jpg
+  Cache-Control: public, max-age=604800
+# Content-hashed assets: cache forever.
 /assets/*
   Cache-Control: public, max-age=31556952, immutable
 /images/*
+  Cache-Control: public, max-age=31556952, immutable
+/fonts/*
   Cache-Control: public, max-age=31556952, immutable
