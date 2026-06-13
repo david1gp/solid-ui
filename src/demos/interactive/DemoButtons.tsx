@@ -8,7 +8,18 @@ import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 import { ToggleButton } from "#ui/interactive/toggle/ToggleButton.jsx"
 import { ToggleButtonIconOnly } from "#ui/interactive/toggle/ToggleButtonIconOnly.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
-import { mdiCodeBraces, mdiCodeJson, mdiHeart, mdiLoading, mdiTestTube, mdiTestTubeEmpty } from "@mdi/js"
+import {
+  mdiBell,
+  mdiCheck,
+  mdiCodeBraces,
+  mdiCodeJson,
+  mdiDownload,
+  mdiHeart,
+  mdiLoading,
+  mdiStar,
+  mdiTestTube,
+  mdiTestTubeEmpty,
+} from "@mdi/js"
 import { createSignal } from "solid-js"
 
 export function DemoButtons() {
@@ -16,28 +27,14 @@ export function DemoButtons() {
     <div class="p-4">
       <h1 class="text-3xl font-bold mb-6">Buttons Demo</h1>
       <div class="space-y-8">
-        <BasicButtonsDemo />
         <ButtonVariantsDemo />
+        <ButtonIconComponentsDemo />
         <ButtonSizesDemo />
         <ButtonIconDemo />
         <ButtonIconOnlyDemo />
         <ButtonIcon1Demo />
         <ButtonStatesDemo />
         <ToggleButtonsDemo />
-      </div>
-    </div>
-  )
-}
-
-function BasicButtonsDemo() {
-  return (
-    <div>
-      <h2 class="text-2xl font-bold mb-4">Basic Buttons</h2>
-      <div class="flex flex-wrap gap-4">
-        <Button>Default Button</Button>
-        <Button variant={buttonVariant.outline}>Outline</Button>
-        <Button variant={buttonVariant.ghost}>Ghost</Button>
-        <Button variant={buttonVariant.link}>Link</Button>
       </div>
     </div>
   )
@@ -58,16 +55,43 @@ function ButtonVariantsDemo() {
   )
 }
 
+function ButtonIconComponentsDemo() {
+  const variants = Object.values(buttonVariant)
+  const icons = [mdiHeart, mdiStar, mdiBell, mdiCheck, mdiDownload]
+
+  return (
+    <div>
+      <h2 class="text-2xl font-bold mb-4">ButtonIcon Components</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {variants.map((variant, i) => (
+          <ButtonIcon icon={icons[i % icons.length]} variant={variant}>
+            {variant}
+          </ButtonIcon>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function ButtonSizesDemo() {
   const sizes = Object.values(buttonSize)
 
   return (
     <div>
       <h2 class="text-2xl font-bold mb-4">Button Sizes</h2>
-      <div class="flex items-center gap-4 flex-wrap">
-        {sizes.map((size) => (
-          <Button size={size}>Size {size}</Button>
-        ))}
+      <div class="space-y-4">
+        <div class="flex items-center gap-4 flex-wrap">
+          {sizes.map((size) => (
+            <Button size={size}>Size {size}</Button>
+          ))}
+        </div>
+        <div class="flex items-center gap-4 flex-wrap">
+          {sizes.map((size) => (
+            <Button size={size} variant={buttonVariant.outline}>
+              Size {size}
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   )
