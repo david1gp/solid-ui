@@ -1,7 +1,7 @@
-import { demoListProd } from "#src/app/demos/demoListProd.js"
+import { demoList } from "#src/app/demos/demoList.js"
 import { NavDemo } from "#src/nav/NavDemo.jsx"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classesGridCols5xl } from "#ui/static/grid/classesGridCols.js"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { classArr } from "#ui/utils/classArr.js"
@@ -14,10 +14,10 @@ const prefix = ""
 
 /** L0 — overview grid of every category and its components. */
 export function DemosOverview() {
-  const categories = objectEntries(demoListProd)
+  const categories = objectEntries(demoList)
   return (
     <LayoutWrapperDemo title={"demos"}>
-      <NavDemo demoList={demoListProd} demoPrefix={prefix} />
+      <NavDemo demoList={demoList} demoPrefix={prefix} />
       <div
         class={classArr(
           "flex flex-col items-center justify-center", // layout
@@ -45,12 +45,12 @@ export function DemosOverview() {
 
 /** L1 — a single category, listing its component demos. */
 export function DemosCategory(props: { category: string }) {
-  const tree = demoListProd[props.category as keyof typeof demoListProd]
+  const tree = demoList[props.category as keyof typeof demoList]
   const links = objectKeys(tree).map((name) => `${prefix}/${props.category}/${name}`)
   const removePrefix = `${prefix}/${props.category}/`
   return (
     <LayoutWrapperDemo title={props.category}>
-      <NavDemo demoList={demoListProd} category={props.category} demoPrefix={prefix} />
+      <NavDemo demoList={demoList} category={props.category} demoPrefix={prefix} />
       <div
         class={classArr(
           "flex flex-col items-center justify-center", // layout
@@ -68,7 +68,7 @@ export function DemosCategory(props: { category: string }) {
 
 /** L2 — a single component demo. */
 export function DemoComponent(props: { category: string; compName: string }) {
-  const tree = demoListProd[props.category as keyof typeof demoListProd]
+  const tree = demoList[props.category as keyof typeof demoList]
   const Comp = tree[props.compName as keyof typeof tree] as () => ReturnType<typeof LayoutWrapperDemo>
   // Each demo is lazy()-imported (see demoList) so it sits in its own chunk.
   // Some demos pull client-only deps that call `template()` at module load —
@@ -82,7 +82,7 @@ export function DemoComponent(props: { category: string; compName: string }) {
   onMount(() => setMounted(true))
   return (
     <LayoutWrapperDemo title={props.compName}>
-      <NavDemo demoList={demoListProd} category={props.category} compName={props.compName} demoPrefix={prefix} />
+      <NavDemo demoList={demoList} category={props.category} compName={props.compName} demoPrefix={prefix} />
       <Show when={mounted()}>
         <Comp />
       </Show>
@@ -94,16 +94,16 @@ export function DemoComponent(props: { category: string; compName: string }) {
 export function DemosNotFound() {
   return (
     <LayoutWrapperDemo>
-      <NavDemo demoList={demoListProd} demoPrefix={prefix} />
+      <NavDemo demoList={demoList} demoPrefix={prefix} />
       <h1 class={"text-xl font-semibold"}>not found</h1>
-      <LinkButton href={prefix || "/"}>back to demos</LinkButton>
+      <LinkButtonInternal to="/">back to demos</LinkButtonInternal>
     </LayoutWrapperDemo>
   )
 }
 
 /** Returns true when `category`/`compName` resolve to a real demo component. */
 export function demoExists(category: string, compName?: string): boolean {
-  const tree = demoListProd[category as keyof typeof demoListProd]
+  const tree = demoList[category as keyof typeof demoList]
   if (!tree) return false
   if (compName === undefined) return true
   return compName in tree

@@ -1,6 +1,6 @@
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
-import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
+import { LinkButtonExternal, LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonIconOnlyExternal, LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { mdiGithub, mdiHome, mdiOpenInNew } from "@mdi/js"
 import { For } from "solid-js"
 
@@ -9,7 +9,7 @@ export function DemoLinks() {
     <div class="p-4">
       <h1 class="text-3xl font-bold mb-6">Links Demo</h1>
       <div class="space-y-8">
-        <BasicLinkButtonDemo />
+        <InternalLinkButtonDemo />
         <LinkButtonVariantsDemo />
         <LinkButtonWithIconsDemo />
         <LinkButtonIconOnlyDemo />
@@ -19,18 +19,19 @@ export function DemoLinks() {
   )
 }
 
-function BasicLinkButtonDemo() {
+/** Internal links — typed `to`, client-side nav + preload (needs a RouterProvider). */
+function InternalLinkButtonDemo() {
   return (
     <div>
-      <h2 class="text-2xl font-bold mb-4">Basic Link Buttons</h2>
+      <h2 class="text-2xl font-bold mb-4">Internal Link Buttons</h2>
       <div class="flex flex-wrap gap-4">
-        <LinkButton href="#home">Home</LinkButton>
-        <LinkButton href="#about" variant={buttonVariant.outline}>
-          About
-        </LinkButton>
-        <LinkButton href="#contact" variant={buttonVariant.contrast}>
-          Contact
-        </LinkButton>
+        <LinkButtonInternal to="/">Home</LinkButtonInternal>
+        <LinkButtonInternal to="/$" params={{ _splat: "interactive/DemoButtons" }} variant={buttonVariant.outline}>
+          Buttons demo (typed splat)
+        </LinkButtonInternal>
+        <LinkButtonInternal to="/$" params={{ _splat: "interactive/DemoLinks" }} variant={buttonVariant.contrast}>
+          Links demo
+        </LinkButtonInternal>
       </div>
     </div>
   )
@@ -45,9 +46,9 @@ function LinkButtonVariantsDemo() {
       <div class="flex flex-wrap gap-4">
         <For each={variants}>
           {(variant) => (
-            <LinkButton href="#variant" variant={variant}>
+            <LinkButtonExternal href="#variant" variant={variant}>
               {variant.charAt(0).toUpperCase() + variant.slice(1)}
-            </LinkButton>
+            </LinkButtonExternal>
           )}
         </For>
       </div>
@@ -60,15 +61,15 @@ function LinkButtonWithIconsDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Link Buttons with Icons</h2>
       <div class="flex flex-wrap gap-4">
-        <LinkButton href="#home" icon={mdiHome}>
+        <LinkButtonInternal to="/" icon={mdiHome}>
           Home
-        </LinkButton>
-        <LinkButton href="#github" icon={mdiGithub} iconRight={mdiOpenInNew}>
+        </LinkButtonInternal>
+        <LinkButtonExternal href="https://github.com" icon={mdiGithub} iconRight={mdiOpenInNew} newTab>
           GitHub
-        </LinkButton>
-        <LinkButton href="#external" iconRight={mdiOpenInNew} newTab>
-          External Link
-        </LinkButton>
+        </LinkButtonExternal>
+        <LinkButtonExternal href="#external" iconRight={mdiOpenInNew}>
+          Hash link
+        </LinkButtonExternal>
       </div>
     </div>
   )
@@ -79,14 +80,19 @@ function LinkButtonIconOnlyDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Icon-Only Link Buttons</h2>
       <div class="flex gap-4">
-        <LinkButtonIconOnly href="#home" icon={mdiHome} title="Home" aria-label="Go to home page" />
-        <LinkButtonIconOnly href="#github" icon={mdiGithub} title="GitHub" variant={buttonVariant.contrast} newTab />
-        <LinkButtonIconOnly
+        <LinkButtonIconOnlyInternal to="/" icon={mdiHome} title="Home" aria-label="Go to home page" />
+        <LinkButtonIconOnlyExternal
+          href="https://github.com"
+          icon={mdiGithub}
+          title="GitHub"
+          variant={buttonVariant.contrast}
+          newTab
+        />
+        <LinkButtonIconOnlyExternal
           href="#external"
           icon={mdiOpenInNew}
           title="External Link"
           variant={buttonVariant.outline}
-          newTab
         />
       </div>
     </div>
@@ -99,16 +105,20 @@ function ExternalLinksDemo() {
       <h2 class="text-2xl font-bold mb-4">External Links</h2>
       <div class="space-y-4">
         <div class="flex flex-wrap gap-4">
-          <LinkButton href="https://example.com" newTab>
+          <LinkButtonExternal href="https://example.com" newTab>
             External Link
-          </LinkButton>
-          <LinkButton href="https://github.com" icon={mdiGithub} newTab>
+          </LinkButtonExternal>
+          <LinkButtonExternal href="https://github.com" icon={mdiGithub} newTab>
             GitHub (New Tab)
-          </LinkButton>
+          </LinkButtonExternal>
         </div>
         <div class="text-sm text-muted-foreground">
           <p>
-            Links with <code>newTab=true</code> open in a new tab/window.
+            Internal links use a typed <code>to</code> for client-side navigation and preloading.
+          </p>
+          <p>
+            External links are plain anchors with <code>href</code>; <code>newTab</code> opens a new tab/window with{" "}
+            <code>rel="noopener noreferrer"</code>.
           </p>
           <p>
             Icon-only links should have proper <code>title</code> and <code>aria-label</code> attributes for

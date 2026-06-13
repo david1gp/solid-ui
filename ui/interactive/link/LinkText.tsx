@@ -1,14 +1,14 @@
 import { classesTextLink } from "#ui/classes/classesTextLink.js"
 import type { LinkTextProps } from "#ui/interactive/link/LinkTextProps.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
+import { createLink } from "@tanstack/solid-router"
 import { splitProps } from "solid-js"
 
-/** Inline anchor styled as an underlined text link. */
-export function LinkText(p: LinkTextProps) {
-  const [s, rest] = splitProps(p, ["class", "href"])
+/** Shared styled inline text-link anchor. */
+function TextAnchor(p: LinkTextProps) {
+  const [s, rest] = splitProps(p, ["class"])
   return (
     <a
-      href={s.href}
       class={classMerge(
         classesTextLink,
         "no-underline hover:underline", // underline
@@ -18,4 +18,12 @@ export function LinkText(p: LinkTextProps) {
       {...rest}
     />
   )
+}
+
+/** Internal text link — typed `to`, client-side nav + preload. Needs a RouterProvider. */
+export const LinkTextInternal = createLink(TextAnchor)
+
+/** External text link — plain `<a>` for external/runtime/`mailto:`/`#hash` URLs. */
+export function LinkTextExternal(p: LinkTextProps & { href: string }) {
+  return <TextAnchor {...p} />
 }

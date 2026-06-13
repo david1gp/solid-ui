@@ -88,6 +88,23 @@ function MyComponent() {
 }
 ```
 
+## Links
+
+Each link primitive ships as **two explicit variants** so every call site is fully type-safe — there is no bare `LinkButton`/`LinkText`/`LinkButtonIconOnly`:
+
+- **`*Internal`** — a typed TanStack Router `Link` (via `createLink`). `to` is **required** and checked against your route tree, and dynamic-route `params` are **enforced**. Gives client-side navigation, preload, view transitions, and active state. Requires a `RouterProvider` in scope — never render it on a non-routed surface (Storybook, SSR email). Since the library is consumed shadcn-style, your project's generated `routeTree.gen` supplies the typed `to`.
+- **`*External`** — a plain styled `<a>` with a **required** `href`, no router dependency. Use it for external URLs, `mailto:`/`tel:`, `#hash`, or any runtime-built string.
+
+`newTab` sets `target="_blank"` + `rel="noopener noreferrer"`.
+
+The variants exist for `LinkButton`, `LinkButtonIconOnly`, and `LinkText` (e.g. `LinkButtonInternal` / `LinkButtonExternal`).
+
+```tsx
+<LinkButtonInternal to="/about">About</LinkButtonInternal>
+<LinkButtonInternal to="/$" params={{ _splat: "interactive/DemoButtons" }}>Demo</LinkButtonInternal>
+<LinkButtonExternal href="https://github.com/..." newTab>GitHub</LinkButtonExternal>
+```
+
 ## Components
 
 The library includes a variety of UI components organized by category:

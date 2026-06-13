@@ -1,7 +1,4 @@
 import type { ComponentProps } from "solid-js"
 
-export interface CustomLinkTextProps {
-  href: string
-}
-
-export interface LinkTextProps extends CustomLinkTextProps, Omit<ComponentProps<"a">, "href"> {}
+/** Props for the styled anchor wrapped by `createLink` to build `LinkText`. */
+export type LinkTextProps = ComponentProps<"a">

@@ -1,7 +1,7 @@
 import type { DemoNavDataProps } from "#ui/demo_pages/DemoNavDataProps.js"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal, LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { ThemeButton } from "#ui/interactive/theme/ThemeButton.jsx"
 import { iconGithub } from "#ui/static/icons/iconGithub.js"
 import { iconNpm } from "#ui/static/icons/iconNpm.js"
@@ -36,9 +36,13 @@ export function NavDemo(p: DemoNavProps) {
         {s.category && (
           <>
             <NavSeparatingSlash />
-            <LinkButton variant={buttonVariant.ghost} href={`${s.demoPrefix}/${s.category}/`}>
+            <LinkButtonInternal
+              variant={buttonVariant.ghost}
+              to="/$"
+              params={{ _splat: `${s.demoPrefix}/${s.category}/`.replace(/^\//, "") }}
+            >
               {s.category}
-            </LinkButton>
+            </LinkButtonInternal>
             {s.compName && (
               <>
                 <NavSeparatingSlash />
@@ -54,12 +58,19 @@ export function NavDemo(p: DemoNavProps) {
         )}
       </div>
 
-      <LinkButton variant={buttonVariant.ghost} icon={iconGithub} href={githubUrl} title="Github">
+      <LinkButtonExternal variant={buttonVariant.ghost} icon={iconGithub} href={githubUrl} title="Github" newTab>
         Code
-      </LinkButton>
-      <LinkButton variant={buttonVariant.ghost} icon={iconNpm} iconClass="size-8" href={npmUrl} title="NPM">
+      </LinkButtonExternal>
+      <LinkButtonExternal
+        variant={buttonVariant.ghost}
+        icon={iconNpm}
+        iconClass="size-8"
+        href={npmUrl}
+        title="NPM"
+        newTab
+      >
         Package
-      </LinkButton>
+      </LinkButtonExternal>
       <ThemeButton showText={true} class="rounded-md sm:pr-0" />
     </nav>
   )
@@ -79,9 +90,13 @@ function ComponentPopover(
     <Show
       when={mounted()}
       fallback={
-        <LinkButton variant={buttonVariant.ghost} href={`${s.demoPrefix}/${s.category}/${s.compName}`}>
+        <LinkButtonInternal
+          variant={buttonVariant.ghost}
+          to="/$"
+          params={{ _splat: `${s.demoPrefix}/${s.category}/${s.compName}`.replace(/^\//, "") }}
+        >
           {s.compName}
-        </LinkButton>
+        </LinkButtonInternal>
       }
     >
       <CorvuPopoverLazy variant={buttonVariant.ghost} buttonChildren={s.compName}>

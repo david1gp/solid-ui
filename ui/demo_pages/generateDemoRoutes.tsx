@@ -3,7 +3,7 @@ import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { pathDemos } from "#ui/demo_pages/pathDemos.js"
 import type { RouteObject } from "#ui/demo_pages/RouteConfig.js"
 import type { DemoListType } from "#ui/generate_demo_list/DemoListType.js"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classesGridCols5xl } from "#ui/static/grid/classesGridCols.js"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { classArr } from "#ui/utils/classArr.js"
@@ -154,7 +154,7 @@ function getDemos404(
           {/*<DemoPageList />*/}
           <Nav demoList={demoList} demoPrefix={prefix} />
           <h1 class={"text-xl font-semibold"}>not found</h1>
-          <LinkButton href={prefix}>back to demos</LinkButton>
+          <LinkButtonExternal href={prefix}>back to demos</LinkButtonExternal>
         </LayoutWrapperDemo>
       ),
     },

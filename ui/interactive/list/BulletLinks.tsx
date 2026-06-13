@@ -1,4 +1,4 @@
-import { LinkText } from "#ui/interactive/link/LinkText.jsx"
+import { LinkTextExternal } from "#ui/interactive/link/LinkText.jsx"
 import { BlueBulletPoint } from "#ui/static/lists/BlueBulletPoint.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
 
@@ -21,9 +21,9 @@ export function BulletLinks(p: BulletLinksProps) {
         return (
           <div class={classMerge("flex flex-row flex-nowrap content-center", p.itemClass)}>
             <BlueBulletPoint class={p.bulletClass} />
-            <LinkText href={url} class={classMerge(p.linkClass)} onClick={p.onClick}>
+            <LinkTextExternal href={url} class={classMerge(p.linkClass)} onClick={p.onClick}>
               {displayAs}
-            </LinkText>
+            </LinkTextExternal>
           </div>
         )
       })}

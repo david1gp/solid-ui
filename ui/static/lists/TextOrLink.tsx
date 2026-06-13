@@ -1,4 +1,4 @@
-import { LinkText } from "#ui/interactive/link/LinkText.jsx"
+import { LinkTextExternal } from "#ui/interactive/link/LinkText.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { classMerge } from "#ui/utils/classMerge.js"
 import { Show } from "solid-js"
@@ -13,7 +13,7 @@ export function TextOrLink(p: TextOrLinkProps) {
 
   return (
     <Show when={isLink()} fallback={<p class={classMerge(p.class)}>{p.text}</p>}>
-      <LinkText href={p.text}>{p.text}</LinkText>
+      <LinkTextExternal href={p.text}>{p.text}</LinkTextExternal>
     </Show>
   )
 }
