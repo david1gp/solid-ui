@@ -14,7 +14,7 @@ export default defineConfig({
     tailwindcss(),
     dts({
       include: ["ui/**/*"],
-      outDir: "out",
+      outDirs: ["out"],
       // Use your tsconfig.lib.json for proper configuration
       tsconfigPath: "./tsconfig.lib.json",
     }),
@@ -44,7 +44,7 @@ export default defineConfig({
         "@mdi/js",
         "@solid-primitives/keyed",
         "@solid-primitives/scheduled",
-        "@solidjs/router",
+        "@tanstack/solid-router",
         "clsx",
         "dayjs",
         "tailwind-merge",

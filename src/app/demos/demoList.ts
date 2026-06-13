@@ -116,46 +116,6 @@ const DemoBadges = lazy(async () => {
   return { default: c.DemoBadges }
 })
 
-const DemoSolidComparingForVsIndex = lazy(async () => {
-  const c = await import("#src/demos/learning_solid/iteration/DemoSolidComparingForVsIndex.jsx")
-  return { default: c.DemoSolidComparingForVsIndex }
-})
-
-const DemoSolidDerivedSignals = lazy(async () => {
-  const c = await import("#src/demos/learning_solid/iteration/DemoSolidDerivedSignals.jsx")
-  return { default: c.DemoSolidDerivedSignals }
-})
-
-const DemoAsync1 = lazy(async () => {
-  const c = await import("#src/demos/learning_solid/async/DemoAsync1.jsx")
-  return { default: c.DemoAsync1 }
-})
-
-const DemoSolidTodoApp = lazy(async () => {
-  const c = await import("#src/demos/learning_solid/todo/DemoSolidTodoApp.jsx")
-  return { default: c.DemoSolidTodoApp }
-})
-
-const DemoSolidTodoApp2Store = lazy(async () => {
-  const c = await import("#src/demos/learning_solid/todo/DemoSolidTodoApp2Store.jsx")
-  return { default: c.DemoSolidTodoApp2Store }
-})
-
-const DemoSolidGlobalResourceApp = lazy(async () => {
-  const c = await import("#src/demos/learning_solid/global_resource/DemoSolidGlobalResourceApp.jsx")
-  return { default: c.DemoSolidGlobalResourceApp }
-})
-
-const DemoUseSubmission2 = lazy(async () => {
-  const c = await import("#src/demos/learning_solid/use_submission/DemoUseSubmission2.jsx")
-  return { default: c.DemoUseSubmission2 }
-})
-
-const DemoUseSubmission1 = lazy(async () => {
-  const c = await import("#src/demos/learning_solid/use_submission/DemoUseSubmission1.jsx")
-  return { default: c.DemoUseSubmission1 }
-})
-
 const DemoFeatureGridSection = lazy(async () => {
   const c = await import("#src/demos/composite/DemoFeatureGridSection.jsx")
   return { default: c.DemoFeatureGridSection }
@@ -256,16 +216,6 @@ export const demoList = {
     DemoButtons: DemoButtons,
     DemoPopover: DemoPopover,
     DemoLists: DemoLists,
-  },
-  learning_solid: {
-    DemoSolidComparingForVsIndex: DemoSolidComparingForVsIndex,
-    DemoSolidDerivedSignals: DemoSolidDerivedSignals,
-    DemoAsync1: DemoAsync1,
-    DemoSolidTodoApp: DemoSolidTodoApp,
-    DemoSolidTodoApp2Store: DemoSolidTodoApp2Store,
-    DemoSolidGlobalResourceApp: DemoSolidGlobalResourceApp,
-    DemoUseSubmission2: DemoUseSubmission2,
-    DemoUseSubmission1: DemoUseSubmission1,
   },
   static: {
     DemoStyles: DemoStyles,

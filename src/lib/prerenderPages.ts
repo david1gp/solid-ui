@@ -15,10 +15,6 @@ import { fileURLToPath } from "node:url"
 const here = dirname(fileURLToPath(import.meta.url))
 const demosDir = join(here, "..", "demos")
 
-// `learning_solid` demos depend on @solidjs/router internals and are dev-only
-// (see `demoListProd.ts`), so they are never prerendered.
-const devOnlyCategories = new Set(["learning_solid"])
-
 function findDemoNames(dir: string): string[] {
   const names: string[] = []
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -46,7 +42,7 @@ export function getPrerenderPages(): PrerenderPage[] {
   const pages: PrerenderPage[] = [page("/", 1, "weekly")]
 
   const categories = readdirSync(demosDir, { withFileTypes: true })
-    .filter((e) => e.isDirectory() && !devOnlyCategories.has(e.name))
+    .filter((e) => e.isDirectory())
     .map((e) => e.name)
     .sort()
 
