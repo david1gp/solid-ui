@@ -1,4 +1,4 @@
-import { FeatureGridSection } from "#ui/static/grid/FeatureGridSection.jsx"
+import { FeatureGridSection } from "#ui/composite/feature_grid/FeatureGridSection.jsx"
 import { technicalFeatures } from "./technicalFeatures.js"
 
 export function DemoFeatureGridSection() {

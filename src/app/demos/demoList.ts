@@ -106,11 +106,6 @@ const DemoLoaders = lazy(async () => {
   return { default: c.DemoLoaders }
 })
 
-const DemoFeatureGridSection = lazy(async () => {
-  const c = await import("#src/demos/static/DemoFeatureGridSection.jsx")
-  return { default: c.DemoFeatureGridSection }
-})
-
 const DemoTimeline = lazy(async () => {
   const c = await import("#src/demos/static/DemoTimeline.jsx")
   return { default: c.DemoTimeline }
@@ -159,6 +154,11 @@ const DemoUseSubmission2 = lazy(async () => {
 const DemoUseSubmission1 = lazy(async () => {
   const c = await import("#src/demos/learning_solid/use_submission/DemoUseSubmission1.jsx")
   return { default: c.DemoUseSubmission1 }
+})
+
+const DemoFeatureGridSection = lazy(async () => {
+  const c = await import("#src/demos/composite/DemoFeatureGridSection.jsx")
+  return { default: c.DemoFeatureGridSection }
 })
 
 const DemoSearchBox = lazy(async () => {
@@ -228,6 +228,7 @@ const DemoLists = lazy(async () => {
 
 export const demoList = {
   composite: {
+    DemoFeatureGridSection: DemoFeatureGridSection,
     DemoSearchBox: DemoSearchBox,
     DemoCookieBanner: DemoCookieBanner,
   },
@@ -274,7 +275,6 @@ export const demoList = {
     DemoCard: DemoCard,
     DemoSeparators: DemoSeparators,
     DemoLoaders: DemoLoaders,
-    DemoFeatureGridSection: DemoFeatureGridSection,
     DemoTimeline: DemoTimeline,
     DemoBadges: DemoBadges,
   },

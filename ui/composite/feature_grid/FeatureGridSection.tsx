@@ -1,13 +1,8 @@
+import type { GridFeatureType } from "#ui/static/grid/GridFeatureType.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import { classMerge } from "#ui/utils/classMerge.js"
 import { splitProps, type ComponentProps } from "solid-js"
-
-export type GridFeatureType = {
-  icon: string
-  title: string
-  description: string
-}
 
 export interface FeatureGridSectionProps extends ComponentProps<"section"> {
   id: string
@@ -23,6 +18,7 @@ export interface FeatureGridSectionProps extends ComponentProps<"section"> {
   cardClass?: string
 }
 
+/** Section displaying features in a responsive icon grid. */
 export function FeatureGridSection(p: FeatureGridSectionProps) {
   const [s, rest] = splitProps(p, [
     "id",
