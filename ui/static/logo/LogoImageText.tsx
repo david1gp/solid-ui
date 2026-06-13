@@ -13,6 +13,7 @@ export interface LogoImageTextProps extends MayHaveClass {
   variant?: ButtonVariant
 }
 
+/** Clickable logo image link with accompanying text. */
 export function LogoImageText(p: LogoImageTextProps) {
   return (
     <LinkButton

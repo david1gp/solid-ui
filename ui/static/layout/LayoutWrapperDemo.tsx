@@ -6,6 +6,7 @@ import { createEffect } from "solid-js"
 
 export interface LayoutWrapperDemoProps extends MayHaveChildren, MayHaveTitle {}
 
+/** Demo layout wrapper with toaster and Tailwind indicator. */
 export function LayoutWrapperDemo(p: LayoutWrapperDemoProps) {
   createEffect(() => {
     if (!p.title) return

@@ -4,6 +4,7 @@ import { type ComponentProps, type JSX, splitProps } from "solid-js"
 
 export interface InputSProps extends HasValueSignalString, ComponentProps<"input"> {}
 
+/** Text input bound to a string signal. */
 export function InputS(p: InputSProps) {
   const [s, rest] = splitProps(p, ["valueSignal", "value", "onInput"])
   const onInputLocal: JSX.InputEventHandlerUnion<HTMLInputElement, InputEvent> = (e) => {

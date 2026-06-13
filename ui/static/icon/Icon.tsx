@@ -7,6 +7,7 @@ export interface IconProps extends MayHaveClass {
   color?: string | null
 }
 
+/** Renders an SVG icon from an MDI path string. */
 export function Icon(p: IconProps) {
   return (
     <svg

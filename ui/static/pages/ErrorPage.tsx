@@ -9,6 +9,7 @@ import { mdiAlertBoxOutline } from "@mdi/js"
 
 export interface ErrorPageProps extends HasTitle, MayHaveSubtitle, MayHaveIcon, MayHaveClass, MayHaveChildren {}
 
+/** Centered error page with icon, title, and subtitle. */
 export function ErrorPage(p: ErrorPageProps) {
   return (
     <div

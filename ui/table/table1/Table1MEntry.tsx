@@ -9,6 +9,7 @@ export type Table1aMEntryProps<T> = {
   mobileClasses?: MobileTableClassNames
 }
 
+/** Renders one table1 mobile card with its field rows. */
 export function Table1MEntry<T>(p: Table1aMEntryProps<T>) {
   return (
     <div class={classMerge("flex flex-col flex-wrap gap-2", p.mobileClasses?.entry)}>

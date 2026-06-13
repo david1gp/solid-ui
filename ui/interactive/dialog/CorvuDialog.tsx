@@ -27,6 +27,7 @@ export interface CorvuDialogProps extends MayHaveClass, MayHaveInnerClass, MayHa
   onOpenChange?: (open: boolean) => void
 }
 
+/** Modal dialog with titled header and trigger button. */
 export function CorvuDialog(p: CorvuDialogProps) {
   const texts = p.texts ?? corvuDialogTextDefault
 

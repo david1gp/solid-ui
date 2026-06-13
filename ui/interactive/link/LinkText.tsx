@@ -3,6 +3,7 @@ import type { LinkTextProps } from "#ui/interactive/link/LinkTextProps.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
 import { splitProps } from "solid-js"
 
+/** Inline anchor styled as an underlined text link. */
 export function LinkText(p: LinkTextProps) {
   const [s, rest] = splitProps(p, ["class", "href"])
   return (

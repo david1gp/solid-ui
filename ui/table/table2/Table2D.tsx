@@ -17,6 +17,7 @@ export interface SortableTableDProps<T> extends Table2Signals<T>, MayHaveClass {
 // table
 //
 
+/** Renders table2 sortable desktop full-table layout. */
 export function Table2D<T>(p: SortableTableDProps<T>) {
   // const l = useAtomValue(languageAtom)
   // const columns = useAtomValue(atoms.columns)

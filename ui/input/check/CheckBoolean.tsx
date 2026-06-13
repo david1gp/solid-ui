@@ -16,6 +16,7 @@ export interface CheckBooleanProps
   optionClass?: string
 }
 
+/** Two-button boolean selector showing both options side by side. */
 export function CheckBoolean(p: CheckBooleanProps) {
   const currentValue = () => p.valueSignal.get()
 

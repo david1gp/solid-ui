@@ -21,6 +21,7 @@ export interface ButtonIconProps extends ComponentProps<"button">, ButtonCvaProp
   validationIcon?: string
 }
 
+/** Button with icon, loading, and validation states. */
 export const ButtonIcon: Component<ButtonIconProps> = (p) => {
   const [s, rest] = splitProps(p, [
     // icon

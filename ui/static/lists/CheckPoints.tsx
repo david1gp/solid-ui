@@ -11,6 +11,7 @@ export interface CheckPointsProps extends MayHaveClass {
   classBullet?: string
 }
 
+/** List of text items with green checkmarks. */
 export function CheckPoints(p: CheckPointsProps) {
   return (
     <For each={p.points}>

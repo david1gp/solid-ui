@@ -6,6 +6,7 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import { isLoading } from "#ui/utils/MayHaveIsLoading.js"
 import { splitProps } from "solid-js"
 
+/** Anchor link styled as an icon-only button. */
 export function LinkButtonIconOnly(p: LinkButtonProps) {
   const [s, rest] = splitProps(p, [
     "class",

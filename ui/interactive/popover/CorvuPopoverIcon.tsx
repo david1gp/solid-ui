@@ -27,6 +27,7 @@ export interface CorvuPopoverIconProps
   onOpenChange?: (open: boolean) => void
 }
 
+/** Popover anchored to an icon-only trigger button. */
 export const CorvuPopoverIcon: Component<CorvuPopoverIconProps> = (p) => {
   const [s, rest] = splitProps(p, [
     // button

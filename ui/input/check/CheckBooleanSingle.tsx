@@ -16,6 +16,7 @@ export interface CheckBooleanSingleProps
   optionClass?: string
 }
 
+/** Single toggle button bound to a boolean signal. */
 export function CheckBooleanSingle(p: CheckBooleanSingleProps) {
   const label = () => p.valueText(p.valueSignal.get())
   const isSelected = () => p.valueSignal.get()

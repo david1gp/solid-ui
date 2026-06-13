@@ -47,6 +47,7 @@ export interface CookieBannerProps {
   onConsentChange?: (preferences: ConsentPreferences) => void
 }
 
+/** Cookie consent banner gating Google tracking. */
 export function CookieBanner(p: CookieBannerProps) {
   const [internalVisible, setInternalVisible] = createSignal(false)
   const [internalShowSettings, setInternalShowSettings] = createSignal(false)

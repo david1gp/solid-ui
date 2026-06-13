@@ -3,6 +3,7 @@ import { classMerge } from "#ui/utils/classMerge.js"
 import styles from "./LoaderSpin4Square.module.css"
 
 /**
+ * Loading spinner with four squares rotating in a ring.
  * https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje
  */
 export function LoaderSpin4Square(p: MayHaveClass) {

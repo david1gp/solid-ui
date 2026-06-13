@@ -24,6 +24,7 @@ const classesPageWrapperInner = classArr(
   "p-8", // spacing
 )
 
+/** Centered success page with icon, title, and subtitle. */
 export function SuccessPage(p: SuccessPageProps) {
   return (
     <div class={classMerge(classesPageWrapper, p.class)}>

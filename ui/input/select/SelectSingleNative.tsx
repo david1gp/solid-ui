@@ -25,6 +25,7 @@ export interface SelectSingleNativeProps
   texts?: SelectSingleNativeTexts
 }
 
+/** Native dropdown selecting a single signal-bound value. */
 export function SelectSingleNative(p: SelectSingleNativeProps) {
   const texts = p.texts ?? selectSingleNativeTextDefault
 

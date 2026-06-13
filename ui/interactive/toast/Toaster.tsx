@@ -8,6 +8,7 @@ import type { JSXElement } from "solid-js"
 // const log = true
 const log = false
 /**
+ * Renders queued toast notifications; mount once near the app root.
  * radix-ui
  * - demo - https://www.radix-ui.com/primitives/docs/components/toast
  * - src - https://github.com/radix-ui/primitives/blob/main/packages/react/toast/src/Toast.tsx

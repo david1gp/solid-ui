@@ -7,6 +7,7 @@ export interface SidebarMobileDrawerProps extends Omit<CorvuDialogProps, "open" 
   open: SignalObject<boolean>
 }
 
+/** Mobile sidebar rendered as a dialog drawer. */
 export function SidebarMobileDrawer(p: SidebarMobileDrawerProps) {
   const [s, rest] = splitProps(p, ["open", "class"])
   return (

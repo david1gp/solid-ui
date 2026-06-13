@@ -7,6 +7,7 @@ export interface PageWrapperProps extends MayHaveChildren, MayHaveClass {
   innerClass?: string
 }
 
+/** Full-height page container with centered inner content. */
 export function PageWrapper(p: PageWrapperProps) {
   return (
     <div class={classMerge("min-h-dvh w-full", classesBgGray, p.class)}>

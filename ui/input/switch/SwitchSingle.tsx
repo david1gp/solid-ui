@@ -21,6 +21,7 @@ export type SwitchSingleTexts = {
   noEntries: string
 }
 
+/** Segmented radio-group switch selecting one value. */
 export function SwitchSingle(p: SwitchSingleProps) {
   const filled = true
   const texts =

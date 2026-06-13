@@ -1,6 +1,7 @@
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { classMerge } from "#ui/utils/classMerge.js"
 
+/** Google "G" multicolor brand logo icon. */
 export function SvgIconGoogle(p: MayHaveClass) {
   return (
     <svg viewBox="0 0 24 24" class={classMerge("w-5 h-5 mr-2", p.class)}>

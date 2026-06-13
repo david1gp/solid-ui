@@ -10,6 +10,7 @@ export interface SortableTableMProps<T> extends Table2Signals<T>, MayHaveClass {
   mobileClasses?: MobileTableClassNames
 }
 
+/** Renders table2 sortable mobile stacked-card layout. */
 export function Table2M<T>(p: SortableTableMProps<T>) {
   return (
     <div class={classMerge("flex flex-col flex-wrap w-full gap-4", p.class, p.mobileClasses?.class)}>

@@ -14,6 +14,7 @@ export interface DetailsProps extends MayHaveClass, MayHaveIcon, MayHaveTitle, M
   summaryEl?: JSXElement
 }
 
+/** Collapsible disclosure panel with title and chevron. */
 export function Details(p: DetailsProps) {
   return (
     <details

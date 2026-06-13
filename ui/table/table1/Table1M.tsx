@@ -9,6 +9,7 @@ export interface Table1aMProps<T> extends Table1Data<T>, MayHaveClass {
   mobileClasses?: MobileTableClassNames
 }
 
+/** Renders table1 mobile stacked-card layout. */
 export function Table1M<T>(p: Table1aMProps<T>) {
   return (
     <div class={classMerge("flex flex-col flex-wrap w-full gap-4", p.class, p.mobileClasses?.class)}>

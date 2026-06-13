@@ -6,6 +6,7 @@ export interface TextAreaSProps extends ComponentProps<"textarea"> {
   valueSignal: SignalObject<string>
 }
 
+/** Textarea bound to a string signal. */
 export function TextareaS(p: TextAreaSProps) {
   const [s, rest] = splitProps(p, ["valueSignal", "value", "onInput"])
   const onInputLocal: JSX.InputEventHandlerUnion<HTMLTextAreaElement, InputEvent> = (e) => {

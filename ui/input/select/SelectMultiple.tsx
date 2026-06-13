@@ -42,6 +42,7 @@ export interface SelectMultipleProps
   texts?: SelectMultipleTexts
 }
 
+/** Popover multi-select showing chosen values as removable chips. */
 export function SelectMultiple(p: SelectMultipleProps) {
   const texts = p.texts ?? selectMultipleTextDefault
 

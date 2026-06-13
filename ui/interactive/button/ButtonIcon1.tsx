@@ -16,6 +16,7 @@ export interface ButtonIcon1Props extends ComponentProps<"button">, ButtonCvaPro
   isDisabled?: Accessor<boolean>
 }
 
+/** Button with optional left and right icons. */
 export const ButtonIcon1: Component<ButtonIcon1Props> = (p) => {
   const [s, rest] = splitProps(p, [
     // generic

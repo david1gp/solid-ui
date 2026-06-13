@@ -11,6 +11,7 @@ export interface BlackBulletPointsProps extends MayHaveClass {
   classBullet?: string
 }
 
+/** List of text items with black bullets. */
 export function BlackBulletPoints(p: BlackBulletPointsProps) {
   return (
     <For each={p.points}>

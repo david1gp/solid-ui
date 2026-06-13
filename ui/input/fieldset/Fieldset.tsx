@@ -11,6 +11,7 @@ export interface FieldsetProps extends MayHaveChildren, MayHaveTitle, MayHaveSub
   titleChildren?: JSXElement
 }
 
+/** Fieldset grouping inputs under a titled legend. */
 export const Fieldset: Component<FieldsetProps> = (p) => {
   const [s, rest] = splitProps(p, ["children", "title", "titleClass", "titleChildren", "subtitleClass", "class"])
 

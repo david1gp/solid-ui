@@ -3,6 +3,7 @@ import { type ComponentProps, splitProps } from "solid-js"
 
 export interface BlackBulletPointProps extends ComponentProps<"span"> {}
 
+/** A single black bullet dot marker. */
 export function BlackBulletPoint(p: BlackBulletPointProps) {
   const [s, rest] = splitProps(p, ["class"])
   return (

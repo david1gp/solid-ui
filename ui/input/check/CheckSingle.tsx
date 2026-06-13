@@ -28,6 +28,7 @@ export interface CheckSingleProps<T extends string>
   optionClass?: string
 }
 
+/** Radio-style group selecting a single value from options. */
 export function CheckSingle<T extends string = string>(p: CheckSingleProps<T>) {
   const [local, others] = splitProps(p, ["class"])
   return (

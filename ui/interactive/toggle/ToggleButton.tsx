@@ -25,6 +25,7 @@ type ToggleButtonStateProps = {
   pressedSignal: SignalObject<boolean>
 }
 
+/** Button toggling a pressed signal on click. */
 export function ToggleButton(p: ToggleButtonProps) {
   const [s, rest] = splitProps(p, ["title", "pressedSignal", "disabled", "onPressedChange", "onClick", "children"])
   return (

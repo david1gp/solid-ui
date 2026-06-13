@@ -21,6 +21,7 @@ export interface ButtonIconOnlyProps
   iconRight?: boolean
 }
 
+/** Rounded icon-only button; pass a single icon and no children. */
 export const ButtonIconOnly: Component<ButtonIconOnlyProps> = (p) => {
   const [s, rest] = splitProps(p, [
     // button

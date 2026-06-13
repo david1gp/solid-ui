@@ -9,6 +9,7 @@ export interface BulletLinksOProps {
   itemClass?: string
 }
 
+/** Bullet link list variant that takes its links as an object. */
 export function BulletLinksO(p: BulletLinksOProps) {
   const [s, rest] = splitProps(p, ["urlObject"])
   const names = Object.keys(s.urlObject)

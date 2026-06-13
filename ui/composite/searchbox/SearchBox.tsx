@@ -26,6 +26,7 @@ export interface SearchBoxProps {
   scrollToId?: string
 }
 
+/** Search input with filter dropdowns and search button. */
 export function SearchBox(p: SearchBoxProps) {
   const [activeFilterKey, setActiveFilterKey] = createSignal<string | null>(null)
 

@@ -19,6 +19,7 @@
     "tag:deployed": "git branch -f deployed",
     "release": "bash ./ops/release.sh",
     "generateDemoList": "bun run ./src/app/demos/generateDemoList.cli.ts",
+    "generateIndexAgents": "bun run ./src/app/generateIndexAgents.cli.ts",
     "update": "nice -15 bun x npm-check-updates -u && bun i",
     "update:commit": "bun x npm-check-updates -u && bun i && git add package.json && bun run tsc && git commit -m \"chore(deps): update dependencies\" && git push",
     "format": "bun run prettier --write ./src ./ui",

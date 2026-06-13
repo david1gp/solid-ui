@@ -4,6 +4,7 @@ import { type ComponentProps, splitProps } from "solid-js"
 
 export interface BlueBulletPointProps extends ComponentProps<"span"> {}
 
+/** A single blue link-colored bullet dot marker. */
 export function BlueBulletPoint(p: BlueBulletPointProps) {
   const [s, rest] = splitProps(p, ["class"])
   return (

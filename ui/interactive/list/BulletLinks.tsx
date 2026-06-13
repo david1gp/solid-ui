@@ -12,6 +12,7 @@ export interface BulletLinksProps {
   itemClass?: string
 }
 
+/** Renders a list of links with blue bullet points. */
 export function BulletLinks(p: BulletLinksProps) {
   return (
     <>

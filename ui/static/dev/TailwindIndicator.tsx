@@ -1,6 +1,7 @@
 import { isProdEnv } from "#ui/env/isProdEnv.js"
 import { classMerge } from "#ui/utils/classMerge.js"
 
+/** Shows the active Tailwind breakpoint in development. */
 export function TailwindIndicator() {
   if (isProdEnv()) return null
 

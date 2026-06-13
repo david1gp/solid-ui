@@ -6,6 +6,7 @@ export interface LabelAsterixProps extends MayHaveClass {
   texts?: LabelAsterixTexts
 }
 
+/** Required-field asterisk marker for labels. */
 export function LabelAsterix(p: LabelAsterixProps) {
   const texts = p.texts ?? labelAsterixTextDefault
   return (

@@ -6,6 +6,7 @@ export interface CodeBlockProps extends ComponentProps<"pre"> {
   data: string | object | unknown[]
 }
 
+/** Preformatted block rendering text or JSON data. */
 export const CodeBlock: Component<CodeBlockProps> = (p) => {
   const [s, rest] = splitProps(p, ["class", "data"])
   return (

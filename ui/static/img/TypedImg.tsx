@@ -9,6 +9,7 @@ export interface TypedImgProps extends MayHaveClass {
   invertColorsInDarkMode?: boolean
 }
 
+/** Renders an Img from a typed image object. */
 export function TypedImg(p: TypedImgProps) {
   const isSvg = p.img.path.endsWith(".svg")
   return (

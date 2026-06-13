@@ -8,6 +8,7 @@ export interface LoadingPageProps extends MayHaveClass {
   texts?: LoadingPageTexts
 }
 
+/** Full-page loading state with heading and animated loader. */
 export function LoadingPage(p: LoadingPageProps) {
   const texts = p.texts ?? loadingPageTextsDefault
 

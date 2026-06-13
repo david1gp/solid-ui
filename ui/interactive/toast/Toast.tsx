@@ -10,6 +10,7 @@ import { classMerge } from "#ui/utils/classMerge.js"
 import { mdiClose } from "@mdi/js"
 import { Show } from "solid-js"
 
+/** Dismissible toast notification with icon and message. */
 export function Toast(p: ToastPropsInternal) {
   const texts =
     p.texts ??

@@ -7,6 +7,7 @@ export interface TextOrLinkProps extends MayHaveClass {
   text: string
 }
 
+/** Renders text as a link when it starts with http. */
 export function TextOrLink(p: TextOrLinkProps) {
   const isLink = () => p.text.startsWith("http")
 

@@ -7,6 +7,7 @@ export interface ConsentSwitchProps {
   onClick?: () => void
 }
 
+/** Accessible toggle switch for consent choices. */
 export function ConsentSwitch(p: ConsentSwitchProps) {
   return (
     <button

@@ -4,6 +4,7 @@ import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { splitProps } from "solid-js"
 
+/** Anchor link styled as a button. */
 export function LinkButton(p: LinkButtonProps) {
   const [s, rest] = splitProps(p, [
     "class",

@@ -10,6 +10,7 @@ export interface Table2DSortButtonProps<T> {
   onClick: (sortDir: TableColumnDef<T>) => void
 }
 
+/** Table2 desktop column header sort button. */
 export function Table2DSortButton<T>(p: Table2DSortButtonProps<T>) {
   return (
     <ButtonIcon

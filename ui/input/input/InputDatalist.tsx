@@ -9,6 +9,7 @@ export interface ResourceListSearchProps extends ComponentProps<"input"> {
   optionDisplayText?: (option: string) => string
 }
 
+/** Text input with autocomplete suggestions from a datalist. */
 export function InputDatalist(p: ResourceListSearchProps) {
   const [s, rest] = splitProps(p, ["id", "class", "type", "list"])
   const id = p.id ?? generateId12()

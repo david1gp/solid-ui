@@ -26,6 +26,7 @@ export interface CheckMultipleProps<T extends string>
   optionClass?: string
 }
 
+/** Checkbox group selecting multiple values from options. */
 export function CheckMultiple<T extends string = string>(p: CheckMultipleProps<T>) {
   const [local, others] = splitProps(p, ["class"])
   return (

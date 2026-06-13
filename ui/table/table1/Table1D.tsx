@@ -11,6 +11,7 @@ export interface Table1aDProps<T> extends Table1Data<T>, MayHaveClass {
   texts?: Table1DTexts
 }
 
+/** Renders table1 desktop full-table layout. */
 export function Table1D<T>(p: Table1aDProps<T>) {
   const texts = p.texts ?? table1DTextDefault
   const noEntriesText = p.texts?.noEntries ?? texts.noEntries

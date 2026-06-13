@@ -1,6 +1,7 @@
 import { classArr } from "#ui/utils/classArr.js"
 import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass.js"
 
+/** Horizontal divider flanking centered children content. */
 export function SeparatorWithText(p: MayHaveChildrenAndClass) {
   return (
     <div class={classArr("w-full flex flex-row items-center")}>

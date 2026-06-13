@@ -6,6 +6,7 @@ import { splitProps } from "solid-js"
 
 export interface ButtonProps extends ComponentProps<"button">, ButtonCvaProps {}
 
+/** Primary clickable button with variant and size styling and a click animation. */
 export const Button: Component<ButtonProps> = (p) => {
   const [s, rest] = splitProps(p, ["variant", "size", "class", "type"])
   return (

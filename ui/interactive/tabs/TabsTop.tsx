@@ -22,6 +22,7 @@ export interface TabsTopProps
 }
 
 /**
+ * Tabs with the trigger row rendered above the panels.
  * https://www.radix-ui.com/primitives/docs/components/tabs
  * https://github.com/radix-ui/primitives/blob/main/packages/react/tabs/src/Tabs.tsx
  **/

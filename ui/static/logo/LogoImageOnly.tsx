@@ -11,6 +11,7 @@ export interface LogoImageOnlyProps extends MayHaveClass {
   variant?: ButtonVariant
 }
 
+/** Clickable logo image link without text. */
 export function LogoImageOnly(p: LogoImageOnlyProps) {
   return (
     <LinkButtonIconOnly

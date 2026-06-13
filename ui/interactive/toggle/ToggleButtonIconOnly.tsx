@@ -24,6 +24,7 @@ export interface ToggleButtonIconOnlyProps
   onClick?: (e: MouseEvent & { currentTarget: HTMLButtonElement; target: Element }) => void
 }
 
+/** Icon-only button toggling a pressed signal. */
 export const ToggleButtonIconOnly: Component<ToggleButtonIconOnlyProps> = (p) => {
   const [s, rest] = splitProps(p, [
     "variant",

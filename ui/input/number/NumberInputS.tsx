@@ -25,6 +25,7 @@ export interface NumberInputSProps extends ComponentProps<"input"> {
   texts?: NumberInputText
 }
 
+/** Number input with increment and decrement buttons, signal-bound. */
 export function NumberInputS(p: NumberInputSProps) {
   const [s, rest] = splitProps(p, [
     "valueSignal",

@@ -13,6 +13,7 @@ interface CheckboxProps extends MayHaveClass, MayHaveChildren, MayHaveDisabled, 
   onChange: (checked: boolean) => void
 }
 
+/** Accessible labeled checkbox driven by a controlled `checked`/`onChange` pair. */
 export function Checkbox(p: CheckboxProps) {
   const [s, rest] = splitProps(p, ["id", "checked", "onChange", "disabled", "class", "children"])
   const handleToggle = () => {

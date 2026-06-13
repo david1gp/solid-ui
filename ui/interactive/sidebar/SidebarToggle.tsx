@@ -20,6 +20,7 @@ interface SidebarToggleClasses {
   iconMobileClose?: string
 }
 
+/** Button toggling sidebar open state, with hotkey. */
 export function SidebarToggle(p: SidebarToggleProps) {
   const isOpen = () => (p.isMobile.get() ? p.openMobile.get() : p.openDesktop.get())
 

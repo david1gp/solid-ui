@@ -3,6 +3,7 @@ import { LoaderShuffle9Squares } from "#ui/static/loaders/LoaderShuffle9Squares.
 import { LoaderSpin4Square } from "#ui/static/loaders/LoaderSpin4Square.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
+/** Renders one of three loaders chosen pseudo-randomly. */
 export function RandomLoader(p: MayHaveClass) {
   const i = new Date().getSeconds() % 3
   switch (i) {

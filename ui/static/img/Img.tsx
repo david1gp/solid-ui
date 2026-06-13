@@ -12,6 +12,7 @@ export interface ImgProps extends MayHaveClass {
   height?: string | number
 }
 
+/** Lazy-loaded image with optional zoom and dark-mode invert. */
 export function Img(p: ImgProps) {
   return (
     <img

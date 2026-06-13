@@ -34,6 +34,7 @@ export interface CorvuDialogIconProps
   texts?: CorcuDialogTexts
 }
 
+/** Modal dialog opened by an icon-only trigger. */
 export const CorvuDialogIcon: Component<CorvuDialogIconProps> = (p) => {
   const [s, rest] = splitProps(p, [
     // button

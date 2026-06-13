@@ -22,6 +22,7 @@ export interface SidebarProps extends MayHaveClass {
   mobileChildren: JSXElement
 }
 
+/** Responsive sidebar switching between desktop and mobile drawer. */
 export function Sidebar(p: SidebarProps) {
   const [s, rest] = splitProps(p, ["state", "defaultWidth", "debounceMs", "class", "desktopChildren", "mobileChildren"])
 

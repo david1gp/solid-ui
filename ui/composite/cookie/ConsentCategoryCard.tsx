@@ -15,6 +15,7 @@ export interface ConsentCategoryCardProps {
   onToggle?: () => void
 }
 
+/** Cookie consent category card with toggle switch. */
 export function ConsentCategoryCard(p: ConsentCategoryCardProps) {
   return (
     <section class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/50">

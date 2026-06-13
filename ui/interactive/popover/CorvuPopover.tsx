@@ -19,6 +19,7 @@ export interface CorvuPopoverProps extends MayHaveClass, MayHaveInnerClass, MayH
   onOpenChange?: (open: boolean) => void
 }
 
+/** Popover anchored to a labeled trigger button. */
 export function CorvuPopover(p: CorvuPopoverProps) {
   // const [a, buttonProps] = splitProps(p.buttonProps, ["onClick"])
   return (

@@ -13,6 +13,7 @@ export interface Table2RProps<T> extends Table2Signals<T> {
   mobileClasses?: MobileTableClassNames
 }
 
+/** Responsive sortable table2 switching desktop and mobile by breakpoint. */
 export function Table2R<T>(p: Table2RProps<T>) {
   const [, desktopP] = splitProps(p, ["breakpoint", "mobileClasses"])
   const [, mobileP] = splitProps(p, ["breakpoint", "desktopClasses"])

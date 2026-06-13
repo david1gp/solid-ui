@@ -13,6 +13,7 @@ export interface SortableTable1RProps<T> extends Table1Data<T> {
   mobileClasses?: MobileTableClassNames
 }
 
+/** Responsive table1 switching desktop and mobile by breakpoint. */
 export function Table1R<T>(p: SortableTable1RProps<T>) {
   return (
     <>

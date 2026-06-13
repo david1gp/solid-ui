@@ -7,6 +7,7 @@ import { mdiInformationOutline } from "@mdi/js"
 
 export interface InfoPopoverProps extends MayHaveClass, HasChildren {}
 
+/** Info icon button revealing a help popover. */
 export function InfoPopover(p: InfoPopoverProps) {
   return (
     <CorvuPopover
