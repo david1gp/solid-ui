@@ -10,6 +10,7 @@ import { classArr } from "#ui/utils/classArr.js"
 import { objectEntries } from "#utils/obj/objectEntries.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
 import { For, type JSX } from "solid-js"
+import { Dynamic } from "solid-js/web"
 
 const log = false
 
@@ -47,7 +48,7 @@ function getDemosL2(
         path,
         component: () => (
           <LayoutWrapperDemo title={compName}>
-            <Nav demoList={demoList} category={category} compName={compName} demoPrefix={prefix} />
+            <Dynamic component={Nav} demoList={demoList} category={category} compName={compName} demoPrefix={prefix} />
             <Comp />
           </LayoutWrapperDemo>
         ),
@@ -74,7 +75,7 @@ function getDemosL1(
       path,
       component: () => (
         <LayoutWrapperDemo title={category}>
-          <Nav demoList={demoList} category={category} demoPrefix={prefix} />
+          <Dynamic component={Nav} demoList={demoList} category={category} demoPrefix={prefix} />
           <div
             class={classArr(
               "flex flex-col items-center justify-center", // layout
@@ -111,7 +112,7 @@ function getDemosL0(
 
         return (
           <LayoutWrapperDemo title={"demos"}>
-            <Nav demoList={demoList} demoPrefix={prefix} />
+            <Dynamic component={Nav} demoList={demoList} demoPrefix={prefix} />
             <div
               class={classArr(
                 "flex flex-col items-center justify-center", // layout
@@ -152,7 +153,7 @@ function getDemos404(
         <LayoutWrapperDemo>
           {/*<SetPageTitle title={"demos"} />*/}
           {/*<DemoPageList />*/}
-          <Nav demoList={demoList} demoPrefix={prefix} />
+          <Dynamic component={Nav} demoList={demoList} demoPrefix={prefix} />
           <h1 class={"text-xl font-semibold"}>not found</h1>
           <LinkButtonExternal href={prefix}>back to demos</LinkButtonExternal>
         </LayoutWrapperDemo>
