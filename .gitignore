@@ -100,3 +100,4 @@ AGENTS.md
 # Local images (original quality, not committed)
 /public-images
 /public-image-versions
+src/routeTree.gen.ts
