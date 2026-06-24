@@ -156,6 +156,11 @@ const DemoTheme = lazy(async () => {
   return { default: c.DemoTheme }
 })
 
+const DemoDetailsDialog = lazy(async () => {
+  const c = await import("#src/demos/interactive/DemoDetailsDialog.jsx")
+  return { default: c.DemoDetailsDialog }
+})
+
 const DemoDetails = lazy(async () => {
   const c = await import("#src/demos/interactive/DemoDetails.jsx")
   return { default: c.DemoDetails }
@@ -210,6 +215,7 @@ export const demoList = {
     DemoLinks: DemoLinks,
     DemoToggle: DemoToggle,
     DemoTheme: DemoTheme,
+    DemoDetailsDialog: DemoDetailsDialog,
     DemoDetails: DemoDetails,
     DemoSidebar: DemoSidebar,
     DemoDialog: DemoDialog,
