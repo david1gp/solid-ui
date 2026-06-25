@@ -10,7 +10,7 @@ export function BlueBulletPoint(p: BlueBulletPointProps) {
   return (
     <span
       class={classMerge(
-        "text-xs select-none", // font
+        "text-sm select-none", // font
         "mr-1 mt-1.5", // spacing
         classesTextLink,
         s.class,

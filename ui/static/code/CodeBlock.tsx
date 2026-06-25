@@ -12,7 +12,7 @@ export const CodeBlock: Component<CodeBlockProps> = (p) => {
   return (
     <pre
       class={classMerge(
-        "p-2 rounded-lg text-xs whitespace-pre-wrap wrap-anywhere bg-slate-100 dark:bg-slate-900",
+        "p-2 rounded-lg text-sm whitespace-pre-wrap wrap-anywhere bg-slate-100 dark:bg-slate-900",
         s.class,
       )}
       {...rest}

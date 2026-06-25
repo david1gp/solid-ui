@@ -239,7 +239,7 @@ function FilterButtons(p: {
               icon={mdiUndo}
               variant={buttonVariant.outline}
               onClick={p.onClear}
-              class="min-h-11 items-center justify-center rounded-full border px-3 py-2 text-xs font-medium shadow-sm sm:px-4 sm:text-sm"
+              class="min-h-11 items-center justify-center rounded-full border px-3 py-2 text-sm font-medium shadow-sm sm:px-4"
               aria-label="Clear filters"
             />
           </Show>

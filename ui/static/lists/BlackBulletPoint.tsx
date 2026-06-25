@@ -9,7 +9,7 @@ export function BlackBulletPoint(p: BlackBulletPointProps) {
   return (
     <span
       class={classMerge(
-        "text-xs select-none", // font
+        "text-sm select-none", // font
         "mt-1.5 mr-1.5", // spacing
         "text-black dark:text-white", // color
         s.class,
