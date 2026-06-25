@@ -1,7 +1,7 @@
 (shared_config_solid_ui) {
 	handle_path /images* {
 		rewrite * {path}
-		root * /home/david/Coding/adaptive-solid-ui/public-images
+		root * /home/david/Coding/adaptive-solid-ui/images
 		file_server
 		header {
 			Routed "solid-ui-images"

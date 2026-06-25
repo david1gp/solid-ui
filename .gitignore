@@ -98,6 +98,6 @@ AGENTS.md
 /export
 
 # Local images (original quality, not committed)
-/public-images
+/images
 /public-image-versions
 src/routeTree.gen.ts
