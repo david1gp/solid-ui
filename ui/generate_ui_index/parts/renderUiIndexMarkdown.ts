@@ -21,10 +21,7 @@ export function renderUiIndexMarkdown(byCategory: Record<string, ComponentIndexE
   const categories = Object.keys(byCategory).sort()
   const entriesOf = (c: string): ComponentIndexEntry[] => byCategory[c] ?? []
   const total = categories.reduce((sum, c) => sum + entriesOf(c).length, 0)
-  const documented = categories.reduce(
-    (sum, c) => sum + entriesOf(c).filter((e) => e.description).length,
-    0,
-  )
+  const documented = categories.reduce((sum, c) => sum + entriesOf(c).filter((e) => e.description).length, 0)
 
   const sections = categories.map((category) => {
     const entries = [...entriesOf(category)].sort((a, b) => a.name.localeCompare(b.name))

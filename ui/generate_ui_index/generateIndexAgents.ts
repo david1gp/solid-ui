@@ -17,7 +17,10 @@ export async function generateIndexAgents(uiDirRelative: string, outputFileRelat
 
     const relFromUi = relative(uiDirAbsolute, file)
     const category = relFromUi.split(sep)[0] ?? relFromUi
-    const importPath = `#ui/${relFromUi.split(sep).join("/").replace(/\.tsx$/, ".jsx")}`
+    const importPath = `#ui/${relFromUi
+      .split(sep)
+      .join("/")
+      .replace(/\.tsx$/, ".jsx")}`
     for (const e of exports) {
       ;(byCategory[category] ??= []).push({ ...e, importPath })
     }
