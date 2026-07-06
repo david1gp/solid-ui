@@ -1,8 +1,8 @@
+import { createLink } from "@tanstack/solid-router"
+import { splitProps } from "solid-js"
 import { classesTextLink } from "#ui/classes/classesTextLink.js"
 import type { LinkTextProps } from "#ui/interactive/link/LinkTextProps.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
-import { createLink } from "@tanstack/solid-router"
-import { splitProps } from "solid-js"
 
 /** Shared styled inline text-link anchor. */
 function TextAnchor(p: LinkTextProps) {

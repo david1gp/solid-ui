@@ -1,13 +1,13 @@
+import { mdiMinus, mdiMinusBox, mdiPlus, mdiPlusBox } from "@mdi/js"
+import { type ComponentProps, type JSX, splitProps } from "solid-js"
 import { Input } from "#ui/input/input/Input.jsx"
 import type { NumberInputText } from "#ui/input/number/NumberInputTexts.jsx"
 import { numberInputTextDefault } from "#ui/input/number/NumberInputTexts.jsx"
-import { buttonVariant, type ButtonVariant } from "#ui/interactive/button/buttonCva.js"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
+import { type ButtonVariant, buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { classMerge } from "#ui/utils/classMerge.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import { safeParseInt } from "#utils/int/safeParseInt.js"
-import { mdiMinus, mdiMinusBox, mdiPlus, mdiPlusBox } from "@mdi/js"
-import { type ComponentProps, type JSX, splitProps } from "solid-js"
 
 export interface NumberInputSProps extends ComponentProps<"input"> {
   valueSignal: SignalObject<number>

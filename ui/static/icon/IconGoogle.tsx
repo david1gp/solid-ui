@@ -1,5 +1,5 @@
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 /** Google "G" multicolor brand logo icon. */
 export function SvgIconGoogle(p: MayHaveClass) {

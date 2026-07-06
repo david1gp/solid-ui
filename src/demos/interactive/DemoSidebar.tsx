@@ -1,10 +1,10 @@
+import { mdiAccount, mdiCog, mdiHome, mdiInformation, mdiMail } from "@mdi/js"
+import { For } from "solid-js"
 import { createSidebarState } from "#ui/interactive/sidebar/createSidebarState.jsx"
 import { Sidebar, SidebarToggle } from "#ui/interactive/sidebar/index.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
 import type { HasChildren } from "#ui/utils/HasChildren.js"
-import { mdiAccount, mdiCog, mdiHome, mdiInformation, mdiMail } from "@mdi/js"
-import { For } from "solid-js"
 
 export function DemoSidebar() {
   const state = createSidebarState()

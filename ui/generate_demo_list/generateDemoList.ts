@@ -1,7 +1,7 @@
-import { formatGeneratedCodeFile } from "#ui/generate_demo_list/parts/formatGeneratedCodeFile.js"
-import { objectKeys } from "#utils/obj/objectKeys.js"
 import { readdir, writeFile } from "node:fs/promises"
 import { join } from "node:path"
+import { formatGeneratedCodeFile } from "#ui/generate_demo_list/parts/formatGeneratedCodeFile.js"
+import { objectKeys } from "#utils/obj/objectKeys.js"
 import { findDemoFilesRecursive } from "./parts/findDemoFilesRecursive.js"
 import { removeDemoObjectValueQuotes } from "./parts/removeDemoObjectValueQuotes.js"
 import { serializeDemoComponentImport } from "./parts/serializeDemoComponentImport.js"
@@ -19,7 +19,9 @@ export async function generateDemoList(
   const demoPageList: DemoPageListType = {}
   const baseDir = process.cwd()
   const demoSearchDirAbsolute = join(baseDir, demoSearchDirRelative)
-  const categories = await readdir(demoSearchDirAbsolute, { withFileTypes: true })
+  const categories = await readdir(demoSearchDirAbsolute, {
+    withFileTypes: true,
+  })
   for (const category of categories) {
     // console.log("category", category.name)
     if (!category.isDirectory()) {

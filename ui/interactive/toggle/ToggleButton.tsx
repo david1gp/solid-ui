@@ -1,17 +1,16 @@
+import { type ComponentProps, splitProps } from "solid-js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { type MayHaveDisabledAccessor, isDisabled } from "#ui/utils/MayHaveDisabledAccessor.js"
-import type { SignalObject } from "#ui/utils/createSignalObject.js"
-import { type ComponentProps, splitProps } from "solid-js"
+import { isDisabled, type MayHaveDisabledAccessor } from "#ui/utils/MayHaveDisabledAccessor.js"
 
 /**
  * https://github.com/radix-ui/primitives/blob/main/packages/react/toggle/src/Toggle.tsx
  * https://github.com/mui/base-ui/blob/master/packages/react/src/toggle/useToggle.ts
  */
 export interface ToggleButtonProps
-  extends
-    ToggleButtonStateProps,
+  extends ToggleButtonStateProps,
     MayHaveClass,
     MayHaveChildren,
     Omit<MayHaveDisabledAccessor, "disabled">,
@@ -52,8 +51,8 @@ export function ToggleButton(p: ToggleButtonProps) {
 function togglePressed(
   s: Pick<ToggleButtonProps, "disabled" | "title" | "pressedSignal" | "onPressedChange" | "onClick">,
 ): boolean {
-  let prev = s.pressedSignal.get()
-  let next = !prev
+  const prev = s.pressedSignal.get()
+  const next = !prev
   s.pressedSignal.set(next)
   return next
 }

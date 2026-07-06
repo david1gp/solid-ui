@@ -1,4 +1,4 @@
-import { envMode, type EnvMode } from "./envMode.js"
+import { type EnvMode, envMode } from "./envMode.js"
 
 export function getEnvMode(fallback: EnvMode = envMode.production): EnvMode {
   // Overwrite Convex env mode

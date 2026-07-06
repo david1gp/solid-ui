@@ -1,8 +1,8 @@
 import { generateToastId } from "#ui/interactive/toast/generateToastId.js"
+import type { AddToastProps } from "#ui/interactive/toast/ToastProps.js"
 import { toastDismiss } from "#ui/interactive/toast/toastDismiss.js"
 import { toasterSettings } from "#ui/interactive/toast/toasterSettings.js"
 import { toasterState } from "#ui/interactive/toast/toasterState.js"
-import type { AddToastProps } from "#ui/interactive/toast/ToastProps.js"
 import { toastVariant, toastVariantIcon } from "#ui/interactive/toast/toastVariant.js"
 
 export function toastAdd(addToast: AddToastProps, log: boolean = false): string {
@@ -35,20 +35,33 @@ export function toastAdd(addToast: AddToastProps, log: boolean = false): string 
     // update list: timeouts
     const newTimeouts = { ...timeouts, [toastId]: newTimeout }
     // update list: toasts
-    const newToasts = toasts.with(foundToastIndex, { ...addToast, id: toastId })
+    const newToasts = toasts.with(foundToastIndex, {
+      ...addToast,
+      id: toastId,
+    })
     if (log) console.log("foundToast", toasts.at(foundToastIndex), "replacedByToast:", newToasts.at(foundToastIndex))
     toasterState.set({ toasts: newToasts, timeouts: newTimeouts })
     if (log) console.groupEnd()
     return toastId
   }
 
-  const newToast = { ...addToast, id: toastId, duration: getDuration(addToast) }
+  const newToast = {
+    ...addToast,
+    id: toastId,
+    duration: getDuration(addToast),
+  }
   if (log) console.log({ op, newToast })
 
   const newToasts = [...toasts, newToast]
   while (newToasts.length > toasterSettings.toastLimit) {
     const deleteToast = newToasts.shift()
-    if (log) console.log({ op, size: newToasts.length, msg: "deleting toast ", deleteToast })
+    if (log)
+      console.log({
+        op,
+        size: newToasts.length,
+        msg: "deleting toast ",
+        deleteToast,
+      })
     if (deleteToast) {
       const deleteTimeout = timeouts[deleteToast.id]
       if (deleteTimeout) clearTimeout(deleteTimeout)

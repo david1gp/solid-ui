@@ -1,11 +1,11 @@
+import type { Accessor } from "solid-js"
 import { searchInputSignal } from "#ui/input/search/searchInputSignal.js"
 import { createTableColumnDef, type TableColumnDef, tableFilterColumns } from "#ui/table/shared/TableColumnDef.js"
 import { sortData } from "#ui/table/table2/sortData.js"
-import { defaultSortDir, sortDir, type SortDir } from "#ui/table/table2/sortDir.js"
+import { defaultSortDir, type SortDir, sortDir } from "#ui/table/table2/sortDir.js"
 import { defaultEntriesPerPage } from "#ui/table/table3/defaultEntriesPerPage.js"
 import { tableRowSearchSimple } from "#ui/table/table3/tableRowSearchSimple.js"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
-import type { Accessor } from "solid-js"
 
 export type CreateTableAtoms<T> = {
   columns: TableColumnDef<T>[] | SignalObject<TableColumnDef<T>[]>

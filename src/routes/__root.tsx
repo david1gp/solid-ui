@@ -1,8 +1,8 @@
-import { DemosNotFound } from "#src/app/demos/DemoViews.jsx"
-import { pageMeta, siteName, softwareSourceCodeJsonLd, websiteJsonLd } from "#src/lib/seo.js"
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/solid-router"
 import { Suspense } from "solid-js"
 import { HydrationScript } from "solid-js/web"
+import { DemosNotFound } from "#src/app/demos/DemoViews.jsx"
+import { pageMeta, siteName, softwareSourceCodeJsonLd, websiteJsonLd } from "#src/lib/seo.js"
 import "../tailwind.css"
 
 export const Route = createRootRoute({
@@ -18,8 +18,14 @@ export const Route = createRootRoute({
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
     ],
     scripts: [
-      { type: "application/ld+json", children: JSON.stringify(websiteJsonLd()) },
-      { type: "application/ld+json", children: JSON.stringify(softwareSourceCodeJsonLd()) },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(websiteJsonLd()),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(softwareSourceCodeJsonLd()),
+      },
     ],
   }),
   component: () => <Outlet />,

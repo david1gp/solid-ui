@@ -1,6 +1,6 @@
+import { mdiAccount, mdiCog, mdiHeart, mdiHome, mdiStar } from "@mdi/js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { SvgIconGoogle as IconGoogle } from "#ui/static/icon/IconGoogle.jsx"
-import { mdiAccount, mdiCog, mdiHeart, mdiHome, mdiStar } from "@mdi/js"
 
 export function DemoIcons() {
   return (

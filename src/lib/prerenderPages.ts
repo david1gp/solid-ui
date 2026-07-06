@@ -34,7 +34,11 @@ export type PrerenderPage = {
 }
 
 function page(path: string, priority: number, changefreq: "weekly" | "monthly"): PrerenderPage {
-  return { path, prerender: { enabled: true }, sitemap: { changefreq, priority } }
+  return {
+    path,
+    prerender: { enabled: true },
+    sitemap: { changefreq, priority },
+  }
 }
 
 /** Every static path to prerender: `/`, each category, and each demo. */

@@ -1,5 +1,6 @@
+import { type Component, type ComponentProps, splitProps } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
-import { buttonCvaIconOnly, type ButtonCvaProps } from "#ui/interactive/button/buttonCva.js"
+import { type ButtonCvaProps, buttonCvaIconOnly } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
 import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
@@ -8,11 +9,9 @@ import type { HasTitle } from "#ui/utils/HasTitle.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import { isDisabled } from "#ui/utils/MayHaveDisabledAccessor.js"
 import { isLoading, type MayHaveIsLoading } from "#ui/utils/MayHaveIsLoading.js"
-import { type Component, type ComponentProps, splitProps } from "solid-js"
 
 export interface ButtonIconOnlyProps
-  extends
-    Omit<ComponentProps<"button">, "title">,
+  extends Omit<ComponentProps<"button">, "title">,
     ButtonCvaProps,
     HasTitle,
     HasIcon,

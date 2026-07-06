@@ -1,4 +1,4 @@
-import { toastVariant, type ToastVariant } from "#ui/interactive/toast/toastVariant.js"
+import { type ToastVariant, toastVariant } from "#ui/interactive/toast/toastVariant.js"
 import { classArr } from "#ui/utils/classArr.js"
 import { classMerge } from "#ui/utils/classMerge.js"
 

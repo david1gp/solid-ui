@@ -1,7 +1,7 @@
-import { LinkTextExternal } from "#ui/interactive/link/LinkText.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { classMerge } from "#ui/utils/classMerge.js"
 import { Show } from "solid-js"
+import { LinkTextExternal } from "#ui/interactive/link/LinkText.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface TextOrLinkProps extends MayHaveClass {
   text: string

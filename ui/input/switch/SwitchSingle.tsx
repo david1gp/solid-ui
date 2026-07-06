@@ -1,3 +1,4 @@
+import { Key } from "@solid-primitives/keyed"
 import { ttt } from "#ui/i18n/ttt.js"
 import { classArr } from "#ui/utils/classArr.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
@@ -7,13 +8,17 @@ import type { MayHaveValueText } from "#ui/utils/HasValueText.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled.js"
 import type { MayHaveId } from "#ui/utils/MayHaveId.js"
-import { Key } from "@solid-primitives/keyed"
 
 /**
  * https://github.com/radix-ui/primitives/blob/main/packages/react/radio-group/src/Radio.tsx
  */
 export interface SwitchSingleProps
-  extends HasValueSignalString, HasGetOptions, MayHaveValueText, MayHaveId, MayHaveDisabled, MayHaveClass {
+  extends HasValueSignalString,
+    HasGetOptions,
+    MayHaveValueText,
+    MayHaveId,
+    MayHaveDisabled,
+    MayHaveClass {
   texts?: SwitchSingleTexts
 }
 

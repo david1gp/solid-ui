@@ -1,8 +1,8 @@
+import { mdiGithub, mdiHome, mdiOpenInNew } from "@mdi/js"
+import { For } from "solid-js"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { LinkButtonExternal, LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { LinkButtonIconOnlyExternal, LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
-import { mdiGithub, mdiHome, mdiOpenInNew } from "@mdi/js"
-import { For } from "solid-js"
 
 export function DemoLinks() {
   return (

@@ -1,12 +1,12 @@
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { onCleanup, onMount } from "solid-js"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import type { ThemeButtonText } from "#ui/interactive/theme/ThemeButtonText.js"
 import { themeButtonTextDefault } from "#ui/interactive/theme/ThemeButtonText.js"
 import { themeInit, themeRotate, themeSignal } from "#ui/interactive/theme/themeSignal.js"
 import { themeIcon } from "#ui/interactive/theme/themeVariant.js"
 import { classMerge } from "#ui/utils/classMerge.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { onCleanup, onMount } from "solid-js"
 
 export interface ThemeButtonProps extends MayHaveClass {
   showText?: boolean

@@ -1,4 +1,4 @@
-import { buttonVariant, type ButtonVariant } from "#ui/interactive/button/buttonCva.js"
+import { type ButtonVariant, buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { classArr } from "#ui/utils/classArr.js"
 import { classMerge } from "#ui/utils/classMerge.js"
 

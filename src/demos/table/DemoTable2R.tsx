@@ -1,16 +1,16 @@
+import { mdiMagicStaff, mdiTrashCan } from "@mdi/js"
 import { formModeIcon } from "#ui/input/form/formModeIcon.js"
 import { InputS } from "#ui/input/input/InputS.jsx"
 import { Button } from "#ui/interactive/button/Button.jsx"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { CorvuDialog } from "#ui/interactive/dialog/CorvuDialog.jsx"
 import type { TableColumnDef } from "#ui/table/shared/TableColumnDef.js"
 import { createTable2Signals } from "#ui/table/table2/createSortableTableSignals.js"
 import { Table2R } from "#ui/table/table2/Table2R.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { createPseudoRandomSec, type PseudoRandom } from "#utils/ran/createPseudoRandom.js"
-import { mdiMagicStaff, mdiTrashCan } from "@mdi/js"
 
 export function DemoTable2R() {
   return (
@@ -103,11 +103,11 @@ function Actions(p: { d: Person }) {
 
 function addData() {
   const newPerson = generatePerson(count++, pseudoRandom)
-  let newRows: Person[] = [...rows.get(), newPerson]
+  const newRows: Person[] = [...rows.get(), newPerson]
   rows.set(newRows)
 }
 function regenerateData() {
-  let newRows: Person[] = generateRows(pseudoRandom)
+  const newRows: Person[] = generateRows(pseudoRandom)
   rows.set(newRows)
 }
 
@@ -140,7 +140,7 @@ function updateTableState() {
   const id = formState.id.get()
   const name = formState.name.get()
 
-  let newRows: Person[] = rows.get().map((r) => {
+  const newRows: Person[] = rows.get().map((r) => {
     if (r.id === prevId) {
       return { ...r, id, name }
     }

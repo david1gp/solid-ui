@@ -2,7 +2,7 @@ import { createToasterState } from "#ui/interactive/toast/GlobalToasterState.js"
 import { toasterState } from "#ui/interactive/toast/toasterState.js"
 
 export function toastDismiss(toastId: string, log = false) {
-  let op = "toastDismiss"
+  const op = "toastDismiss"
   const { toasts, timeouts } = toasterState.get()
   if (log) console.debug({ op, toastId })
   const newToasts = toasts.filter((t) => t.id !== toastId)
@@ -12,6 +12,6 @@ export function toastDismiss(toastId: string, log = false) {
 }
 
 export function toastDismissAll() {
-  let op = "toastDismissAll"
+  const op = "toastDismissAll"
   toasterState.set(createToasterState())
 }

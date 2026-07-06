@@ -11,23 +11,51 @@ import { stylesBgWave } from "#ui/static/styles/stylesBgWave.js"
 import { classArr } from "#ui/utils/classArr.js"
 
 const styles = [
-  { name: "Dotted", bgStyles: stylesBgDotted, description: "Subtle dot pattern for a clean, minimal look." },
-  { name: "Grid", bgStyles: stylesBgGrid, description: "Graph paper style grid pattern." },
-  { name: "Slash", bgStyles: stylesBgSlash, description: "Diagonal slash pattern for texture." },
+  {
+    name: "Dotted",
+    bgStyles: stylesBgDotted,
+    description: "Subtle dot pattern for a clean, minimal look.",
+  },
+  {
+    name: "Grid",
+    bgStyles: stylesBgGrid,
+    description: "Graph paper style grid pattern.",
+  },
+  {
+    name: "Slash",
+    bgStyles: stylesBgSlash,
+    description: "Diagonal slash pattern for texture.",
+  },
   {
     name: "Slash Sparse",
     bgStyles: stylesBgSlashSparse,
     description: "Sparse diagonal slash pattern with more spacing.",
   },
-  { name: "Cube", bgStyles: stylesBgCube, description: "Japanese pattern with interlocking cube shapes." },
-  { name: "Wave", bgStyles: stylesBgWave, description: "Smooth wave pattern for a flowing feel." },
-  { name: "Leaf", bgStyles: stylesBgLeaf, description: "Organic leaf-inspired pattern." },
+  {
+    name: "Cube",
+    bgStyles: stylesBgCube,
+    description: "Japanese pattern with interlocking cube shapes.",
+  },
+  {
+    name: "Wave",
+    bgStyles: stylesBgWave,
+    description: "Smooth wave pattern for a flowing feel.",
+  },
+  {
+    name: "Leaf",
+    bgStyles: stylesBgLeaf,
+    description: "Organic leaf-inspired pattern.",
+  },
   {
     name: "Grid Blueprint",
     bgStyles: stylesBgGridBlueprint,
     description: "Blueprint-style grid with major and minor lines.",
   },
-  { name: "Square Zigzag", bgStyles: stylesBgSquareZig, description: "Zigzag square pattern." },
+  {
+    name: "Square Zigzag",
+    bgStyles: stylesBgSquareZig,
+    description: "Zigzag square pattern.",
+  },
 ]
 
 export function DemoStyles() {

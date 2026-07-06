@@ -1,9 +1,9 @@
-import { buttonVariant, type ButtonVariant } from "#ui/interactive/button/buttonCva.js"
+import type { ComponentProps } from "solid-js"
+import { type ButtonVariant, buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { Img } from "#ui/static/img/Img.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { classMerge } from "#ui/utils/classMerge.js"
-import type { ComponentProps } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface LogoImageTextProps extends MayHaveClass {
   /** Typed internal route to navigate to; defaults to `"/"`. */

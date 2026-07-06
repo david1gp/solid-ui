@@ -1,11 +1,11 @@
+import { createLink } from "@tanstack/solid-router"
+import { splitProps } from "solid-js"
 import { buttonCvaIconOnly } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
 import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
 import type { ButtonAnchorProps } from "#ui/interactive/link/LinkButtonProps.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { isLoading } from "#ui/utils/MayHaveIsLoading.js"
-import { createLink } from "@tanstack/solid-router"
-import { splitProps } from "solid-js"
 
 /** Shared styled icon-only button-anchor; base for both link variants. */
 function ButtonIconOnlyAnchor(p: ButtonAnchorProps) {

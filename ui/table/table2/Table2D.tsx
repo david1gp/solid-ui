@@ -1,3 +1,4 @@
+import { For } from "solid-js"
 import type { DesktopTableClassNames } from "#ui/table/shared/DesktopTableClassNames.js"
 import { sharedTableRowClassName } from "#ui/table/shared/sharedTableRowClassName.js"
 import type { TableColumnDef } from "#ui/table/shared/TableColumnDef.js"
@@ -7,7 +8,6 @@ import { nextSortDir } from "#ui/table/table2/sortDir.js"
 import { Table2DSortButton } from "#ui/table/table2/Table2DSortButton.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { For } from "solid-js"
 
 export interface SortableTableDProps<T> extends Table2Signals<T>, MayHaveClass {
   desktopClasses?: DesktopTableClassNames

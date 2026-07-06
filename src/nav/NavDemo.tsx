@@ -1,3 +1,5 @@
+import type { ComponentProps } from "solid-js"
+import { createSignal, lazy, onMount, Show, splitProps } from "solid-js"
 import type { DemoNavDataProps } from "#ui/demo_pages/DemoNavDataProps.js"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
@@ -9,14 +11,14 @@ import { LogoImageText } from "#ui/static/logo/LogoImageText.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
 import { objectEntries } from "#utils/obj/objectEntries.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
-import type { ComponentProps } from "solid-js"
-import { createSignal, lazy, onMount, Show, splitProps } from "solid-js"
 
 // `@corvu/popover` is precompiled to client-only DOM templates (`template()` at
 // module load), so it must stay out of the SSR import graph. Load it via a
 // dynamic import and render it only after mount on the client.
 const CorvuPopoverLazy = lazy(() =>
-  import("#ui/interactive/popover/CorvuPopover.jsx").then((m) => ({ default: m.CorvuPopover })),
+  import("#ui/interactive/popover/CorvuPopover.jsx").then((m) => ({
+    default: m.CorvuPopover,
+  })),
 )
 
 export interface DemoNavProps extends DemoNavDataProps, ComponentProps<"nav"> {}
@@ -39,7 +41,9 @@ export function NavDemo(p: DemoNavProps) {
             <LinkButtonInternal
               variant={buttonVariant.ghost}
               to="/$"
-              params={{ _splat: `${s.demoPrefix}/${s.category}/`.replace(/^\//, "") }}
+              params={{
+                _splat: `${s.demoPrefix}/${s.category}/`.replace(/^\//, ""),
+              }}
             >
               {s.category}
             </LinkButtonInternal>
@@ -93,7 +97,9 @@ function ComponentPopover(
         <LinkButtonInternal
           variant={buttonVariant.ghost}
           to="/$"
-          params={{ _splat: `${s.demoPrefix}/${s.category}/${s.compName}`.replace(/^\//, "") }}
+          params={{
+            _splat: `${s.demoPrefix}/${s.category}/${s.compName}`.replace(/^\//, ""),
+          }}
         >
           {s.compName}
         </LinkButtonInternal>

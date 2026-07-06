@@ -1,3 +1,4 @@
+import { createSignal, For, onMount, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
 import { NavDemo } from "#src/nav/NavDemo.jsx"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
@@ -7,7 +8,6 @@ import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import { objectEntries } from "#utils/obj/objectEntries.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
-import { createSignal, For, onMount, Show } from "solid-js"
 
 // Demos live at the site root (prefix ""), e.g. /input, /input/DemoInputS.
 const prefix = ""

@@ -1,7 +1,10 @@
+import { mdiCheck, mdiClose, mdiPlus } from "@mdi/js"
+import { Key } from "@solid-primitives/keyed"
+import { For, mergeProps } from "solid-js"
 import type { SelectMultipleTexts } from "#ui/input/select/SelectMultipleTexts.js"
 import { selectMultipleTextDefault } from "#ui/input/select/SelectMultipleTexts.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import type { CorvuPopoverProps } from "#ui/interactive/popover/CorvuPopover.jsx"
 import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
 import { classesGridCols3xl } from "#ui/static/grid/classesGridCols.js"
@@ -16,16 +19,12 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled.js"
 import type { MayHaveId } from "#ui/utils/MayHaveId.js"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
-import { mdiCheck, mdiClose, mdiPlus } from "@mdi/js"
-import { Key } from "@solid-primitives/keyed"
-import { For, mergeProps } from "solid-js"
 
 /**
  * https://github.com/radix-ui/primitives/blob/main/packages/react/checkbox/src/Checkbox.tsx
  */
 export interface SelectMultipleProps
-  extends
-    HasValueSignalStringArray,
+  extends HasValueSignalStringArray,
     HasGetOptions,
     MayHaveValueText,
     MayHaveId,
@@ -133,7 +132,12 @@ function SelectedValue(p: SelectedValueProps) {
 }
 
 interface OptionListProps
-  extends HasValueSignalStringArray, HasGetOptions, MayHaveValueText, MayHaveId, MayHaveInnerClass, MayHaveDisabled {
+  extends HasValueSignalStringArray,
+    HasGetOptions,
+    MayHaveValueText,
+    MayHaveId,
+    MayHaveInnerClass,
+    MayHaveDisabled {
   noItemsClass?: string
   listOptionClass?: string
   texts: SelectMultipleTexts

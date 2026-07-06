@@ -1,5 +1,5 @@
-import { formMode, type FormMode } from "#ui/input/form/formMode.js"
 import { mdiCardTextOutline, mdiPlus, mdiSquareEditOutline, mdiTrashCan } from "@mdi/js"
+import { type FormMode, formMode } from "#ui/input/form/formMode.js"
 
 export const formModeIcon = {
   [formMode.view]: mdiCardTextOutline,

@@ -1,7 +1,7 @@
+import { splitProps } from "solid-js"
 import { CorvuDialog, type CorvuDialogProps } from "#ui/interactive/dialog/CorvuDialog.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
-import { splitProps } from "solid-js"
 
 export interface SidebarMobileDrawerProps extends Omit<CorvuDialogProps, "open" | "onOpenChange"> {
   open: SignalObject<boolean>

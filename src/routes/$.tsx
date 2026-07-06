@@ -1,7 +1,7 @@
-import { DemoComponent, DemosCategory, DemosNotFound, demoExists } from "#src/app/demos/DemoViews.jsx"
-import { canonicalLink, pageMeta, siteName } from "#src/lib/seo.js"
 import { createFileRoute } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
+import { DemoComponent, DemosCategory, DemosNotFound, demoExists } from "#src/app/demos/DemoViews.jsx"
+import { canonicalLink, pageMeta, siteName } from "#src/lib/seo.js"
 
 export const Route = createFileRoute("/$")({
   head: ({ params }) => {

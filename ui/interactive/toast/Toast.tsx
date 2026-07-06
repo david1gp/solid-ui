@@ -1,3 +1,5 @@
+import { mdiClose } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
@@ -7,8 +9,6 @@ import { toastDismiss } from "#ui/interactive/toast/toastDismiss.js"
 import { toastIconCva } from "#ui/interactive/toast/toastIconCva.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
-import { mdiClose } from "@mdi/js"
-import { Show } from "solid-js"
 
 /** Dismissible toast notification with icon and message. */
 export function Toast(p: ToastPropsInternal) {

@@ -1,8 +1,8 @@
-import { Icon } from "#ui/static/icon/Icon.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { classMerge } from "#ui/utils/classMerge.js"
 import { mdiCheck } from "@mdi/js"
 import { For } from "solid-js"
+import { Icon } from "#ui/static/icon/Icon.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { TextOrLink } from "./TextOrLink.js"
 
 export interface CheckPointsProps extends MayHaveClass {

@@ -47,7 +47,10 @@ export function pageMeta(input: PageMetaInput): Meta[] {
     { property: "og:image", content: ogImage },
     { property: "og:image:width", content: String(ogImageWidth) },
     { property: "og:image:height", content: String(ogImageHeight) },
-    { property: "og:image:alt", content: `${siteName} — accessible UI components for Solid.js` },
+    {
+      property: "og:image:alt",
+      content: `${siteName} — accessible UI components for Solid.js`,
+    },
     // Twitter
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: input.title },

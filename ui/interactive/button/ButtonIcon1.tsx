@@ -1,11 +1,11 @@
+import { type Accessor, type Component, type ComponentProps, splitProps } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
-import { buttonCva2, type ButtonCvaProps } from "#ui/interactive/button/buttonCva.js"
+import { type ButtonCvaProps, buttonCva2 } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
 import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { type Accessor, type Component, type ComponentProps, splitProps } from "solid-js"
 
 export interface ButtonIcon1Props extends ComponentProps<"button">, ButtonCvaProps, MayHaveClass, MayHaveChildren {
   // icon
@@ -41,7 +41,7 @@ export const ButtonIcon1: Component<ButtonIcon1Props> = (p) => {
     if (s.isDisabled?.()) return
     if (s.disabled) return
     if (s.onClick) {
-      // @ts-ignore
+      // @ts-expect-error
       s.onClick(e)
     }
   }

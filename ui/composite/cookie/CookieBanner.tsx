@@ -51,11 +51,20 @@ export interface CookieBannerProps {
 export function CookieBanner(p: CookieBannerProps) {
   const [internalVisible, setInternalVisible] = createSignal(false)
   const [internalShowSettings, setInternalShowSettings] = createSignal(false)
-  const [choices, setChoices] = createSignal<ConsentChoices>({ statistics: false, marketing: false })
+  const [choices, setChoices] = createSignal<ConsentChoices>({
+    statistics: false,
+    marketing: false,
+  })
 
-  const labels = (): CookieBannerLabels => ({ ...defaultCookieBannerLabels, ...p.labels })
+  const labels = (): CookieBannerLabels => ({
+    ...defaultCookieBannerLabels,
+    ...p.labels,
+  })
   const config = (): ConsentConfig => resolveConsentConfig(p.consentConfig)
-  const trackingConfig = (): GoogleTrackingConfig => ({ gaId: p.gaId, adsId: p.adsId })
+  const trackingConfig = (): GoogleTrackingConfig => ({
+    gaId: p.gaId,
+    adsId: p.adsId,
+  })
 
   const isVisible = () => (p.open !== undefined ? p.open : internalVisible())
   const setVisible = (v: boolean) => {
@@ -74,7 +83,10 @@ export function CookieBanner(p: CookieBannerProps) {
 
     const stored = getStoredConsent(config())
     if (stored) {
-      setChoices({ statistics: stored.statistics, marketing: stored.marketing })
+      setChoices({
+        statistics: stored.statistics,
+        marketing: stored.marketing,
+      })
       // Returning visitor with prior consent — re-arm Google tracking on this page load.
       enableGoogleTracking(trackingConfig(), config())
     } else {
@@ -83,7 +95,11 @@ export function CookieBanner(p: CookieBannerProps) {
 
     const openPreferences = () => {
       const current = getStoredConsent(config())
-      if (current) setChoices({ statistics: current.statistics, marketing: current.marketing })
+      if (current)
+        setChoices({
+          statistics: current.statistics,
+          marketing: current.marketing,
+        })
       setShowSettings(true)
       setVisible(true)
     }

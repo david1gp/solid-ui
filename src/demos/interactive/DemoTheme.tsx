@@ -2,7 +2,7 @@ import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { ThemeButton } from "#ui/interactive/theme/ThemeButton.jsx"
 import { themeSignal } from "#ui/interactive/theme/themeSignal.js"
-import { type ThemeVariant } from "#ui/interactive/theme/themeVariant.js"
+import type { ThemeVariant } from "#ui/interactive/theme/themeVariant.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 

@@ -1,3 +1,4 @@
+import { Key } from "@solid-primitives/keyed"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
 import type { SelectSingleNativeTexts } from "#ui/input/select/SelectSingleNativeTexts.js"
 import { selectSingleNativeTextDefault } from "#ui/input/select/SelectSingleNativeTexts.js"
@@ -9,13 +10,11 @@ import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled.js"
 import type { MayHaveId } from "#ui/utils/MayHaveId.js"
-import { Key } from "@solid-primitives/keyed"
 
 export type StringStringFn = (value: string) => string
 
 export interface SelectSingleNativeProps
-  extends
-    HasValueSignalString,
+  extends HasValueSignalString,
     HasGetOptions,
     MayHaveValueText,
     MayHaveClass,

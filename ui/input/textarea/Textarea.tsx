@@ -1,7 +1,7 @@
-import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier.js"
-import { classMerge } from "#ui/utils/classMerge.js"
 import type { Component, ComponentProps } from "solid-js"
 import { splitProps } from "solid-js"
+import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 
 /** Styled native multiline textarea element. */
 export const Textarea: Component<ComponentProps<"textarea">> = (p) => {

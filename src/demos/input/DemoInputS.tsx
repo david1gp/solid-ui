@@ -1,6 +1,6 @@
+import type { JSX } from "solid-js"
 import { InputS } from "#ui/input/input/InputS.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
-import type { JSX } from "solid-js"
 
 export function DemoInputS() {
   const valueSignal = createSignalObject("")

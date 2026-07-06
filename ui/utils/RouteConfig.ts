@@ -1,4 +1,4 @@
-import { type Component, type JSXElement } from "solid-js"
+import type { Component, JSXElement } from "solid-js"
 
 export type RouteComponent = Component<any> | (() => JSXElement)
 

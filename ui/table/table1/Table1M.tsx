@@ -2,8 +2,8 @@ import { Separator } from "#ui/static/separator/Separator.jsx"
 import type { MobileTableClassNames } from "#ui/table/shared/MobileTableClassNames.js"
 import type { Table1Data } from "#ui/table/table1/Table1Data.js"
 import { Table1MEntry } from "#ui/table/table1/Table1MEntry.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface Table1aMProps<T> extends Table1Data<T>, MayHaveClass {
   mobileClasses?: MobileTableClassNames

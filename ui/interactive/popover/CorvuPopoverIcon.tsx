@@ -1,5 +1,7 @@
+import Popover from "@corvu/popover"
+import { type Component, type ComponentProps, splitProps } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
-import { buttonCvaIconOnly, type ButtonCvaProps } from "#ui/interactive/button/buttonCva.js"
+import { type ButtonCvaProps, buttonCvaIconOnly } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
 import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
 import { classesPopoverContentMerge } from "#ui/interactive/popover/classesPopoverContent.js"
@@ -10,12 +12,9 @@ import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
 import { isLoading, type MayHaveIsLoading } from "#ui/utils/MayHaveIsLoading.js"
-import Popover from "@corvu/popover"
-import { type Component, type ComponentProps, splitProps } from "solid-js"
 
 export interface CorvuPopoverIconProps
-  extends
-    Omit<ComponentProps<"button">, "title">,
+  extends Omit<ComponentProps<"button">, "title">,
     ButtonCvaProps,
     HasIcon,
     HasTitle,

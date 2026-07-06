@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-@source './**/*.{astro,html,mdx,ts,tsx}';
-@source '../lib/**/*.{astro,html,mdx,ts,tsx}';
+@source "./**/*.{astro,html,mdx,ts,tsx}";
+@source "../lib/**/*.{astro,html,mdx,ts,tsx}";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -1,3 +1,5 @@
+import { mdiChevronLeft, mdiChevronRight, mdiMenu } from "@mdi/js"
+import { onCleanup, onMount } from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import type { SidebarState } from "#ui/interactive/sidebar/SidebarState.jsx"
@@ -5,11 +7,13 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import type { MayHaveButtonVariant } from "#ui/utils/MayHaveButtonVariant.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { mdiChevronLeft, mdiChevronRight, mdiMenu } from "@mdi/js"
-import { onCleanup, onMount } from "solid-js"
 
 export interface SidebarToggleProps
-  extends SidebarState, SidebarToggleClasses, MayHaveChildren, MayHaveClass, MayHaveButtonVariant {
+  extends SidebarState,
+    SidebarToggleClasses,
+    MayHaveChildren,
+    MayHaveClass,
+    MayHaveButtonVariant {
   iconClass?: string
 }
 

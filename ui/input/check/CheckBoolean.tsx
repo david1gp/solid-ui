@@ -1,5 +1,6 @@
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle } from "@mdi/js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { classMerge } from "#ui/utils/classMerge.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import type { MayHaveButtonVariant } from "#ui/utils/MayHaveButtonVariant.js"
@@ -7,10 +8,13 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled.js"
 import type { MayHaveId } from "#ui/utils/MayHaveId.js"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
-import { mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle } from "@mdi/js"
 
 export interface CheckBooleanProps
-  extends MayHaveId, MayHaveButtonVariant, MayHaveClass, MayHaveInnerClass, MayHaveDisabled {
+  extends MayHaveId,
+    MayHaveButtonVariant,
+    MayHaveClass,
+    MayHaveInnerClass,
+    MayHaveDisabled {
   valueSignal: SignalObject<boolean>
   valueText: (value: boolean) => string
   optionClass?: string

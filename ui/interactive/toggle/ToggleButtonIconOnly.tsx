@@ -1,19 +1,18 @@
+import { type Component, type ComponentProps, splitProps } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
-import { buttonCvaIconOnly, type ButtonCvaProps } from "#ui/interactive/button/buttonCva.js"
+import { type ButtonCvaProps, buttonCvaIconOnly } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
 import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
+import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import type { HasIcon } from "#ui/utils/HasIcon.js"
 import type { HasTitle } from "#ui/utils/HasTitle.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import { isDisabled } from "#ui/utils/MayHaveDisabledAccessor.js"
 import { isLoading, type MayHaveIsLoading } from "#ui/utils/MayHaveIsLoading.js"
-import type { SignalObject } from "#ui/utils/createSignalObject.js"
-import { type Component, type ComponentProps, splitProps } from "solid-js"
 
 export interface ToggleButtonIconOnlyProps
-  extends
-    Omit<ComponentProps<"button">, "title" | "onClick">,
+  extends Omit<ComponentProps<"button">, "title" | "onClick">,
     ButtonCvaProps,
     HasTitle,
     HasIcon,
@@ -75,7 +74,7 @@ export const ToggleButtonIconOnly: Component<ToggleButtonIconOnlyProps> = (p) =>
 function togglePressed(
   s: Pick<ToggleButtonIconOnlyProps, "disabled" | "title" | "pressedSignal" | "onPressedChange" | "onClick">,
 ): boolean {
-  let next = !s.pressedSignal.get()
+  const next = !s.pressedSignal.get()
   s.pressedSignal.set(next)
   return next
 }

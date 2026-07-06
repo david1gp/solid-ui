@@ -1,13 +1,3 @@
-import { Button } from "#ui/interactive/button/Button.jsx"
-import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
-import { ButtonIcon1 } from "#ui/interactive/button/ButtonIcon1.jsx"
-import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
-import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.js"
-import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
-import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
-import { ToggleButton } from "#ui/interactive/toggle/ToggleButton.jsx"
-import { ToggleButtonIconOnly } from "#ui/interactive/toggle/ToggleButtonIconOnly.jsx"
-import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import {
   mdiBell,
   mdiCheck,
@@ -21,6 +11,16 @@ import {
   mdiTestTubeEmpty,
 } from "@mdi/js"
 import { createSignal } from "solid-js"
+import { Button } from "#ui/interactive/button/Button.jsx"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { ButtonIcon1 } from "#ui/interactive/button/ButtonIcon1.jsx"
+import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
+import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
+import { ToggleButton } from "#ui/interactive/toggle/ToggleButton.jsx"
+import { ToggleButtonIconOnly } from "#ui/interactive/toggle/ToggleButtonIconOnly.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export function DemoButtons() {
   return (

@@ -1,9 +1,9 @@
+import { debounce } from "@solid-primitives/scheduled"
+import { type JSXElement, onMount, Show, splitProps } from "solid-js"
 import type { CorcuDialogTexts } from "#ui/interactive/dialog/CorcuDialogTexts.js"
 import { SidebarMobileDrawer } from "#ui/interactive/sidebar/SidebarMobileDrawer.jsx"
 import type { SidebarState } from "#ui/interactive/sidebar/SidebarState.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { debounce } from "@solid-primitives/scheduled"
-import { onMount, Show, splitProps, type JSXElement } from "solid-js"
 
 export interface SidebarProps extends MayHaveClass {
   state: SidebarState

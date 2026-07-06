@@ -1,25 +1,24 @@
+import Dialog from "@corvu/dialog"
+import { mdiClose } from "@mdi/js"
+import { type Component, type ComponentProps, splitProps } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
-import { buttonCvaIconOnly, buttonVariant, type ButtonCvaProps } from "#ui/interactive/button/buttonCva.js"
+import { type ButtonCvaProps, buttonCvaIconOnly, buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
 import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
 import type { CorcuDialogTexts } from "#ui/interactive/dialog/CorcuDialogTexts.js"
 import { corvuDialogTextDefault } from "#ui/interactive/dialog/CorcuDialogTexts.js"
 import { classesDialogContentMerge, classesDialogOverlayMerge } from "#ui/interactive/dialog/classesDialogContent.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
 import type { HasIcon } from "#ui/utils/HasIcon.js"
 import type { HasTitle } from "#ui/utils/HasTitle.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
 import { isLoading, type MayHaveIsLoading } from "#ui/utils/MayHaveIsLoading.js"
-import { classMerge } from "#ui/utils/classMerge.js"
-import Dialog from "@corvu/dialog"
-import { mdiClose } from "@mdi/js"
-import { splitProps, type Component, type ComponentProps } from "solid-js"
 
 export interface CorvuDialogIconProps
-  extends
-    Omit<ComponentProps<"button">, "title">,
+  extends Omit<ComponentProps<"button">, "title">,
     ButtonCvaProps,
     HasIcon,
     HasTitle,

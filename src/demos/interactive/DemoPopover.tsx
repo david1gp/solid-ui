@@ -1,3 +1,4 @@
+import { mdiDotsVertical } from "@mdi/js"
 import { LongContent } from "#src/demos/interactive/LongContent.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
@@ -5,7 +6,6 @@ import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon.jsx"
 import { classesGridCols3xl } from "#ui/static/grid/classesGridCols.js"
 import { classArr } from "#ui/utils/classArr.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { mdiDotsVertical } from "@mdi/js"
 
 export function DemoPopover() {
   return (

@@ -1,6 +1,8 @@
+import { mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle } from "@mdi/js"
+import { For, Show, splitProps } from "solid-js"
 import { classesTextMuted } from "#ui/classes/classesTextMuted.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { classesGridCols3xl } from "#ui/static/grid/classesGridCols.js"
 import { classArr } from "#ui/utils/classArr.js"
 import { classMerge } from "#ui/utils/classMerge.js"
@@ -10,11 +12,13 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled.js"
 import type { MayHaveId } from "#ui/utils/MayHaveId.js"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
-import { mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle } from "@mdi/js"
-import { For, Show, splitProps } from "solid-js"
 
 export interface CheckMultipleProps<T extends string>
-  extends MayHaveId, MayHaveButtonVariant, MayHaveClass, MayHaveInnerClass, MayHaveDisabled {
+  extends MayHaveId,
+    MayHaveButtonVariant,
+    MayHaveClass,
+    MayHaveInnerClass,
+    MayHaveDisabled {
   // state
   valueSignal: SignalObject<T[]>
   getOptions: () => T[]

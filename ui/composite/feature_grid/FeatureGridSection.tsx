@@ -1,8 +1,8 @@
+import { type ComponentProps, splitProps } from "solid-js"
 import type { GridFeatureType } from "#ui/static/grid/GridFeatureType.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import { classMerge } from "#ui/utils/classMerge.js"
-import { splitProps, type ComponentProps } from "solid-js"
 
 export interface FeatureGridSectionProps extends ComponentProps<"section"> {
   id: string

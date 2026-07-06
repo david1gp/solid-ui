@@ -1,10 +1,10 @@
+import { mdiCheck, mdiMagnify, mdiUndo } from "@mdi/js"
+import { createSignal, For, onCleanup, Show } from "solid-js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
-import { type SignalObject } from "#ui/utils/createSignalObject.js"
-import { mdiCheck, mdiMagnify, mdiUndo } from "@mdi/js"
-import { For, Show, createSignal, onCleanup } from "solid-js"
+import type { SignalObject } from "#ui/utils/createSignalObject.js"
 
 export interface SearchFilterEntry {
   key: string

@@ -1,9 +1,9 @@
+import { createLink } from "@tanstack/solid-router"
+import { splitProps } from "solid-js"
 import { buttonCva2 } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
 import type { ButtonAnchorProps } from "#ui/interactive/link/LinkButtonProps.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { createLink } from "@tanstack/solid-router"
-import { splitProps } from "solid-js"
 
 /** Shared styled button-anchor; base for both link variants. */
 function ButtonAnchor(p: ButtonAnchorProps) {

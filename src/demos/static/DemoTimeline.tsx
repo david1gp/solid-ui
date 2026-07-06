@@ -1,7 +1,7 @@
-import { Icon } from "#ui/static/icon/Icon.jsx"
-import { Timeline } from "#ui/static/timeline/Timeline.jsx"
 import { mdiBrain, mdiCodeTags, mdiPencilRuler, mdiRocketLaunch, mdiTestTube } from "@mdi/js"
 import type { JSXElement } from "solid-js"
+import { Icon } from "#ui/static/icon/Icon.jsx"
+import { Timeline } from "#ui/static/timeline/Timeline.jsx"
 
 export function DemoTimeline() {
   const items: {

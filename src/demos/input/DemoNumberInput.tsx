@@ -1,7 +1,7 @@
+import type { JSX } from "solid-js"
 import { NumberInputS } from "#ui/input/number/NumberInputS.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
-import type { JSX } from "solid-js"
 
 export function DemoNumberInput() {
   const valueSignal = createSignalObject(0)

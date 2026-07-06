@@ -1,4 +1,4 @@
-import { demoGetTextValue, demoGetSubtitleValue } from "#src/demos/input/demoGetTextValue.jsx"
+import { demoGetSubtitleValue, demoGetTextValue } from "#src/demos/input/demoGetTextValue.jsx"
 import { CheckMultiple } from "#ui/input/check/CheckMultiple.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"

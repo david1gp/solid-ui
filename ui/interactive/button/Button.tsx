@@ -1,8 +1,8 @@
-import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
-import { buttonCva2, type ButtonCvaProps } from "#ui/interactive/button/buttonCva.js"
-import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
 import type { Component, ComponentProps } from "solid-js"
 import { splitProps } from "solid-js"
+import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
+import { type ButtonCvaProps, buttonCva2 } from "#ui/interactive/button/buttonCva.js"
+import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
 
 export interface ButtonProps extends ComponentProps<"button">, ButtonCvaProps {}
 

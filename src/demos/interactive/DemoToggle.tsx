@@ -1,8 +1,8 @@
+import { mdiFormatAlignCenter, mdiFormatAlignLeft, mdiFormatAlignRight } from "@mdi/js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 import { ToggleButton } from "#ui/interactive/toggle/ToggleButton.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
-import { mdiFormatAlignCenter, mdiFormatAlignLeft, mdiFormatAlignRight } from "@mdi/js"
 
 export function DemoToggle() {
   return (
@@ -67,9 +67,24 @@ function TextFormattingDemo() {
 
 function MultipleToggleDemo() {
   const toggles = [
-    { id: "left", pressed: createSignalObject(false), icon: mdiFormatAlignLeft, label: "Left" },
-    { id: "center", pressed: createSignalObject(false), icon: mdiFormatAlignCenter, label: "Center" },
-    { id: "right", pressed: createSignalObject(false), icon: mdiFormatAlignRight, label: "Right" },
+    {
+      id: "left",
+      pressed: createSignalObject(false),
+      icon: mdiFormatAlignLeft,
+      label: "Left",
+    },
+    {
+      id: "center",
+      pressed: createSignalObject(false),
+      icon: mdiFormatAlignCenter,
+      label: "Center",
+    },
+    {
+      id: "right",
+      pressed: createSignalObject(false),
+      icon: mdiFormatAlignRight,
+      label: "Right",
+    },
   ]
 
   const handleToggleChange = (toggleId: string, pressed: boolean) => {

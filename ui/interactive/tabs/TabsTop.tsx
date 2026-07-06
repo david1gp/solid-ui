@@ -1,3 +1,6 @@
+import { Key } from "@solid-primitives/keyed"
+import type { JSXElement } from "solid-js"
+import { createUniqueId } from "solid-js"
 import type { TabsTopText } from "#ui/interactive/tabs/TabsTopText.js"
 import { tabsTopTextDefault } from "#ui/interactive/tabs/TabsTopText.js"
 import { classArr } from "#ui/utils/classArr.js"
@@ -7,12 +10,13 @@ import type { HasValueSignalString } from "#ui/utils/HasValueSignalString.js"
 import type { MayHaveValueText } from "#ui/utils/HasValueText.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { Key } from "@solid-primitives/keyed"
-import type { JSXElement } from "solid-js"
-import { createUniqueId } from "solid-js"
 
 export interface TabsTopProps
-  extends HasValueSignalString, HasGetOptions, MayHaveValueText, MayHaveChildren, MayHaveClass {
+  extends HasValueSignalString,
+    HasGetOptions,
+    MayHaveValueText,
+    MayHaveChildren,
+    MayHaveClass {
   valueIcon?: (value: string) => string
   valueAmount?: (value: string) => number | undefined
   valueChildren: (value: string) => JSXElement
@@ -147,7 +151,7 @@ interface SetActiveTabProps extends HasValueSignalString {
 }
 
 function setActiveTab(p: SetActiveTabProps) {
-  let prev = p.valueSignal.get()
+  const prev = p.valueSignal.get()
   // console.log("setActiveTab", p.value, "prev:", prev)
   if (prev === p.value) return
   p.valueSignal.set(p.value)

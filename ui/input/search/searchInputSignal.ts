@@ -1,5 +1,5 @@
-import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { scheduleIdle } from "@solid-primitives/scheduled"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export const searchInputSignal = createSignalObject("")
 

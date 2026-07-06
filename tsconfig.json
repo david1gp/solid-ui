@@ -9,11 +9,7 @@
     //
     // dom
     //
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     //
@@ -32,9 +28,7 @@
     "useDefineForClassFields": true,
     "moduleDetection": "force",
     "noUncheckedSideEffectImports": true,
-    "types": [
-      "bun"
-    ],
+    "types": ["bun"],
     //
     // type imports - https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
     //
@@ -55,12 +49,7 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "lib",
-    "src",
-    "ui",
-    "test"
-  ],
+  "include": ["lib", "src", "ui", "test"],
   "exclude": [
     ".idea",
     ".vscode",

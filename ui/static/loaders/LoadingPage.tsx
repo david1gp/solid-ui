@@ -1,4 +1,4 @@
-import { loadingPageTextsDefault, type LoadingPageTexts } from "#ui/static/loaders/LoadingPageTexts.js"
+import { type LoadingPageTexts, loadingPageTextsDefault } from "#ui/static/loaders/LoadingPageTexts.js"
 import { RandomLoader } from "#ui/static/loaders/RandomLoader.jsx"
 import { classMerge } from "#ui/utils/classMerge.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
