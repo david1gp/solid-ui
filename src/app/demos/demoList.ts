@@ -51,6 +51,11 @@ const DemoSelectSingleNative = lazy(async () => {
   return { default: c.DemoSelectSingleNative }
 })
 
+const DemoSelectSingle = lazy(async () => {
+  const c = await import("#src/demos/input/DemoSelectSingle.jsx")
+  return { default: c.DemoSelectSingle }
+})
+
 const DemoCheckMultiple = lazy(async () => {
   const c = await import("#src/demos/input/DemoCheckMultiple.jsx")
   return { default: c.DemoCheckMultiple }
@@ -204,6 +209,7 @@ export const demoList = {
     DemoInputS: DemoInputS,
     DemoNumberInput: DemoNumberInput,
     DemoSelectSingleNative: DemoSelectSingleNative,
+    DemoSelectSingle: DemoSelectSingle,
     DemoCheckMultiple: DemoCheckMultiple,
     DemoCheckbox: DemoCheckbox,
     DemoInputDatalist: DemoInputDatalist,
