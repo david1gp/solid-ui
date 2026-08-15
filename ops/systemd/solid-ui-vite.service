@@ -1,0 +1,14 @@
+[Unit]
+Description=solid-ui Vite development server (:3031)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/adaptive/solid-ui
+Environment=PATH=%h/.local/bin:%h/.bun/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/env bun run vite:dev -- --host 127.0.0.1 --port 3031
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

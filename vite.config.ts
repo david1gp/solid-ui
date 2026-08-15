@@ -15,7 +15,7 @@ export default defineConfig({
     watch: {
       ignored: ["**/.github/**", "**/data/**", "**/dist/**", "**/ops/**", "**/out/**", "**/docs/**", "**/test/**"],
     },
-    allowedHosts: ["solid-ui.com"],
+    allowedHosts: ["solid-ui.david-siewert.com"],
   },
   plugins: [
     tanstackStart({
