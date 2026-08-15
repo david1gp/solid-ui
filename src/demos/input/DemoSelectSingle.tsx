@@ -1,9 +1,12 @@
 import type { JSX } from "solid-js"
+import { demoGetTextValue } from "#src/demos/input/demoGetTextValue.jsx"
 import { SelectSingle } from "#ui/input/select/SelectSingle.jsx"
 import type { SelectSingleEntry } from "#ui/input/select/SelectSingleEntry.js"
+import { classesGridCols3xl } from "#ui/static/grid/classesGridCols.js"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { arrCreate } from "#utils/arr/arrCreate.js"
 
 const basicEntries: SelectSingleEntry[] = [
   { type: "item", value: "Apple" },
@@ -23,10 +26,13 @@ const groupedEntries: SelectSingleEntry[] = [
   { type: "item", value: "Iced coffee" },
   { type: "item", value: "Lemonade" },
 ]
+const options100Strings = arrCreate<string>(100, (i) => "" + i)
+const entries100: SelectSingleEntry[] = options100Strings.map((value) => ({ type: "item", value }))
 
 const basicValueSignal = createSignalObject("")
 const densityValueSignal = createSignalObject("")
 const groupedValueSignal = createSignalObject("")
+const hundredValueSignal = createSignalObject("")
 
 export function DemoSelectSingle() {
   return (
@@ -56,6 +62,19 @@ export function DemoSelectSingle() {
           innerClass={classArr(
             "grid grid-cols-1", // layout
             "gap-y-1", // spacing
+          )}
+          buttonProps={{}}
+        />
+      </SelectExample>
+      <SelectExample title="100 items">
+        <SelectSingle
+          valueSignal={hundredValueSignal}
+          getOptions={() => entries100}
+          valueText={demoGetTextValue}
+          innerClass={classArr(
+            classesGridCols3xl, // responsive grid
+            "max-h-80 overflow-y-auto", // bounded scrolling
+            "gap-x-2 gap-y-1", // spacing
           )}
           buttonProps={{}}
         />
