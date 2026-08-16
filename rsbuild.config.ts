@@ -2,6 +2,7 @@ import { defineConfig } from "@rsbuild/core"
 import { pluginBabel } from "@rsbuild/plugin-babel"
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
 import { pluginSolid } from "@rsbuild/plugin-solid"
+import tailwindcss from "@tailwindcss/postcss"
 
 export default defineConfig({
   server: {
@@ -32,6 +33,14 @@ export default defineConfig({
     }),
     pluginSolid(),
   ],
+  tools: {
+    postcss: {
+      postcssOptions: {
+        config: false,
+        plugins: [tailwindcss()],
+      },
+    },
+  },
   output: {
     distPath: {
       root: "out",
