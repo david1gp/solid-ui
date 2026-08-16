@@ -1,12 +1,28 @@
 import tailwindcss from "@tailwindcss/vite"
 import { tanstackStart } from "@tanstack/solid-start/plugin/vite"
 import { visualizer } from "rollup-plugin-visualizer"
+import type { Plugin } from "vite"
 import { defineConfig } from "vite"
 import solid from "vite-plugin-solid"
 import { getPrerenderPages } from "./src/lib/prerenderPages"
 import { siteUrl } from "./src/lib/seo"
 
 const prerenderPages = getPrerenderPages()
+
+function tailwindStandaloneCssStubPlugin(): Plugin {
+  const standaloneCssPattern =
+    /(?:^|[/\\])node_modules[/\\]tailwindcss[/\\](?:index|theme|preflight|utilities)\.css(?:\?.*)?$/
+
+  return {
+    name: "tailwind-standalone-css-stub",
+    apply: "serve",
+    enforce: "pre",
+    load(id) {
+      if (!standaloneCssPattern.test(id)) return
+      return ""
+    },
+  }
+}
 
 export default defineConfig({
   server: {
@@ -41,6 +57,7 @@ export default defineConfig({
     }),
     // @ts-ignore - solid plugin types
     solid({ ssr: true }),
+    tailwindStandaloneCssStubPlugin(),
     tailwindcss(),
     visualizer({ filename: "dist/bundle-size.html", gzipSize: true }),
   ],
