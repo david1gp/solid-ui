@@ -28,6 +28,10 @@
 /* shadcn theming - https://ui.shadcn.com/docs/theming */
 /* background colors - https://tailwindcss.com/docs/background-color */
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
   /*
   [Tutorial] How to make use of Tailwind Colors directly in CSS Variables
   https://github.com/shadcn-ui/ui/issues/669
