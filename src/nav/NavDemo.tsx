@@ -62,20 +62,22 @@ export function NavDemo(p: DemoNavProps) {
         )}
       </div>
 
-      <LinkButtonExternal variant={buttonVariant.ghost} icon={iconGithub} href={githubUrl} title="Github" newTab>
-        Code
-      </LinkButtonExternal>
-      <LinkButtonExternal
-        variant={buttonVariant.ghost}
-        icon={iconNpm}
-        iconClass="size-8"
-        href={npmUrl}
-        title="NPM"
-        newTab
-      >
-        Package
-      </LinkButtonExternal>
-      <ThemeButton showText={true} class="rounded-md sm:pr-0" />
+      <div class="flex flex-wrap items-center gap-1">
+        <LinkButtonExternal variant={buttonVariant.ghost} icon={iconGithub} href={githubUrl} title="Github" newTab>
+          Code
+        </LinkButtonExternal>
+        <LinkButtonExternal
+          variant={buttonVariant.ghost}
+          icon={iconNpm}
+          iconClass="size-8"
+          href={npmUrl}
+          title="NPM"
+          newTab
+        >
+          Package
+        </LinkButtonExternal>
+        <ThemeButton showText={true} class="rounded-md sm:pr-0" />
+      </div>
     </nav>
   )
 }
