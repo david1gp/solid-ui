@@ -1,4 +1,4 @@
-import { mdiCheckCircle } from "@mdi/js"
+import { mdiCheckCircle } from "@adaptive-ds/mdi/mdiCheckCircle.js"
 import { LongContent } from "#src/demos/interactive/LongContent.jsx"
 import { DetailsDialog } from "#ui/interactive/dialog/DetailsDialog.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"

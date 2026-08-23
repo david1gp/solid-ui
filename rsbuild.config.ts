@@ -82,7 +82,7 @@ export default defineConfig({
     chunkSplit: {
       strategy: "split-by-experience",
       forceSplitting: {
-        "@mdi/js": /node_modules[\\/]@mdi[\\/]js/,
+        "@adaptive-ds/mdi": /node_modules[\\/]@adaptive-ds[\\/]mdi/,
         "tailwind-merge": /node_modules[\\/]tailwind-merge/,
         "posthog-js": /node_modules[\\/]posthog-js/,
       },

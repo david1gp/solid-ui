@@ -1,4 +1,8 @@
-import { mdiAccount, mdiCog, mdiHeart, mdiHome, mdiStar } from "@mdi/js"
+import { mdiAccount } from "@adaptive-ds/mdi/mdiAccount.js"
+import { mdiCog } from "@adaptive-ds/mdi/mdiCog.js"
+import { mdiHeart } from "@adaptive-ds/mdi/mdiHeart.js"
+import { mdiHome } from "@adaptive-ds/mdi/mdiHome.js"
+import { mdiStar } from "@adaptive-ds/mdi/mdiStar.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { SvgIconGoogle as IconGoogle } from "#ui/static/icon/IconGoogle.jsx"
 

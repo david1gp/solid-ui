@@ -1,4 +1,4 @@
-import { mdiCog } from "@mdi/js"
+import { mdiCog } from "@adaptive-ds/mdi/mdiCog.js"
 import { LongContent } from "#src/demos/interactive/LongContent.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { CorvuDialog } from "#ui/interactive/dialog/CorvuDialog.jsx"

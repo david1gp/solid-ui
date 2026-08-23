@@ -1,4 +1,4 @@
-import { mdiDotsVertical } from "@mdi/js"
+import { mdiDotsVertical } from "@adaptive-ds/mdi/mdiDotsVertical.js"
 import { LongContent } from "#src/demos/interactive/LongContent.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"

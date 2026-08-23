@@ -1,4 +1,5 @@
-import { mdiAccount, mdiInformation } from "@mdi/js"
+import { mdiAccount } from "@adaptive-ds/mdi/mdiAccount.js"
+import { mdiInformation } from "@adaptive-ds/mdi/mdiInformation.js"
 import { Details } from "#ui/interactive/details/Details.jsx"
 
 export function DemoDetails() {

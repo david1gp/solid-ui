@@ -1,4 +1,5 @@
-import { mdiChevronLeft, mdiChevronRight } from "@mdi/js"
+import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
+import { mdiChevronRight } from "@adaptive-ds/mdi/mdiChevronRight.js"
 import type { JSXElement } from "solid-js"
 import { NumberInputS } from "#ui/input/number/NumberInputS.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"

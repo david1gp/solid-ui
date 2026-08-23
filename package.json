@@ -27,10 +27,10 @@
     "reset": "rm -rf ./node_modules"
   },
   "peerDependencies": {
+    "@adaptive-ds/mdi": "^0.1.2",
     "@adaptive-ds/utils": "^0.12.0",
     "@corvu/dialog": "^0.2.4",
     "@corvu/popover": "^0.2.0",
-    "@mdi/js": "^7.4.47",
     "@solid-primitives/keyed": "^1.5.3",
     "@solid-primitives/scheduled": "^1.5.2",
     "@tanstack/solid-router": "^1.170.0",

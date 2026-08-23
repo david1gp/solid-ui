@@ -1,15 +1,13 @@
-import {
-  mdiBell,
-  mdiCheck,
-  mdiCodeBraces,
-  mdiCodeJson,
-  mdiDownload,
-  mdiHeart,
-  mdiLoading,
-  mdiStar,
-  mdiTestTube,
-  mdiTestTubeEmpty,
-} from "@mdi/js"
+import { mdiBell } from "@adaptive-ds/mdi/mdiBell.js"
+import { mdiCheck } from "@adaptive-ds/mdi/mdiCheck.js"
+import { mdiCodeBraces } from "@adaptive-ds/mdi/mdiCodeBraces.js"
+import { mdiCodeJson } from "@adaptive-ds/mdi/mdiCodeJson.js"
+import { mdiDownload } from "@adaptive-ds/mdi/mdiDownload.js"
+import { mdiHeart } from "@adaptive-ds/mdi/mdiHeart.js"
+import { mdiLoading } from "@adaptive-ds/mdi/mdiLoading.js"
+import { mdiStar } from "@adaptive-ds/mdi/mdiStar.js"
+import { mdiTestTube } from "@adaptive-ds/mdi/mdiTestTube.js"
+import { mdiTestTubeEmpty } from "@adaptive-ds/mdi/mdiTestTubeEmpty.js"
 import { createSignal } from "solid-js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"

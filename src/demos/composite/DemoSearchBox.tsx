@@ -1,4 +1,6 @@
-import { mdiMapMarker, mdiSort, mdiTag } from "@mdi/js"
+import { mdiMapMarker } from "@adaptive-ds/mdi/mdiMapMarker.js"
+import { mdiSort } from "@adaptive-ds/mdi/mdiSort.js"
+import { mdiTag } from "@adaptive-ds/mdi/mdiTag.js"
 import { createMemo } from "solid-js"
 import { SearchBox } from "#ui/composite/searchbox/index.js"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"

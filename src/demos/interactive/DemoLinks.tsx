@@ -1,4 +1,6 @@
-import { mdiGithub, mdiHome, mdiOpenInNew } from "@mdi/js"
+import { mdiGithub } from "@adaptive-ds/mdi/mdiGithub.js"
+import { mdiHome } from "@adaptive-ds/mdi/mdiHome.js"
+import { mdiOpenInNew } from "@adaptive-ds/mdi/mdiOpenInNew.js"
 import { For } from "solid-js"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { LinkButtonExternal, LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"

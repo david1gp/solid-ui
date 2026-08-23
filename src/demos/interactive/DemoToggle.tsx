@@ -1,4 +1,6 @@
-import { mdiFormatAlignCenter, mdiFormatAlignLeft, mdiFormatAlignRight } from "@mdi/js"
+import { mdiFormatAlignCenter } from "@adaptive-ds/mdi/mdiFormatAlignCenter.js"
+import { mdiFormatAlignLeft } from "@adaptive-ds/mdi/mdiFormatAlignLeft.js"
+import { mdiFormatAlignRight } from "@adaptive-ds/mdi/mdiFormatAlignRight.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 import { ToggleButton } from "#ui/interactive/toggle/ToggleButton.jsx"

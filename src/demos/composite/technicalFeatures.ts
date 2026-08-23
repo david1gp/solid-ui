@@ -1,14 +1,12 @@
-import {
-  mdiAccountKey,
-  mdiMonitorCellphone,
-  mdiRocketLaunch,
-  mdiServerNetwork,
-  mdiShieldHalfFull,
-  mdiShieldLock,
-  mdiSync,
-  mdiThemeLightDark,
-  mdiWheelchair,
-} from "@mdi/js"
+import { mdiAccountKey } from "@adaptive-ds/mdi/mdiAccountKey.js"
+import { mdiMonitorCellphone } from "@adaptive-ds/mdi/mdiMonitorCellphone.js"
+import { mdiRocketLaunch } from "@adaptive-ds/mdi/mdiRocketLaunch.js"
+import { mdiServerNetwork } from "@adaptive-ds/mdi/mdiServerNetwork.js"
+import { mdiShieldHalfFull } from "@adaptive-ds/mdi/mdiShieldHalfFull.js"
+import { mdiShieldLock } from "@adaptive-ds/mdi/mdiShieldLock.js"
+import { mdiSync } from "@adaptive-ds/mdi/mdiSync.js"
+import { mdiThemeLightDark } from "@adaptive-ds/mdi/mdiThemeLightDark.js"
+import { mdiWheelchair } from "@adaptive-ds/mdi/mdiWheelchair.js"
 import type { GridFeatureType } from "#ui/static/grid/GridFeatureType.js"
 
 export const technicalFeatures = [

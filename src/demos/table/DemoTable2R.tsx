@@ -1,4 +1,5 @@
-import { mdiMagicStaff, mdiTrashCan } from "@mdi/js"
+import { mdiMagicStaff } from "@adaptive-ds/mdi/mdiMagicStaff.js"
+import { mdiTrashCan } from "@adaptive-ds/mdi/mdiTrashCan.js"
 import { formModeIcon } from "#ui/input/form/formModeIcon.js"
 import { InputS } from "#ui/input/input/InputS.jsx"
 import { Button } from "#ui/interactive/button/Button.jsx"

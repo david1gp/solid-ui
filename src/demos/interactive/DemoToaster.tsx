@@ -1,4 +1,4 @@
-import { mdiHeart } from "@mdi/js"
+import { mdiHeart } from "@adaptive-ds/mdi/mdiHeart.js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
