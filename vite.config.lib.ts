@@ -45,9 +45,8 @@ export default defineConfig({
         "@solid-primitives/keyed",
         "@solid-primitives/scheduled",
         "@tanstack/solid-router",
-        "clsx",
+        "cn",
         "dayjs",
-        "tailwind-merge",
         "valibot",
         /^node:.*$/, // Externalize all node imports
         /^bun:.*$/, // Externalize all bun imports

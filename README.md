@@ -44,7 +44,7 @@ This is the recommended setup for two reasons:
 Ensure you have the peer dependencies installed:
 
 ```bash
-bun add solid-js clsx tailwind-merge valibot dayjs @solid-primitives/keyed @solid-primitives/scheduled @adaptive-ds/mdi
+bun add solid-js cn valibot dayjs @solid-primitives/keyed @solid-primitives/scheduled @adaptive-ds/mdi
 ```
 
 ## Setup: Tailwind CSS Configuration
