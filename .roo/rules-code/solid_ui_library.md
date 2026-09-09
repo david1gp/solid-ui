@@ -217,7 +217,6 @@ Generated at: 2026-03-14 04:06
 - ~/interactive/button/classesButtonDisabled.ts
 - ~/interactive/button/buttonIconCva.ts
 - ~/interactive/button/classesButtonClickAnimationPush.ts
-- ~/interactive/button/ButtonIcon1.tsx
 - ~/interactive/button/classesButtonClickAnimation.ts
 - ~/interactive/button/Button.tsx
 - ~/interactive/dialog/CorcuDialogTexts.ts

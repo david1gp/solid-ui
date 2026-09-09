@@ -11,7 +11,6 @@ import { mdiTestTubeEmpty } from "@adaptive-ds/mdi/mdiTestTubeEmpty.js"
 import { createSignal } from "solid-js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
-import { ButtonIcon1 } from "#ui/interactive/button/ButtonIcon1.jsx"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
 import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
@@ -30,7 +29,6 @@ export function DemoButtons() {
         <ButtonSizesDemo />
         <ButtonIconDemo />
         <ButtonIconOnlyDemo />
-        <ButtonIcon1Demo />
         <ButtonStatesDemo />
         <ToggleButtonsDemo />
       </div>
@@ -141,21 +139,6 @@ function ButtonIconOnlyDemo() {
           variant={buttonVariant.contrast}
           onClick={() => toastAdd({ title: "Favorited!", variant: toastVariant.success })}
         />
-      </div>
-    </div>
-  )
-}
-
-function ButtonIcon1Demo() {
-  return (
-    <div>
-      <h2 class="text-2xl font-bold mb-4">ButtonIcon1 Component</h2>
-      <div class="flex flex-wrap gap-4">
-        <ButtonIcon1 icon={mdiHeart}>With Icon</ButtonIcon1>
-        <ButtonIcon1 iconRight={mdiHeart}>Icon Right</ButtonIcon1>
-        <ButtonIcon1 icon={mdiHeart} iconRight={mdiHeart}>
-          Both Icons
-        </ButtonIcon1>
       </div>
     </div>
   )
