@@ -87,20 +87,16 @@ export function getThemeFromBrowserPref() {
 }
 
 export function getThemeFromStorageOrBrowserPref(): ThemeVariant {
-  const op = "getThemeFromStorageOrBrowserPref"
   if (typeof window === "undefined") {
-    // console.log(op, "themeInit: window undefined")
-    return getThemeFromBrowserPref()
+    return themeVariant.light
   }
   const stored = localStorage?.getItem(themeLocalStorageKey) ?? null
   if (!stored) {
-    // console.log(op, "!stored", stored)
-    return getThemeFromBrowserPref()
+    return themeVariant.light
   }
   const result = v.safeParse(themeSchema, stored)
   if (!result.success) {
-    // console.log(op, "!parsed.success", result.issues, stored)
-    return getThemeFromBrowserPref()
+    return themeVariant.light
   }
   return result.output
 }
