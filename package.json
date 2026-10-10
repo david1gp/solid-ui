@@ -7,7 +7,7 @@
     "build:site": "bun run vite:build",
     "build:lib": "clear ; rm -rf ./dist ; vite build --config vite.config.lib.ts",
     "ts:build": "rm -rf ./export ; tsc -p ./tsconfig.lib.json",
-    "compile": "bun run tsc",
+    "compile": "bun check",
     "vite:dev": "nice -5 vite dev --debug hmr",
     "vite:build": "nice -15 vite build",
     "vite:deploy": "bun run vite:build && bun run solid:upload && bun run tag:deployed",
@@ -21,7 +21,7 @@
     "generateDemoList": "bun run ./src/app/demos/generateDemoList.cli.ts",
     "generateIndexAgents": "bun run ./src/app/generateIndexAgents.cli.ts",
     "update": "nice -15 bun x npm-check-updates -u && bun i",
-    "update:commit": "bun x npm-check-updates -u && bun i && git add package.json && bun run tsc && git commit -m \"chore(deps): update dependencies\" && git push",
+    "update:commit": "bun x npm-check-updates -u && bun i && git add package.json && bun check && git commit -m \"chore(deps): update dependencies\" && git push",
     "format": "biome format --write src ui package.json tsconfig.json tsconfig.lib.json biome.json",
     "clean": "rm -rf ./dist",
     "reset": "rm -rf ./node_modules"
