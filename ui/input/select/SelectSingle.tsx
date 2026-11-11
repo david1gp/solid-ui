@@ -1,5 +1,6 @@
-import Popover from "@corvu/popover"
 import { mdiCheck } from "@adaptive-ds/mdi/mdiCheck.js"
+import Popover from "@corvu/popover"
+import { cn } from "cn"
 import { For, type JSX, Show } from "solid-js"
 import type { SelectSingleEntry, SelectSingleGroupEntry } from "#ui/input/select/SelectSingleEntry.js"
 import type { SelectSingleTexts } from "#ui/input/select/SelectSingleTexts.js"
@@ -10,7 +11,6 @@ import type { CorvuPopoverProps } from "#ui/interactive/popover/CorvuPopover.jsx
 import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
 import { classesGridCols3xl } from "#ui/static/grid/classesGridCols.js"
 import { classArr } from "#ui/utils/classArr.js"
-import { classMerge } from "#ui/utils/classMerge.js"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import type { HasValueSignalString } from "#ui/utils/HasValueSignalString.js"
 import type { MayHaveValueText } from "#ui/utils/HasValueText.js"
@@ -184,7 +184,7 @@ function ListOption(p: ListOptionProps) {
       onKeyDown={(event) => handleOptionKeyDown(event, p.option, p.valueSignal, p.closePopover)}
       onClick={() => p.valueSignal.set(p.option)}
       variant={buttonVariant.ghost}
-      class={classMerge("justify-start text-left", p.listOptionClass)}
+      class={cn("justify-start text-left", p.listOptionClass)}
       disabled={p.disabled}
     >
       {p.renderItem ? p.renderItem(p.option) : label()}
@@ -197,7 +197,7 @@ interface NoItemsProps extends MayHaveClass {
 }
 
 function NoItems(p: NoItemsProps) {
-  return <div class={classMerge("py-2 px-3", p.class)}>{p.texts.noEntries}</div>
+  return <div class={cn("py-2 px-3", p.class)}>{p.texts.noEntries}</div>
 }
 
 function getTriggerLabel(p: SelectSingleProps, texts: SelectSingleTexts): string {

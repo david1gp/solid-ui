@@ -1,6 +1,6 @@
+import { cn } from "cn"
 import { splitProps } from "solid-js"
 import { CorvuDialog, type CorvuDialogProps } from "#ui/interactive/dialog/CorvuDialog.jsx"
-import { classMerge } from "#ui/utils/classMerge.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
 
 export interface SidebarMobileDrawerProps extends Omit<CorvuDialogProps, "open" | "onOpenChange"> {
@@ -15,7 +15,7 @@ export function SidebarMobileDrawer(p: SidebarMobileDrawerProps) {
       {...rest}
       open={s.open.get()}
       onOpenChange={(open) => s.open.set(open)}
-      class={classMerge("hidden", s.class)}
+      class={cn("hidden", s.class)}
     />
   )
 }
