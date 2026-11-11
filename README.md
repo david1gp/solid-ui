@@ -145,7 +145,7 @@ The library includes a variety of UI components organized by category:
 
 ### Utils
 
-- [Class Utilities](https://github.com/david1gp/solid-ui/tree/main/lib/utils/ui) - `classMerge`, `classArr` for Tailwind class management.
+- [Class Utilities](https://github.com/david1gp/solid-ui/tree/main/lib/utils/ui) - `cn`, `classArr` for Tailwind class management.
 - [i18n](https://github.com/david1gp/solid-ui/tree/main/lib/i18n) - Basic internationalization support.
 - [Arrays & Objects](https://github.com/david1gp/solid-ui/tree/main/lib/utils/arr) - Utility functions for data manipulation.
 

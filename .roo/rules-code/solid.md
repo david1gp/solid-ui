@@ -25,10 +25,10 @@ Instead of adding conditional logic or early returns in React-like patterns:
 
 ## component classes
 
-### classMerge and classArr
+### cn and classArr
 
-- **Standardize class organization** in Solid components using `classMerge` and `classArr` utility functions
-- **Always use `classMerge`** instead of template strings
+- **Standardize class organization** in Solid components using `cn` (from the `cn` package) and the `classArr` utility function
+- **Always use `cn`** instead of template strings
 - **Group classes** by functional category:
   ```tsx
   ;[
@@ -50,7 +50,7 @@ Instead of adding conditional logic or early returns in React-like patterns:
   - State modifiers (hover/focus)
 - **Place props.class last** to enable proper override
 - Prefer `classArr` for static class lists without dynamic props
-- Use `classMerge` when dynamic class props are needed
+- Use `cn` when dynamic class props are needed
 
 Incorrect Approach (String Templates):
 
@@ -59,12 +59,12 @@ Incorrect Approach (String Templates):
 <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
 ```
 
-Correct Approach (ClassMerge + Grouped Arrays):
+Correct Approach (cn + Grouped Arrays):
 
 ```tsx
-import { classMerge } from "#/ui/utils/classMerge"
+import { cn } from "cn"
 
-<div class={classMerge(
+<div class={cn(
   "flex flex-col items-center justify-center", // layout
   "min-h-screen", // sizing
   "bg-gray-50 dark:bg-gray-900", // background
