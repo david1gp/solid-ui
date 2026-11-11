@@ -12,7 +12,7 @@ import { createSignal } from "solid-js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
-import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 import { ToggleButton } from "#ui/interactive/toggle/ToggleButton.jsx"
@@ -26,7 +26,6 @@ export function DemoButtons() {
       <div class="space-y-8">
         <ButtonVariantsDemo />
         <ButtonIconComponentsDemo />
-        <ButtonSizesDemo />
         <ButtonIconDemo />
         <ButtonIconOnlyDemo />
         <ButtonStatesDemo />
@@ -64,30 +63,6 @@ function ButtonIconComponentsDemo() {
             {variant}
           </ButtonIcon>
         ))}
-      </div>
-    </div>
-  )
-}
-
-function ButtonSizesDemo() {
-  const sizes = Object.values(buttonSize)
-
-  return (
-    <div>
-      <h2 class="text-2xl font-bold mb-4">Button Sizes</h2>
-      <div class="space-y-4">
-        <div class="flex items-center gap-4 flex-wrap">
-          {sizes.map((size) => (
-            <Button size={size}>Size {size}</Button>
-          ))}
-        </div>
-        <div class="flex items-center gap-4 flex-wrap">
-          {sizes.map((size) => (
-            <Button size={size} variant={buttonVariant.outline}>
-              Size {size}
-            </Button>
-          ))}
-        </div>
       </div>
     </div>
   )

@@ -150,12 +150,8 @@ function ToastWithActionsDemo() {
               variant: toastVariant.success,
               children: (
                 <div class="mt-2 flex gap-2">
-                  <Button size="sm" variant={buttonVariant.outline}>
-                    Undo
-                  </Button>
-                  <Button size="sm" variant={buttonVariant.filledIndigo}>
-                    View
-                  </Button>
+                  <Button variant={buttonVariant.outline}>Undo</Button>
+                  <Button variant={buttonVariant.filledIndigo}>View</Button>
                 </div>
               ),
             })

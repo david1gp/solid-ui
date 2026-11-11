@@ -66,14 +66,7 @@ export function NavDemo(p: DemoNavProps) {
         <LinkButtonExternal variant={buttonVariant.ghost} icon={iconGithub} href={githubUrl} title="Github" newTab>
           Code
         </LinkButtonExternal>
-        <LinkButtonExternal
-          variant={buttonVariant.ghost}
-          icon={iconNpm}
-          iconClass="size-8"
-          href={npmUrl}
-          title="NPM"
-          newTab
-        >
+        <LinkButtonExternal variant={buttonVariant.ghost} icon={iconNpm} href={npmUrl} title="NPM" newTab>
           Package
         </LinkButtonExternal>
         <ThemeButton showText={true} class="rounded-md sm:pr-0" />
