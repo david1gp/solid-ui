@@ -1,11 +1,11 @@
 import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
 import { mdiChevronRight } from "@adaptive-ds/mdi/mdiChevronRight.js"
+import { cn } from "cn"
 import type { JSXElement } from "solid-js"
 import { NumberInputS } from "#ui/input/number/NumberInputS.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
 import { commonHeaderClass } from "#ui/static/text/commonHeaderClass.js"
-import { classMerge } from "#ui/utils/classMerge.js"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.js"
@@ -136,5 +136,5 @@ function B(p: MayHaveChildren): JSXElement {
 }
 
 function H(p: MayHaveClassAndChildren): JSXElement {
-  return <div class={classMerge(commonHeaderClass, p.class)}>{p.children}</div>
+  return <div class={cn(commonHeaderClass, p.class)}>{p.children}</div>
 }

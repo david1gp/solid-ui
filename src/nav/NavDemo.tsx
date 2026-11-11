@@ -1,3 +1,4 @@
+import { cn } from "cn"
 import type { ComponentProps } from "solid-js"
 import { createSignal, lazy, onMount, Show, splitProps } from "solid-js"
 import type { DemoNavDataProps } from "#ui/demo_pages/DemoNavDataProps.js"
@@ -8,7 +9,6 @@ import { ThemeButton } from "#ui/interactive/theme/ThemeButton.jsx"
 import { iconGithub } from "#ui/static/icons/iconGithub.js"
 import { iconNpm } from "#ui/static/icons/iconNpm.js"
 import { LogoImageText } from "#ui/static/logo/LogoImageText.jsx"
-import { classMerge } from "#ui/utils/classMerge.js"
 import { objectEntries } from "#utils/obj/objectEntries.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
 
@@ -28,10 +28,7 @@ export function NavDemo(p: DemoNavProps) {
   const githubUrl = "https://github.com/david1gp/solid-ui"
   const npmUrl = "https://www.npmjs.com/package/@adaptive-ds/solid-ui"
   return (
-    <nav
-      class={classMerge("flex flex-wrap items-center justify-between p-1 gap-1 max-w-4xl mx-auto", s.class)}
-      {...rest}
-    >
+    <nav class={cn("flex flex-wrap items-center justify-between p-1 gap-1 max-w-4xl mx-auto", s.class)} {...rest}>
       <div class={"flex flex-wrap gap-1"}>
         <LogoImageText logoText="adaptive-solid-ui" logoTextClass="text-lg font-semibold" class="sm:pl-0" />
         {/* <LogoImageOnly /> */}

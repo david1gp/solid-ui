@@ -1,10 +1,10 @@
 import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
 import { mdiChevronRight } from "@adaptive-ds/mdi/mdiChevronRight.js"
+import { cn } from "cn"
 import type { JSXElement } from "solid-js"
 import { createEffect, Show } from "solid-js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
-import { classMerge } from "#ui/utils/classMerge.js"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
@@ -39,7 +39,7 @@ export function DemoTablePagination2() {
   }
   const texts = tablePagination2TextDefault
   return (
-    <div class={classMerge("flex flex-wrap justify-center md:justify-between py-1 pl-3 gap-2", p.class)}>
+    <div class={cn("flex flex-wrap justify-center md:justify-between py-1 pl-3 gap-2", p.class)}>
       <TablePaginationInfo {...p} texts={texts} />
       <TablePaginationButtons {...p} texts={texts} />
       <TablePaginationButtonShortcuts {...p} />
@@ -50,7 +50,7 @@ export function DemoTablePagination2() {
 function TablePaginationInfo(p: AtomizedTablePaginationProps & { texts: TablePagination2Text }) {
   return (
     <Show when={p.entriesSignal.get() > 0 && p.entriesSignal.get() > p.entriesPerPage}>
-      <p class={classMerge("flex flex-wrap gap-1 my-auto mx-1", p.class)}>
+      <p class={cn("flex flex-wrap gap-1 my-auto mx-1", p.class)}>
         <T>{p.texts.page}</T>
         <A>{p.currentPageSignal.get() + 1}</A>
         <T>{"/"}</T>
@@ -73,13 +73,13 @@ function TablePaginationInfo2(p: AtomizedTablePaginationProps & { texts: TablePa
 
   return (
     <div>
-      <p class={classMerge("flex flex-wrap gap-1 my-auto mx-1", p.class)}>
+      <p class={cn("flex flex-wrap gap-1 my-auto mx-1", p.class)}>
         <T>{p.texts.page}</T>
         <B>{currentPage + 1}</B>
         <T>{"/"}</T>
         <A>{totalPages}</A>
       </p>
-      <p class={classMerge("flex flex-wrap gap-1 my-auto mx-1", p.class)}>
+      <p class={cn("flex flex-wrap gap-1 my-auto mx-1", p.class)}>
         <T>{p.texts.showing}</T>
         <A>{from}</A>
         <T>{p.texts.to}</T>
@@ -117,7 +117,7 @@ function TablePaginationButtons(p: AtomizedTablePaginationProps & { texts: Table
 
   return (
     <Show when={p.entriesSignal.get() > p.entriesPerPage}>
-      <div class={classMerge("flex flex-wrap gap-1 mx-1", p.class)}>
+      <div class={cn("flex flex-wrap gap-1 mx-1", p.class)}>
         <ButtonIcon
           icon={mdiChevronLeft}
           iconClass={"mr-0.5"}

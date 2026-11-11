@@ -3,11 +3,11 @@ import { mdiCog } from "@adaptive-ds/mdi/mdiCog.js"
 import { mdiHome } from "@adaptive-ds/mdi/mdiHome.js"
 import { mdiInformation } from "@adaptive-ds/mdi/mdiInformation.js"
 import { mdiMail } from "@adaptive-ds/mdi/mdiMail.js"
+import { cn } from "cn"
 import { For } from "solid-js"
 import { createSidebarState } from "#ui/interactive/sidebar/createSidebarState.jsx"
 import { Sidebar, SidebarToggle } from "#ui/interactive/sidebar/index.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { classMerge } from "#ui/utils/classMerge.js"
 import type { HasChildren } from "#ui/utils/HasChildren.js"
 
 export function DemoSidebar() {
@@ -110,7 +110,7 @@ function SidebarContent() {
                 <button
                   type="button"
                   onClick={item.onClick}
-                  class={classMerge(
+                  class={cn(
                     "flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium transition-colors",
                     "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                     item.isActive && "bg-sidebar-accent text-sidebar-accent-foreground",
