@@ -92,7 +92,6 @@ export function DemoAppSidebar() {
             <AppSidebarUserMenu
               name={"Max Mustermann"}
               email={"max.mustermann@example.com"}
-              sections={sections}
               logoutLabel={"Abmelden"}
             />
           }
