@@ -5,6 +5,7 @@ import { mdiCogOutline } from "@adaptive-ds/mdi/mdiCogOutline.js"
 import { mdiFileDocumentOutline } from "@adaptive-ds/mdi/mdiFileDocumentOutline.js"
 import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutline.js"
 import { mdiPaletteOutline } from "@adaptive-ds/mdi/mdiPaletteOutline.js"
+import { mdiPaletteSwatchOutline } from "@adaptive-ds/mdi/mdiPaletteSwatchOutline.js"
 import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
 import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
@@ -27,21 +28,42 @@ const entries = [
 
 const settingsLabel = "Einstellungen"
 
-const sections: AppSidebarUserMenuSection[] = [
-  {
-    label: "Darstellung",
-    icon: mdiPaletteOutline,
-    options: [
-      { icon: mdiWhiteBalanceSunny, label: "Hell", preview: "light", selected: true },
-      { icon: mdiWeatherNight, label: "Dunkel", preview: "dark" },
-      { icon: mdiBrightnessAuto, label: "System", preview: "system" },
-    ],
-  },
-  { label: "Sprache", icon: mdiTranslate, options: [{ label: "DE", selected: true }, { label: "EN" }] },
+const accentColors = [
+  { label: "Blau", color: "#2563eb" },
+  { label: "Pink", color: "#ec4899" },
+  { label: "Gelb", color: "#eab308" },
+  { label: "Grün", color: "#22c55e" },
+  { label: "Lila", color: "#8b5cf6" },
 ]
+
+const appearanceSection: AppSidebarUserMenuSection = {
+  label: "Darstellung",
+  icon: mdiPaletteOutline,
+  options: [
+    { icon: mdiWhiteBalanceSunny, label: "Hell", preview: "light", selected: true },
+    { icon: mdiWeatherNight, label: "Dunkel", preview: "dark" },
+    { icon: mdiBrightnessAuto, label: "System", preview: "system" },
+  ],
+}
+
+const languageSection: AppSidebarUserMenuSection = {
+  label: "Sprache",
+  icon: mdiTranslate,
+  options: [{ label: "DE", selected: true }, { label: "EN" }],
+}
 
 export function DemoAppSidebar() {
   const collapsed = createSignalObject(false)
+  const accentColor = createSignalObject(accentColors[0]!.color)
+  const sections: AppSidebarUserMenuSection[] = [
+    appearanceSection,
+    {
+      label: "Akzentfarbe",
+      icon: mdiPaletteSwatchOutline,
+      options: accentColors.map((c, i) => ({ ...c, selected: i === 0, onClick: () => accentColor.set(c.color) })),
+    },
+    languageSection,
+  ]
   const settingsOpen = createSignalObject(false)
   const [active, setActive] = createSignal("Projekte")
   const groups = (): AppSidebarNavGroup[] => [
@@ -86,6 +108,7 @@ export function DemoAppSidebar() {
             </>
           }
           groups={groups()}
+          accentColor={accentColor.get()}
           userName={"Max Mustermann"}
           userInitials={"MM"}
           userMenu={
