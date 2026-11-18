@@ -28,7 +28,7 @@ interface BasicPopoverDemo extends MayHaveClass {
 function BasicPopoverDemo(p: BasicPopoverDemo) {
   return (
     <div class={classArr("flex flex-col", p.class)}>
-      <h2 class="text-2xl font-bold mb-4">{p.title + " Popover"}</h2>
+      <h2 class="text-2xl font-bold mb-4">{`${p.title} Popover`}</h2>
       <CorvuPopover icon={mdiDotsVertical} variant={buttonVariant.outline} buttonChildren={"Open"}>
         <LongContent />
       </CorvuPopover>
@@ -39,7 +39,7 @@ function BasicPopoverDemo(p: BasicPopoverDemo) {
 function IconPopoverDemo(p: BasicPopoverDemo) {
   return (
     <div class={classArr("flex flex-col", p.class)}>
-      <h2 class="text-2xl font-bold mb-4">{p.title + " Popover"}</h2>
+      <h2 class="text-2xl font-bold mb-4">{`${p.title} Popover`}</h2>
       <CorvuPopoverIcon icon={mdiDotsVertical} variant={buttonVariant.outline} title="Open popover">
         <Content />
       </CorvuPopoverIcon>

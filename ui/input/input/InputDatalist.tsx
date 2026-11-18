@@ -13,7 +13,7 @@ export interface ResourceListSearchProps extends ComponentProps<"input"> {
 export function InputDatalist(p: ResourceListSearchProps) {
   const [s, rest] = splitProps(p, ["id", "class", "type", "list"])
   const id = p.id ?? generateId12()
-  const listId = id + "-options"
+  const listId = `${id}-options`
 
   return (
     <>

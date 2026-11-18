@@ -26,7 +26,7 @@ const groupedEntries: SelectSingleEntry[] = [
   { type: "item", value: "Iced coffee" },
   { type: "item", value: "Lemonade" },
 ]
-const options100Strings = arrCreate<string>(100, (i) => "" + i)
+const options100Strings = arrCreate<string>(100, (i) => `${i}`)
 const entries100: SelectSingleEntry[] = options100Strings.map((value) => ({ type: "item", value }))
 
 const basicValueSignal = createSignalObject("")

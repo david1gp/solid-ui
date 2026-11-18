@@ -26,7 +26,7 @@ export function Table2DSortButton<T>(p: Table2DSortButtonProps<T>) {
   )
 }
 
-function sortIcon<T>(
+function _sortIcon<T>(
   sortHeader: TableColumnDef<T>,
   prevHeader: TableColumnDef<T> | null,
   dir: SortDir,

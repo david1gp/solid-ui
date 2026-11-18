@@ -15,8 +15,6 @@ export function DemoTable1R() {
   )
 }
 
-type TableId = (typeof tableId)[keyof typeof tableId]
-
 const tableId = {
   id: "id",
   name: "name",

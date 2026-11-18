@@ -166,12 +166,12 @@ function ToggleButtonsDemo() {
           <h3 class="text-xl font-semibold mb-3">ToggleButtonIconOnly</h3>
           <div class="flex gap-4">
             <ToggleButtonIconOnly
-              title={"Dev Mode: " + (inDevModeSignal.get() ? "Active" : "Disabled")}
+              title={`Dev Mode: ${inDevModeSignal.get() ? "Active" : "Disabled"}`}
               pressedSignal={inDevModeSignal}
               icon={inDevModeSignal.get() ? mdiCodeJson : mdiCodeBraces}
             />
             <ToggleButtonIconOnly
-              title={"Test Mode: " + (inTestModeSignal.get() ? "Active" : "Disabled")}
+              title={`Test Mode: ${inTestModeSignal.get() ? "Active" : "Disabled"}`}
               pressedSignal={inTestModeSignal}
               icon={inTestModeSignal.get() ? mdiTestTube : mdiTestTubeEmpty}
             />

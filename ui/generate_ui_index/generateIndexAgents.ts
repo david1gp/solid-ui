@@ -22,7 +22,9 @@ export async function generateIndexAgents(uiDirRelative: string, outputFileRelat
       .join("/")
       .replace(/\.tsx$/, ".jsx")}`
     for (const e of exports) {
-      ;(byCategory[category] ??= []).push({ ...e, importPath })
+      const list = byCategory[category] ?? []
+      byCategory[category] = list
+      list.push({ ...e, importPath })
     }
   }
 

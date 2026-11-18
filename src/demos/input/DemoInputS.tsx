@@ -9,7 +9,7 @@ export function DemoInputS() {
   const handleInput: JSX.InputEventHandlerUnion<HTMLInputElement, InputEvent> = (e) => {
     console.log("Custom onInput called:", e)
     const derivedValue = e.currentTarget.value.length
-    derivedSignal.set("Length: " + derivedValue)
+    derivedSignal.set(`Length: ${derivedValue}`)
   }
 
   return (

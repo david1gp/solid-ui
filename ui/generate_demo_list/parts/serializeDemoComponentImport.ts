@@ -1,9 +1,5 @@
 import { join } from "node:path"
 
-type SerializeDemoComponentImportOptions = {
-  importPrefix: string
-}
-
 export function serializeDemoComponentImport(path: string, baseDir: string, importPrefix: string) {
   const name =
     path

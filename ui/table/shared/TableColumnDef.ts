@@ -14,7 +14,7 @@ export function createTableColumnDef<T>(): TableColumnDef<T> {
   return {
     id: "",
     name: "",
-    cell: (d: T) => "",
+    cell: (_d: T) => "",
   }
 }
 

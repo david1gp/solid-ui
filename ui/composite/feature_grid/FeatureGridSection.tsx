@@ -40,7 +40,7 @@ export function FeatureGridSection(p: FeatureGridSectionProps) {
         <h2 class={classArr("text-3xl sm:text-4xl font-bold", "mb-4", "group flex items-center justify-center")}>
           <span>{s.title}</span>
           <a
-            href={"#" + s.id}
+            href={`#${s.id}`}
             class="opacity-0 group-hover:opacity-100 p-1 rounded hidden sm:flex"
             title="Link to this section"
           >

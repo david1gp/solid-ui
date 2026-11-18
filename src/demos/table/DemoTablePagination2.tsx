@@ -60,7 +60,7 @@ function TablePaginationInfo(p: AtomizedTablePaginationProps & { texts: TablePag
   )
 }
 
-function TablePaginationInfo2(p: AtomizedTablePaginationProps & { texts: TablePagination2Text }) {
+function _TablePaginationInfo2(p: AtomizedTablePaginationProps & { texts: TablePagination2Text }) {
   const entries = p.entriesSignal.get()
   const currentPage = p.currentPageSignal.get()
 
@@ -165,7 +165,7 @@ function TablePaginationButtonShortcuts(p: AtomizedTablePaginationProps) {
   return null
 }
 
-function addKeyboardShortcutForPageNavigation(decr: () => void, incr: () => void) {
+function _addKeyboardShortcutForPageNavigation(decr: () => void, incr: () => void) {
   createEffect(() => {
     function hotkeyPress(e: KeyboardEvent) {
       if (e.key === "ArrowLeft" && (e.ctrlKey || e.metaKey)) {

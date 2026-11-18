@@ -12,6 +12,6 @@ export function toastDismiss(toastId: string, log = false) {
 }
 
 export function toastDismissAll() {
-  const op = "toastDismissAll"
+  const _op = "toastDismissAll"
   toasterState.set(createToasterState())
 }

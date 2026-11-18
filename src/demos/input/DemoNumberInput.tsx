@@ -12,7 +12,7 @@ export function DemoNumberInput() {
     console.log("Custom onInput called:", e)
     const currentValue = Number(e.currentTarget.value)
     const derivedValue = currentValue * 2
-    derivedSignal.set("Double: " + derivedValue)
+    derivedSignal.set(`Double: ${derivedValue}`)
   }
 
   const handleBudgetChange = (value: number) => {

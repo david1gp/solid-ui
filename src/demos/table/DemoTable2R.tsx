@@ -32,8 +32,6 @@ export function DemoTable2R() {
   )
 }
 
-type TableId = (typeof tableId)[keyof typeof tableId]
-
 const tableId = {
   id: "id",
   name: "name",
@@ -54,7 +52,7 @@ const state = createTable2Signals({ rows, columns })
 
 function createTableColumns(): TableColumnDef<Person>[] {
   type D = Person
-  function deleteData(d: D) {
+  function _deleteData(d: D) {
     console.log("delete", d)
     const newData = rows.get().filter((r) => r.id !== d.id)
     rows.set(newData)

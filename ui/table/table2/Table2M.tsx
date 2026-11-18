@@ -15,7 +15,7 @@ export function Table2M<T>(p: SortableTableMProps<T>) {
   return (
     <div class={cn("flex flex-col flex-wrap w-full gap-4", p.class, p.mobileClasses?.class)}>
       <For each={p.rows.get()}>
-        {(row, i) => (
+        {(row, _i) => (
           <>
             <Separator />
             <Table1MEntry row={row} columns={p.columns.get()} mobileClasses={p.mobileClasses} />

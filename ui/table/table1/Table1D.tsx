@@ -21,7 +21,7 @@ export function Table1D<T>(p: Table1aDProps<T>) {
     <table class={cn("overflow-x-auto", p.class, p.desktopClasses?.class)}>
       <thead>
         <tr>
-          {p.columns.map((h, i) => (
+          {p.columns.map((h, _i) => (
             <th
               scope="col"
               class={cn("text-left", "px-4 py-2", p.desktopClasses?.header, h.headerClass)}
@@ -33,7 +33,7 @@ export function Table1D<T>(p: Table1aDProps<T>) {
         </tr>
       </thead>
       <tbody>
-        {p.rows.map((d, y) => (
+        {p.rows.map((d, _y) => (
           <tr class={cn(sharedTableRowClassName, p.desktopClasses?.row)}>
             {p.columns.map((h) => {
               return <td class={cn(p.desktopClasses?.data, h.dataClass)}>{h.cell(d)}</td>

@@ -183,7 +183,7 @@ function createTableAtomsComputed<T>(state: TableAtomState<T>): FilterableTableA
     const columns = columnsFiltered()
     const header = columns.map((c) => c.name ?? c.title ?? c.id).join(";")
     const csv = rows.map((r) => columns.map((c) => (c.data ? c.data(r) : "")).join(";")).join("\n")
-    return "#" + header + "\n" + csv
+    return `#${header}\n${csv}`
   }
   return {
     ...state,
@@ -239,5 +239,5 @@ function getPagedRows<T>(rows: T[], state: TableAtomState<T>, currentPage: numbe
   const to = Math.min((currentPage + 1) * maxEntriesPerPage, entries)
   // console.log(currentPage, from, to, entries)
 
-  return rows.filter((r, i) => i >= from && i < to)
+  return rows.filter((_r, i) => i >= from && i < to)
 }

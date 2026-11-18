@@ -105,7 +105,7 @@ export type TimelineItemBulletProps = {
 const TimelineItemBullet: Component<TimelineItemBulletProps> = (p) => {
   return (
     <div
-      class={cn(`absolute top-0 flex items-center justify-center rounded-full border`, p.isActive && "border-primary")}
+      class={cn("absolute top-0 flex items-center justify-center rounded-full border", p.isActive && "border-primary")}
       style={{
         width: `${p.bulletSize}px`,
         height: `${p.bulletSize}px`,
