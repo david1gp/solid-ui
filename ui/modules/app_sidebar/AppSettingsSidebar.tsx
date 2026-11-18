@@ -36,7 +36,7 @@ export function AppSettingsSidebar(p: AppSettingsSidebarProps) {
         p.class,
       )}
     >
-      <div class={"flex flex-col w-80 h-full"}>
+      <div class={"flex flex-col w-[calc(20rem-1px)] h-full"}>
         <div class={"flex items-center h-11 px-2 pl-4"}>
           <h2 class={"flex-1 min-w-0 truncate text-base font-semibold text-neutral-950 dark:text-neutral-50"}>
             {p.title}
