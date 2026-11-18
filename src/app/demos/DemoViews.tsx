@@ -1,9 +1,11 @@
+import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { createSignal, For, onMount, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
 import { NavDemo } from "#src/nav/NavDemo.jsx"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
-import { classesGridCols5xl } from "#ui/static/grid/classesGridCols.js"
+import { BulletLinks } from "#ui/interactive/list/BulletLinks.jsx"
+import { Icon } from "#ui/static/icon/Icon.jsx"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import { objectEntries } from "#utils/obj/objectEntries.js"
@@ -14,26 +16,45 @@ const prefix = ""
 
 /** L0 — overview grid of every category and its components. */
 export function DemosOverview() {
-  const categories = objectEntries(demoList)
+  const categories: [string, Record<string, unknown>][] = objectEntries(demoList)
   return (
     <LayoutWrapperDemo title={"demos"}>
       <NavDemo demoList={demoList} demoPrefix={prefix} />
       <div
         class={classArr(
           "flex flex-col items-center justify-center", // layout
-          "bg-gray-50 dark:bg-gray-700", // background
+          "bg-transparent", // background
           "p-4", // spacing
         )}
       >
-        <div class={classArr(classesGridCols5xl, "gap-4")}>
+        <div class={"flex flex-wrap justify-center items-start gap-x-8 gap-y-3"}>
           <For each={categories}>
             {([category, tree]) => {
               const categoryLinks = objectKeys(tree).map((compName) => `${prefix}/${category}/${compName}`)
               const removePrefix = `${prefix}/${category}/Demo`
               return (
-                <div>
-                  <LinkBlock header={category} removeUrlPrefix={removePrefix} links={categoryLinks} />
-                </div>
+                <details class={"group"}>
+                  <summary
+                    class={classArr(
+                      "flex items-center gap-1 cursor-pointer select-none list-none", // layout
+                      "[&::-webkit-details-marker]:hidden", // hide native marker
+                    )}
+                  >
+                    <h2 class={"text-xl font-semibold capitalize"}>{category}</h2>
+                    <Icon
+                      path={mdiChevronDown}
+                      class={"size-6 fill-current transition-transform group-open:rotate-180"}
+                    />
+                  </summary>
+                  <div class={"flex flex-col mt-1"}>
+                    <Show
+                      when={categoryLinks.length > 0}
+                      fallback={<span class={"text-muted-foreground"}>No entries yet</span>}
+                    >
+                      <BulletLinks internal removeUrlPrefix={removePrefix} urls={categoryLinks} />
+                    </Show>
+                  </div>
+                </details>
               )
             }}
           </For>
@@ -54,12 +75,12 @@ export function DemosCategory(props: { category: string }) {
       <div
         class={classArr(
           "flex flex-col items-center justify-center", // layout
-          "bg-gray-50 dark:bg-gray-900", // background
+          "bg-transparent", // background
           "p-4", // spacing
         )}
       >
         <div>
-          <LinkBlock header={props.category} removeUrlPrefix={removePrefix} links={links} />
+          <LinkBlock header={capitalizeFirst(props.category)} removeUrlPrefix={removePrefix} links={links} />
         </div>
       </div>
     </LayoutWrapperDemo>
@@ -107,4 +128,8 @@ export function demoExists(category: string, compName?: string): boolean {
   if (!tree) return false
   if (compName === undefined) return true
   return compName in tree
+}
+
+function capitalizeFirst(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1)
 }

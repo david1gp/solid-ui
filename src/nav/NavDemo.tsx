@@ -28,47 +28,53 @@ export function NavDemo(p: DemoNavProps) {
   const githubUrl = "https://github.com/david1gp/solid-ui"
   const npmUrl = "https://www.npmjs.com/package/@adaptive-ds/solid-ui"
   return (
-    <nav class={cn("flex flex-wrap items-center justify-between p-1 gap-1 max-w-4xl mx-auto", s.class)} {...rest}>
-      <div class={"flex flex-wrap gap-1"}>
-        <LogoImageText logoText="adaptive-solid-ui" logoTextClass="text-lg font-semibold" class="sm:pl-0" />
-        {/* <LogoImageOnly /> */}
-        {s.category && (
-          <>
-            <NavSeparatingSlash />
-            <LinkButtonInternal
-              variant={buttonVariant.ghost}
-              to="/$"
-              params={{
-                _splat: `${s.demoPrefix}/${s.category}/`.replace(/^\//, ""),
-              }}
-            >
-              {s.category}
-            </LinkButtonInternal>
-            {s.compName && (
-              <>
-                <NavSeparatingSlash />
-                <ComponentPopover
-                  demoList={s.demoList}
-                  category={s.category}
-                  compName={s.compName}
-                  demoPrefix={s.demoPrefix}
-                />
-              </>
-            )}
-          </>
-        )}
-      </div>
+    <header
+      class={
+        "w-full bg-gray-100 dark:bg-background [&_a:hover]:bg-gray-200 [&_button:hover]:bg-gray-200 dark:[&_a:hover]:bg-slate-800 dark:[&_button:hover]:bg-slate-800"
+      }
+    >
+      <nav class={cn("flex flex-wrap items-center justify-between p-1 gap-1 max-w-4xl mx-auto", s.class)} {...rest}>
+        <div class={"flex flex-wrap gap-1"}>
+          <LogoImageText logoText="adaptive-solid-ui" logoTextClass="text-lg font-semibold" class="sm:pl-0" />
+          {/* <LogoImageOnly /> */}
+          {s.category && (
+            <>
+              <NavSeparatingSlash />
+              <LinkButtonInternal
+                variant={buttonVariant.ghost}
+                to="/$"
+                params={{
+                  _splat: `${s.demoPrefix}/${s.category}/`.replace(/^\//, ""),
+                }}
+              >
+                <span class={"capitalize"}>{s.category}</span>
+              </LinkButtonInternal>
+              {s.compName && (
+                <>
+                  <NavSeparatingSlash />
+                  <ComponentPopover
+                    demoList={s.demoList}
+                    category={s.category}
+                    compName={s.compName}
+                    demoPrefix={s.demoPrefix}
+                  />
+                </>
+              )}
+            </>
+          )}
+        </div>
 
-      <div class="flex flex-wrap items-center gap-1">
-        <LinkButtonExternal variant={buttonVariant.ghost} icon={iconGithub} href={githubUrl} title="Github" newTab>
-          Code
-        </LinkButtonExternal>
-        <LinkButtonExternal variant={buttonVariant.ghost} icon={iconNpm} href={npmUrl} title="NPM" newTab>
-          Package
-        </LinkButtonExternal>
-        <ThemeButton showText={true} class="rounded-md sm:pr-0" />
-      </div>
-    </nav>
+        <div class="flex flex-wrap items-center gap-1">
+          <LinkButtonExternal variant={buttonVariant.ghost} icon={iconGithub} href={githubUrl} title="Github" newTab>
+            Code
+          </LinkButtonExternal>
+          <LinkButtonExternal variant={buttonVariant.ghost} icon={iconNpm} href={npmUrl} title="NPM" newTab>
+            Package
+          </LinkButtonExternal>
+          <ThemeButton showText={true} class="rounded-md sm:pr-0" />
+        </div>
+      </nav>
+    </header>
   )
 }
 
@@ -77,7 +83,7 @@ function ComponentPopover(
 ) {
   if (!s.category || !s.compName) return null
   const links = objectEntries(s.demoList)
-    .filter(([category, tree]) => category === s.category)
+    .filter(([category, _tree]) => category === s.category)
     .flatMap(([category, tree]) => objectKeys(tree).map((compName) => `${s.demoPrefix}/${category}/${compName}`))
   if (!links || links.length <= 0) return null
   const [mounted, setMounted] = createSignal(false)
@@ -98,7 +104,11 @@ function ComponentPopover(
       }
     >
       <CorvuPopoverLazy variant={buttonVariant.ghost} buttonChildren={s.compName}>
-        <LinkBlock header={s.category} removeUrlPrefix={`${s.demoPrefix}/${s.category}/`} links={links} />
+        <LinkBlock
+          header={s.category.charAt(0).toUpperCase() + s.category.slice(1)}
+          removeUrlPrefix={`${s.demoPrefix}/${s.category}/`}
+          links={links}
+        />
       </CorvuPopoverLazy>
     </Show>
   )
