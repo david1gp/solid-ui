@@ -51,12 +51,12 @@ export function DemoAppSidebar() {
           </>
         }
         groups={groups()}
-        userName={"Tim Krohn"}
-        userInitials={"TK"}
+        userName={"Max Mustermann"}
+        userInitials={"MM"}
         userMenu={
           <AppSidebarUserMenu
-            name={"Tim Krohn"}
-            email={"tk.semesterkur@gmail.com"}
+            name={"Max Mustermann"}
+            email={"max.mustermann@example.com"}
             sections={[
               {
                 label: "Darstellung",
