@@ -11,7 +11,7 @@
 /og-image.jpg
   Cache-Control: public, max-age=604800
 # Content-hashed assets: cache forever.
-/assets/*
+/bundle/*
   Cache-Control: public, max-age=31556952, immutable
 /images/*
   Cache-Control: public, max-age=31556952, immutable

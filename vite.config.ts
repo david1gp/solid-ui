@@ -72,7 +72,10 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1050,
     outDir: "out",
-    assetsDir: "assets",
+    // Not "assets": browsers cached Cloudflare's old SPA-fallback HTML under
+    // /assets/*.js as immutable for a year. Unchanged chunks keep their hash, so
+    // a new directory is the only way to give every chunk a never-cached URL.
+    assetsDir: "bundle",
     emptyOutDir: true,
   },
 })
