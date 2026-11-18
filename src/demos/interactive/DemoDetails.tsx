@@ -53,12 +53,16 @@ function DetailsWithSubtitleDemo() {
         <div class="p-6 border-t border-gray-200 dark:border-gray-700">
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium mb-1">Name</label>
-              <input type="text" placeholder="John Doe" class="w-full p-2 border rounded-md" />
+              <label class="block text-sm font-medium mb-1">
+                Name
+                <input type="text" placeholder="John Doe" class="w-full p-2 border rounded-md" />
+              </label>
             </div>
             <div>
-              <label class="block text-sm font-medium mb-1">Email</label>
-              <input type="email" placeholder="john@example.com" class="w-full p-2 border rounded-md" />
+              <label class="block text-sm font-medium mb-1">
+                Email
+                <input type="email" placeholder="john@example.com" class="w-full p-2 border rounded-md" />
+              </label>
             </div>
           </div>
         </div>
@@ -74,7 +78,7 @@ function CustomSummaryDemo() {
       <Details
         summaryEl={
           <div class="flex items-center gap-3">
-            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+            <div class="w-3 h-3 bg-green-500 rounded-full" />
             <span class="font-semibold">Custom Summary Element</span>
             <span class="text-sm text-muted-foreground">(3 items)</span>
           </div>

@@ -16,6 +16,7 @@ export function Icon(p: IconProps) {
       stroke-width={0.5}
       class={cn("size-6 shrink-0 align-middle fill-current", p.class)}
     >
+      <title>{p.title}</title>
       <path d={p.path} />
     </svg>
   )

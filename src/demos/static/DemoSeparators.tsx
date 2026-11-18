@@ -96,7 +96,7 @@ function SeparatorStylesDemo() {
           <h3 class="text-lg font-semibold mb-2">Vertical Separator</h3>
           <div class="flex items-center gap-4">
             <div class="p-2 bg-gray-100 dark:bg-gray-800 rounded">Left</div>
-            <div class="h-8 w-0.5 bg-gray-300 dark:bg-gray-600"></div>
+            <div class="h-8 w-0.5 bg-gray-300 dark:bg-gray-600" />
             <div class="p-2 bg-gray-100 dark:bg-gray-800 rounded">Right</div>
           </div>
         </div>
@@ -105,7 +105,7 @@ function SeparatorStylesDemo() {
           <h3 class="text-lg font-semibold mb-2">Thick Separator</h3>
           <div class="space-y-2">
             <div class="p-2 bg-red-50 dark:bg-red-900/20 rounded">Above</div>
-            <div class="w-full h-1 bg-red-300 dark:bg-red-600"></div>
+            <div class="w-full h-1 bg-red-300 dark:bg-red-600" />
             <div class="p-2 bg-red-50 dark:bg-red-900/20 rounded">Below</div>
           </div>
         </div>
@@ -114,7 +114,7 @@ function SeparatorStylesDemo() {
           <h3 class="text-lg font-semibold mb-2">Dotted Separator</h3>
           <div class="space-y-2">
             <div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded">Above</div>
-            <div class="w-full h-0.5 border-t-2 border-dotted border-blue-300 dark:border-blue-600"></div>
+            <div class="w-full h-0.5 border-t-2 border-dotted border-blue-300 dark:border-blue-600" />
             <div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded">Below</div>
           </div>
         </div>
@@ -130,8 +130,10 @@ function SeparatorInFormsDemo() {
       <form class="space-y-6 max-w-md">
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-medium mb-1">Personal Information</label>
-            <input type="text" placeholder="Full Name" class="w-full p-2 border rounded-md" />
+            <label class="block text-sm font-medium mb-1">
+              Personal Information
+              <input type="text" placeholder="Full Name" class="w-full p-2 border rounded-md" />
+            </label>
           </div>
 
           <div>
@@ -143,8 +145,10 @@ function SeparatorInFormsDemo() {
 
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-medium mb-1">Account Settings</label>
-            <input type="text" placeholder="Username" class="w-full p-2 border rounded-md" />
+            <label class="block text-sm font-medium mb-1">
+              Account Settings
+              <input type="text" placeholder="Username" class="w-full p-2 border rounded-md" />
+            </label>
           </div>
 
           <div>

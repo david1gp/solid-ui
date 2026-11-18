@@ -43,7 +43,7 @@ export function SwitchSingle(p: SwitchSingleProps) {
       class={classArr(
         "flex flex-wrap gap-2",
         // "grid gap-2 rounded-md p-2",
-        filled && "bg-white dark:bg-black", // bg
+        filled && "bg-white dark:bg-background", // bg
         filled && "border border-slate-200 dark:border-slate-700", // border
         p.class,
       )}
@@ -81,27 +81,30 @@ interface Option2Props extends MayHaveClass {
 
 function Option(p: Option2Props) {
   return (
-    <button
-      type="button"
-      role="radio"
-      disabled={p.disabled}
-      aria-checked={isChecked(p)}
+    <label
       data-checked={isChecked(p)}
       data-state={isChecked(p) ? "checked" : "unchecked"}
       data-disabled={p.disabled}
-      value={isChecked(p) ? "on" : "off"}
       class={classArr(
         "cursor-pointer select-none",
         "rounded-sm",
         "px-3 py-2 text-center",
         isChecked(p) ? "bg-blue-500 text-white" : "hover:bg-slate-50 dark:hover:bg-slate-900", // bg hover
         "flex gap-2",
+        "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-blue-500",
         p.class,
       )}
-      onClick={() => optionToggle(p)}
     >
+      <input
+        type="radio"
+        class="peer sr-only"
+        value={p.item}
+        checked={isChecked(p)}
+        disabled={p.disabled}
+        onChange={() => optionToggle(p)}
+      />
       {getText(p)}
-    </button>
+    </label>
   )
 }
 

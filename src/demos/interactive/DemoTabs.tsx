@@ -62,8 +62,10 @@ function TabsWithContentDemo() {
           <h3 class="text-lg font-semibold mb-2">Profile Tab</h3>
           <p>Profile information and settings would go here.</p>
           <div class="mt-4">
-            <label class="block text-sm font-medium mb-1">Name</label>
-            <input type="text" class="border rounded px-3 py-2 w-full" placeholder="Your name" />
+            <label class="block text-sm font-medium mb-1">
+              Name
+              <input type="text" class="border rounded px-3 py-2 w-full" placeholder="Your name" />
+            </label>
           </div>
         </div>
       )
@@ -127,10 +129,18 @@ function TabsWithAmountsDemo() {
         valueChildren={valueChildren}
       />
       <div class="mt-4 flex gap-2">
-        <button class="px-3 py-1 bg-blue-500 text-white rounded" onClick={() => setInboxCount((c) => c + 1)}>
+        <button
+          type="button"
+          class="px-3 py-1 bg-blue-500 text-white rounded"
+          onClick={() => setInboxCount((c) => c + 1)}
+        >
           Add to Inbox
         </button>
-        <button class="px-3 py-1 bg-green-500 text-white rounded" onClick={() => setArchiveCount((c) => c + 1)}>
+        <button
+          type="button"
+          class="px-3 py-1 bg-green-500 text-white rounded"
+          onClick={() => setArchiveCount((c) => c + 1)}
+        >
           Add to Archive
         </button>
       </div>
