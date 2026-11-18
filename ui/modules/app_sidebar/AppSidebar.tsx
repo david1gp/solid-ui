@@ -20,6 +20,8 @@ export interface AppSidebarProps extends MayHaveClass {
   onUserClick?: () => void
   /** Popover body opened by clicking the user footer, e.g. <AppSidebarUserMenu />. */
   userMenu?: JSXElement
+  /** CSS color of the active item's accent bar; defaults to blue. */
+  accentColor?: string
 }
 
 // Shared timing so width, fades and height collapses move as one.
@@ -100,10 +102,11 @@ export function AppSidebar(p: AppSidebarProps) {
                     >
                       <span
                         aria-hidden={true}
+                        style={p.accentColor ? { "background-color": p.accentColor } : undefined}
                         class={classArr(
                           "absolute -left-1.5 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full", // layout
-                          "bg-blue-600 dark:bg-blue-500", // color
-                          "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none", // animation
+                          !p.accentColor && "bg-blue-600 dark:bg-blue-500", // color
+                          "transition-[transform,opacity,background-color] duration-200 ease-out motion-reduce:transition-none", // animation
                           item.isActive ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0",
                         )}
                       />

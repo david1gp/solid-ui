@@ -12,6 +12,8 @@ export interface AppSidebarUserMenuOption {
   selected?: boolean
   /** Settings panel only: render the tile as a light/dark/system window mockup. */
   preview?: "light" | "dark" | "system"
+  /** Settings panel only: CSS color; a section where every option has one renders as round swatches. */
+  color?: string
   onClick?: () => void
 }
 

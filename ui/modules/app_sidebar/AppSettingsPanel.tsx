@@ -80,29 +80,58 @@ function Card(p: { class?: string; compact?: boolean; children: JSXElement }) {
 function TileSection(p: { section: AppSidebarUserMenuSection }) {
   const [selected, setSelected] = createSignal(p.section.options.findIndex((o) => o.selected))
   const sectionIcon = () => p.section.icon
+  const select = (o: AppSidebarUserMenuOption, i: number) => {
+    setSelected(i)
+    o.onClick?.()
+  }
+  // Sections whose options all carry a color render as one inline row of round swatches.
+  const isSwatches = () => p.section.options.length > 0 && p.section.options.every((o) => o.color)
   return (
-    <div class={"flex flex-col gap-3"}>
+    <div class={classArr("flex gap-3", isSwatches() ? "items-center justify-between flex-wrap" : "flex-col")}>
       <div class={"flex items-center gap-3 text-sm font-medium"}>
         <Show when={sectionIcon()}>
           {(icon) => <Icon path={icon()} class={"size-5 text-neutral-500 dark:text-neutral-400"} />}
         </Show>
         <span>{p.section.label}</span>
       </div>
-      <div class={"grid grid-flow-col auto-cols-fr gap-2"}>
-        <For each={p.section.options}>
-          {(o, i) => (
-            <Tile
-              option={o}
-              selected={selected() === i()}
-              onClick={() => {
-                setSelected(i())
-                o.onClick?.()
-              }}
-            />
-          )}
-        </For>
-      </div>
+      <Show when={isSwatches()}>
+        <div class={"flex items-center gap-1.5"}>
+          <For each={p.section.options}>
+            {(o, i) => <Swatch option={o} selected={selected() === i()} onClick={() => select(o, i())} />}
+          </For>
+        </div>
+      </Show>
+      <Show when={!isSwatches()}>
+        <div class={"grid grid-flow-col auto-cols-fr gap-2"}>
+          <For each={p.section.options}>
+            {(o, i) => <Tile option={o} selected={selected() === i()} onClick={() => select(o, i())} />}
+          </For>
+        </div>
+      </Show>
     </div>
+  )
+}
+
+/** Round color swatch; the selected one gets a ring and a white center dot. */
+function Swatch(p: { option: AppSidebarUserMenuOption; selected: boolean; onClick: () => void }) {
+  return (
+    <button
+      type={"button"}
+      aria-pressed={p.selected}
+      aria-label={p.option.label}
+      title={p.option.label}
+      onClick={() => p.onClick()}
+      style={{ "background-color": p.option.color, "--tw-ring-color": p.option.color }}
+      class={classArr(
+        "flex items-center justify-center size-[22px] rounded-full cursor-pointer", // layout
+        "ring-offset-1 ring-offset-neutral-50 dark:ring-offset-neutral-800 transition-shadow", // ring
+        p.selected ? "ring-2" : "hover:ring-2 hover:opacity-90",
+      )}
+    >
+      <Show when={p.selected}>
+        <span class={"size-2 rounded-full bg-white"} />
+      </Show>
+    </button>
   )
 }
 
