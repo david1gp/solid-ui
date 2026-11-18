@@ -41,7 +41,7 @@ export function TabsTop(p: TabsTopProps) {
         class={classArr(
           "flex flex-wrap gap-2",
           // "grid gap-2 rounded-md p-2",
-          "bg-white dark:bg-black", // bg
+          "bg-white dark:bg-background", // bg
           "border border-slate-200 dark:border-slate-700", // border
           p.class,
         )}
@@ -115,7 +115,7 @@ function TabOption(p: TabOptionProps): JSXElement {
         "flex gap-2",
         p.class,
       )}
-      onClick={(e) => setActiveTab(p)}
+      onClick={(_e) => setActiveTab(p)}
     >
       {getText(p)}
     </button>
@@ -130,6 +130,7 @@ function TabContent(p: TabOptionProps): JSXElement {
       data-state={isSelected(p) ? "active" : "inactive"}
       aria-labelledby={makeTriggerId(p.baseId, p.value)}
       hidden={!isSelected(p)}
+      // biome-ignore lint/a11y/noNoninteractiveTabindex: WAI-APG recommends tabindex=0 on tabpanels so keyboard users can scroll them.
       tabIndex={0}
       class={classArr("")}
     >

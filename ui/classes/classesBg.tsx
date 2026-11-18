@@ -1,4 +1,4 @@
-export const classesBgWhite = "bg-white dark:bg-black"
+export const classesBgWhite = "bg-white dark:bg-background"
 // export const classesBgGray = "bg-gray-50 dark:bg-gray-700"
 export const classesBgGray = "bg-gray-100 dark:bg-gray-900"
 export const classesBgAmber = "bg-amber-50 dark:bg-amber-900"

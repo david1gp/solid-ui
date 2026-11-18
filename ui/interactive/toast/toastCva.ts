@@ -11,7 +11,7 @@ const variantClasses = {
   // filled grayscale
   filled: classArr(
     "dark:text-slate-100", // text
-    "bg-white dark:bg-black", // bg
+    "bg-white dark:bg-background", // bg
     "hover:bg-slate-50 dark:hover:bg-slate-900", // bg hover
     "border border-slate-200 dark:border-slate-700", // border
   ),

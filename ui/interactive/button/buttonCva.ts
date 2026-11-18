@@ -81,7 +81,7 @@ const variantClasses = {
   //
   filled: classArr(
     "dark:text-slate-100", // text
-    "bg-white dark:bg-black", // bg
+    "bg-white dark:bg-background", // bg
     "hover:bg-slate-50 dark:hover:bg-slate-900", // bg hover
   ),
   subtle: classArr(
@@ -214,8 +214,8 @@ const variantClasses = {
   // outline toast colors
   //
   outlineRed: classArr(
-    "text-red-500 dark:text-red-500", // text
-    "border border-red-200 dark:border-red-700", // border
+    "text-red-500 dark:text-red-300", // text
+    "border border-red-200 dark:border-red-400", // border
     "bg-transparent", // bg
     "hover:bg-red-100 dark:hover:bg-red-950", // bg hover
     "focus:ring-red-400 dark:focus:ring-red-400", // focus
@@ -230,6 +230,7 @@ export function buttonCva2(
 }
 
 export function buttonCvaIconOnly(
+  // biome-ignore lint/style/useDefaultParameterLast: variant stays first for ergonomics; undefined falls through to buttonCva2's ghost default.
   variant: ButtonVariant = buttonVariant.ghost,
   isLoading: boolean | undefined,
   isDisabled: boolean | undefined,

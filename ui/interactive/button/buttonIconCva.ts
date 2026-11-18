@@ -53,7 +53,7 @@ const buttonIconClasses = {
   filledBlueGreenGradient: classesWhiteWhite,
   filledIndigoGradient: classesWhiteWhite,
   // outlined colors
-  outlineRed: classArr("text-red-500 fill-red-500 dark:text-red-700 dark:fill-red-700"),
+  outlineRed: classArr("text-red-500 fill-red-500 dark:text-red-300 dark:fill-red-300"),
 } as const satisfies Record<ButtonVariant, string>
 
 export function buttonIconCva(
