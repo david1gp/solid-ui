@@ -30,7 +30,7 @@ function findDemoNames(dir: string): string[] {
 export type PrerenderPage = {
   path: string
   prerender: { enabled: true }
-  sitemap: { changefreq: "weekly" | "monthly"; priority: number }
+  sitemap: { changefreq: "weekly" | "monthly"; priority: number } | { exclude: true }
 }
 
 function page(path: string, priority: number, changefreq: "weekly" | "monthly"): PrerenderPage {
@@ -56,6 +56,12 @@ export function getPrerenderPages(): PrerenderPage[] {
       pages.push(page(`/${category}/${name}`, 0.6, "monthly"))
     }
   }
+
+  // Emits out/client/404.html. Cloudflare Pages then answers unknown paths with
+  // a real 404 instead of its SPA fallback (index.html with 200) — that fallback
+  // was served for missing /assets/*.js chunks and, via the immutable
+  // /assets/* cache header, got cached as "JS" for a year, breaking every demo.
+  pages.push({ path: "/404", prerender: { enabled: true }, sitemap: { exclude: true } })
 
   return pages
 }

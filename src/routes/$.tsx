@@ -8,6 +8,9 @@ export const Route = createFileRoute("/$")({
     const segments = (params._splat ?? "").split("/").filter(Boolean)
     const [category, compName] = segments
     const path = `/${segments.join("/")}`
+    if (!demoExists(category ?? "", compName)) {
+      return { meta: [{ title: `Not found | ${siteName}` }, { name: "robots", content: "noindex" }] }
+    }
     const title = compName
       ? `${compName} — ${category} | ${siteName}`
       : category

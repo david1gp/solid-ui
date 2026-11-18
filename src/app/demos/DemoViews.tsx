@@ -1,5 +1,5 @@
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
-import { createSignal, For, onMount, Show } from "solid-js"
+import { createSignal, ErrorBoundary, For, onMount, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
 import { NavDemo } from "#src/nav/NavDemo.jsx"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
@@ -105,9 +105,29 @@ export function DemoComponent(props: { category: string; compName: string }) {
     <LayoutWrapperDemo title={props.compName}>
       <NavDemo demoList={demoList} category={props.category} compName={props.compName} demoPrefix={prefix} />
       <Show when={mounted()}>
-        <Comp />
+        <ErrorBoundary fallback={(err) => <DemoLoadError error={err} />}>
+          <Comp />
+        </ErrorBoundary>
       </Show>
     </LayoutWrapperDemo>
+  )
+}
+
+/** Shown instead of an empty page when a demo chunk fails to load or render. */
+function DemoLoadError(props: { error: unknown }) {
+  const message = () => (props.error instanceof Error ? props.error.message : String(props.error))
+  return (
+    <div class={"flex flex-col items-center gap-3 p-8 text-center"}>
+      <h2 class={"text-xl font-semibold"}>Demo could not be loaded</h2>
+      <p class={"text-muted-foreground max-w-xl break-words"}>{message()}</p>
+      <button
+        type={"button"}
+        class={"px-3 py-1.5 rounded-md border border-border cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"}
+        onClick={() => location.reload()}
+      >
+        Reload page
+      </button>
+    </div>
   )
 }
 
