@@ -10,12 +10,16 @@ export interface AppSidebarUserMenuOption {
   icon?: string
   /** Initially selected option; afterwards the selection follows clicks. */
   selected?: boolean
+  /** Settings panel only: render the tile as a light/dark/system window mockup. */
+  preview?: "light" | "dark" | "system"
   onClick?: () => void
 }
 
 /** A labelled row of segmented choices, e.g. "Darstellung" or "Sprache". */
 export interface AppSidebarUserMenuSection {
   label: string
+  /** MDI path string; shown next to the label in the settings panel. */
+  icon?: string
   options: AppSidebarUserMenuOption[]
 }
 
