@@ -89,11 +89,7 @@ export function DemoAppSidebar() {
           userName={"Max Mustermann"}
           userInitials={"MM"}
           userMenu={
-            <AppSidebarUserMenu
-              name={"Max Mustermann"}
-              email={"max.mustermann@example.com"}
-              logoutLabel={"Abmelden"}
-            />
+            <AppSidebarUserMenu name={"Max Mustermann"} email={"max.mustermann@example.com"} logoutLabel={"Abmelden"} />
           }
         />
         <AppSettingsSidebar open={settingsOpen} title={settingsLabel}>
