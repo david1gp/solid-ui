@@ -1,5 +1,9 @@
 #!/bin/bash
-set -e
+# Build and deploy. Credentials: see ops/upload.bash (.env.cloudflare).
+# Extra args go to `wrangler pages deploy`; with --branch=<name> this is a
+# preview deployment and the `deployed` git branch is left untouched.
+set -euo pipefail
+cd "$(dirname "$0")/.."
 
 bun run build
 # Local original-quality images live in ./images (gitignored, optional).
@@ -8,5 +12,7 @@ if [ -d images ]; then
 else
   echo "ℹ️  No ./images folder found — skipping image sync."
 fi
-bun run upload
-git branch -f deployed
+bash ./ops/upload.bash "$@"
+if [[ " $* " != *" --branch"* ]]; then
+  git branch -f deployed
+fi
