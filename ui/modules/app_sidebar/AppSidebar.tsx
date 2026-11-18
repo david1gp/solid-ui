@@ -92,12 +92,21 @@ export function AppSidebar(p: AppSidebarProps) {
                       aria-label={item.label}
                       aria-current={item.isActive ? "page" : undefined}
                       class={classArr(
-                        "flex items-center gap-2 h-8 px-2 rounded-md cursor-pointer text-sm text-left", // layout
+                        "relative flex items-center gap-2 h-8 px-2 rounded-md cursor-pointer text-sm text-left", // layout
                         "font-medium text-neutral-950 dark:text-neutral-50", // text
                         "hover:bg-black/5 dark:hover:bg-white/10", // hover
                         item.isActive && "bg-black/5 dark:bg-white/10",
                       )}
                     >
+                      <span
+                        aria-hidden={true}
+                        class={classArr(
+                          "absolute -left-1.5 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full", // layout
+                          "bg-blue-600 dark:bg-blue-500", // color
+                          "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none", // animation
+                          item.isActive ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0",
+                        )}
+                      />
                       <Icon path={item.icon} class={"size-4"} />
                       <span class={classArr("truncate whitespace-nowrap", fade())}>{item.label}</span>
                     </button>
@@ -167,7 +176,8 @@ function Collapsible(p: { open: boolean; children: JSXElement }) {
       )}
       aria-hidden={!p.open}
     >
-      <div class={"min-h-0 overflow-hidden"}>{p.children}</div>
+      {/* -mx-2 px-2: extend the clip box into the nav padding so the active accent bar is not cut off */}
+      <div class={"min-h-0 overflow-hidden -mx-2 px-2"}>{p.children}</div>
     </div>
   )
 }
