@@ -68,42 +68,44 @@ export function DemoAppSidebar() {
   ]
   return (
     <div class={"flex h-[640px] w-full border border-border rounded-lg overflow-hidden bg-background"}>
-      <AppSidebar
-        collapsed={collapsed}
-        logo={
-          <span
-            class={
-              "flex items-center justify-center size-6 rounded-md bg-black text-white text-sm font-bold dark:bg-white dark:text-black"
-            }
-          >
-            C
-          </span>
-        }
-        brand={
-          <>
-            Atlas<span class={"text-blue-600"}>.</span>
-          </>
-        }
-        groups={groups()}
-        userName={"Max Mustermann"}
-        userInitials={"MM"}
-        userMenu={
-          <AppSidebarUserMenu
+      <div class={"relative flex shrink-0 h-full"}>
+        <AppSidebar
+          collapsed={collapsed}
+          logo={
+            <span
+              class={
+                "flex items-center justify-center size-6 rounded-md bg-black text-white text-sm font-bold dark:bg-white dark:text-black"
+              }
+            >
+              C
+            </span>
+          }
+          brand={
+            <>
+              Atlas<span class={"text-blue-600"}>.</span>
+            </>
+          }
+          groups={groups()}
+          userName={"Max Mustermann"}
+          userInitials={"MM"}
+          userMenu={
+            <AppSidebarUserMenu
+              name={"Max Mustermann"}
+              email={"max.mustermann@example.com"}
+              sections={sections}
+              logoutLabel={"Abmelden"}
+            />
+          }
+        />
+        <AppSettingsSidebar open={settingsOpen} title={settingsLabel}>
+          <AppSettingsPanel
             name={"Max Mustermann"}
             email={"max.mustermann@example.com"}
             sections={sections}
             logoutLabel={"Abmelden"}
           />
-        }
-      />
-      <AppSettingsSidebar open={settingsOpen} title={settingsLabel}>
-        <AppSettingsPanel
-          name={"Max Mustermann"}
-          email={"max.mustermann@example.com"}
-          sections={sections}
-          logoutLabel={"Abmelden"}
-        />
-      </AppSettingsSidebar>
+        </AppSettingsSidebar>
+      </div>
       <main class={"flex-1 min-w-0 p-8 overflow-y-auto"}>
         <h1 class={"text-2xl font-semibold mb-6"}>{active()}</h1>
         <p class={"text-muted-foreground"}>Noch keine {active()} vorhanden.</p>
