@@ -316,6 +316,7 @@ export function DemoAppSidebar() {
                   email={email.get()}
                   userAvatar={<AppSidebarCssAvatar />}
                   banner={<AppSidebarCssBanner accentColor={accentColor.get()} />}
+                  hideIdentity
                 />
                 <SettingsCard>
                   <div class={"grid gap-4 sm:grid-cols-2"}>
