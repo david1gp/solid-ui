@@ -142,7 +142,8 @@ function Swatch(p: { option: AppSidebarUserMenuOption; selected: boolean; onClic
       class={classArr(
         "flex items-center justify-center size-[22px] rounded-full cursor-pointer", // layout
         "ring-offset-1 ring-offset-neutral-50 dark:ring-offset-neutral-800 transition-shadow", // ring
-        p.selected ? "ring-2" : "hover:ring-2 hover:opacity-90",
+        // No opacity/filter on hover: it promotes a compositing layer and makes the surrounding text re-rasterize (visible jump).
+        p.selected ? "ring-2" : "hover:ring-2",
       )}
     >
       <Show when={p.selected}>
