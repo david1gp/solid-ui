@@ -8,4 +8,9 @@ export interface AppSidebarNavGroup {
   collapsible?: boolean
   /** Initial drawer state when collapsible; defaults to closed. */
   defaultOpen?: boolean
+  /**
+   * MDI path shown in the icon rail while a collapsible drawer is closed; clicking it opens a
+   * flyout with the items. Defaults to the first item's icon.
+   */
+  icon?: string
 }

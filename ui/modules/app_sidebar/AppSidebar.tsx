@@ -5,6 +5,7 @@ import Popover from "@corvu/popover"
 import { type ComponentProps, children, createSignal, For, type JSXElement, Show, splitProps } from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
 import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGroup.js"
+import type { AppSidebarNavItem } from "#ui/modules/app_sidebar/AppSidebarNavItem.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
@@ -81,8 +82,9 @@ export function AppSidebar(p: AppSidebarProps) {
           {(group) => {
             const drawerOpen = () => drawerState()[group.label] ?? group.defaultOpen ?? false
             const setDrawerOpen = (open: boolean) => setDrawerState((s) => ({ ...s, [group.label]: open }))
-            // In the icon rail the label is hidden, so items stay visible regardless of the drawer.
-            const itemsVisible = () => !group.collapsible || drawerOpen() || !isOpen()
+            // The rail mirrors the drawer: a closed drawer collapses to one group icon with a flyout.
+            const itemsVisible = () => !group.collapsible || drawerOpen()
+            const railGroupVisible = () => !isOpen() && !!group.collapsible && !drawerOpen()
             const labelClass = "px-2 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"
             return (
               <Collapsible open={isOpen() || group.items.length > 0}>
@@ -115,36 +117,21 @@ export function AppSidebar(p: AppSidebarProps) {
                       </h3>
                     </Show>
                   </Collapsible>
+                  <Show when={group.collapsible}>
+                    <Collapsible open={railGroupVisible()}>
+                      <RailGroupButton group={group} accentColor={p.accentColor} />
+                    </Collapsible>
+                  </Show>
                   <Collapsible open={itemsVisible()}>
                     <div class={"flex flex-col gap-0.5"}>
                       <For each={group.items}>
                         {(item) => (
-                          <button
-                            type={"button"}
-                            onClick={() => item.onClick?.()}
+                          <NavItemButton
+                            item={item}
+                            accentColor={p.accentColor}
                             title={isOpen() ? undefined : item.label}
-                            aria-label={item.label}
-                            aria-current={item.isActive ? "page" : undefined}
-                            class={classArr(
-                              "relative flex items-center gap-2 h-8 px-2 rounded-md cursor-pointer text-sm text-left", // layout
-                              "font-medium text-neutral-950 dark:text-neutral-50", // text
-                              "hover:bg-black/5 dark:hover:bg-white/10", // hover
-                              item.isActive && "bg-black/5 dark:bg-white/10",
-                            )}
-                          >
-                            <span
-                              aria-hidden={true}
-                              style={p.accentColor ? { "background-color": p.accentColor } : undefined}
-                              class={classArr(
-                                "absolute -left-1.5 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full", // layout
-                                !p.accentColor && "bg-blue-600 dark:bg-blue-500", // color
-                                "transition-[transform,opacity,background-color] duration-200 ease-out motion-reduce:transition-none", // animation
-                                item.isActive ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0",
-                              )}
-                            />
-                            <Icon path={item.icon} class={"size-4"} />
-                            <span class={classArr("truncate whitespace-nowrap", fade())}>{item.label}</span>
-                          </button>
+                            labelClass={fade()}
+                          />
                         )}
                       </For>
                     </div>
@@ -200,6 +187,97 @@ export function AppSidebar(p: AppSidebarProps) {
         </div>
       </Show>
     </aside>
+  )
+}
+
+const navButtonClass = classArr(
+  "relative flex items-center gap-2 h-8 px-2 rounded-md cursor-pointer text-sm text-left", // layout
+  "font-medium text-neutral-950 dark:text-neutral-50", // text
+  "hover:bg-black/5 dark:hover:bg-white/10", // hover
+)
+
+/** Rounded accent bar left of an active entry. */
+function AccentBar(p: { active: boolean; accentColor?: string }) {
+  return (
+    <span
+      aria-hidden={true}
+      style={p.accentColor ? { "background-color": p.accentColor } : undefined}
+      class={classArr(
+        "absolute -left-1.5 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full", // layout
+        !p.accentColor && "bg-blue-600 dark:bg-blue-500", // color
+        "transition-[transform,opacity,background-color] duration-200 ease-out motion-reduce:transition-none", // animation
+        p.active ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0",
+      )}
+    />
+  )
+}
+
+type NavItemButtonProps = {
+  item: AppSidebarNavItem
+  accentColor?: string
+  title?: string
+  labelClass?: string
+  onSelect?: () => void
+}
+
+/** One navigation entry: accent bar, icon and label. */
+function NavItemButton(p: NavItemButtonProps) {
+  return (
+    <button
+      type={"button"}
+      onClick={() => {
+        p.item.onClick?.()
+        p.onSelect?.()
+      }}
+      title={p.title}
+      aria-label={p.item.label}
+      aria-current={p.item.isActive ? "page" : undefined}
+      class={classArr(navButtonClass, p.item.isActive && "bg-black/5 dark:bg-white/10")}
+    >
+      <AccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
+      <Icon path={p.item.icon} class={"size-4"} />
+      <span class={classArr("truncate whitespace-nowrap", p.labelClass)}>{p.item.label}</span>
+    </button>
+  )
+}
+
+/** Icon-rail stand-in for a closed drawer: one group icon that opens a flyout with its items. */
+function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string }) {
+  const [open, setOpen] = createSignal(false)
+  const hasActive = () => p.group.items.some((i) => i.isActive)
+  const icon = () => p.group.icon ?? p.group.items[0]?.icon
+  return (
+    <Popover
+      open={open()}
+      onOpenChange={setOpen}
+      placement={"right-start"}
+      floatingOptions={{ offset: 8, flip: true, shift: { padding: 8 } }}
+    >
+      <Popover.Trigger
+        title={p.group.label}
+        aria-label={p.group.label}
+        class={classArr(navButtonClass, "w-full", (hasActive() || open()) && "bg-black/5 dark:bg-white/10")}
+      >
+        <AccentBar active={hasActive()} accentColor={p.accentColor} />
+        <Show when={icon()}>{(path) => <Icon path={path()} class={"size-4"} />}</Show>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          class={classArr(
+            "z-50 flex flex-col gap-0.5 min-w-44 max-w-64 max-h-[70vh] overflow-y-auto px-2.5 py-1.5", // layout
+            "rounded-xl border border-border shadow-lg bg-white dark:bg-[#111111]", // look
+            "data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0", // animation
+          )}
+        >
+          <Popover.Label class={"px-2 pt-1 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"}>
+            {p.group.label}
+          </Popover.Label>
+          <For each={p.group.items}>
+            {(item) => <NavItemButton item={item} accentColor={p.accentColor} onSelect={() => setOpen(false)} />}
+          </For>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover>
   )
 }
 
