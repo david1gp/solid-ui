@@ -240,7 +240,6 @@ export function DemoAppSidebar() {
             email={"max.mustermann@example.com"}
             userAvatar={<AppSidebarCssAvatar />}
             banner={<AppSidebarCssBanner />}
-            editProfileLabel={"Profil bearbeiten"}
             sections={sections}
             logoutLabel={"Abmelden"}
             logoutPlacement={"bottom"}
