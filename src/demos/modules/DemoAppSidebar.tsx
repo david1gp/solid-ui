@@ -243,6 +243,7 @@ export function DemoAppSidebar() {
             editProfileLabel={"Profil bearbeiten"}
             sections={sections}
             logoutLabel={"Abmelden"}
+            logoutPlacement={"bottom"}
           />
         </AppSettingsSidebar>
       </div>

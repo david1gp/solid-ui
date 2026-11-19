@@ -23,6 +23,8 @@ export interface AppSettingsPanelProps {
   sections?: AppSidebarUserMenuSection[]
   logoutLabel?: string
   onLogout?: () => void
+  /** Where the logout button goes: inside the profile header (default) or as a full-width card at the bottom. */
+  logoutPlacement?: "header" | "bottom"
   class?: string
 }
 
@@ -32,6 +34,7 @@ export interface AppSettingsPanelProps {
  */
 export function AppSettingsPanel(p: AppSettingsPanelProps) {
   const hasProfile = () => !!(p.name || p.email || p.userAvatar || p.userImageUrl || p.userInitials)
+  const logoutInHeader = () => hasProfile() && p.logoutPlacement !== "bottom"
   return (
     <div class={classArr("flex flex-col gap-3 w-full text-neutral-950 dark:text-neutral-50", p.class)}>
       <Show when={hasProfile()}>
@@ -45,7 +48,7 @@ export function AppSettingsPanel(p: AppSettingsPanelProps) {
           bannerImageUrl={p.bannerImageUrl}
           editProfileLabel={p.editProfileLabel}
           onEditProfile={p.onEditProfile}
-          logoutLabel={p.logoutLabel}
+          logoutLabel={logoutInHeader() ? p.logoutLabel : undefined}
           onLogout={p.onLogout}
         />
       </Show>
@@ -56,8 +59,7 @@ export function AppSettingsPanel(p: AppSettingsPanelProps) {
         </Card>
       </Show>
 
-      {/* Logout lives in the profile header; this standalone card is only the fallback without profile data. */}
-      <Show when={p.logoutLabel && !hasProfile()}>
+      <Show when={p.logoutLabel && !logoutInHeader()}>
         <Card compact>
           <button
             type={"button"}
