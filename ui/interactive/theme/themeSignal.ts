@@ -13,11 +13,24 @@ import { createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export const themeSignal = createSignalObject<ThemeVariant>(themeVariant.os)
 
+let themeListenersRegistered = false
+
 export function themeInit() {
   if (isServer) return // Skip during SSR
   const theme = getThemeFromStorageOrBrowserPref()
   themeSet(theme, false)
+  if (themeListenersRegistered) return
+  themeListenersRegistered = true
   themeRegisterStorageListener()
+  themeRegisterOsListener()
+}
+
+/** Re-apply the OS preference when it changes while the "os" (System) theme is active. */
+function themeRegisterOsListener() {
+  const media = window.matchMedia("(prefers-color-scheme: dark)")
+  media.addEventListener("change", () => {
+    if (themeSignal.get() === themeVariant.os) setThemeToBrowser(themeVariant.os)
+  })
 }
 
 export function themeSet(theme: ThemeVariant, saveToStorage: boolean) {
