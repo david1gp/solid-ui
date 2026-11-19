@@ -6,6 +6,6 @@ export interface AppSidebarNavGroup {
   items: AppSidebarNavItem[]
   /** Render the label as a drawer toggle that shows/hides the items. */
   collapsible?: boolean
-  /** Initial drawer state when collapsible; defaults to open. */
+  /** Initial drawer state when collapsible; defaults to closed. */
   defaultOpen?: boolean
 }

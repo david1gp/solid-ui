@@ -77,7 +77,7 @@ export function AppSidebar(p: AppSidebarProps) {
       <nav class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2"}>
         <For each={p.groups}>
           {(group) => {
-            const [drawerOpen, setDrawerOpen] = createSignal(group.defaultOpen ?? true)
+            const [drawerOpen, setDrawerOpen] = createSignal(group.defaultOpen ?? false)
             // In the icon rail the label is hidden, so items stay visible regardless of the drawer.
             const itemsVisible = () => !group.collapsible || drawerOpen() || !isOpen()
             const labelClass = "px-2 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"
