@@ -4,6 +4,7 @@ import { mdiClipboardTextOutline } from "@adaptive-ds/mdi/mdiClipboardTextOutlin
 import { mdiCogOutline } from "@adaptive-ds/mdi/mdiCogOutline.js"
 import { mdiFileDocumentOutline } from "@adaptive-ds/mdi/mdiFileDocumentOutline.js"
 import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutline.js"
+import { mdiFolderOutline } from "@adaptive-ds/mdi/mdiFolderOutline.js"
 import { mdiPaletteOutline } from "@adaptive-ds/mdi/mdiPaletteOutline.js"
 import { mdiPaletteSwatchOutline } from "@adaptive-ds/mdi/mdiPaletteSwatchOutline.js"
 import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
@@ -28,6 +29,7 @@ const entries = [
 
 const settingsLabel = "Einstellungen"
 const settingsPageKey = "settings-page"
+const projects = [1, 2, 3, 4, 5].map((n) => `Projekt ${n}`)
 
 const accentColors = [
   { label: "Blau", color: "#2563eb" },
@@ -96,7 +98,19 @@ export function DemoAppSidebar() {
         },
       ],
     },
-    { label: "Projekte", items: [] },
+    {
+      label: "Projekte",
+      collapsible: true,
+      items: projects.map((label) => ({
+        icon: mdiFolderOutline,
+        label,
+        isActive: !settingsOpen.get() && active() === label,
+        onClick: () => {
+          setActive(label)
+          settingsOpen.set(false)
+        },
+      })),
+    },
   ]
   return (
     <div class={"flex h-[640px] w-full overflow-hidden bg-background"}>
@@ -140,7 +154,9 @@ export function DemoAppSidebar() {
           fallback={
             <>
               <h1 class={"text-2xl font-semibold mb-6"}>{active()}</h1>
-              <p class={"text-muted-foreground"}>Noch keine {active()} vorhanden.</p>
+              <p class={"text-muted-foreground"}>
+                {projects.includes(active()) ? `Platzhalter für ${active()}.` : `Noch keine ${active()} vorhanden.`}
+              </p>
             </>
           }
         >
