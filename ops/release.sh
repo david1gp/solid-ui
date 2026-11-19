@@ -5,7 +5,7 @@ set -e # Exit immediately if a command exits with a non-zero status
 # --- Configuration ---
 CHANGELOGS_DIR="changelogs"
 REPO_URL=$(git remote get-url origin | sed 's/\.git$//')
-REPO_NAME=$(echo "$REPO_URL" | sed 's/.*://')
+REPO_NAME=$(echo "$REPO_URL" | sed -E 's#.*github\.com[:/]##')
 PACKAGE_JSON="package.json"
 
 # --- Preflight checks ---
