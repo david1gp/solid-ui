@@ -33,9 +33,9 @@ export function NavDemo(p: DemoNavProps) {
         "w-full bg-gray-100 dark:bg-background [&_a:hover]:bg-gray-200 [&_button:hover]:bg-gray-200 dark:[&_a:hover]:bg-slate-800 dark:[&_button:hover]:bg-slate-800"
       }
     >
-      <nav class={cn("flex flex-wrap items-center justify-between p-1 gap-1 max-w-4xl mx-auto", s.class)} {...rest}>
+      <nav class={cn("flex flex-wrap items-center justify-between py-1 gap-1 w-full", s.class)} {...rest}>
         <div class={"flex flex-wrap gap-1"}>
-          <LogoImageText logoText="adaptive-solid-ui" logoTextClass="text-lg font-semibold" class="sm:pl-0" />
+          <LogoImageText logoText="adaptive-solid-ui" logoTextClass="text-lg font-semibold" />
           {/* <LogoImageOnly /> */}
           {s.category && (
             <>
@@ -71,7 +71,7 @@ export function NavDemo(p: DemoNavProps) {
           <LinkButtonExternal variant={buttonVariant.ghost} icon={iconNpm} href={npmUrl} title="NPM" newTab>
             Package
           </LinkButtonExternal>
-          <ThemeButton showText={true} class="rounded-md sm:pr-0" />
+          <ThemeButton showText={true} class="rounded-md" />
         </div>
       </nav>
     </header>
