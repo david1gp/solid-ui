@@ -38,8 +38,8 @@ export function SelectSingleNative(p: SelectSingleNativeProps) {
           "block w-full appearance-none py-2.5 pl-2.5 pr-10",
           "text-gray-900 dark:text-white", // text
           "placeholder:text-muted-foreground", // text placeholder
-          "bg-gray-50 dark:bg-gray-700", // bg
-          "rounded-lg border border-gray-300 dark:border-gray-500", // border
+          "bg-gray-50 dark:bg-[#202124]", // bg
+          "rounded-lg border border-gray-300 dark:border-white/10", // border
           "focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500",
           p.disabled && classesDisabledDirectly,
           p.class,
