@@ -788,23 +788,24 @@
   }
 }
 
+/* Dark mode follows the site theme tokens from src/tailwind.css (--color-*). */
 .dark .register-login {
-  --background: #0f1012;
-  --surface: #17181b;
-  --surface-soft: #222428;
-  --text: #f1f2f4;
-  --text-muted: #a8abb2;
-  --border: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.18);
-  --primary: #f1f2f4;
-  --primary-hover: #d8dade;
-  --primary-text: #141619;
+  --background: var(--color-background);
+  --surface: var(--color-background);
+  --surface-soft: color-mix(in oklab, var(--color-muted), white 5%);
+  --text: var(--color-foreground);
+  --text-muted: var(--color-muted-foreground);
+  --border: var(--color-border);
+  --border-strong: var(--color-input);
+  --primary: var(--color-foreground);
+  --primary-hover: color-mix(in oklab, var(--color-foreground), black 12%);
+  --primary-text: var(--color-background);
   --success: #66d49a;
   --focus: rgba(255, 255, 255, 0.16);
-  --gradient: rgba(70, 73, 80, 0.22);
-  --card: rgba(23, 24, 27, 0.96);
-  --indicator-border: rgba(255, 255, 255, 0.08);
-  --placeholder: #888c94;
+  --gradient: rgb(255 255 255 / 4%);
+  --card: var(--color-muted);
+  --indicator-border: var(--color-border);
+  --placeholder: color-mix(in oklab, var(--color-muted-foreground) 65%, transparent);
   --spinner-track: rgba(20, 22, 25, 0.35);
   --success-surface: #17392a;
   --backdrop: rgba(0, 0, 0, 0.7);
