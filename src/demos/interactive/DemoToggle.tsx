@@ -1,9 +1,13 @@
 import { mdiFormatAlignCenter } from "@adaptive-ds/mdi/mdiFormatAlignCenter.js"
 import { mdiFormatAlignLeft } from "@adaptive-ds/mdi/mdiFormatAlignLeft.js"
 import { mdiFormatAlignRight } from "@adaptive-ds/mdi/mdiFormatAlignRight.js"
+import { mdiFormatBold } from "@adaptive-ds/mdi/mdiFormatBold.js"
+import { mdiFormatItalic } from "@adaptive-ds/mdi/mdiFormatItalic.js"
+import { mdiFormatUnderline } from "@adaptive-ds/mdi/mdiFormatUnderline.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 import { ToggleButton } from "#ui/interactive/toggle/ToggleButton.jsx"
+import { Icon } from "#ui/static/icon/Icon.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export function DemoToggle() {
@@ -54,9 +58,15 @@ function TextFormattingDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Text Formatting</h2>
       <div class="flex items-center gap-2 p-4 border rounded-lg">
-        <ToggleButton pressedSignal={boldPressed} title="Bold" />
-        <ToggleButton pressedSignal={italicPressed} title="Italic" />
-        <ToggleButton pressedSignal={underlinePressed} title="Underline" />
+        <ToggleButton pressedSignal={boldPressed} title="Bold" aria-label="Bold">
+          <Icon path={mdiFormatBold} class="size-5" />
+        </ToggleButton>
+        <ToggleButton pressedSignal={italicPressed} title="Italic" aria-label="Italic">
+          <Icon path={mdiFormatItalic} class="size-5" />
+        </ToggleButton>
+        <ToggleButton pressedSignal={underlinePressed} title="Underline" aria-label="Underline">
+          <Icon path={mdiFormatUnderline} class="size-5" />
+        </ToggleButton>
       </div>
       <div class="mt-2 text-sm text-muted-foreground">
         Formatting: {boldPressed.get() ? "B" : ""}
@@ -135,7 +145,7 @@ function ToggleWithStateDemo() {
           <span class="text-sm text-muted-foreground">Feature is {pressedSignal.get() ? "enabled" : "disabled"}</span>
         </div>
 
-        <div class="mt-4 p-4 border rounded-lg bg-gray-50 dark:bg-gray-900/20">
+        <div class="mt-4 p-4 border rounded-lg bg-gray-50 dark:bg-neutral-900/20">
           <h3 class="font-semibold mb-2">Feature Content</h3>
           <p>This content is {pressedSignal.get() ? "visible" : "hidden"} based on the toggle state.</p>
         </div>

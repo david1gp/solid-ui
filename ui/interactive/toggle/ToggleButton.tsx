@@ -1,3 +1,4 @@
+import { cn } from "cn"
 import { type ComponentProps, splitProps } from "solid-js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
@@ -26,7 +27,15 @@ type ToggleButtonStateProps = {
 
 /** Button toggling a pressed signal on click. */
 export function ToggleButton(p: ToggleButtonProps) {
-  const [s, rest] = splitProps(p, ["title", "pressedSignal", "disabled", "onPressedChange", "onClick", "children"])
+  const [s, rest] = splitProps(p, [
+    "title",
+    "pressedSignal",
+    "disabled",
+    "onPressedChange",
+    "onClick",
+    "children",
+    "class",
+  ])
   return (
     <ButtonIcon
       type="button"
@@ -34,6 +43,8 @@ export function ToggleButton(p: ToggleButtonProps) {
       aria-pressed={s.pressedSignal.get()}
       data-state={s.pressedSignal.get() ? "on" : "off"}
       data-disabled={isDisabled(p)}
+      // Visible pressed state; without it toggles look identical on and off.
+      class={cn("data-[state=on]:bg-slate-200 dark:data-[state=on]:bg-white/15", s.class)}
       onClick={(e) => {
         const next = togglePressed(p)
         if (s.onPressedChange) {
