@@ -42,7 +42,7 @@ export function AppSidebar(p: AppSidebarProps) {
     <aside
       class={classArr(
         "flex flex-col shrink-0 h-full overflow-hidden", // layout
-        "bg-neutral-50 dark:bg-[#0a0a0a]", // background
+        "bg-neutral-50 dark:bg-[#111111]", // background
         "border-r border-border", // border
         "transition-[width]", // animation
         motion,
@@ -153,7 +153,7 @@ export function AppSidebar(p: AppSidebarProps) {
                 <Popover.Content
                   class={classArr(
                     "z-50 p-3 rounded-xl border border-border shadow-lg", // layout
-                    "bg-white dark:bg-[#0a0a0a]", // background
+                    "bg-white dark:bg-[#111111]", // background
                     "data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0", // animation
                   )}
                 >
