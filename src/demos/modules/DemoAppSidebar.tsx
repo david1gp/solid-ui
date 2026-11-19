@@ -18,6 +18,7 @@ import { AppSettingsPanel } from "#ui/modules/app_sidebar/AppSettingsPanel.jsx"
 import { AppSettingsSidebar } from "#ui/modules/app_sidebar/AppSettingsSidebar.jsx"
 import { AppSidebar } from "#ui/modules/app_sidebar/AppSidebar.jsx"
 import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
+import { AppSidebarCssBanner } from "#ui/modules/app_sidebar/AppSidebarCssBanner.jsx"
 import { AppSidebarFlag } from "#ui/modules/app_sidebar/AppSidebarFlag.jsx"
 import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGroup.js"
 import { AppSidebarUserMenu, type AppSidebarUserMenuSection } from "#ui/modules/app_sidebar/AppSidebarUserMenu.jsx"
@@ -238,6 +239,8 @@ export function DemoAppSidebar() {
             name={"Max Mustermann"}
             email={"max.mustermann@example.com"}
             userAvatar={<AppSidebarCssAvatar />}
+            banner={<AppSidebarCssBanner />}
+            editProfileLabel={"Profil bearbeiten"}
             sections={sections}
             logoutLabel={"Abmelden"}
           />
@@ -263,6 +266,8 @@ export function DemoAppSidebar() {
             name={"Max Mustermann"}
             email={"max.mustermann@example.com"}
             userAvatar={<AppSidebarCssAvatar />}
+            banner={<AppSidebarCssBanner />}
+            editProfileLabel={"Profil bearbeiten"}
             sections={sections}
             logoutLabel={"Abmelden"}
           />

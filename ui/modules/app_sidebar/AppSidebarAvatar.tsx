@@ -1,14 +1,18 @@
 import { createSignal, type JSXElement, Show } from "solid-js"
 
 /** Shared avatar: custom content takes precedence over a URL, then initials. */
-export function AppSidebarAvatar(p: { userAvatar?: JSXElement; userImageUrl?: string; userInitials?: string }) {
+export function AppSidebarAvatar(p: {
+  userAvatar?: JSXElement
+  userImageUrl?: string
+  userInitials?: string
+  /** Replaces the default size and text size (size-8 text-xs). */
+  class?: string
+}) {
   const [failedUrl, setFailedUrl] = createSignal<string>()
   return (
     <Show when={p.userAvatar || p.userImageUrl || p.userInitials}>
       <span
-        class={
-          "flex items-center justify-center size-8 shrink-0 overflow-hidden rounded-full bg-black/5 dark:bg-white/10 text-xs font-semibold"
-        }
+        class={`flex items-center justify-center shrink-0 overflow-hidden rounded-full bg-black/5 dark:bg-white/10 font-semibold ${p.class ?? "size-8 text-xs"}`}
       >
         <Show
           when={p.userAvatar}

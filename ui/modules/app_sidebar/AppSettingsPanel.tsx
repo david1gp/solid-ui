@@ -1,6 +1,6 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
 import { createEffect, createSignal, For, type JSXElement, Match, Show, Switch } from "solid-js"
-import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
+import { AppSettingsProfileHeader } from "#ui/modules/app_sidebar/AppSettingsProfileHeader.jsx"
 import type {
   AppSidebarUserMenuOption,
   AppSidebarUserMenuSection,
@@ -14,6 +14,11 @@ export interface AppSettingsPanelProps {
   userInitials?: string
   userImageUrl?: string
   userAvatar?: JSXElement
+  /** Profile cover content, e.g. <AppSidebarCssBanner />; takes precedence over bannerImageUrl. */
+  banner?: JSXElement
+  bannerImageUrl?: string
+  editProfileLabel?: string
+  onEditProfile?: () => void
   /** Same section shape as the user menu; options with `preview` render as window mockup tiles. */
   sections?: AppSidebarUserMenuSection[]
   logoutLabel?: string
@@ -26,22 +31,23 @@ export interface AppSettingsPanelProps {
  * Purely presentational: tiles are selectable, but only do something if the caller passes onClick.
  */
 export function AppSettingsPanel(p: AppSettingsPanelProps) {
+  const hasProfile = () => !!(p.name || p.email || p.userAvatar || p.userImageUrl || p.userInitials)
   return (
     <div class={classArr("flex flex-col gap-3 w-full text-neutral-950 dark:text-neutral-50", p.class)}>
-      <Show when={p.name || p.email || p.userAvatar || p.userImageUrl || p.userInitials}>
-        <Card>
-          <div class={"flex items-center gap-3"}>
-            <AppSidebarAvatar userAvatar={p.userAvatar} userImageUrl={p.userImageUrl} userInitials={p.userInitials} />
-            <div class={"flex flex-col min-w-0"}>
-              <Show when={p.name}>
-                <span class={"text-sm font-semibold truncate"}>{p.name}</span>
-              </Show>
-              <Show when={p.email}>
-                <span class={"text-sm text-neutral-500 dark:text-neutral-400 truncate"}>{p.email}</span>
-              </Show>
-            </div>
-          </div>
-        </Card>
+      <Show when={hasProfile()}>
+        <AppSettingsProfileHeader
+          name={p.name}
+          email={p.email}
+          userInitials={p.userInitials}
+          userImageUrl={p.userImageUrl}
+          userAvatar={p.userAvatar}
+          banner={p.banner}
+          bannerImageUrl={p.bannerImageUrl}
+          editProfileLabel={p.editProfileLabel}
+          onEditProfile={p.onEditProfile}
+          logoutLabel={p.logoutLabel}
+          onLogout={p.onLogout}
+        />
       </Show>
 
       <Show when={p.sections?.length}>
@@ -50,7 +56,8 @@ export function AppSettingsPanel(p: AppSettingsPanelProps) {
         </Card>
       </Show>
 
-      <Show when={p.logoutLabel}>
+      {/* Logout lives in the profile header; this standalone card is only the fallback without profile data. */}
+      <Show when={p.logoutLabel && !hasProfile()}>
         <Card compact>
           <button
             type={"button"}
