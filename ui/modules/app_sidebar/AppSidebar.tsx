@@ -2,10 +2,12 @@ import { mdiAccountCircleOutline } from "@adaptive-ds/mdi/mdiAccountCircleOutlin
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
 import Popover from "@corvu/popover"
-import { type ComponentProps, children, createSignal, For, type JSXElement, Show, splitProps } from "solid-js"
+import { Key } from "@solid-primitives/keyed"
+import { type ComponentProps, children, createSignal, type JSXElement, Show, splitProps } from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
 import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGroup.js"
 import type { AppSidebarNavItem } from "#ui/modules/app_sidebar/AppSidebarNavItem.js"
+import { createFlyoutState } from "#ui/modules/app_sidebar/createFlyoutState.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
@@ -36,7 +38,7 @@ const motion = "duration-500 ease-in-out motion-reduce:transition-none"
  */
 export function AppSidebar(p: AppSidebarProps) {
   const isOpen = () => !p.collapsed.get()
-  const [menuOpen, setMenuOpen] = createSignal(false)
+  const menu = createFlyoutState()
   // Drawer state keyed by group label, so it survives `groups` being re-created on every update.
   const [drawerState, setDrawerState] = createSignal<Record<string, boolean>>({})
   // Resolve once so the menu keeps its state (e.g. selections) across close/reopen.
@@ -78,21 +80,21 @@ export function AppSidebar(p: AppSidebarProps) {
       </div>
 
       <nav class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2"}>
-        <For each={p.groups}>
+        <Key each={p.groups} by={"label"}>
           {(group) => {
-            const drawerOpen = () => drawerState()[group.label] ?? group.defaultOpen ?? false
-            const setDrawerOpen = (open: boolean) => setDrawerState((s) => ({ ...s, [group.label]: open }))
+            const drawerOpen = () => drawerState()[group().label] ?? group().defaultOpen ?? false
+            const setDrawerOpen = (open: boolean) => setDrawerState((s) => ({ ...s, [group().label]: open }))
             // The rail mirrors the drawer: a closed drawer collapses to one group icon with a flyout.
-            const itemsVisible = () => !group.collapsible || drawerOpen()
-            const railGroupVisible = () => !isOpen() && !!group.collapsible && !drawerOpen()
+            const itemsVisible = () => !group().collapsible || drawerOpen()
+            const railGroupVisible = () => !isOpen() && !!group().collapsible && !drawerOpen()
             const labelClass = "px-2 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"
             return (
-              <Collapsible open={isOpen() || group.items.length > 0}>
+              <Collapsible open={isOpen() || group().items.length > 0}>
                 <div class={"flex flex-col gap-0.5 pb-4"}>
                   <Collapsible open={isOpen()}>
                     <Show
-                      when={group.collapsible}
-                      fallback={<h3 class={classArr(labelClass, fade())}>{group.label}</h3>}
+                      when={group().collapsible}
+                      fallback={<h3 class={classArr(labelClass, fade())}>{group().label}</h3>}
                     >
                       <h3 class={fade()}>
                         <button
@@ -105,7 +107,7 @@ export function AppSidebar(p: AppSidebarProps) {
                             "hover:text-neutral-950 dark:hover:text-neutral-50", // hover
                           )}
                         >
-                          <span class={"truncate"}>{group.label}</span>
+                          <span class={"truncate"}>{group().label}</span>
                           <Icon
                             path={mdiChevronDown}
                             class={classArr(
@@ -117,30 +119,30 @@ export function AppSidebar(p: AppSidebarProps) {
                       </h3>
                     </Show>
                   </Collapsible>
-                  <Show when={group.collapsible}>
+                  <Show when={group().collapsible}>
                     <Collapsible open={railGroupVisible()}>
-                      <RailGroupButton group={group} accentColor={p.accentColor} />
+                      <RailGroupButton group={group()} accentColor={p.accentColor} />
                     </Collapsible>
                   </Show>
                   <Collapsible open={itemsVisible()}>
                     <div class={"flex flex-col gap-0.5"}>
-                      <For each={group.items}>
+                      <Key each={group().items} by={"label"}>
                         {(item) => (
                           <NavItemButton
-                            item={item}
+                            item={item()}
                             accentColor={p.accentColor}
-                            title={isOpen() ? undefined : item.label}
+                            title={isOpen() ? undefined : item().label}
                             labelClass={fade()}
                           />
                         )}
-                      </For>
+                      </Key>
                     </div>
                   </Collapsible>
                 </div>
               </Collapsible>
             )
           }}
-        </For>
+        </Key>
       </nav>
 
       <Show when={p.userName || p.userInitials}>
@@ -158,13 +160,14 @@ export function AppSidebar(p: AppSidebarProps) {
             }
           >
             <Popover
-              open={menuOpen()}
-              onOpenChange={setMenuOpen}
+              open={menu.open()}
+              onOpenChange={menu.setOpen}
               placement={isOpen() ? "top-start" : "right-end"}
               floatingOptions={{ offset: 8, flip: true, shift: { padding: 8 } }}
             >
               <Popover.Trigger
                 as={UserButton}
+                onClick={menu.onTriggerClick}
                 userName={p.userName}
                 userInitials={p.userInitials}
                 onUserClick={p.onUserClick}
@@ -176,7 +179,7 @@ export function AppSidebar(p: AppSidebarProps) {
                   class={classArr(
                     "z-50 p-3 rounded-xl border border-border shadow-lg", // layout
                     "bg-white dark:bg-[#111111]", // background
-                    "data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0", // animation
+                    menu.contentClass(),
                   )}
                 >
                   {userMenu()}
@@ -243,20 +246,21 @@ function NavItemButton(p: NavItemButtonProps) {
 
 /** Icon-rail stand-in for a closed drawer: one group icon that opens a flyout with its items. */
 function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string }) {
-  const [open, setOpen] = createSignal(false)
+  const flyout = createFlyoutState()
   const hasActive = () => p.group.items.some((i) => i.isActive)
   const icon = () => p.group.icon ?? p.group.items[0]?.icon
   return (
     <Popover
-      open={open()}
-      onOpenChange={setOpen}
+      open={flyout.open()}
+      onOpenChange={flyout.setOpen}
       placement={"right-start"}
       floatingOptions={{ offset: 8, flip: true, shift: { padding: 8 } }}
     >
       <Popover.Trigger
+        onClick={flyout.onTriggerClick}
         title={p.group.label}
         aria-label={p.group.label}
-        class={classArr(navButtonClass, "w-full", (hasActive() || open()) && "bg-black/5 dark:bg-white/10")}
+        class={classArr(navButtonClass, "w-full", (hasActive() || flyout.open()) && "bg-black/5 dark:bg-white/10")}
       >
         <AccentBar active={hasActive()} accentColor={p.accentColor} />
         <Show when={icon()}>{(path) => <Icon path={path()} class={"size-4"} />}</Show>
@@ -266,15 +270,17 @@ function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string })
           class={classArr(
             "z-50 flex flex-col gap-0.5 min-w-44 max-w-64 max-h-[70vh] overflow-y-auto px-2.5 py-1.5", // layout
             "rounded-xl border border-border shadow-lg bg-white dark:bg-[#111111]", // look
-            "data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0", // animation
+            flyout.contentClass(),
           )}
         >
           <Popover.Label class={"px-2 pt-1 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"}>
             {p.group.label}
           </Popover.Label>
-          <For each={p.group.items}>
-            {(item) => <NavItemButton item={item} accentColor={p.accentColor} onSelect={() => setOpen(false)} />}
-          </For>
+          <Key each={p.group.items} by={"label"}>
+            {(item) => (
+              <NavItemButton item={item()} accentColor={p.accentColor} onSelect={() => flyout.setOpen(false)} />
+            )}
+          </Key>
         </Popover.Content>
       </Popover.Portal>
     </Popover>
