@@ -84,7 +84,7 @@ export function AppSidebar(p: AppSidebarProps) {
       class={classArr(
         "flex flex-col shrink-0 h-full overflow-hidden", // layout
         "bg-neutral-50 dark:bg-[#262626]", // background
-        "border-r border-border", // border
+        "border-r border-neutral-200 dark:border-white/10", // border
         "transition-[width]", // animation
         motion,
         isOpen() ? "w-56" : "w-12",
@@ -207,7 +207,7 @@ export function AppSidebar(p: AppSidebarProps) {
 
       <Show when={p.userName || p.userInitials || p.userAvatar || p.userImageUrl}>
         {/* px-1 + button p-1 = 8px inset: centers the 32px avatar in the 48px rail, aligned with the toggle button */}
-        <div class={"border-t border-border px-1 py-1.5"}>
+        <div class={"border-t border-neutral-200 dark:border-white/10 px-1 py-1.5"}>
           <Show
             when={userMenu()}
             fallback={
@@ -242,7 +242,7 @@ export function AppSidebar(p: AppSidebarProps) {
               <Popover.Portal>
                 <Popover.Content
                   class={classArr(
-                    "z-50 p-3 rounded-xl border border-border shadow-lg", // layout
+                    "z-50 p-3 rounded-xl border border-neutral-200 dark:border-white/10 shadow-lg", // layout
                     "bg-white dark:bg-[#262626]", // background
                     menu.contentClass(),
                   )}
@@ -481,7 +481,7 @@ function NavItemButton(p: NavItemButtonProps) {
                     buttons[next]?.focus()
                   }}
                   class={classArr(
-                    "z-60 min-w-44 p-1 rounded-xl border border-border shadow-lg bg-white dark:bg-[#262626]",
+                    "z-60 min-w-44 p-1 rounded-xl border border-neutral-200 dark:border-white/10 shadow-lg bg-white dark:bg-[#262626]",
                     menu.contentClass(),
                   )}
                 >
@@ -519,7 +519,7 @@ function NavItemButton(p: NavItemButtonProps) {
                   </Show>
                   <Show when={p.item.onDelete}>
                     <Show when={canRename() || p.draggable}>
-                      <div role={"separator"} class={"my-1 border-t border-border"} />
+                      <div role={"separator"} class={"my-1 border-t border-neutral-200 dark:border-white/10"} />
                     </Show>
                     <MenuItem
                       label={ttt("Delete")}
@@ -744,7 +744,7 @@ function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string })
         <Popover.Content
           class={classArr(
             "z-50 flex flex-col gap-0.5 min-w-44 max-w-64 max-h-[70vh] overflow-y-auto px-2.5 py-1.5", // layout
-            "rounded-xl border border-border shadow-lg bg-white dark:bg-[#262626]", // look
+            "rounded-xl border border-neutral-200 dark:border-white/10 shadow-lg bg-white dark:bg-[#262626]", // look
             flyout.contentClass(),
           )}
         >

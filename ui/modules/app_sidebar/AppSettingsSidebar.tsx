@@ -45,7 +45,7 @@ export function AppSettingsSidebar(p: AppSettingsSidebarProps) {
           "bg-neutral-50 dark:bg-[#262626]", // background
           "transition-[width,opacity]", // animation
           motion,
-          isOpen() ? "w-80 opacity-100 border-r border-border shadow-xl" : "w-0 opacity-0",
+          isOpen() ? "w-80 opacity-100 border-r border-neutral-200 dark:border-white/10 shadow-xl" : "w-0 opacity-0",
           p.class,
         )}
       >
