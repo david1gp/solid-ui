@@ -18,8 +18,6 @@ export interface AppSettingsProfileHeaderProps {
   onEditProfile?: () => void
   logoutLabel?: string
   onLogout?: () => void
-  /** Hide the avatar/name/email/actions row and show only the banner. */
-  hideIdentity?: boolean
   class?: string
 }
 
@@ -65,52 +63,50 @@ export function AppSettingsProfileHeader(p: AppSettingsProfileHeaderProps) {
           {p.banner}
         </Show>
       </div>
-      <Show when={!p.hideIdentity}>
-        <div
+      <div
+        class={classArr(
+          "flex flex-col items-center gap-3 px-4 pb-4 text-center", // narrow: centered stack
+          "@md:flex-row @md:items-start @md:gap-4 @md:text-left", // wide: row
+        )}
+      >
+        <AppSidebarAvatar
+          userAvatar={p.userAvatar}
+          userImageUrl={p.userImageUrl}
+          userInitials={p.userInitials}
           class={classArr(
-            "flex flex-col items-center gap-3 px-4 pb-4 text-center", // narrow: centered stack
-            "@md:flex-row @md:items-start @md:gap-4 @md:text-left", // wide: row
+            "size-18 -mt-9 @md:size-20 @md:-mt-10 text-xl", // size + overlap with banner
+            "ring-4 ring-neutral-50 dark:ring-neutral-800 bg-neutral-100 dark:bg-neutral-700",
           )}
-        >
-          <AppSidebarAvatar
-            userAvatar={p.userAvatar}
-            userImageUrl={p.userImageUrl}
-            userInitials={p.userInitials}
-            class={classArr(
-              "size-18 -mt-9 @md:size-20 @md:-mt-10 text-xl", // size + overlap with banner
-              "ring-4 ring-neutral-50 dark:ring-neutral-800 bg-neutral-100 dark:bg-neutral-700",
-            )}
-          />
-          <div class={"flex flex-col min-w-0 w-full @md:w-auto @md:flex-1 @md:pt-3"}>
-            <Show when={p.name}>
-              <h2 class={"text-lg font-semibold truncate"}>{p.name}</h2>
-            </Show>
-            <Show when={p.email}>
-              <span class={"text-sm text-neutral-500 dark:text-neutral-400 truncate"}>{p.email}</span>
-            </Show>
-          </div>
-          <Show when={hasActions()}>
-            <div class={"flex flex-wrap items-center justify-center gap-2 @md:pt-3.5 @md:shrink-0"}>
-              <Show when={p.editProfileLabel}>
-                <button type={"button"} onClick={() => p.onEditProfile?.()} class={actionButton}>
-                  <Icon path={mdiPencilOutline} class={"size-4"} />
-                  <span>{p.editProfileLabel}</span>
-                </button>
-              </Show>
-              <Show when={p.logoutLabel}>
-                <button
-                  type={"button"}
-                  onClick={() => p.onLogout?.()}
-                  class={classArr(actionButton, "text-red-600 dark:text-red-400")}
-                >
-                  <Icon path={mdiLogout} class={"size-4"} />
-                  <span>{p.logoutLabel}</span>
-                </button>
-              </Show>
-            </div>
+        />
+        <div class={"flex flex-col min-w-0 w-full @md:w-auto @md:flex-1 @md:pt-3"}>
+          <Show when={p.name}>
+            <h2 class={"text-lg font-semibold truncate"}>{p.name}</h2>
+          </Show>
+          <Show when={p.email}>
+            <span class={"text-sm text-neutral-500 dark:text-neutral-400 truncate"}>{p.email}</span>
           </Show>
         </div>
-      </Show>
+        <Show when={hasActions()}>
+          <div class={"flex flex-wrap items-center justify-center gap-2 @md:pt-3.5 @md:shrink-0"}>
+            <Show when={p.editProfileLabel}>
+              <button type={"button"} onClick={() => p.onEditProfile?.()} class={actionButton}>
+                <Icon path={mdiPencilOutline} class={"size-4"} />
+                <span>{p.editProfileLabel}</span>
+              </button>
+            </Show>
+            <Show when={p.logoutLabel}>
+              <button
+                type={"button"}
+                onClick={() => p.onLogout?.()}
+                class={classArr(actionButton, "text-red-600 dark:text-red-400")}
+              >
+                <Icon path={mdiLogout} class={"size-4"} />
+                <span>{p.logoutLabel}</span>
+              </button>
+            </Show>
+          </div>
+        </Show>
+      </div>
     </section>
   )
 }
