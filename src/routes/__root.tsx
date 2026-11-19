@@ -1,6 +1,7 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/solid-router"
 import { Suspense } from "solid-js"
 import { HydrationScript } from "solid-js/web"
+import { DemoNoticePopup } from "#src/app/demo_notice/DemoNoticePopup.jsx"
 import { DemosNotFound } from "#src/app/demos/DemoViews.jsx"
 import { pageMeta, siteName, softwareSourceCodeJsonLd, websiteJsonLd } from "#src/lib/seo.js"
 import "../tailwind.css"
@@ -60,6 +61,7 @@ function RootDocument(props: { children: any }) {
         <div class="flex flex-col min-h-dvh w-full">
           <Suspense>{props.children}</Suspense>
         </div>
+        <DemoNoticePopup />
         <Scripts />
       </body>
     </html>
