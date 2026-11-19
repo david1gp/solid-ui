@@ -19,10 +19,12 @@ import {
   untrack,
 } from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
+import { AppSidebarAccentBar } from "#ui/modules/app_sidebar/AppSidebarAccentBar.jsx"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGroup.js"
 import type { AppSidebarNavItem } from "#ui/modules/app_sidebar/AppSidebarNavItem.js"
 import { appSidebarFilterGroups } from "#ui/modules/app_sidebar/appSidebarFilterGroups.js"
+import { appSidebarNavButtonClass } from "#ui/modules/app_sidebar/appSidebarNavButtonClass.js"
 import { createFlyoutState } from "#ui/modules/app_sidebar/createFlyoutState.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
@@ -130,7 +132,7 @@ export function AppSidebar(p: AppSidebarProps) {
               onClick={openSearch}
               title={ttt("Search")}
               aria-label={ttt("Search")}
-              class={classArr(navButtonClass, "w-full")}
+              class={classArr(appSidebarNavButtonClass, "w-full")}
             >
               <Icon path={mdiMagnify} class={"size-4"} />
             </button>
@@ -253,28 +255,6 @@ export function AppSidebar(p: AppSidebarProps) {
         </div>
       </Show>
     </aside>
-  )
-}
-
-const navButtonClass = classArr(
-  "relative flex items-center gap-2 h-8 px-2 rounded-md cursor-pointer text-sm text-left", // layout
-  "font-medium text-neutral-950 dark:text-neutral-50", // text
-  "hover:bg-black/5 dark:hover:bg-white/10", // hover
-)
-
-/** Rounded accent bar left of an active entry. */
-function AccentBar(p: { active: boolean; accentColor?: string }) {
-  return (
-    <span
-      aria-hidden={true}
-      style={p.accentColor ? { "background-color": p.accentColor } : undefined}
-      class={classArr(
-        "absolute -left-1.5 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full", // layout
-        !p.accentColor && "bg-blue-600 dark:bg-blue-500", // color
-        "transition-[transform,opacity,background-color] duration-200 ease-out motion-reduce:transition-none", // animation
-        p.active ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0",
-      )}
-    />
   )
 }
 
@@ -429,13 +409,13 @@ function NavItemButton(p: NavItemButtonProps) {
                 .join(" ") || undefined
             }
             class={classArr(
-              navButtonClass,
+              appSidebarNavButtonClass,
               "w-full min-w-0",
               hasMenu() && "pr-9",
               p.item.isActive && "bg-black/5 dark:bg-white/10",
             )}
           >
-            <AccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
+            <AppSidebarAccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
             <Icon path={p.item.icon} class={"size-4"} />
             <span class={classArr("min-w-0 truncate whitespace-nowrap", p.labelClass)}>{p.item.label}</span>
           </button>
@@ -558,8 +538,8 @@ function NavItemButton(p: NavItemButtonProps) {
         </div>
       }
     >
-      <div class={classArr(navButtonClass, "cursor-text bg-black/5 dark:bg-white/10")}>
-        <AccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
+      <div class={classArr(appSidebarNavButtonClass, "cursor-text bg-black/5 dark:bg-white/10")}>
+        <AppSidebarAccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
         <Icon path={p.item.icon} class={"size-4"} />
         <input
           ref={(el) => {
@@ -719,7 +699,7 @@ function GroupItems(p: {
             type={"button"}
             onClick={() => add().onAdd()}
             data-nav-add={""}
-            class={classArr(navButtonClass, "text-neutral-500 dark:text-neutral-400")}
+            class={classArr(appSidebarNavButtonClass, "text-neutral-500 dark:text-neutral-400")}
           >
             <Icon path={add().icon ?? mdiPlus} class={"size-4"} />
             <span class={"truncate whitespace-nowrap"}>{add().label}</span>
@@ -751,9 +731,13 @@ function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string })
         onClick={flyout.onTriggerClick}
         title={p.group.label}
         aria-label={p.group.label}
-        class={classArr(navButtonClass, "w-full", (hasActive() || flyout.open()) && "bg-black/5 dark:bg-white/10")}
+        class={classArr(
+          appSidebarNavButtonClass,
+          "w-full",
+          (hasActive() || flyout.open()) && "bg-black/5 dark:bg-white/10",
+        )}
       >
-        <AccentBar active={hasActive()} accentColor={p.accentColor} />
+        <AppSidebarAccentBar active={hasActive()} accentColor={p.accentColor} />
         <Show when={icon()}>{(path) => <Icon path={path()} class={"size-4"} />}</Show>
       </Popover.Trigger>
       <Popover.Portal>

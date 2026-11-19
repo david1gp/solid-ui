@@ -1,5 +1,7 @@
+import { mdiAccountCogOutline } from "@adaptive-ds/mdi/mdiAccountCogOutline.js"
 import { mdiAccountGroup } from "@adaptive-ds/mdi/mdiAccountGroup.js"
 import { mdiBrightnessAuto } from "@adaptive-ds/mdi/mdiBrightnessAuto.js"
+import { mdiCardAccountDetailsOutline } from "@adaptive-ds/mdi/mdiCardAccountDetailsOutline.js"
 import { mdiClipboardTextOutline } from "@adaptive-ds/mdi/mdiClipboardTextOutline.js"
 import { mdiCogOutline } from "@adaptive-ds/mdi/mdiCogOutline.js"
 import { mdiFileDocumentOutline } from "@adaptive-ds/mdi/mdiFileDocumentOutline.js"
@@ -11,10 +13,13 @@ import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
 import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
-import { createRoot, createSignal, Show } from "solid-js"
+import { createRoot, createSignal, type JSXElement, Match, Show, Switch } from "solid-js"
+import { Input } from "#ui/input/input/Input.jsx"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { toastDismiss } from "#ui/interactive/toast/toastDismiss.js"
+import { AppSettingsNav } from "#ui/modules/app_sidebar/AppSettingsNav.jsx"
 import { AppSettingsPanel } from "#ui/modules/app_sidebar/AppSettingsPanel.jsx"
+import { AppSettingsProfileHeader } from "#ui/modules/app_sidebar/AppSettingsProfileHeader.jsx"
 import { AppSettingsSidebar } from "#ui/modules/app_sidebar/AppSettingsSidebar.jsx"
 import { AppSidebar } from "#ui/modules/app_sidebar/AppSidebar.jsx"
 import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
@@ -35,6 +40,13 @@ const entries = [
 const settingsLabel = "Einstellungen"
 const settingsPageKey = "settings-page"
 
+const settingsPages = [
+  { id: "account", icon: mdiAccountCogOutline, label: "Account-Einstellungen" },
+  { id: "personal", icon: mdiCardAccountDetailsOutline, label: "Persönliche Informationen" },
+  { id: "appearance", icon: mdiPaletteOutline, label: "Erscheinungsbild" },
+] as const
+type SettingsPageId = (typeof settingsPages)[number]["id"]
+
 const accentColors = [
   { label: "Blau", color: "#2563eb" },
   { label: "Pink", color: "#ec4899" },
@@ -48,6 +60,13 @@ export function DemoAppSidebar() {
   const accentColor = createSignalObject(accentColors[0]!.color)
   const appearance = createSignalObject("Hell")
   const language = createSignalObject("DE")
+  const firstName = createSignalObject("Max")
+  const lastName = createSignalObject("Mustermann")
+  const email = createSignalObject("max.mustermann@example.com")
+  const fullName = () => [firstName.get(), lastName.get()].filter(Boolean).join(" ")
+  const initials = () => `${firstName.get().charAt(0)}${lastName.get().charAt(0)}`.toUpperCase()
+  const settingsPage = createSignalObject<SettingsPageId>("account")
+  const settingsPageLabel = () => settingsPages.find((page) => page.id === settingsPage.get())?.label
   const projects = createSignalObject([1, 2, 3, 4, 5].map((n) => ({ id: `project-${n}`, label: `Projekt ${n}` })))
   let nextProject = 6
   const newProjectId = createSignalObject<string | undefined>(undefined)
@@ -222,13 +241,13 @@ export function DemoAppSidebar() {
           }
           groups={groups()}
           accentColor={accentColor.get()}
-          userName={"Max Mustermann"}
-          userInitials={"MM"}
+          userName={fullName()}
+          userInitials={initials()}
           userAvatar={<AppSidebarCssAvatar />}
           userMenu={
             <AppSidebarUserMenu
-              name={"Max Mustermann"}
-              email={"max.mustermann@example.com"}
+              name={fullName()}
+              email={email.get()}
               userAvatar={<AppSidebarCssAvatar />}
               logoutLabel={"Abmelden"}
             />
@@ -236,16 +255,34 @@ export function DemoAppSidebar() {
         />
         <AppSettingsSidebar open={settingsOpen} title={settingsLabel}>
           <AppSettingsPanel
-            name={"Max Mustermann"}
-            email={"max.mustermann@example.com"}
+            name={fullName()}
+            email={email.get()}
             userAvatar={<AppSidebarCssAvatar />}
-            banner={<AppSidebarCssBanner />}
+            banner={<AppSidebarCssBanner accentColor={accentColor.get()} />}
             sections={sections}
             logoutLabel={"Abmelden"}
             logoutPlacement={"bottom"}
           />
         </AppSettingsSidebar>
       </div>
+      <Show when={active() === settingsPageKey}>
+        <AppSettingsNav
+          title={settingsLabel}
+          name={fullName()}
+          email={email.get()}
+          userAvatar={<AppSidebarCssAvatar />}
+          accentColor={accentColor.get()}
+          items={settingsPages.map((page) => ({
+            icon: page.icon,
+            label: page.label,
+            get isActive() {
+              return settingsPage.get() === page.id
+            },
+            onClick: () => settingsPage.set(page.id),
+          }))}
+          logoutLabel={"Abmelden"}
+        />
+      </Show>
       <main class={"flex-1 min-w-0 p-8 overflow-y-auto"}>
         <Show
           when={active() === settingsPageKey}
@@ -260,19 +297,89 @@ export function DemoAppSidebar() {
             </>
           }
         >
-          <h1 class={"text-2xl font-semibold mb-6"}>{settingsLabel}</h1>
-          <AppSettingsPanel
-            class={"max-w-2xl"}
-            name={"Max Mustermann"}
-            email={"max.mustermann@example.com"}
-            userAvatar={<AppSidebarCssAvatar />}
-            banner={<AppSidebarCssBanner />}
-            editProfileLabel={"Profil bearbeiten"}
-            sections={sections}
-            logoutLabel={"Abmelden"}
-          />
+          <h1 class={"text-2xl font-semibold mb-6"}>{settingsPageLabel()}</h1>
+          <Switch>
+            <Match when={settingsPage.get() === "account"}>
+              <div class={"flex flex-col gap-3 max-w-2xl"}>
+                <SettingsCard>
+                  <InfoRow label={"E-Mail-Adresse"} value={email.get()} />
+                  <InfoRow label={"Benutzername"} value={email.get().split("@")[0] ?? ""} />
+                  <InfoRow label={"Mitglied seit"} value={"März 2024"} />
+                </SettingsCard>
+                <AppSettingsPanel sections={sections.filter((section) => section.label === "Sprache")} />
+              </div>
+            </Match>
+            <Match when={settingsPage.get() === "personal"}>
+              <div class={"flex flex-col gap-3 max-w-2xl"}>
+                <AppSettingsProfileHeader
+                  name={fullName()}
+                  email={email.get()}
+                  userAvatar={<AppSidebarCssAvatar />}
+                  banner={<AppSidebarCssBanner accentColor={accentColor.get()} />}
+                />
+                <SettingsCard>
+                  <div class={"grid gap-4 sm:grid-cols-2"}>
+                    <Field label={"Vorname"} for={"settings-first-name"}>
+                      <Input
+                        id={"settings-first-name"}
+                        value={firstName.get()}
+                        onInput={(e) => firstName.set(e.currentTarget.value)}
+                      />
+                    </Field>
+                    <Field label={"Nachname"} for={"settings-last-name"}>
+                      <Input
+                        id={"settings-last-name"}
+                        value={lastName.get()}
+                        onInput={(e) => lastName.set(e.currentTarget.value)}
+                      />
+                    </Field>
+                    <Field label={"E-Mail-Adresse"} for={"settings-email"} class={"sm:col-span-2"}>
+                      <Input
+                        id={"settings-email"}
+                        type={"email"}
+                        value={email.get()}
+                        onInput={(e) => email.set(e.currentTarget.value)}
+                      />
+                    </Field>
+                  </div>
+                </SettingsCard>
+              </div>
+            </Match>
+            <Match when={settingsPage.get() === "appearance"}>
+              <AppSettingsPanel
+                class={"max-w-2xl"}
+                sections={sections.filter((section) => section.label !== "Sprache")}
+              />
+            </Match>
+          </Switch>
         </Show>
       </main>
+    </div>
+  )
+}
+
+function SettingsCard(p: { children: JSXElement }) {
+  return (
+    <div class={"p-4 rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-white/5 dark:bg-neutral-800/60"}>
+      {p.children}
+    </div>
+  )
+}
+
+function InfoRow(p: { label: string; value: string }) {
+  return (
+    <div class={"flex items-center justify-between gap-4 py-2 text-sm border-b border-border last:border-b-0"}>
+      <span class={"text-neutral-500 dark:text-neutral-400"}>{p.label}</span>
+      <span class={"font-medium truncate"}>{p.value}</span>
+    </div>
+  )
+}
+
+function Field(p: { label: string; for: string; class?: string; children: JSXElement }) {
+  return (
+    <div class={`flex flex-col gap-1.5 text-sm font-medium ${p.class ?? ""}`}>
+      <label for={p.for}>{p.label}</label>
+      {p.children}
     </div>
   )
 }
