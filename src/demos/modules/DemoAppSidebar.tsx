@@ -64,6 +64,9 @@ export function DemoAppSidebar() {
   const language = createSignalObject("DE")
   const firstName = createSignalObject("Max")
   const lastName = createSignalObject("Mustermann")
+  const username = createSignalObject("maxmustermann")
+  const password = createSignalObject("")
+  const phone = createSignalObject("+49 170 1234567")
   const email = createSignalObject("max.mustermann@example.com")
   const fullName = () => [firstName.get(), lastName.get()].filter(Boolean).join(" ")
   const initials = () => `${firstName.get().charAt(0)}${lastName.get().charAt(0)}`.toUpperCase()
@@ -327,6 +330,32 @@ export function DemoAppSidebar() {
                         id={"settings-last-name"}
                         value={lastName.get()}
                         onInput={(e) => lastName.set(e.currentTarget.value)}
+                      />
+                    </Field>
+                    <Field label={"Benutzername"} for={"settings-username"}>
+                      <Input
+                        id={"settings-username"}
+                        autocomplete={"username"}
+                        value={username.get()}
+                        onInput={(e) => username.set(e.currentTarget.value)}
+                      />
+                    </Field>
+                    <Field label={"Passwort"} for={"settings-password"}>
+                      <Input
+                        id={"settings-password"}
+                        type={"password"}
+                        autocomplete={"new-password"}
+                        value={password.get()}
+                        onInput={(e) => password.set(e.currentTarget.value)}
+                      />
+                    </Field>
+                    <Field label={"Telefonnummer"} for={"settings-phone"} class={"sm:col-span-2"}>
+                      <Input
+                        id={"settings-phone"}
+                        type={"tel"}
+                        autocomplete={"tel"}
+                        value={phone.get()}
+                        onInput={(e) => phone.set(e.currentTarget.value)}
                       />
                     </Field>
                     <Field label={"E-Mail-Adresse"} for={"settings-email"} class={"sm:col-span-2"}>
