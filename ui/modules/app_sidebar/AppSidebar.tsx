@@ -446,7 +446,8 @@ function NavItemButton(p: NavItemButtonProps) {
                 aria-label={`${ttt("Options for")} ${p.item.label}`}
                 aria-haspopup={"menu"}
                 class={classArr(
-                  "absolute right-1 top-1 size-6 flex items-center justify-center rounded cursor-pointer hover:bg-black/10 dark:hover:bg-white/15 focus:opacity-100 group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:opacity-100",
+                  // focus-visible, not focus: flyouts auto-focus their first entry on a mouse open, which must not reveal the dots.
+                  "absolute right-1 top-1 size-6 flex items-center justify-center rounded cursor-pointer hover:bg-black/10 dark:hover:bg-white/15 focus-visible:opacity-100 group-hover:opacity-100 group-has-[:focus-visible]:opacity-100 [@media(hover:none)]:opacity-100",
                   p.item.isActive || menu.open() ? "opacity-100" : "opacity-0",
                 )}
               >
