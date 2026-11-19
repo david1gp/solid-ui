@@ -11,7 +11,9 @@ import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
 import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
-import { createSignal, Show } from "solid-js"
+import { createRoot, createSignal, Show } from "solid-js"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { toastDismiss } from "#ui/interactive/toast/toastDismiss.js"
 import { AppSettingsPanel } from "#ui/modules/app_sidebar/AppSettingsPanel.jsx"
 import { AppSettingsSidebar } from "#ui/modules/app_sidebar/AppSettingsSidebar.jsx"
 import { AppSidebar } from "#ui/modules/app_sidebar/AppSidebar.jsx"
@@ -97,6 +99,40 @@ export function DemoAppSidebar() {
   ]
   const settingsOpen = createSignalObject(false)
   const [active, setActive] = createSignal("Projekte")
+  const deleteProject = (id: string) => {
+    const current = projects.get()
+    const index = current.findIndex((project) => project.id === id)
+    const project = current[index]
+    if (!project) return
+    const wasActive = !settingsOpen.get() && active() === id
+    projects.set(current.filter((item) => item.id !== id))
+    if (wasActive) setActive((current[index + 1] ?? current[index - 1])?.id ?? entries[0]!.label)
+    // The toast content is created in an event handler, so give it an owner and dispose it with the toast.
+    let disposeToast = () => {}
+    const undoButton = createRoot((dispose) => {
+      disposeToast = dispose
+      return (
+        <button
+          type={"button"}
+          class={"underline font-medium cursor-pointer"}
+          onClick={() => {
+            const restored = [...projects.get()]
+            restored.splice(Math.min(index, restored.length), 0, project)
+            projects.set(restored)
+            if (wasActive) {
+              setActive(id)
+              settingsOpen.set(false)
+            }
+            toastDismiss(toastId)
+          }}
+        >
+          Rückgängig
+        </button>
+      )
+    })
+    const toastId = toastAdd({ title: `Projekt „${project.label}“ gelöscht`, duration: 6000, children: undoButton })
+    setTimeout(disposeToast, 7000)
+  }
   const groups = (): AppSidebarNavGroup[] => [
     {
       label: "Navigation",
@@ -156,6 +192,7 @@ export function DemoAppSidebar() {
         isActive: !settingsOpen.get() && active() === id,
         autoEdit: newProjectId.get() === id,
         onRename: (name: string) => renameProject(id, name),
+        onDelete: () => deleteProject(id),
         onClick: () => {
           setActive(id)
           settingsOpen.set(false)
