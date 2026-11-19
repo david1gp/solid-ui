@@ -1,4 +1,5 @@
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
+import { mdiHome } from "@adaptive-ds/mdi/mdiHome.js"
 import { createSignal, ErrorBoundary, For, onMount, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
 import { NavDemo } from "#src/nav/NavDemo.jsx"
@@ -13,6 +14,9 @@ import { objectKeys } from "#utils/obj/objectKeys.js"
 
 // Demos live at the site root (prefix ""), e.g. /input, /input/DemoInputS.
 const prefix = ""
+
+/** Full-viewport demos rendered without the demo nav; they get a floating home button instead. */
+const fullscreenDemos = new Set(["DemoAppSidebar"])
 
 /** L0 — overview grid of every category and its components. */
 export function DemosOverview() {
@@ -103,13 +107,34 @@ export function DemoComponent(props: { category: string; compName: string }) {
   onMount(() => setMounted(true))
   return (
     <LayoutWrapperDemo title={props.compName}>
-      <NavDemo demoList={demoList} category={props.category} compName={props.compName} demoPrefix={prefix} />
+      <Show
+        when={fullscreenDemos.has(props.compName)}
+        fallback={
+          <NavDemo demoList={demoList} category={props.category} compName={props.compName} demoPrefix={prefix} />
+        }
+      >
+        <HomeButtonFloating />
+      </Show>
       <Show when={mounted()}>
         <ErrorBoundary fallback={(err) => <DemoLoadError error={err} />}>
           <Comp />
         </ErrorBoundary>
       </Show>
     </LayoutWrapperDemo>
+  )
+}
+
+/** Icon-only home link pinned to the bottom-right of the viewport. */
+function HomeButtonFloating() {
+  return (
+    <LinkButtonInternal
+      to="/"
+      variant={"outline"}
+      icon={mdiHome}
+      title={"Home"}
+      aria-label={"Home"}
+      class={"fixed bottom-4 right-4 z-50 p-2.5 rounded-full shadow-md bg-background"}
+    />
   )
 }
 
