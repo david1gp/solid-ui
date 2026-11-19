@@ -1,7 +1,8 @@
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
-import { mdiHome } from "@adaptive-ds/mdi/mdiHome.js"
 import { createSignal, ErrorBoundary, For, onMount, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
+import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
+import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreate.js"
 import { NavDemo } from "#src/nav/NavDemo.jsx"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
@@ -134,15 +135,12 @@ export function DemoComponent(props: { category: string; compName: string }) {
 
 /** Icon-only home link pinned to the bottom-right of the viewport. */
 function HomeButtonFloating() {
+  const state = floatingThemeStateCreate()
   return (
-    <LinkButtonInternal
-      to="/"
-      variant={"outline"}
-      icon={mdiHome}
-      title={"Home"}
-      aria-label={"Home"}
-      class={"fixed bottom-4 right-4 z-50 p-2.5 rounded-full shadow-md bg-background dark:bg-background"}
-    />
+    <div class={"fixed bottom-4 right-4 z-50 flex items-center gap-1.5"}>
+      <FloatingGlowButton kind={"theme"} label={state.label()} isDark={state.isDark()} onClick={state.toggle} />
+      <FloatingGlowButton kind={"home"} label={"Home"} />
+    </div>
   )
 }
 

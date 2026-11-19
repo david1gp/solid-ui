@@ -1,0 +1,51 @@
+.floating-glow {
+  --glow-a: 250 220 100;
+  --glow-b: 190 110 220;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgb(255 255 255 / 9%);
+  border-radius: 28%;
+  background:
+    radial-gradient(
+      ellipse 75% 45% at 50% 105%,
+      rgb(var(--glow-a) / 70%),
+      rgb(var(--glow-b) / 35%) 45%,
+      transparent 75%
+    ),
+    linear-gradient(180deg, #2a2a2f, #141417 60%, #101012);
+  background-origin: border-box;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 10%),
+    0 1px 3px rgb(0 0 0 / 35%);
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    transform 150ms ease,
+    background 150ms ease;
+}
+
+.floating-glow--home {
+  --glow-a: 245 160 220;
+  --glow-b: 140 110 240;
+}
+
+.floating-glow svg {
+  width: 17.5px;
+  height: 17.5px;
+}
+
+.floating-glow:hover {
+  transform: translateY(-1px);
+}
+
+.floating-glow:active {
+  transform: translateY(0.5px) scale(0.96);
+}
+
+.floating-glow:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
