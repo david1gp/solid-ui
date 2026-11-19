@@ -17,7 +17,6 @@
     --placeholder: #a1a5ac;
     --primary-text: #fff;
     --spinner-track: rgba(255, 255, 255, 0.45);
-    --success-surface: #e7f7ee;
     --backdrop: rgba(20, 22, 25, 0.38);
     --radius: 14px;
     --transition: 180ms ease;
@@ -532,51 +531,6 @@
     color: var(--text);
   }
 
-  .toast {
-    position: fixed;
-    z-index: 50;
-    right: 24px;
-    bottom: 24px;
-    max-width: min(380px, calc(100vw - 32px));
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 13px 16px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--card);
-    box-shadow: 0 16px 50px rgba(20, 22, 25, 0.14);
-    color: var(--text);
-    font-size: 14px;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(14px);
-    transition: 250ms ease;
-    backdrop-filter: blur(14px);
-  }
-
-  .toast.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .toast-icon {
-    width: 22px;
-    height: 22px;
-    flex: 0 0 22px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--success-surface);
-    color: var(--success);
-  }
-
-  /* biome-ignore lint/style/noDescendingSpecificity: independent component */
-  .toast-icon svg {
-    width: 13px;
-    height: 13px;
-  }
-
   dialog {
     width: min(440px, calc(100% - 32px));
     padding: 0;
@@ -712,11 +666,6 @@
       padding: 22px 0;
     }
 
-    .toast {
-      right: 16px;
-      bottom: 16px;
-    }
-
     .dialog-content {
       padding: 22px;
     }
@@ -807,6 +756,5 @@
   --indicator-border: var(--color-border);
   --placeholder: color-mix(in oklab, var(--color-muted-foreground) 65%, transparent);
   --spinner-track: rgba(20, 22, 25, 0.35);
-  --success-surface: #17392a;
   --backdrop: rgba(0, 0, 0, 0.7);
 }

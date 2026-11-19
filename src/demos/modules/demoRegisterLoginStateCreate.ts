@@ -6,18 +6,11 @@ export function demoRegisterLoginStateCreate() {
   const [password, setPassword] = createSignal("")
   const [email, setEmail] = createSignal("")
   const [loading, setLoading] = createSignal(false)
-  const [toast, setToast] = createSignal("")
   let form: HTMLFormElement | undefined
   let dialog: HTMLDialogElement | undefined
   let resetEmail: HTMLInputElement | undefined
-  let toastTimer: ReturnType<typeof setTimeout> | undefined
   let submitTimer: ReturnType<typeof setTimeout> | undefined
   let focusTimer: ReturnType<typeof setTimeout> | undefined
-  const showToast = (message: string) => {
-    setToast(message)
-    clearTimeout(toastTimer)
-    toastTimer = setTimeout(() => setToast(""), 3500)
-  }
   const changeMode = (next: "login" | "register") => {
     setMode(next)
     form?.reset()
@@ -34,10 +27,7 @@ export function demoRegisterLoginStateCreate() {
     event.preventDefault()
     if (!form?.reportValidity()) return
     setLoading(true)
-    submitTimer = setTimeout(() => {
-      setLoading(false)
-      showToast(mode() === "register" ? "Dein Konto wurde erfolgreich erstellt." : "Du wurdest erfolgreich eingeloggt.")
-    }, 900)
+    submitTimer = setTimeout(() => setLoading(false), 900)
   }
   const openReset = () => {
     if (resetEmail) resetEmail.value = email()
@@ -46,7 +36,6 @@ export function demoRegisterLoginStateCreate() {
   }
   const closeReset = () => dialog?.close()
   onCleanup(() => {
-    clearTimeout(toastTimer)
     clearTimeout(submitTimer)
     clearTimeout(focusTimer)
   })
@@ -56,7 +45,6 @@ export function demoRegisterLoginStateCreate() {
     password,
     email,
     loading,
-    toast,
     score,
     changeMode,
     toggleVisible: () => setVisible(!visible()),
@@ -65,7 +53,6 @@ export function demoRegisterLoginStateCreate() {
     submit,
     openReset,
     closeReset,
-    showToast,
     setForm: (el: HTMLFormElement) => {
       form = el
     },

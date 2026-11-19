@@ -183,15 +183,7 @@ export function DemoRegisterLogin() {
             <div class="social-buttons">
               <For each={["Google", "Apple", "Microsoft"]}>
                 {(provider) => (
-                  <button
-                    class="social-button"
-                    type="button"
-                    onClick={() =>
-                      state.showToast(
-                        `${state.mode() === "register" ? "Registrierung" : "Anmeldung"} über ${provider} wird geöffnet.`,
-                      )
-                    }
-                  >
+                  <button class="social-button" type="button">
                     <Show
                       when={provider === "Google"}
                       fallback={
@@ -276,7 +268,6 @@ export function DemoRegisterLogin() {
             e.preventDefault()
             if (!e.currentTarget.reportValidity()) return
             state.closeReset()
-            state.showToast("Der Link zum Zurücksetzen wurde versendet.")
           }}
         >
           <div class="dialog-head">
@@ -312,20 +303,6 @@ export function DemoRegisterLogin() {
           </div>
         </form>
       </dialog>
-      <div class="toast" classList={{ show: !!state.toast() }} role="status" aria-live="polite">
-        <span class="toast-icon" aria-hidden="true">
-          <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path
-              d="m2.5 7.2 2.7 2.6 6.2-6"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </span>
-        <span>{state.toast()}</span>
-      </div>
     </div>
   )
 }
