@@ -83,7 +83,7 @@ function Card(p: { class?: string; compact?: boolean; children: JSXElement }) {
     <div
       class={classArr(
         p.compact ? "p-1" : "p-4",
-        "rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-white/5 dark:bg-neutral-800/60",
+        "rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-white/5 dark:bg-[#292A2D]",
         p.class,
       )}
     >
@@ -141,7 +141,7 @@ function Swatch(p: { option: AppSidebarUserMenuOption; selected: boolean; onClic
       style={{ "background-color": p.option.color, "--tw-ring-color": p.option.color }}
       class={classArr(
         "flex items-center justify-center size-[22px] rounded-full cursor-pointer", // layout
-        "ring-offset-1 ring-offset-neutral-50 dark:ring-offset-neutral-800 transition-shadow", // ring
+        "ring-offset-1 ring-offset-neutral-50 dark:ring-offset-[#292A2D] transition-shadow", // ring
         // No opacity/filter on hover: it promotes a compositing layer and makes the surrounding text re-rasterize (visible jump).
         p.selected ? "ring-2" : "hover:ring-2",
       )}

@@ -38,7 +38,7 @@ export function AppSettingsProfileHeader(p: AppSettingsProfileHeaderProps) {
   return (
     <section
       class={classArr(
-        "@container overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-white/5 dark:bg-neutral-800/60",
+        "@container overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-white/5 dark:bg-[#292A2D]",
         p.class,
       )}
     >
@@ -75,7 +75,7 @@ export function AppSettingsProfileHeader(p: AppSettingsProfileHeaderProps) {
           userInitials={p.userInitials}
           class={classArr(
             "size-18 -mt-9 @md:size-20 @md:-mt-10 text-xl", // size + overlap with banner
-            "ring-4 ring-neutral-50 dark:ring-neutral-800 bg-neutral-100 dark:bg-neutral-700",
+            "ring-4 ring-neutral-50 dark:ring-[#292A2D] bg-neutral-100 dark:bg-neutral-700",
           )}
         />
         <div class={"flex flex-col min-w-0 w-full @md:w-auto @md:flex-1 @md:pt-3"}>
