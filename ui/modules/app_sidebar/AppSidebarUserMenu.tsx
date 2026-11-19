@@ -1,5 +1,6 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
-import { createSignal, For, type JSXElement, Show } from "solid-js"
+import { createEffect, createSignal, For, type JSXElement, Show } from "solid-js"
+import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 
@@ -8,7 +9,11 @@ export interface AppSidebarUserMenuOption {
   label: string
   /** MDI path string. */
   icon?: string
-  /** Initially selected option; afterwards the selection follows clicks. */
+  /** Optional decorative content, such as a flag. */
+  leading?: JSXElement
+  /** Optional emoji flag, used when leading is omitted. */
+  flag?: string
+  /** Selected option; reactive values can be supplied with a getter. */
   selected?: boolean
   /** Settings panel only: render the tile as a light/dark/system window mockup. */
   preview?: "light" | "dark" | "system"
@@ -28,6 +33,9 @@ export interface AppSidebarUserMenuSection {
 export interface AppSidebarUserMenuProps {
   name?: string
   email?: string
+  userInitials?: string
+  userImageUrl?: string
+  userAvatar?: JSXElement
   sections?: AppSidebarUserMenuSection[]
   /** Label of the bottom action row; hidden when omitted. */
   logoutLabel?: string
@@ -41,14 +49,17 @@ export interface AppSidebarUserMenuProps {
 export function AppSidebarUserMenu(p: AppSidebarUserMenuProps) {
   return (
     <div class={"flex flex-col gap-3 w-72 text-neutral-950 dark:text-neutral-50"}>
-      <Show when={p.name || p.email}>
-        <div class={"flex flex-col px-1"}>
-          <Show when={p.name}>
-            <span class={"text-sm font-semibold truncate"}>{p.name}</span>
-          </Show>
-          <Show when={p.email}>
-            <span class={"text-sm text-neutral-500 dark:text-neutral-400 truncate"}>{p.email}</span>
-          </Show>
+      <Show when={p.name || p.email || p.userAvatar || p.userImageUrl || p.userInitials}>
+        <div class={"flex items-center gap-3 px-1"}>
+          <AppSidebarAvatar userAvatar={p.userAvatar} userImageUrl={p.userImageUrl} userInitials={p.userInitials} />
+          <div class={"flex flex-col min-w-0"}>
+            <Show when={p.name}>
+              <span class={"text-sm font-semibold truncate"}>{p.name}</span>
+            </Show>
+            <Show when={p.email}>
+              <span class={"text-sm text-neutral-500 dark:text-neutral-400 truncate"}>{p.email}</span>
+            </Show>
+          </div>
         </div>
       </Show>
 
@@ -74,6 +85,7 @@ export function AppSidebarUserMenu(p: AppSidebarUserMenuProps) {
 /** Segmented choice row; keeps its own selection so options are clickable without any app logic behind them. */
 function SegmentedSection(p: { section: AppSidebarUserMenuSection }) {
   const [selected, setSelected] = createSignal(p.section.options.findIndex((o) => o.selected))
+  createEffect(() => setSelected(p.section.options.findIndex((o) => o.selected)))
   return (
     <Section label={p.section.label}>
       <div class={"grid grid-flow-col auto-cols-fr gap-1"}>
@@ -86,6 +98,16 @@ function SegmentedSection(p: { section: AppSidebarUserMenuSection }) {
                 o.onClick?.()
               }}
             >
+              <Show
+                when={o.leading}
+                fallback={
+                  <Show when={o.flag}>
+                    <span aria-hidden={true}>{o.flag}</span>
+                  </Show>
+                }
+              >
+                {o.leading}
+              </Show>
               <Show when={o.icon}>{(icon) => <Icon path={icon()} class={"size-4"} />}</Show>
               <span>{o.label}</span>
             </Segment>

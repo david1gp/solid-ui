@@ -1,5 +1,6 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
-import { createSignal, For, type JSXElement, Match, Show, Switch } from "solid-js"
+import { createEffect, createSignal, For, type JSXElement, Match, Show, Switch } from "solid-js"
+import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import type {
   AppSidebarUserMenuOption,
   AppSidebarUserMenuSection,
@@ -10,6 +11,9 @@ import { classArr } from "#ui/utils/classArr.js"
 export interface AppSettingsPanelProps {
   name?: string
   email?: string
+  userInitials?: string
+  userImageUrl?: string
+  userAvatar?: JSXElement
   /** Same section shape as the user menu; options with `preview` render as window mockup tiles. */
   sections?: AppSidebarUserMenuSection[]
   logoutLabel?: string
@@ -24,15 +28,18 @@ export interface AppSettingsPanelProps {
 export function AppSettingsPanel(p: AppSettingsPanelProps) {
   return (
     <div class={classArr("flex flex-col gap-3 w-full text-neutral-950 dark:text-neutral-50", p.class)}>
-      <Show when={p.name || p.email}>
+      <Show when={p.name || p.email || p.userAvatar || p.userImageUrl || p.userInitials}>
         <Card>
-          <div class={"flex flex-col"}>
-            <Show when={p.name}>
-              <span class={"text-sm font-semibold truncate"}>{p.name}</span>
-            </Show>
-            <Show when={p.email}>
-              <span class={"text-sm text-neutral-500 dark:text-neutral-400 truncate"}>{p.email}</span>
-            </Show>
+          <div class={"flex items-center gap-3"}>
+            <AppSidebarAvatar userAvatar={p.userAvatar} userImageUrl={p.userImageUrl} userInitials={p.userInitials} />
+            <div class={"flex flex-col min-w-0"}>
+              <Show when={p.name}>
+                <span class={"text-sm font-semibold truncate"}>{p.name}</span>
+              </Show>
+              <Show when={p.email}>
+                <span class={"text-sm text-neutral-500 dark:text-neutral-400 truncate"}>{p.email}</span>
+              </Show>
+            </div>
           </div>
         </Card>
       </Show>
@@ -79,6 +86,7 @@ function Card(p: { class?: string; compact?: boolean; children: JSXElement }) {
 /** Tile row with its own selection so tiles are clickable without any app logic behind them. */
 function TileSection(p: { section: AppSidebarUserMenuSection }) {
   const [selected, setSelected] = createSignal(p.section.options.findIndex((o) => o.selected))
+  createEffect(() => setSelected(p.section.options.findIndex((o) => o.selected)))
   const sectionIcon = () => p.section.icon
   const select = (o: AppSidebarUserMenuOption, i: number) => {
     setSelected(i)
@@ -158,6 +166,16 @@ function Tile(p: { option: AppSidebarUserMenuOption; selected: boolean; onClick:
           when={p.option.preview}
           fallback={
             <>
+              <Show
+                when={p.option.leading}
+                fallback={
+                  <Show when={p.option.flag}>
+                    <span aria-hidden={true}>{p.option.flag}</span>
+                  </Show>
+                }
+              >
+                {p.option.leading}
+              </Show>
               <Show when={icon()}>{(path) => <Icon path={path()} class={"size-5"} />}</Show>
               <span>{p.option.label}</span>
             </>
