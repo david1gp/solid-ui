@@ -10,7 +10,7 @@ import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
 import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
-import { createSignal } from "solid-js"
+import { createSignal, Show } from "solid-js"
 import { AppSettingsPanel } from "#ui/modules/app_sidebar/AppSettingsPanel.jsx"
 import { AppSettingsSidebar } from "#ui/modules/app_sidebar/AppSettingsSidebar.jsx"
 import { AppSidebar } from "#ui/modules/app_sidebar/AppSidebar.jsx"
@@ -27,6 +27,7 @@ const entries = [
 ]
 
 const settingsLabel = "Einstellungen"
+const settingsPageKey = "settings-page"
 
 const accentColors = [
   { label: "Blau", color: "#2563eb" },
@@ -80,16 +81,25 @@ export function DemoAppSidebar() {
         })),
         {
           icon: mdiCogOutline,
-          label: settingsLabel,
+          label: `${settingsLabel} 1-3`,
           isActive: settingsOpen.get(),
           onClick: () => settingsOpen.set(!settingsOpen.get()),
+        },
+        {
+          icon: mdiCogOutline,
+          label: `${settingsLabel} 4+`,
+          isActive: !settingsOpen.get() && active() === settingsPageKey,
+          onClick: () => {
+            setActive(settingsPageKey)
+            settingsOpen.set(false)
+          },
         },
       ],
     },
     { label: "Projekte", items: [] },
   ]
   return (
-    <div class={"flex h-[640px] w-full border border-border rounded-lg overflow-hidden bg-background"}>
+    <div class={"flex h-[640px] w-full overflow-hidden bg-background"}>
       <div class={"relative flex shrink-0 h-full"}>
         <AppSidebar
           collapsed={collapsed}
@@ -125,8 +135,24 @@ export function DemoAppSidebar() {
         </AppSettingsSidebar>
       </div>
       <main class={"flex-1 min-w-0 p-8 overflow-y-auto"}>
-        <h1 class={"text-2xl font-semibold mb-6"}>{active()}</h1>
-        <p class={"text-muted-foreground"}>Noch keine {active()} vorhanden.</p>
+        <Show
+          when={active() === settingsPageKey}
+          fallback={
+            <>
+              <h1 class={"text-2xl font-semibold mb-6"}>{active()}</h1>
+              <p class={"text-muted-foreground"}>Noch keine {active()} vorhanden.</p>
+            </>
+          }
+        >
+          <h1 class={"text-2xl font-semibold mb-6"}>{settingsLabel}</h1>
+          <AppSettingsPanel
+            class={"max-w-2xl"}
+            name={"Max Mustermann"}
+            email={"max.mustermann@example.com"}
+            sections={sections}
+            logoutLabel={"Abmelden"}
+          />
+        </Show>
       </main>
     </div>
   )
