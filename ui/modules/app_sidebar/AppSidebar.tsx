@@ -83,7 +83,7 @@ export function AppSidebar(p: AppSidebarProps) {
       style={p.accentColor ? { "--app-sidebar-accent": p.accentColor } : undefined}
       class={classArr(
         "flex flex-col shrink-0 h-full overflow-hidden", // layout
-        "bg-neutral-50 dark:bg-[#111111]", // background
+        "bg-neutral-50 dark:bg-[#292929]", // background
         "border-r border-border", // border
         "transition-[width]", // animation
         motion,
@@ -412,7 +412,7 @@ function NavItemButton(p: NavItemButtonProps) {
               appSidebarNavButtonClass,
               "w-full min-w-0",
               hasMenu() && "pr-9",
-              p.item.isActive && "bg-black/5 dark:bg-white/10",
+              p.item.isActive && "bg-black/5 dark:bg-white/15",
             )}
           >
             <AppSidebarAccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
@@ -538,7 +538,7 @@ function NavItemButton(p: NavItemButtonProps) {
         </div>
       }
     >
-      <div class={classArr(appSidebarNavButtonClass, "cursor-text bg-black/5 dark:bg-white/10")}>
+      <div class={classArr(appSidebarNavButtonClass, "cursor-text bg-black/5 dark:bg-white/15")}>
         <AppSidebarAccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
         <Icon path={p.item.icon} class={"size-4"} />
         <input
@@ -734,7 +734,7 @@ function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string })
         class={classArr(
           appSidebarNavButtonClass,
           "w-full",
-          (hasActive() || flyout.open()) && "bg-black/5 dark:bg-white/10",
+          (hasActive() || flyout.open()) && "bg-black/5 dark:bg-white/15",
         )}
       >
         <AppSidebarAccentBar active={hasActive()} accentColor={p.accentColor} />

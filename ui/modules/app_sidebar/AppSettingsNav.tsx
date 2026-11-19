@@ -36,7 +36,7 @@ export function AppSettingsNav(p: AppSettingsNavProps) {
     <aside
       class={classArr(
         "flex flex-col shrink-0 self-stretch w-56 min-h-0 overflow-hidden", // layout: stretches to the flex row height
-        "bg-neutral-50 dark:bg-[#111111] border-r border-border", // look
+        "bg-neutral-50 dark:bg-[#292929] border-r border-border", // look
         "text-neutral-950 dark:text-neutral-50",
         p.class,
       )}
@@ -78,7 +78,7 @@ export function AppSettingsNav(p: AppSettingsNavProps) {
               class={classArr(
                 appSidebarNavButtonClass,
                 "w-full min-w-0",
-                item.isActive && "bg-black/5 dark:bg-white/10",
+                item.isActive && "bg-black/5 dark:bg-white/15",
               )}
             >
               <AppSidebarAccentBar active={!!item.isActive} accentColor={p.accentColor} />
