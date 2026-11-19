@@ -1,12 +1,16 @@
-import { mdiAccountCircleOutline } from "@adaptive-ds/mdi/mdiAccountCircleOutline.js"
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
+import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
+import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
+import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import Popover from "@corvu/popover"
 import { Key } from "@solid-primitives/keyed"
-import { type ComponentProps, children, createSignal, type JSXElement, Show, splitProps } from "solid-js"
+import { type ComponentProps, children, createMemo, createSignal, type JSXElement, Show, splitProps } from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
+import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGroup.js"
 import type { AppSidebarNavItem } from "#ui/modules/app_sidebar/AppSidebarNavItem.js"
+import { appSidebarFilterGroups } from "#ui/modules/app_sidebar/appSidebarFilterGroups.js"
 import { createFlyoutState } from "#ui/modules/app_sidebar/createFlyoutState.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
@@ -21,11 +25,17 @@ export interface AppSidebarProps extends MayHaveClass {
   groups: AppSidebarNavGroup[]
   userName?: string
   userInitials?: string
+  userAvatar?: JSXElement
+  userImageUrl?: string
   onUserClick?: () => void
   /** Popover body opened by clicking the user footer, e.g. <AppSidebarUserMenu />. */
   userMenu?: JSXElement
   /** CSS color of the active item's accent bar; defaults to blue. */
   accentColor?: string
+  /** Show a search field below the header that filters groups and entries; defaults to true. */
+  searchable?: boolean
+  /** Placeholder of the search field; defaults to "Search". */
+  searchPlaceholder?: string
 }
 
 // Shared timing so width, fades and height collapses move as one.
@@ -41,6 +51,16 @@ export function AppSidebar(p: AppSidebarProps) {
   const menu = createFlyoutState()
   // Drawer state keyed by group label, so it survives `groups` being re-created on every update.
   const [drawerState, setDrawerState] = createSignal<Record<string, boolean>>({})
+  const [searchQuery, setSearchQuery] = createSignal("")
+  // The filter only applies while the field is visible, so the icon rail always shows everything.
+  const activeQuery = () => (isOpen() && p.searchable !== false ? searchQuery().trim() : "")
+  const isSearching = () => activeQuery() !== ""
+  const groups = () => appSidebarFilterGroups(p.groups, activeQuery())
+  let searchInput: HTMLInputElement | undefined
+  const openSearch = () => {
+    p.collapsed.set(false)
+    queueMicrotask(() => searchInput?.focus())
+  }
   // Resolve once so the menu keeps its state (e.g. selections) across close/reopen.
   const userMenu = children(() => p.userMenu)
   const fade = () => classArr("transition-opacity", motion, isOpen() ? "opacity-100" : "opacity-0")
@@ -79,17 +99,46 @@ export function AppSidebar(p: AppSidebarProps) {
         </button>
       </div>
 
+      <Show when={p.searchable !== false}>
+        <div class={"px-2 pt-1"}>
+          <Collapsible open={isOpen()}>
+            <SearchField
+              ref={(el) => {
+                searchInput = el
+              }}
+              value={searchQuery()}
+              onInput={setSearchQuery}
+              placeholder={p.searchPlaceholder ?? ttt("Search")}
+            />
+          </Collapsible>
+          <Collapsible open={!isOpen()}>
+            <button
+              type={"button"}
+              onClick={openSearch}
+              title={ttt("Search")}
+              aria-label={ttt("Search")}
+              class={classArr(navButtonClass, "w-full")}
+            >
+              <Icon path={mdiMagnify} class={"size-4"} />
+            </button>
+          </Collapsible>
+        </div>
+      </Show>
+
       <nav class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2"}>
-        <Key each={p.groups} by={"label"}>
+        <Show when={isSearching() && groups().length === 0}>
+          <p class={"px-2 py-1 text-sm text-muted-foreground whitespace-nowrap"}>{ttt("No results")}</p>
+        </Show>
+        <Key each={groups()} by={"label"}>
           {(group) => {
-            const drawerOpen = () => drawerState()[group().label] ?? group().defaultOpen ?? false
+            const drawerOpen = () => isSearching() || (drawerState()[group().label] ?? group().defaultOpen ?? false)
             const setDrawerOpen = (open: boolean) => setDrawerState((s) => ({ ...s, [group().label]: open }))
             // The rail mirrors the drawer: a closed drawer collapses to one group icon with a flyout.
             const itemsVisible = () => !group().collapsible || drawerOpen()
             const railGroupVisible = () => !isOpen() && !!group().collapsible && !drawerOpen()
             const labelClass = "px-2 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"
             return (
-              <Collapsible open={isOpen() || group().items.length > 0}>
+              <Collapsible open={isOpen() || group().items.length > 0 || !!group().addItem}>
                 <div class={"flex flex-col gap-0.5 pb-4"}>
                   <Collapsible open={isOpen()}>
                     <Show
@@ -126,16 +175,12 @@ export function AppSidebar(p: AppSidebarProps) {
                   </Show>
                   <Collapsible open={itemsVisible()}>
                     <div class={"flex flex-col gap-0.5"}>
-                      <Key each={group().items} by={"label"}>
-                        {(item) => (
-                          <NavItemButton
-                            item={item()}
-                            accentColor={p.accentColor}
-                            title={isOpen() ? undefined : item().label}
-                            labelClass={fade()}
-                          />
-                        )}
-                      </Key>
+                      <GroupItems
+                        group={group()}
+                        accentColor={p.accentColor}
+                        showLabels={isOpen()}
+                        labelClass={fade()}
+                      />
                     </div>
                   </Collapsible>
                 </div>
@@ -145,7 +190,7 @@ export function AppSidebar(p: AppSidebarProps) {
         </Key>
       </nav>
 
-      <Show when={p.userName || p.userInitials}>
+      <Show when={p.userName || p.userInitials || p.userAvatar || p.userImageUrl}>
         <div class={"border-t border-border p-1.5"}>
           <Show
             when={userMenu()}
@@ -153,6 +198,8 @@ export function AppSidebar(p: AppSidebarProps) {
               <UserButton
                 userName={p.userName}
                 userInitials={p.userInitials}
+                userAvatar={p.userAvatar}
+                userImageUrl={p.userImageUrl}
                 onUserClick={p.onUserClick}
                 isOpen={isOpen()}
                 fade={fade()}
@@ -170,6 +217,8 @@ export function AppSidebar(p: AppSidebarProps) {
                 onClick={menu.onTriggerClick}
                 userName={p.userName}
                 userInitials={p.userInitials}
+                userAvatar={p.userAvatar}
+                userImageUrl={p.userImageUrl}
                 onUserClick={p.onUserClick}
                 isOpen={isOpen()}
                 fade={fade()}
@@ -221,26 +270,203 @@ type NavItemButtonProps = {
   title?: string
   labelClass?: string
   onSelect?: () => void
+  draggable?: boolean
+  dragging?: boolean
+  dropBefore?: boolean
+  dropAfter?: boolean
+  onDragStart?: (event: DragEvent) => void
+  onDragOver?: (event: DragEvent) => void
+  onDrop?: (event: DragEvent) => void
+  onDragEnd?: () => void
+  onKeyDown?: (event: KeyboardEvent) => void
+  /** Called when inline rename starts, e.g. to cancel a pending flyout close from the double-click's first click. */
+  onEditStart?: () => void
 }
 
-/** One navigation entry: accent bar, icon and label. */
+/** One navigation entry: accent bar, icon and label; optionally renamable inline. */
 function NavItemButton(p: NavItemButtonProps) {
+  // Memo (owned by the component): conditional JSX props are compiled to memo getters, and reading
+  // them from event handlers would create unowned computations.
+  const canRename = createMemo(() => !!p.item.onRename && !p.title)
+  // Only the visible, labelled instance may auto-edit; hidden copies (collapsed rail) must not steal focus.
+  const [editing, setEditing] = createSignal(!!p.item.autoEdit && canRename())
+  let button: HTMLButtonElement | undefined
+  const startEditing = () => {
+    if (!canRename()) return
+    p.onEditStart?.()
+    setEditing(true)
+  }
+  const finish = (value: string | undefined) => {
+    if (!editing()) return
+    setEditing(false)
+    const label = value?.trim()
+    if (label && label !== p.item.label) p.item.onRename?.(label)
+    // Keep focus on the entry so focus-outside handlers (e.g. the flyout popover) don't dismiss.
+    queueMicrotask(() => button?.focus())
+  }
   return (
-    <button
-      type={"button"}
-      onClick={() => {
-        p.item.onClick?.()
-        p.onSelect?.()
-      }}
-      title={p.title}
-      aria-label={p.item.label}
-      aria-current={p.item.isActive ? "page" : undefined}
-      class={classArr(navButtonClass, p.item.isActive && "bg-black/5 dark:bg-white/10")}
+    <Show
+      when={editing()}
+      fallback={
+        <button
+          ref={button}
+          type={"button"}
+          onClick={() => {
+            p.item.onClick?.()
+            p.onSelect?.()
+          }}
+          onDblClick={startEditing}
+          title={p.title}
+          draggable={p.draggable}
+          onDragStart={p.onDragStart}
+          onDragOver={p.onDragOver}
+          onDrop={p.onDrop}
+          onDragEnd={p.onDragEnd}
+          onKeyDown={(event) => {
+            if (event.key === "F2" && canRename()) {
+              event.preventDefault()
+              startEditing()
+              return
+            }
+            p.onKeyDown?.(event)
+          }}
+          aria-label={p.item.label}
+          aria-current={p.item.isActive ? "page" : undefined}
+          aria-keyshortcuts={
+            [p.draggable && "Alt+ArrowUp Alt+ArrowDown", canRename() && "F2"].filter(Boolean).join(" ") || undefined
+          }
+          class={classArr(
+            navButtonClass,
+            p.item.isActive && "bg-black/5 dark:bg-white/10",
+            p.dragging && "opacity-40",
+            p.dropBefore && "before:absolute before:inset-x-1 before:top-0 before:h-0.5 before:bg-blue-500",
+            p.dropAfter && "after:absolute after:inset-x-1 after:bottom-0 after:h-0.5 after:bg-blue-500",
+          )}
+        >
+          <AccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
+          <Icon path={p.item.icon} class={"size-4"} />
+          <span class={classArr("truncate whitespace-nowrap", p.labelClass)}>{p.item.label}</span>
+        </button>
+      }
     >
-      <AccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
-      <Icon path={p.item.icon} class={"size-4"} />
-      <span class={classArr("truncate whitespace-nowrap", p.labelClass)}>{p.item.label}</span>
-    </button>
+      <div class={classArr(navButtonClass, "cursor-text bg-black/5 dark:bg-white/10")}>
+        <AccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
+        <Icon path={p.item.icon} class={"size-4"} />
+        <input
+          ref={(el) => {
+            queueMicrotask(() => {
+              el.focus()
+              el.select()
+            })
+          }}
+          value={p.item.label}
+          aria-label={ttt("Rename")}
+          onKeyDown={(event) => {
+            event.stopPropagation()
+            if (event.key === "Enter") {
+              event.preventDefault()
+              finish(event.currentTarget.value)
+            } else if (event.key === "Escape") {
+              event.preventDefault()
+              finish(undefined)
+            }
+          }}
+          onBlur={(event) => finish(event.currentTarget.value)}
+          class={classArr(
+            "min-w-0 flex-1 -mx-1 px-1 h-6 rounded bg-white dark:bg-black", // layout
+            "outline-none ring-1 ring-blue-500 text-sm font-medium", // look
+          )}
+        />
+      </div>
+    </Show>
+  )
+}
+
+/** Shared drawer/flyout entries; onReorder uses final destination indices. */
+function GroupItems(p: {
+  group: AppSidebarNavGroup
+  accentColor?: string
+  showLabels: boolean
+  labelClass?: string
+  onSelect?: () => void
+  onEditStart?: () => void
+}) {
+  const [dragged, setDragged] = createSignal<string>()
+  const [target, setTarget] = createSignal<string>()
+  const items = () => p.group.items.map((item) => ({ ...item, key: item.id ?? item.label }))
+  const move = (from: string, to: string) => {
+    const current = items()
+    const fromIndex = current.findIndex((item) => item.key === from)
+    const toIndex = current.findIndex((item) => item.key === to)
+    if (fromIndex >= 0 && toIndex >= 0 && fromIndex !== toIndex) p.group.onReorder?.(fromIndex, toIndex)
+  }
+  const clear = () => {
+    setDragged(undefined)
+    setTarget(undefined)
+  }
+  return (
+    <>
+      <Key each={items()} by={"key"}>
+        {(item) => (
+          <NavItemButton
+            item={item()}
+            accentColor={p.accentColor}
+            title={p.showLabels ? undefined : item().label}
+            labelClass={p.labelClass}
+            onSelect={p.onSelect}
+            onEditStart={p.onEditStart}
+            draggable={!!p.group.onReorder}
+            dragging={dragged() === item().key}
+            dropBefore={
+              target() === item().key &&
+              items().findIndex((i) => i.key === dragged()) > items().findIndex((i) => i.key === item().key)
+            }
+            dropAfter={
+              target() === item().key &&
+              items().findIndex((i) => i.key === dragged()) < items().findIndex((i) => i.key === item().key)
+            }
+            onDragStart={(event) => {
+              if (!p.group.onReorder) return
+              setDragged(item().key)
+              event.dataTransfer?.setData("text/plain", item().key)
+              if (event.dataTransfer) event.dataTransfer.effectAllowed = "move"
+            }}
+            onDragOver={(event) => {
+              if (!dragged()) return
+              event.preventDefault()
+              setTarget(item().key)
+            }}
+            onDrop={(event) => {
+              if (!dragged()) return
+              event.preventDefault()
+              move(dragged()!, item().key)
+              clear()
+            }}
+            onDragEnd={clear}
+            onKeyDown={(event) => {
+              if (!p.group.onReorder || !event.altKey || (event.key !== "ArrowUp" && event.key !== "ArrowDown")) return
+              event.preventDefault()
+              const current = items()
+              const index = current.findIndex((i) => i.key === item().key)
+              const next = current[index + (event.key === "ArrowUp" ? -1 : 1)]
+              if (next) move(item().key, next.key)
+            }}
+          />
+        )}
+      </Key>
+      <Show when={p.showLabels && p.group.addItem}>
+        {(add) => (
+          <button
+            type={"button"}
+            onClick={() => add().onAdd()}
+            class={classArr(navButtonClass, "text-neutral-500 dark:text-neutral-400")}
+          >
+            <Icon path={add().icon ?? mdiPlus} class={"size-4"} />
+            <span class={"truncate whitespace-nowrap"}>{add().label}</span>
+          </button>
+        )}
+      </Show>
+    </>
   )
 }
 
@@ -248,7 +474,7 @@ function NavItemButton(p: NavItemButtonProps) {
 function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string }) {
   const flyout = createFlyoutState()
   const hasActive = () => p.group.items.some((i) => i.isActive)
-  const icon = () => p.group.icon ?? p.group.items[0]?.icon
+  const icon = () => p.group.icon ?? p.group.items[0]?.icon ?? (p.group.addItem ? mdiPlus : undefined)
   return (
     <Popover
       open={flyout.open()}
@@ -276,14 +502,66 @@ function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string })
           <Popover.Label class={"px-2 pt-1 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"}>
             {p.group.label}
           </Popover.Label>
-          <Key each={p.group.items} by={"label"}>
-            {(item) => (
-              <NavItemButton item={item()} accentColor={p.accentColor} onSelect={() => flyout.setOpen(false)} />
-            )}
-          </Key>
+          <GroupItems
+            group={p.group}
+            accentColor={p.accentColor}
+            showLabels={true}
+            onSelect={() => flyout.setOpen(false)}
+            onEditStart={() => flyout.setOpen(true)}
+          />
         </Popover.Content>
       </Popover.Portal>
     </Popover>
+  )
+}
+
+/** Sidebar search input with magnifier icon and clear button; Escape clears the query. */
+function SearchField(p: {
+  ref: (el: HTMLInputElement) => void
+  value: string
+  onInput: (value: string) => void
+  placeholder: string
+}) {
+  return (
+    <div
+      class={classArr(
+        "flex items-center gap-2 h-8 px-2 rounded-md", // layout
+        "bg-black/5 dark:bg-white/10 focus-within:ring-1 focus-within:ring-blue-500", // look
+      )}
+    >
+      <Icon path={mdiMagnify} class={"size-4 shrink-0 text-muted-foreground"} />
+      <input
+        ref={p.ref}
+        type={"search"}
+        value={p.value}
+        onInput={(event) => p.onInput(event.currentTarget.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Escape" && p.value) {
+            event.preventDefault()
+            p.onInput("")
+          }
+        }}
+        placeholder={p.placeholder}
+        aria-label={p.placeholder}
+        class={classArr(
+          "min-w-0 flex-1 bg-transparent outline-none text-sm", // layout
+          "placeholder:text-muted-foreground [&::-webkit-search-cancel-button]:hidden", // look
+        )}
+      />
+      <Show when={p.value}>
+        <button
+          type={"button"}
+          onClick={() => p.onInput("")}
+          title={ttt("Clear search")}
+          aria-label={ttt("Clear search")}
+          class={
+            "flex items-center justify-center shrink-0 size-5 rounded cursor-pointer hover:bg-black/10 dark:hover:bg-white/10"
+          }
+        >
+          <Icon path={mdiClose} class={"size-3.5"} />
+        </button>
+      </Show>
+    </div>
   )
 }
 
@@ -297,6 +575,7 @@ function Collapsible(p: { open: boolean; children: JSXElement }) {
         p.open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
       )}
       aria-hidden={!p.open}
+      inert={!p.open}
     >
       {/* -mx-2 px-2: extend the clip box into the nav padding so the active accent bar is not cut off */}
       <div class={"min-h-0 overflow-hidden -mx-2 px-2"}>{p.children}</div>
@@ -304,12 +583,24 @@ function Collapsible(p: { open: boolean; children: JSXElement }) {
   )
 }
 
-type UserButtonProps = Pick<AppSidebarProps, "userName" | "userInitials" | "onUserClick"> &
+type UserButtonProps = Pick<
+  AppSidebarProps,
+  "userName" | "userInitials" | "userAvatar" | "userImageUrl" | "onUserClick"
+> &
   ComponentProps<"button"> & { isOpen: boolean; fade: string }
 
 /** Footer button with avatar initials and name; also used as popover trigger. */
 function UserButton(p: UserButtonProps) {
-  const [s, rest] = splitProps(p, ["userName", "userInitials", "onUserClick", "isOpen", "fade", "class"])
+  const [s, rest] = splitProps(p, [
+    "userName",
+    "userInitials",
+    "userAvatar",
+    "userImageUrl",
+    "onUserClick",
+    "isOpen",
+    "fade",
+    "class",
+  ])
   return (
     <button
       type={"button"}
@@ -325,21 +616,9 @@ function UserButton(p: UserButtonProps) {
         "hover:bg-black/5 dark:hover:bg-white/10 data-expanded:bg-black/5 dark:data-expanded:bg-white/10", // hover
       )}
     >
-      <Show when={s.userInitials}>
-        <span
-          class={classArr(
-            "flex items-center justify-center size-7 shrink-0 rounded-full", // layout
-            "bg-black/5 dark:bg-white/10 text-xs font-semibold", // look
-          )}
-        >
-          {s.userInitials}
-        </span>
-      </Show>
+      <AppSidebarAvatar userAvatar={s.userAvatar} userImageUrl={s.userImageUrl} userInitials={s.userInitials} />
       <Show when={s.userName}>
-        <span class={classArr("flex min-w-0 items-center gap-2", s.fade)}>
-          <Icon path={mdiAccountCircleOutline} class={"size-4"} />
-          <span class={"truncate whitespace-nowrap"}>{s.userName}</span>
-        </span>
+        <span class={classArr("min-w-0 truncate whitespace-nowrap", s.fade)}>{s.userName}</span>
       </Show>
     </button>
   )

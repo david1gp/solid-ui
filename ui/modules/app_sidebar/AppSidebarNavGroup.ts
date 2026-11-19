@@ -4,6 +4,10 @@ import type { AppSidebarNavItem } from "#ui/modules/app_sidebar/AppSidebarNavIte
 export interface AppSidebarNavGroup {
   label: string
   items: AppSidebarNavItem[]
+  /** Enable item reordering. Indices refer to the current items array. */
+  onReorder?: (fromIndex: number, toIndex: number) => void
+  /** Optional action displayed after the group's items. */
+  addItem?: { label: string; icon?: string; onAdd: () => void }
   /** Render the label as a drawer toggle that shows/hides the items. */
   collapsible?: boolean
   /** Initial drawer state when collapsible; defaults to closed. */
