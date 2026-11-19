@@ -15,6 +15,8 @@ import { createSignal, Show } from "solid-js"
 import { AppSettingsPanel } from "#ui/modules/app_sidebar/AppSettingsPanel.jsx"
 import { AppSettingsSidebar } from "#ui/modules/app_sidebar/AppSettingsSidebar.jsx"
 import { AppSidebar } from "#ui/modules/app_sidebar/AppSidebar.jsx"
+import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
+import { AppSidebarFlag } from "#ui/modules/app_sidebar/AppSidebarFlag.jsx"
 import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGroup.js"
 import { AppSidebarUserMenu, type AppSidebarUserMenuSection } from "#ui/modules/app_sidebar/AppSidebarUserMenu.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
@@ -29,7 +31,6 @@ const entries = [
 
 const settingsLabel = "Einstellungen"
 const settingsPageKey = "settings-page"
-const projects = [1, 2, 3, 4, 5].map((n) => `Projekt ${n}`)
 
 const accentColors = [
   { label: "Blau", color: "#2563eb" },
@@ -39,33 +40,60 @@ const accentColors = [
   { label: "Lila", color: "#8b5cf6" },
 ]
 
-const appearanceSection: AppSidebarUserMenuSection = {
-  label: "Darstellung",
-  icon: mdiPaletteOutline,
-  options: [
-    { icon: mdiWhiteBalanceSunny, label: "Hell", preview: "light", selected: true },
-    { icon: mdiWeatherNight, label: "Dunkel", preview: "dark" },
-    { icon: mdiBrightnessAuto, label: "System", preview: "system" },
-  ],
-}
-
-const languageSection: AppSidebarUserMenuSection = {
-  label: "Sprache",
-  icon: mdiTranslate,
-  options: [{ label: "DE", selected: true }, { label: "EN" }],
-}
-
 export function DemoAppSidebar() {
   const collapsed = createSignalObject(false)
   const accentColor = createSignalObject(accentColors[0]!.color)
+  const appearance = createSignalObject("Hell")
+  const language = createSignalObject("DE")
+  const projects = createSignalObject([1, 2, 3, 4, 5].map((n) => ({ id: `project-${n}`, label: `Projekt ${n}` })))
+  let nextProject = 6
+  const newProjectId = createSignalObject<string | undefined>(undefined)
+  const projectById = (id: string) => projects.get().find((project) => project.id === id)
+  const renameProject = (id: string, label: string) =>
+    projects.set(projects.get().map((project) => (project.id === id ? { ...project, label } : project)))
   const sections: AppSidebarUserMenuSection[] = [
-    appearanceSection,
+    {
+      label: "Darstellung",
+      icon: mdiPaletteOutline,
+      options: (
+        [
+          { icon: mdiWhiteBalanceSunny, label: "Hell", preview: "light" },
+          { icon: mdiWeatherNight, label: "Dunkel", preview: "dark" },
+          { icon: mdiBrightnessAuto, label: "System", preview: "system" },
+        ] as const
+      ).map((option) => ({
+        ...option,
+        get selected() {
+          return appearance.get() === option.label
+        },
+        onClick: () => appearance.set(option.label),
+      })),
+    },
     {
       label: "Akzentfarbe",
       icon: mdiPaletteSwatchOutline,
-      options: accentColors.map((c, i) => ({ ...c, selected: i === 0, onClick: () => accentColor.set(c.color) })),
+      options: accentColors.map((c) => ({
+        ...c,
+        get selected() {
+          return accentColor.get() === c.color
+        },
+        onClick: () => accentColor.set(c.color),
+      })),
     },
-    languageSection,
+    {
+      label: "Sprache",
+      icon: mdiTranslate,
+      options: (["DE", "EN", "FR", "ES", "IT"] as const).map((label) => ({
+        label,
+        get leading() {
+          return <AppSidebarFlag language={label.toLowerCase() as "de" | "en" | "fr" | "es" | "it"} />
+        },
+        get selected() {
+          return language.get() === label
+        },
+        onClick: () => language.set(label),
+      })),
+    },
   ]
   const settingsOpen = createSignalObject(false)
   const [active, setActive] = createSignal("Projekte")
@@ -101,12 +129,35 @@ export function DemoAppSidebar() {
     {
       label: "Projekte",
       collapsible: true,
-      items: projects.map((label) => ({
+      onReorder: (from, to) => {
+        const reordered = [...projects.get()]
+        const [item] = reordered.splice(from, 1)
+        if (item === undefined) return
+        reordered.splice(to, 0, item)
+        projects.set(reordered)
+      },
+      addItem: {
+        label: "Neues Projekt",
+        onAdd: () => {
+          const n = nextProject++
+          const project = { id: `project-${n}`, label: `Projekt ${n}` }
+          newProjectId.set(project.id)
+          projects.set([...projects.get(), project])
+          setActive(project.id)
+          settingsOpen.set(false)
+          // autoEdit only applies on first render; reset so reopening the drawer doesn't re-enter rename mode
+          queueMicrotask(() => newProjectId.set(undefined))
+        },
+      },
+      items: projects.get().map(({ id, label }) => ({
+        id,
         icon: mdiFolderOutline,
         label,
-        isActive: !settingsOpen.get() && active() === label,
+        isActive: !settingsOpen.get() && active() === id,
+        autoEdit: newProjectId.get() === id,
+        onRename: (name: string) => renameProject(id, name),
         onClick: () => {
-          setActive(label)
+          setActive(id)
           settingsOpen.set(false)
         },
       })),
@@ -135,14 +186,22 @@ export function DemoAppSidebar() {
           accentColor={accentColor.get()}
           userName={"Max Mustermann"}
           userInitials={"MM"}
+          userAvatar={<AppSidebarCssAvatar />}
           userMenu={
-            <AppSidebarUserMenu name={"Max Mustermann"} email={"max.mustermann@example.com"} logoutLabel={"Abmelden"} />
+            <AppSidebarUserMenu
+              name={"Max Mustermann"}
+              email={"max.mustermann@example.com"}
+              userAvatar={<AppSidebarCssAvatar />}
+              sections={sections}
+              logoutLabel={"Abmelden"}
+            />
           }
         />
         <AppSettingsSidebar open={settingsOpen} title={settingsLabel}>
           <AppSettingsPanel
             name={"Max Mustermann"}
             email={"max.mustermann@example.com"}
+            userAvatar={<AppSidebarCssAvatar />}
             sections={sections}
             logoutLabel={"Abmelden"}
           />
@@ -153,9 +212,11 @@ export function DemoAppSidebar() {
           when={active() === settingsPageKey}
           fallback={
             <>
-              <h1 class={"text-2xl font-semibold mb-6"}>{active()}</h1>
+              <h1 class={"text-2xl font-semibold mb-6"}>{projectById(active())?.label ?? active()}</h1>
               <p class={"text-muted-foreground"}>
-                {projects.includes(active()) ? `Platzhalter für ${active()}.` : `Noch keine ${active()} vorhanden.`}
+                {projectById(active())
+                  ? `Platzhalter für ${projectById(active())?.label}. Doppelklick oder F2 in der Sidebar zum Umbenennen.`
+                  : `Noch keine ${active()} vorhanden.`}
               </p>
             </>
           }
@@ -165,6 +226,7 @@ export function DemoAppSidebar() {
             class={"max-w-2xl"}
             name={"Max Mustermann"}
             email={"max.mustermann@example.com"}
+            userAvatar={<AppSidebarCssAvatar />}
             sections={sections}
             logoutLabel={"Abmelden"}
           />
