@@ -223,7 +223,7 @@ export function DemoAppSidebar() {
     },
   ]
   return (
-    <div class={"flex flex-1 h-0 min-h-[480px] w-full overflow-hidden bg-background"}>
+    <div class={"flex flex-1 h-0 min-h-[480px] w-full overflow-hidden bg-background dark:bg-[#222326]"}>
       <div class={"relative flex shrink-0"}>
         <AppSidebar
           collapsed={collapsed}
@@ -356,7 +356,7 @@ export function DemoAppSidebar() {
 
 function SettingsCard(p: { children: JSXElement }) {
   return (
-    <div class={"p-4 rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-white/5 dark:bg-neutral-800/60"}>
+    <div class={"p-4 rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-white/5 dark:bg-[#292A2D]"}>
       {p.children}
     </div>
   )
@@ -364,7 +364,11 @@ function SettingsCard(p: { children: JSXElement }) {
 
 function InfoRow(p: { label: string; value: string }) {
   return (
-    <div class={"flex items-center justify-between gap-4 py-2 text-sm border-b border-border last:border-b-0"}>
+    <div
+      class={
+        "flex items-center justify-between gap-4 py-2 text-sm border-b border-neutral-200 dark:border-white/10 last:border-b-0"
+      }
+    >
       <span class={"text-neutral-500 dark:text-neutral-400"}>{p.label}</span>
       <span class={"font-medium truncate"}>{p.value}</span>
     </div>
