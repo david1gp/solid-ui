@@ -1,11 +1,23 @@
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
 import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
+import { mdiDotsHorizontal } from "@adaptive-ds/mdi/mdiDotsHorizontal.js"
 import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import Popover from "@corvu/popover"
 import { Key } from "@solid-primitives/keyed"
-import { type ComponentProps, children, createMemo, createSignal, type JSXElement, Show, splitProps } from "solid-js"
+import {
+  type ComponentProps,
+  children,
+  createEffect,
+  createMemo,
+  createSignal,
+  type JSXElement,
+  onCleanup,
+  Show,
+  splitProps,
+  untrack,
+} from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGroup.js"
@@ -66,6 +78,7 @@ export function AppSidebar(p: AppSidebarProps) {
   const fade = () => classArr("transition-opacity", motion, isOpen() ? "opacity-100" : "opacity-0")
   return (
     <aside
+      style={p.accentColor ? { "--app-sidebar-accent": p.accentColor } : undefined}
       class={classArr(
         "flex flex-col shrink-0 h-full overflow-hidden", // layout
         "bg-neutral-50 dark:bg-[#111111]", // background
@@ -125,7 +138,7 @@ export function AppSidebar(p: AppSidebarProps) {
         </div>
       </Show>
 
-      <nav class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2"}>
+      <nav tabindex={-1} class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2"}>
         <Show when={isSearching() && groups().length === 0}>
           <p class={"px-2 py-1 text-sm text-muted-foreground whitespace-nowrap"}>{ttt("No results")}</p>
         </Show>
@@ -191,7 +204,8 @@ export function AppSidebar(p: AppSidebarProps) {
       </nav>
 
       <Show when={p.userName || p.userInitials || p.userAvatar || p.userImageUrl}>
-        <div class={"border-t border-border p-1.5"}>
+        {/* px-1 + button p-1 = 8px inset: centers the 32px avatar in the 48px rail, aligned with the toggle button */}
+        <div class={"border-t border-border px-1 py-1.5"}>
           <Show
             when={userMenu()}
             fallback={
@@ -279,9 +293,16 @@ type NavItemButtonProps = {
   onDrop?: (event: DragEvent) => void
   onDragEnd?: () => void
   onKeyDown?: (event: KeyboardEvent) => void
+  onDelete?: () => void
+  onMove?: (direction: number) => void
+  canMoveUp?: boolean
+  canMoveDown?: boolean
   /** Called when inline rename starts, e.g. to cancel a pending flyout close from the double-click's first click. */
   onEditStart?: () => void
 }
+
+/** Token of the entry whose options menu is open; shared so at most one menu is open. */
+const [openItemMenu, setOpenItemMenu] = createSignal<symbol>()
 
 /** One navigation entry: accent bar, icon and label; optionally renamable inline. */
 function NavItemButton(p: NavItemButtonProps) {
@@ -291,6 +312,43 @@ function NavItemButton(p: NavItemButtonProps) {
   // Only the visible, labelled instance may auto-edit; hidden copies (collapsed rail) must not steal focus.
   const [editing, setEditing] = createSignal(!!p.item.autoEdit && canRename())
   let button: HTMLButtonElement | undefined
+  let trigger: HTMLButtonElement | undefined
+  let menuContent: HTMLDivElement | undefined
+  // dragstart fires on the draggable wrapper, not on the trigger, so remember where the press began.
+  let pressOnTrigger = false
+  const menu = createFlyoutState()
+  // Memo for the same reason as canRename: read from the contextmenu handler.
+  const hasMenu = createMemo(() => !p.title && (!!p.item.onRename || !!p.item.onDelete || !!p.draggable))
+  const focusFirstMenuItem = () =>
+    // The content mounts after the open state flips; wait a frame so the menu items exist.
+    requestAnimationFrame(() =>
+      menuContent?.querySelector<HTMLButtonElement>('[role="menuitem"]:not(:disabled)')?.focus(),
+    )
+  const menuToken = Symbol()
+  const setMenuOpen = (open: boolean) => {
+    if (open) setOpenItemMenu(menuToken)
+    menu.setOpen(open)
+  }
+  // Only one entry menu at a time: opening another one (e.g. via right-click) closes this one.
+  createEffect(() => {
+    if (openItemMenu() !== menuToken && untrack(menu.open)) menu.setOpen(false)
+  })
+  // Escape must close the menu even when focus did not move into it (e.g. after a right-click).
+  createEffect(() => {
+    if (!menu.open()) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented) return
+      event.preventDefault()
+      menu.setOpen(false)
+      trigger?.focus()
+    }
+    document.addEventListener("keydown", onKeyDown)
+    onCleanup(() => document.removeEventListener("keydown", onKeyDown))
+  })
+  const openMenu = () => {
+    setMenuOpen(true)
+    focusFirstMenuItem()
+  }
   const startEditing = () => {
     if (!canRename()) return
     p.onEditStart?.()
@@ -308,45 +366,196 @@ function NavItemButton(p: NavItemButtonProps) {
     <Show
       when={editing()}
       fallback={
-        <button
-          ref={button}
-          type={"button"}
-          onClick={() => {
-            p.item.onClick?.()
-            p.onSelect?.()
-          }}
-          onDblClick={startEditing}
-          title={p.title}
+        <div
+          class={classArr(
+            "relative group",
+            p.dragging && "opacity-40",
+            p.dropBefore &&
+              "before:absolute before:z-10 before:inset-x-1 before:top-0 before:h-0.5 before:bg-[var(--app-sidebar-accent,var(--color-blue-500))]",
+            p.dropAfter &&
+              "after:absolute after:z-10 after:inset-x-1 after:bottom-0 after:h-0.5 after:bg-[var(--app-sidebar-accent,var(--color-blue-500))]",
+          )}
           draggable={p.draggable}
-          onDragStart={p.onDragStart}
+          onDragStart={(event) => {
+            if (pressOnTrigger) {
+              event.preventDefault()
+              return
+            }
+            p.onDragStart?.(event)
+          }}
+          onPointerDown={() => {
+            pressOnTrigger = false
+          }}
           onDragOver={p.onDragOver}
           onDrop={p.onDrop}
           onDragEnd={p.onDragEnd}
-          onKeyDown={(event) => {
-            if (event.key === "F2" && canRename()) {
-              event.preventDefault()
-              startEditing()
-              return
-            }
-            p.onKeyDown?.(event)
+          onContextMenu={(event) => {
+            if (!hasMenu()) return
+            event.preventDefault()
+            openMenu()
           }}
-          aria-label={p.item.label}
-          aria-current={p.item.isActive ? "page" : undefined}
-          aria-keyshortcuts={
-            [p.draggable && "Alt+ArrowUp Alt+ArrowDown", canRename() && "F2"].filter(Boolean).join(" ") || undefined
-          }
-          class={classArr(
-            navButtonClass,
-            p.item.isActive && "bg-black/5 dark:bg-white/10",
-            p.dragging && "opacity-40",
-            p.dropBefore && "before:absolute before:inset-x-1 before:top-0 before:h-0.5 before:bg-blue-500",
-            p.dropAfter && "after:absolute after:inset-x-1 after:bottom-0 after:h-0.5 after:bg-blue-500",
-          )}
         >
-          <AccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
-          <Icon path={p.item.icon} class={"size-4"} />
-          <span class={classArr("truncate whitespace-nowrap", p.labelClass)}>{p.item.label}</span>
-        </button>
+          <button
+            ref={button}
+            type={"button"}
+            onClick={() => {
+              p.item.onClick?.()
+              p.onSelect?.()
+            }}
+            onDblClick={startEditing}
+            title={p.title}
+            onKeyDown={(event) => {
+              if ((event.key === "Delete" || event.key === "Backspace") && p.item.onDelete) {
+                event.preventDefault()
+                p.onDelete?.()
+                return
+              }
+              if (event.key === "F2" && canRename()) {
+                event.preventDefault()
+                startEditing()
+                return
+              }
+              p.onKeyDown?.(event)
+              // Reordering moves the DOM node, which drops focus; keep it on the moved entry.
+              if (event.altKey && (event.key === "ArrowUp" || event.key === "ArrowDown"))
+                queueMicrotask(() => button?.focus())
+            }}
+            aria-label={p.item.label}
+            data-nav-entry={""}
+            aria-current={p.item.isActive ? "page" : undefined}
+            aria-keyshortcuts={
+              [p.draggable && "Alt+ArrowUp Alt+ArrowDown", canRename() && "F2", p.item.onDelete && "Delete"]
+                .filter(Boolean)
+                .join(" ") || undefined
+            }
+            class={classArr(
+              navButtonClass,
+              "w-full min-w-0",
+              hasMenu() && "pr-9",
+              p.item.isActive && "bg-black/5 dark:bg-white/10",
+            )}
+          >
+            <AccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
+            <Icon path={p.item.icon} class={"size-4"} />
+            <span class={classArr("min-w-0 truncate whitespace-nowrap", p.labelClass)}>{p.item.label}</span>
+          </button>
+          <Show when={hasMenu()}>
+            <Popover
+              open={menu.open()}
+              onOpenChange={setMenuOpen}
+              restoreFocus={false}
+              placement={"bottom-end"}
+              floatingOptions={{ offset: 4, flip: true, shift: { padding: 8 } }}
+            >
+              <Popover.Trigger
+                ref={trigger}
+                type={"button"}
+                draggable={false}
+                onPointerDown={(event) => {
+                  event.stopPropagation()
+                  pressOnTrigger = true
+                }}
+                onDragStart={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+                }}
+                onClick={(event) => {
+                  menu.onTriggerClick(event)
+                  if (!menu.open()) focusFirstMenuItem()
+                }}
+                aria-label={`${ttt("Options for")} ${p.item.label}`}
+                aria-haspopup={"menu"}
+                class={classArr(
+                  "absolute right-1 top-1 size-6 flex items-center justify-center rounded cursor-pointer hover:bg-black/10 dark:hover:bg-white/15 focus:opacity-100 group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:opacity-100",
+                  p.item.isActive || menu.open() ? "opacity-100" : "opacity-0",
+                )}
+              >
+                <Icon path={mdiDotsHorizontal} class={"size-4"} />
+              </Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content
+                  ref={menuContent}
+                  role={"menu"}
+                  data-sidebar-item-menu={""}
+                  aria-label={`${ttt("Options for")} ${p.item.label}`}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") {
+                      event.preventDefault()
+                      event.stopPropagation()
+                      menu.setOpen(false)
+                      trigger?.focus()
+                      return
+                    }
+                    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return
+                    event.preventDefault()
+                    const buttons = Array.from(
+                      event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="menuitem"]:not(:disabled)'),
+                    )
+                    const index = buttons.indexOf(document.activeElement as HTMLButtonElement)
+                    const next =
+                      event.key === "Home"
+                        ? 0
+                        : event.key === "End"
+                          ? buttons.length - 1
+                          : (index + (event.key === "ArrowDown" ? 1 : -1) + buttons.length) % buttons.length
+                    buttons[next]?.focus()
+                  }}
+                  class={classArr(
+                    "z-60 min-w-44 p-1 rounded-xl border border-border shadow-lg bg-white dark:bg-[#111111]",
+                    menu.contentClass(),
+                  )}
+                >
+                  <Show when={canRename()}>
+                    <MenuItem
+                      label={ttt("Rename")}
+                      shortcut={"F2"}
+                      onClick={() => {
+                        menu.setOpen(false)
+                        startEditing()
+                      }}
+                    />
+                  </Show>
+                  <Show when={p.draggable}>
+                    <MenuItem
+                      label={ttt("Move up")}
+                      shortcut={"Alt+↑"}
+                      disabled={!p.canMoveUp}
+                      onClick={() => {
+                        p.onMove?.(-1)
+                        menu.setOpen(false)
+                        trigger?.focus()
+                      }}
+                    />
+                    <MenuItem
+                      label={ttt("Move down")}
+                      shortcut={"Alt+↓"}
+                      disabled={!p.canMoveDown}
+                      onClick={() => {
+                        p.onMove?.(1)
+                        menu.setOpen(false)
+                        trigger?.focus()
+                      }}
+                    />
+                  </Show>
+                  <Show when={p.item.onDelete}>
+                    <Show when={canRename() || p.draggable}>
+                      <div role={"separator"} class={"my-1 border-t border-border"} />
+                    </Show>
+                    <MenuItem
+                      label={ttt("Delete")}
+                      shortcut={"Del"}
+                      destructive
+                      onClick={() => {
+                        menu.setOpen(false)
+                        p.onDelete?.()
+                      }}
+                    />
+                  </Show>
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover>
+          </Show>
+        </div>
       }
     >
       <div class={classArr(navButtonClass, "cursor-text bg-black/5 dark:bg-white/10")}>
@@ -374,11 +583,35 @@ function NavItemButton(p: NavItemButtonProps) {
           onBlur={(event) => finish(event.currentTarget.value)}
           class={classArr(
             "min-w-0 flex-1 -mx-1 px-1 h-6 rounded bg-white dark:bg-black", // layout
-            "outline-none ring-1 ring-blue-500 text-sm font-medium", // look
+            "outline-none ring-1 ring-[var(--app-sidebar-accent,var(--color-blue-500))] text-sm font-medium", // look
           )}
         />
       </div>
     </Show>
+  )
+}
+
+function MenuItem(p: {
+  label: string
+  shortcut: string
+  disabled?: boolean
+  destructive?: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      type={"button"}
+      role={"menuitem"}
+      disabled={p.disabled}
+      onClick={p.onClick}
+      class={classArr(
+        "flex w-full items-center justify-between gap-6 rounded-md px-2 py-1.5 text-sm text-left hover:bg-black/5 dark:hover:bg-white/10 focus:bg-black/5 dark:focus:bg-white/10 outline-none disabled:opacity-40",
+        p.destructive && "text-red-600 dark:text-red-400",
+      )}
+    >
+      <span>{p.label}</span>
+      <span class={"text-xs text-muted-foreground"}>{p.shortcut}</span>
+    </button>
   )
 }
 
@@ -390,7 +623,9 @@ function GroupItems(p: {
   labelClass?: string
   onSelect?: () => void
   onEditStart?: () => void
+  onEmptyFocus?: () => void
 }) {
+  let groupElement: HTMLDivElement | undefined
   const [dragged, setDragged] = createSignal<string>()
   const [target, setTarget] = createSignal<string>()
   const items = () => p.group.items.map((item) => ({ ...item, key: item.id ?? item.label }))
@@ -405,7 +640,7 @@ function GroupItems(p: {
     setTarget(undefined)
   }
   return (
-    <>
+    <div ref={groupElement} class={"flex flex-col gap-0.5"} tabindex={-1}>
       <Key each={items()} by={"key"}>
         {(item) => (
           <NavItemButton
@@ -415,6 +650,30 @@ function GroupItems(p: {
             labelClass={p.labelClass}
             onSelect={p.onSelect}
             onEditStart={p.onEditStart}
+            onDelete={() => {
+              const buttons = Array.from(groupElement?.querySelectorAll<HTMLButtonElement>("[data-nav-entry]") ?? [])
+              const index = items().findIndex((i) => i.key === item().key)
+              const next =
+                buttons[index + 1] ??
+                buttons[index - 1] ??
+                groupElement?.querySelector<HTMLButtonElement>("[data-nav-add]")
+              const nav = groupElement?.closest<HTMLElement>("nav")
+              item().onDelete?.()
+              queueMicrotask(() => {
+                if (next?.isConnected) next.focus()
+                else if (groupElement?.isConnected) groupElement.focus()
+                else if (p.onEmptyFocus) p.onEmptyFocus()
+                else nav?.focus()
+              })
+            }}
+            onMove={(direction) => {
+              const current = items()
+              const index = current.findIndex((i) => i.key === item().key)
+              const next = current[index + direction]
+              if (next) move(item().key, next.key)
+            }}
+            canMoveUp={items().findIndex((i) => i.key === item().key) > 0}
+            canMoveDown={items().findIndex((i) => i.key === item().key) < items().length - 1}
             draggable={!!p.group.onReorder}
             dragging={dragged() === item().key}
             dropBefore={
@@ -459,6 +718,7 @@ function GroupItems(p: {
           <button
             type={"button"}
             onClick={() => add().onAdd()}
+            data-nav-add={""}
             class={classArr(navButtonClass, "text-neutral-500 dark:text-neutral-400")}
           >
             <Icon path={add().icon ?? mdiPlus} class={"size-4"} />
@@ -466,23 +726,28 @@ function GroupItems(p: {
           </button>
         )}
       </Show>
-    </>
+    </div>
   )
 }
 
 /** Icon-rail stand-in for a closed drawer: one group icon that opens a flyout with its items. */
 function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string }) {
   const flyout = createFlyoutState()
+  let trigger: HTMLButtonElement | undefined
   const hasActive = () => p.group.items.some((i) => i.isActive)
   const icon = () => p.group.icon ?? p.group.items[0]?.icon ?? (p.group.addItem ? mdiPlus : undefined)
   return (
     <Popover
       open={flyout.open()}
       onOpenChange={flyout.setOpen}
+      onOutsidePointer={(event) => {
+        if (event.target instanceof Element && event.target.closest("[data-sidebar-item-menu]")) event.preventDefault()
+      }}
       placement={"right-start"}
       floatingOptions={{ offset: 8, flip: true, shift: { padding: 8 } }}
     >
       <Popover.Trigger
+        ref={trigger}
         onClick={flyout.onTriggerClick}
         title={p.group.label}
         aria-label={p.group.label}
@@ -508,6 +773,7 @@ function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string })
             showLabels={true}
             onSelect={() => flyout.setOpen(false)}
             onEditStart={() => flyout.setOpen(true)}
+            onEmptyFocus={() => trigger?.closest<HTMLElement>("nav")?.focus()}
           />
         </Popover.Content>
       </Popover.Portal>
@@ -526,7 +792,7 @@ function SearchField(p: {
     <div
       class={classArr(
         "flex items-center gap-2 h-8 px-2 rounded-md", // layout
-        "bg-black/5 dark:bg-white/10 focus-within:ring-1 focus-within:ring-blue-500", // look
+        "bg-black/5 dark:bg-white/10 focus-within:ring-1 focus-within:ring-[var(--app-sidebar-accent,var(--color-blue-500))]", // look
       )}
     >
       <Icon path={mdiMagnify} class={"size-4 shrink-0 text-muted-foreground"} />

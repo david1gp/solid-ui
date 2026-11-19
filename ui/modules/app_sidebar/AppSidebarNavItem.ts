@@ -9,6 +9,8 @@ export interface AppSidebarNavItem {
   onClick?: () => void
   /** Enables inline renaming via double-click or F2; called with the trimmed, non-empty new label. */
   onRename?: (label: string) => void
+  /** Enables deletion; called directly without confirmation so the consumer can implement undo or confirmation. */
+  onDelete?: () => void
   /** Start in rename mode when the entry is first rendered, e.g. right after creating it. */
   autoEdit?: boolean
 }
