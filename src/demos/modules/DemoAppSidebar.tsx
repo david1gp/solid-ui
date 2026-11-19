@@ -229,7 +229,6 @@ export function DemoAppSidebar() {
               name={"Max Mustermann"}
               email={"max.mustermann@example.com"}
               userAvatar={<AppSidebarCssAvatar />}
-              sections={sections}
               logoutLabel={"Abmelden"}
             />
           }
