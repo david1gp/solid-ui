@@ -27,6 +27,8 @@ export interface AppSidebarUserMenuSection {
   label: string
   /** MDI path string; shown next to the label in the settings panel. */
   icon?: string
+  /** Optional note shown above the options, e.g. "Muss manuell aktiviert werden". */
+  hint?: string
   options: AppSidebarUserMenuOption[]
 }
 

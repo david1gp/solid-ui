@@ -111,6 +111,9 @@ function TileSection(p: { section: AppSidebarUserMenuSection }) {
         </Show>
         <span>{p.section.label}</span>
       </div>
+      <Show when={!isSwatches() && p.section.hint}>
+        <span class={"-mt-1 text-xs text-red-600 dark:text-red-400"}>{p.section.hint}</span>
+      </Show>
       <Show when={isSwatches()}>
         <div class={"flex items-center gap-1.5"}>
           <For each={p.section.options}>
