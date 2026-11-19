@@ -13,8 +13,10 @@ import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
 import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
-import { createRoot, createSignal, type JSXElement, Match, Show, Switch } from "solid-js"
+import { createRoot, createSignal, type JSXElement, Match, onMount, Show, Switch } from "solid-js"
 import { Input } from "#ui/input/input/Input.jsx"
+import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
+import { themeVariant } from "#ui/interactive/theme/themeVariant.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { toastDismiss } from "#ui/interactive/toast/toastDismiss.js"
 import { AppSettingsNav } from "#ui/modules/app_sidebar/AppSettingsNav.jsx"
@@ -55,9 +57,10 @@ const accentColors = [
 ]
 
 export function DemoAppSidebar() {
+  // Fullscreen demo has no nav ThemeButton, so load the stored theme here for the tiles' selection.
+  onMount(themeInit)
   const collapsed = createSignalObject(false)
   const accentColor = createSignalObject(accentColors[0]!.color)
-  const appearance = createSignalObject("Hell")
   const language = createSignalObject("DE")
   const firstName = createSignalObject("Max")
   const lastName = createSignalObject("Mustermann")
@@ -78,16 +81,16 @@ export function DemoAppSidebar() {
       icon: mdiPaletteOutline,
       options: (
         [
-          { icon: mdiWhiteBalanceSunny, label: "Hell", preview: "light" },
-          { icon: mdiWeatherNight, label: "Dunkel", preview: "dark" },
-          { icon: mdiBrightnessAuto, label: "System", preview: "system" },
+          { icon: mdiWhiteBalanceSunny, label: "Hell", preview: "light", theme: themeVariant.light },
+          { icon: mdiWeatherNight, label: "Dunkel", preview: "dark", theme: themeVariant.dark },
+          { icon: mdiBrightnessAuto, label: "System", preview: "system", theme: themeVariant.os },
         ] as const
-      ).map((option) => ({
+      ).map(({ theme, ...option }) => ({
         ...option,
         get selected() {
-          return appearance.get() === option.label
+          return themeSignal.get() === theme
         },
-        onClick: () => appearance.set(option.label),
+        onClick: () => themeSet(theme, true),
       })),
     },
     {
@@ -166,7 +169,7 @@ export function DemoAppSidebar() {
         })),
         {
           icon: mdiCogOutline,
-          label: `${settingsLabel} 1-3`,
+          label: `${settingsLabel} 1-3 (Mobil)`,
           isActive: settingsOpen.get(),
           onClick: () => settingsOpen.set(!settingsOpen.get()),
         },
