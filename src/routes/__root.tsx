@@ -56,7 +56,7 @@ function RootDocument(props: { children: any }) {
         <HydrationScript />
         <HeadContent />
       </head>
-      <body class="min-h-dvh w-full font-sans antialiased text-foreground bg-background dark:bg-gray-700">
+      <body class="min-h-dvh w-full font-sans antialiased text-foreground bg-background">
         <div class="min-h-dvh w-full">
           <Suspense>{props.children}</Suspense>
         </div>
