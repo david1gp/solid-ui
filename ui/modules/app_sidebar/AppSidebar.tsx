@@ -523,7 +523,7 @@ function NavItemButton(p: NavItemButtonProps) {
                     </Show>
                     <MenuItem
                       label={ttt("Delete")}
-                      shortcut={"Del"}
+                      shortcut={ttt("Del")}
                       destructive
                       onClick={() => {
                         menu.setOpen(false)
