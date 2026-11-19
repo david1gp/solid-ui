@@ -30,8 +30,10 @@
 /* shadcn theming - https://ui.shadcn.com/docs/theming */
 /* background colors - https://tailwindcss.com/docs/background-color */
 @layer base {
+  /* Always show the scrollbar track to prevent navbar shift after mount.
+     `scrollbar-gutter: stable` left an empty white gutter right of the full-width header. */
   html {
-    scrollbar-gutter: stable;
+    overflow-y: scroll;
   }
 
   /*
