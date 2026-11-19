@@ -36,7 +36,7 @@ export function AppSettingsNav(p: AppSettingsNavProps) {
     <aside
       class={classArr(
         "flex flex-col shrink-0 self-stretch w-56 min-h-0 overflow-hidden", // layout: stretches to the flex row height
-        "bg-neutral-50 dark:bg-[#292929] border-r border-border", // look
+        "bg-neutral-50 dark:bg-[#262626] border-r border-border", // look
         "text-neutral-950 dark:text-neutral-50",
         p.class,
       )}
@@ -90,12 +90,13 @@ export function AppSettingsNav(p: AppSettingsNavProps) {
       </nav>
 
       <Show when={p.logoutLabel}>
+        {/* h-10 matches AppSidebar's user footer (32px avatar + p-1), so both top borders line up */}
         <div class={"border-t border-border px-2 py-1.5"}>
           <button
             type={"button"}
             onClick={() => p.onLogout?.()}
             class={classArr(
-              "flex items-center gap-2 w-full min-w-0 h-8 px-2 rounded-md cursor-pointer text-sm text-left font-medium", // layout like nav entries
+              "flex items-center gap-2 w-full min-w-0 h-10 px-2 rounded-md cursor-pointer text-sm text-left font-medium", // layout like nav entries
               "text-red-600 dark:text-red-400 hover:bg-black/5 dark:hover:bg-white/10", // color
             )}
           >
