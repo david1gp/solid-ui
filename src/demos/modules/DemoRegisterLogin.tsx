@@ -146,7 +146,7 @@ export function DemoRegisterLogin() {
                     <input type="checkbox" name="terms" required />
                     <span class="checkbox" aria-hidden="true">
                       <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                        <path d="m2.2 6.2 2.3 2.2 5.2-5" stroke="white" stroke-width="1.8" />
+                        <path d="m2.2 6.2 2.3 2.2 5.2-5" stroke="currentColor" stroke-width="1.8" />
                       </svg>
                     </span>
                     <span>
@@ -161,7 +161,7 @@ export function DemoRegisterLogin() {
                     <input type="checkbox" name="remember" />
                     <span class="checkbox" aria-hidden="true">
                       <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                        <path d="m2.2 6.2 2.3 2.2 5.2-5" stroke="white" stroke-width="1.8" />
+                        <path d="m2.2 6.2 2.3 2.2 5.2-5" stroke="currentColor" stroke-width="1.8" />
                       </svg>
                     </span>
                     <span>Angemeldet bleiben</span>
