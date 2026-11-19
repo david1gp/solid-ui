@@ -141,7 +141,7 @@ function HomeButtonFloating() {
       icon={mdiHome}
       title={"Home"}
       aria-label={"Home"}
-      class={"fixed bottom-4 right-4 z-50 p-2.5 rounded-full shadow-md bg-background"}
+      class={"fixed bottom-4 right-4 z-50 p-2.5 rounded-full shadow-md bg-background dark:bg-background"}
     />
   )
 }
