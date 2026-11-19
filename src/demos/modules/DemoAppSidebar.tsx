@@ -83,10 +83,10 @@ export function DemoAppSidebar() {
     {
       label: "Sprache",
       icon: mdiTranslate,
-      options: (["DE", "EN", "FR", "ES", "IT"] as const).map((label) => ({
+      options: (["DE", "EN"] as const).map((label) => ({
         label,
         get leading() {
-          return <AppSidebarFlag language={label.toLowerCase() as "de" | "en" | "fr" | "es" | "it"} />
+          return <AppSidebarFlag language={label.toLowerCase() as "de" | "en"} />
         },
         get selected() {
           return language.get() === label
