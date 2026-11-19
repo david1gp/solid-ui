@@ -1,4 +1,5 @@
 import { mdiAccountCircleOutline } from "@adaptive-ds/mdi/mdiAccountCircleOutline.js"
+import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
 import Popover from "@corvu/popover"
 import { type ComponentProps, children, createSignal, For, type JSXElement, Show, splitProps } from "solid-js"
@@ -75,49 +76,80 @@ export function AppSidebar(p: AppSidebarProps) {
 
       <nav class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2"}>
         <For each={p.groups}>
-          {(group) => (
-            <Collapsible open={isOpen() || group.items.length > 0}>
-              <div class={"flex flex-col gap-0.5 pb-4"}>
-                <Collapsible open={isOpen()}>
-                  <h3
-                    class={classArr("px-2 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap", fade())}
-                  >
-                    {group.label}
-                  </h3>
-                </Collapsible>
-                <For each={group.items}>
-                  {(item) => (
-                    <button
-                      type={"button"}
-                      onClick={() => item.onClick?.()}
-                      title={isOpen() ? undefined : item.label}
-                      aria-label={item.label}
-                      aria-current={item.isActive ? "page" : undefined}
-                      class={classArr(
-                        "relative flex items-center gap-2 h-8 px-2 rounded-md cursor-pointer text-sm text-left", // layout
-                        "font-medium text-neutral-950 dark:text-neutral-50", // text
-                        "hover:bg-black/5 dark:hover:bg-white/10", // hover
-                        item.isActive && "bg-black/5 dark:bg-white/10",
-                      )}
+          {(group) => {
+            const [drawerOpen, setDrawerOpen] = createSignal(group.defaultOpen ?? true)
+            // In the icon rail the label is hidden, so items stay visible regardless of the drawer.
+            const itemsVisible = () => !group.collapsible || drawerOpen() || !isOpen()
+            const labelClass = "px-2 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"
+            return (
+              <Collapsible open={isOpen() || group.items.length > 0}>
+                <div class={"flex flex-col gap-0.5 pb-4"}>
+                  <Collapsible open={isOpen()}>
+                    <Show
+                      when={group.collapsible}
+                      fallback={<h3 class={classArr(labelClass, fade())}>{group.label}</h3>}
                     >
-                      <span
-                        aria-hidden={true}
-                        style={p.accentColor ? { "background-color": p.accentColor } : undefined}
-                        class={classArr(
-                          "absolute -left-1.5 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full", // layout
-                          !p.accentColor && "bg-blue-600 dark:bg-blue-500", // color
-                          "transition-[transform,opacity,background-color] duration-200 ease-out motion-reduce:transition-none", // animation
-                          item.isActive ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0",
+                      <h3 class={fade()}>
+                        <button
+                          type={"button"}
+                          onClick={() => setDrawerOpen(!drawerOpen())}
+                          aria-expanded={drawerOpen()}
+                          class={classArr(
+                            labelClass,
+                            "flex items-center gap-1 w-full rounded-md cursor-pointer text-left", // layout
+                            "hover:text-neutral-950 dark:hover:text-neutral-50", // hover
+                          )}
+                        >
+                          <span class={"truncate"}>{group.label}</span>
+                          <Icon
+                            path={mdiChevronDown}
+                            class={classArr(
+                              "size-4 shrink-0 transition-transform duration-200 motion-reduce:transition-none",
+                              !drawerOpen() && "-rotate-90",
+                            )}
+                          />
+                        </button>
+                      </h3>
+                    </Show>
+                  </Collapsible>
+                  <Collapsible open={itemsVisible()}>
+                    <div class={"flex flex-col gap-0.5"}>
+                      <For each={group.items}>
+                        {(item) => (
+                          <button
+                            type={"button"}
+                            onClick={() => item.onClick?.()}
+                            title={isOpen() ? undefined : item.label}
+                            aria-label={item.label}
+                            aria-current={item.isActive ? "page" : undefined}
+                            class={classArr(
+                              "relative flex items-center gap-2 h-8 px-2 rounded-md cursor-pointer text-sm text-left", // layout
+                              "font-medium text-neutral-950 dark:text-neutral-50", // text
+                              "hover:bg-black/5 dark:hover:bg-white/10", // hover
+                              item.isActive && "bg-black/5 dark:bg-white/10",
+                            )}
+                          >
+                            <span
+                              aria-hidden={true}
+                              style={p.accentColor ? { "background-color": p.accentColor } : undefined}
+                              class={classArr(
+                                "absolute -left-1.5 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full", // layout
+                                !p.accentColor && "bg-blue-600 dark:bg-blue-500", // color
+                                "transition-[transform,opacity,background-color] duration-200 ease-out motion-reduce:transition-none", // animation
+                                item.isActive ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0",
+                              )}
+                            />
+                            <Icon path={item.icon} class={"size-4"} />
+                            <span class={classArr("truncate whitespace-nowrap", fade())}>{item.label}</span>
+                          </button>
                         )}
-                      />
-                      <Icon path={item.icon} class={"size-4"} />
-                      <span class={classArr("truncate whitespace-nowrap", fade())}>{item.label}</span>
-                    </button>
-                  )}
-                </For>
-              </div>
-            </Collapsible>
-          )}
+                      </For>
+                    </div>
+                  </Collapsible>
+                </div>
+              </Collapsible>
+            )
+          }}
         </For>
       </nav>
 
