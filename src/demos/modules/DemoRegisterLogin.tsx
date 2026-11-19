@@ -3,6 +3,7 @@ import { Input } from "#ui/input/input/Input.jsx"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { LogoImageText } from "#ui/static/logo/LogoImageText.jsx"
 import { demoRegisterLoginStateCreate } from "./demoRegisterLoginStateCreate.js"
+import { FieldError } from "./FieldError.jsx"
 import "./DemoRegisterLogin.css"
 
 export function DemoRegisterLogin() {
@@ -46,11 +47,29 @@ export function DemoRegisterLogin() {
                 Registrieren
               </button>
             </div>
-            <form ref={state.setForm} class="form-stack" id="authForm" noValidate onSubmit={state.submit}>
+            <form
+              ref={state.setForm}
+              class="form-stack"
+              id="authForm"
+              noValidate
+              onSubmit={state.submit}
+              onInput={state.clearError}
+              onChange={state.clearError}
+            >
               <Show when={state.mode() === "register"}>
                 <div class="field">
                   <label for="name">Name</label>
-                  <Input id="name" name="name" type="text" autocomplete="name" placeholder="Max Mustermann" required />
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Max Mustermann"
+                    required
+                    aria-invalid={!!state.errors().name || undefined}
+                    aria-describedby={state.errors().name ? "nameError" : undefined}
+                  />
+                  <FieldError id="nameError" message={state.errors().name} />
                 </div>
               </Show>
               <div class="field">
@@ -62,8 +81,11 @@ export function DemoRegisterLogin() {
                   autocomplete="email"
                   placeholder="name@beispiel.de"
                   required
+                  aria-invalid={!!state.errors().email || undefined}
+                  aria-describedby={state.errors().email ? "emailError" : undefined}
                   onInput={(e) => state.emailInput(e.currentTarget.value)}
                 />
+                <FieldError id="emailError" message={state.errors().email} />
               </div>
               <div class="field">
                 <div class="field-header">
@@ -83,6 +105,8 @@ export function DemoRegisterLogin() {
                     placeholder="Dein Passwort"
                     minLength={8}
                     required
+                    aria-invalid={!!state.errors().password || undefined}
+                    aria-describedby={state.errors().password ? "passwordError" : undefined}
                     onInput={(e) => state.passwordInput(e.currentTarget.value)}
                   />
                   <button
@@ -114,6 +138,7 @@ export function DemoRegisterLogin() {
                     </svg>
                   </button>
                 </div>
+                <FieldError id="passwordError" message={state.errors().password} />
                 <Show when={state.mode() === "register"}>
                   <div>
                     <div class="password-strength" aria-hidden="true">
@@ -142,18 +167,27 @@ export function DemoRegisterLogin() {
               <Show
                 when={state.mode() === "login"}
                 fallback={
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="terms" required />
-                    <span class="checkbox" aria-hidden="true">
-                      <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                        <path d="m2.2 6.2 2.3 2.2 5.2-5" stroke="currentColor" stroke-width="1.8" />
-                      </svg>
-                    </span>
-                    <span>
-                      Ich akzeptiere die <a href="#authTitle">Nutzungsbedingungen</a> und{" "}
-                      <a href="#authTitle">Datenschutzerklärung</a>.
-                    </span>
-                  </label>
+                  <div class="field">
+                    <label class="checkbox-label">
+                      <input
+                        type="checkbox"
+                        name="terms"
+                        required
+                        aria-invalid={!!state.errors().terms || undefined}
+                        aria-describedby={state.errors().terms ? "termsError" : undefined}
+                      />
+                      <span class="checkbox" aria-hidden="true">
+                        <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                          <path d="m2.2 6.2 2.3 2.2 5.2-5" stroke="currentColor" stroke-width="1.8" />
+                        </svg>
+                      </span>
+                      <span>
+                        Ich akzeptiere die <a href="#authTitle">Nutzungsbedingungen</a> und{" "}
+                        <a href="#authTitle">Datenschutzerklärung</a>.
+                      </span>
+                    </label>
+                    <FieldError id="termsError" message={state.errors().terms} />
+                  </div>
                 }
               >
                 <div class="options-row">
@@ -262,14 +296,7 @@ export function DemoRegisterLogin() {
           }
         }}
       >
-        <form
-          class="dialog-content"
-          onSubmit={(e) => {
-            e.preventDefault()
-            if (!e.currentTarget.reportValidity()) return
-            state.closeReset()
-          }}
-        >
+        <form class="dialog-content" noValidate onSubmit={state.submitReset} onInput={state.clearResetError}>
           <div class="dialog-head">
             <div>
               <h2 id="resetTitle">Passwort zurücksetzen</h2>
@@ -291,7 +318,10 @@ export function DemoRegisterLogin() {
               autocomplete="email"
               placeholder="name@beispiel.de"
               required
+              aria-invalid={!!state.resetErrors().resetEmail || undefined}
+              aria-describedby={state.resetErrors().resetEmail ? "resetEmailError" : undefined}
             />
+            <FieldError id="resetEmailError" message={state.resetErrors().resetEmail} />
           </div>
           <div class="dialog-actions">
             <button class="secondary-button" type="button" onClick={state.closeReset}>
