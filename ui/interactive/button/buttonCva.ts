@@ -48,6 +48,7 @@ const baseClasses = classArr(
   "items-center justify-center", // layout children
   "rounded-md ring-offset-background", // rounded, rings
   "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", // focus
+  "dark:ring-offset-neutral-900 dark:focus-visible:ring-white/60", // focus dark: neutral, no navy offset
   "transition-colors", // animation
   "group",
   "cursor-pointer",
@@ -58,20 +59,21 @@ const variantClasses = {
   // transparent bg
   //
   none: "",
+  // Dark mode uses neutral grays (no slate/navy tint) to match the neutral dark inputs and cards.
   outline: classArr(
     "bg-transparent dark:bg-transparent",
-    "dark:text-slate-100", // text
-    "hover:bg-slate-100", // bg hover
-    "border border-slate-200 dark:border-slate-700 dark:hover:bg-slate-900", // border
+    "dark:text-neutral-100", // text
+    "hover:bg-slate-100 dark:hover:bg-white/5", // bg hover
+    "border border-slate-200 dark:border-white/15", // border
   ),
   ghost: classArr(
-    "dark:text-slate-100 dark:hover:text-slate-100", // text
+    "dark:text-neutral-100 dark:hover:text-neutral-100", // text
     "bg-transparent dark:bg-transparent", // bg
     "data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent", // bg data
-    "hover:bg-slate-100 dark:hover:bg-slate-800", // bg hover
+    "hover:bg-slate-100 dark:hover:bg-white/10", // bg hover
   ),
   link: classArr(
-    "text-slate-900 dark:text-slate-100", // text
+    "text-slate-900 dark:text-neutral-100", // text
     "underline-offset-4 hover:underline ", // underline
     "bg-transparent dark:bg-transparent", // bg
     "hover:bg-transparent dark:hover:bg-transparent", // bg hover
@@ -80,19 +82,19 @@ const variantClasses = {
   // filled grayscale
   //
   filled: classArr(
-    "dark:text-slate-100", // text
-    "bg-white dark:bg-background", // bg
-    "hover:bg-slate-50 dark:hover:bg-slate-900", // bg hover
+    "dark:text-neutral-100", // text
+    "bg-white dark:bg-white/10", // bg
+    "hover:bg-slate-50 dark:hover:bg-white/15", // bg hover
   ),
   subtle: classArr(
-    "text-slate-900 dark:text-slate-100", // text
-    "bg-slate-100 dark:bg-slate-700", // bg
-    "hover:bg-slate-200 dark:hover:bg-slate-600", // bg hover
+    "text-slate-900 dark:text-neutral-100", // text
+    "bg-slate-100 dark:bg-neutral-700", // bg
+    "hover:bg-slate-200 dark:hover:bg-neutral-600", // bg hover
   ),
   contrast: classArr(
-    "text-white dark:text-slate-900 dark:hover:text-slate-900", // text
-    "bg-slate-900 dark:bg-slate-50", // bg
-    "hover:bg-slate-700 dark:hover:bg-slate-300", // bg hover
+    "text-white dark:text-neutral-900 dark:hover:text-neutral-900", // text
+    "bg-slate-900 dark:bg-neutral-50", // bg
+    "hover:bg-slate-700 dark:hover:bg-neutral-300", // bg hover
   ),
   //
   // filled colors
@@ -215,9 +217,9 @@ const variantClasses = {
   //
   outlineRed: classArr(
     "text-red-500 dark:text-red-300", // text
-    "border border-red-200 dark:border-red-400", // border
+    "border border-red-200 dark:border-red-400/40", // border
     "bg-transparent", // bg
-    "hover:bg-red-100 dark:hover:bg-red-950", // bg hover
+    "hover:bg-red-100 dark:hover:bg-red-500/10", // bg hover
     "focus:ring-red-400 dark:focus:ring-red-400", // focus
   ),
 } as const satisfies Record<ButtonVariant, string>

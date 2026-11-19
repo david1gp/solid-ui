@@ -11,5 +11,6 @@ export const classesInput = classArr(
   "placeholder:text-muted-foreground", // typography
   "file:border-0 file:bg-transparent file:font-medium", // file input styling
   "focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2", // focus states
+  "dark:focus-visible:ring-white/40 dark:focus-visible:ring-offset-0 dark:focus-visible:border-white/30", // focus dark: neutral, no white offset gap
   classesDisabledModifier, // disabled
 )
