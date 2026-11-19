@@ -16,11 +16,12 @@ import { objectKeys } from "#utils/obj/objectKeys.js"
 const prefix = ""
 
 /** Full-viewport demos rendered without the demo nav; they get a floating home button instead. */
-const fullscreenDemos = new Set(["DemoAppSidebar"])
+const fullscreenDemos = new Set(["DemoAppSidebar", "DemoRegisterLogin"])
 
 /** Display labels overriding the name derived from the demo key (prefix "Demo" stripped). */
 const demoDisplayNames: Record<string, string> = {
   DemoAppSidebar: "Sidebar-Simple",
+  DemoRegisterLogin: "Register-Login",
 }
 
 /** L0 — overview grid of every category and its components. */

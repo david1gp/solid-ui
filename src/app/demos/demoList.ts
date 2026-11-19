@@ -46,6 +46,11 @@ const DemoCard = lazy(async () => {
   return { default: c.DemoCard }
 })
 
+const DemoRegisterLogin = lazy(async () => {
+  const c = await import("#src/demos/modules/DemoRegisterLogin.jsx")
+  return { default: c.DemoRegisterLogin }
+})
+
 const DemoAppSidebar = lazy(async () => {
   const c = await import("#src/demos/modules/DemoAppSidebar.jsx")
   return { default: c.DemoAppSidebar }
@@ -229,6 +234,7 @@ export const demoList = {
     DemoDialog: DemoDialog,
   },
   modules: {
+    DemoRegisterLogin: DemoRegisterLogin,
     DemoAppSidebar: DemoAppSidebar,
   },
   static: {
