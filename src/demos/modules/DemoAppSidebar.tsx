@@ -110,6 +110,7 @@ export function DemoAppSidebar() {
     {
       label: "Sprache",
       icon: mdiTranslate,
+      hint: "Muss manuell aktiviert werden",
       options: (["DE", "EN"] as const).map((label) => ({
         label,
         get leading() {
