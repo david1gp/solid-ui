@@ -51,11 +51,6 @@ const DemoAppSidebar = lazy(async () => {
   return { default: c.DemoAppSidebar }
 })
 
-const DemoSidebar = lazy(async () => {
-  const c = await import("#src/demos/interactive/DemoSidebar.jsx")
-  return { default: c.DemoSidebar }
-})
-
 const DemoDetails = lazy(async () => {
   const c = await import("#src/demos/interactive/DemoDetails.jsx")
   return { default: c.DemoDetails }
@@ -221,7 +216,6 @@ export const demoList = {
     DemoInputS: DemoInputS,
   },
   interactive: {
-    DemoSidebar: DemoSidebar,
     DemoDetails: DemoDetails,
     DemoToaster: DemoToaster,
     DemoToggle: DemoToggle,

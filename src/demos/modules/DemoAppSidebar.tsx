@@ -592,7 +592,7 @@ export function DemoAppSidebar() {
                           <Button variant={"ghost"} class={"text-sm"} onClick={closePasswordForm}>
                             Abbrechen
                           </Button>
-                          <Button type={"submit"} variant={"filled"} class={"text-sm"}>
+                          <Button type={"submit"} variant={"contrast"} class={"text-sm"}>
                             Passwort aktualisieren
                           </Button>
                         </div>
@@ -680,7 +680,7 @@ function SaveBar(p: { dirty: boolean; onDiscard: () => void }) {
       <Button variant={"ghost"} class={"text-sm"} disabled={!p.dirty} onClick={() => p.onDiscard()}>
         Verwerfen
       </Button>
-      <Button type={"submit"} variant={"filled"} class={"text-sm"} disabled={!p.dirty}>
+      <Button type={"submit"} variant={"contrast"} class={"text-sm"} disabled={!p.dirty}>
         Speichern
       </Button>
     </div>

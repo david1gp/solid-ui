@@ -18,6 +18,11 @@ const prefix = ""
 /** Full-viewport demos rendered without the demo nav; they get a floating home button instead. */
 const fullscreenDemos = new Set(["DemoAppSidebar"])
 
+/** Display labels overriding the name derived from the demo key (prefix "Demo" stripped). */
+const demoDisplayNames: Record<string, string> = {
+  DemoAppSidebar: "Sidebar-Simple",
+}
+
 /** L0 — overview grid of every category and its components. */
 export function DemosOverview() {
   const categories: [string, Record<string, unknown>][] = objectEntries(demoList)
@@ -35,7 +40,9 @@ export function DemosOverview() {
           <For each={categories}>
             {([category, tree]) => {
               const categoryLinks = objectKeys(tree).map((compName) => `${prefix}/${category}/${compName}`)
-              const removePrefix = `${prefix}/${category}/Demo`
+              const categoryLabels = objectKeys(tree).map(
+                (compName) => demoDisplayNames[compName] ?? compName.replace(/^Demo/, ""),
+              )
               return (
                 <details class={"group"}>
                   <summary
@@ -55,7 +62,7 @@ export function DemosOverview() {
                       when={categoryLinks.length > 0}
                       fallback={<span class={"text-muted-foreground"}>No entries yet</span>}
                     >
-                      <BulletLinks internal removeUrlPrefix={removePrefix} urls={categoryLinks} />
+                      <BulletLinks internal display={categoryLabels} urls={categoryLinks} />
                     </Show>
                   </div>
                 </details>
