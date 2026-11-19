@@ -36,7 +36,7 @@ export function AppSettingsNav(p: AppSettingsNavProps) {
     <aside
       class={classArr(
         "flex flex-col shrink-0 self-stretch w-56 min-h-0 overflow-hidden", // layout: stretches to the flex row height
-        "bg-neutral-50 dark:bg-[#262626] border-r border-neutral-200 dark:border-white/10", // look
+        "bg-neutral-50 dark:bg-[#202124] border-r border-neutral-200 dark:border-white/10", // look
         "text-neutral-950 dark:text-neutral-50",
         p.class,
       )}

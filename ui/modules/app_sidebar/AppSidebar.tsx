@@ -83,7 +83,7 @@ export function AppSidebar(p: AppSidebarProps) {
       style={p.accentColor ? { "--app-sidebar-accent": p.accentColor } : undefined}
       class={classArr(
         "flex flex-col shrink-0 h-full overflow-hidden", // layout
-        "bg-neutral-50 dark:bg-[#262626]", // background
+        "bg-neutral-50 dark:bg-[#202124]", // background
         "border-r border-neutral-200 dark:border-white/10", // border
         "transition-[width]", // animation
         motion,
@@ -243,7 +243,7 @@ export function AppSidebar(p: AppSidebarProps) {
                 <Popover.Content
                   class={classArr(
                     "z-50 p-3 rounded-xl border border-neutral-200 dark:border-white/10 shadow-lg", // layout
-                    "bg-white dark:bg-[#262626]", // background
+                    "bg-white dark:bg-[#202124]", // background
                     menu.contentClass(),
                   )}
                 >
@@ -481,7 +481,7 @@ function NavItemButton(p: NavItemButtonProps) {
                     buttons[next]?.focus()
                   }}
                   class={classArr(
-                    "z-60 min-w-44 p-1 rounded-xl border border-neutral-200 dark:border-white/10 shadow-lg bg-white dark:bg-[#262626]",
+                    "z-60 min-w-44 p-1 rounded-xl border border-neutral-200 dark:border-white/10 shadow-lg bg-white dark:bg-[#202124]",
                     menu.contentClass(),
                   )}
                 >
@@ -744,7 +744,7 @@ function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string })
         <Popover.Content
           class={classArr(
             "z-50 flex flex-col gap-0.5 min-w-44 max-w-64 max-h-[70vh] overflow-y-auto px-2.5 py-1.5", // layout
-            "rounded-xl border border-neutral-200 dark:border-white/10 shadow-lg bg-white dark:bg-[#262626]", // look
+            "rounded-xl border border-neutral-200 dark:border-white/10 shadow-lg bg-white dark:bg-[#202124]", // look
             flyout.contentClass(),
           )}
         >

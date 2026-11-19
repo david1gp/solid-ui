@@ -42,7 +42,7 @@ export function AppSettingsSidebar(p: AppSettingsSidebarProps) {
         onKeyDown={(e) => e.key === "Escape" && p.open.set(false)}
         class={classArr(
           "absolute top-0 left-full z-40 h-full overflow-hidden", // layout
-          "bg-neutral-50 dark:bg-[#262626]", // background
+          "bg-neutral-50 dark:bg-[#202124]", // background
           "transition-[width,opacity]", // animation
           motion,
           isOpen() ? "w-80 opacity-100 border-r border-neutral-200 dark:border-white/10 shadow-xl" : "w-0 opacity-0",
