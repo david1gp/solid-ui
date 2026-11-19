@@ -13,7 +13,7 @@ export function TailwindIndicator() {
         "rounded-full p-3", // size
         "font-mono font-bold text-sm", // font
         "bg-zinc-100 dark:bg-zinc-900", // bg
-        "select-none print:hidden",
+        "select-none pointer-events-none print:hidden",
       )}
     >
       <div class="block sm:hidden">xs</div>
