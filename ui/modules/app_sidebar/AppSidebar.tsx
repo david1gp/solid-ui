@@ -36,6 +36,8 @@ const motion = "duration-500 ease-in-out motion-reduce:transition-none"
 export function AppSidebar(p: AppSidebarProps) {
   const isOpen = () => !p.collapsed.get()
   const [menuOpen, setMenuOpen] = createSignal(false)
+  // Drawer state keyed by group label, so it survives `groups` being re-created on every update.
+  const [drawerState, setDrawerState] = createSignal<Record<string, boolean>>({})
   // Resolve once so the menu keeps its state (e.g. selections) across close/reopen.
   const userMenu = children(() => p.userMenu)
   const fade = () => classArr("transition-opacity", motion, isOpen() ? "opacity-100" : "opacity-0")
@@ -77,7 +79,8 @@ export function AppSidebar(p: AppSidebarProps) {
       <nav class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2"}>
         <For each={p.groups}>
           {(group) => {
-            const [drawerOpen, setDrawerOpen] = createSignal(group.defaultOpen ?? false)
+            const drawerOpen = () => drawerState()[group.label] ?? group.defaultOpen ?? false
+            const setDrawerOpen = (open: boolean) => setDrawerState((s) => ({ ...s, [group.label]: open }))
             // In the icon rail the label is hidden, so items stay visible regardless of the drawer.
             const itemsVisible = () => !group.collapsible || drawerOpen() || !isOpen()
             const labelClass = "px-2 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"
