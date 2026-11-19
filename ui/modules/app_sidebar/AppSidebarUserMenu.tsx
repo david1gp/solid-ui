@@ -60,7 +60,7 @@ export function AppSidebarUserMenu(p: AppSidebarUserMenuProps) {
           onClick={() => p.onLogout?.()}
           class={classArr(
             "flex items-center gap-2 h-8 px-2 rounded-md cursor-pointer text-sm font-medium", // layout
-            "hover:bg-black/5 dark:hover:bg-white/10", // hover
+            "text-red-600 dark:text-red-400 hover:bg-black/5 dark:hover:bg-white/10", // color
           )}
         >
           <Icon path={mdiLogout} class={"size-4"} />
