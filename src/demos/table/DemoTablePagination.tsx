@@ -127,7 +127,7 @@ function TablePaginationInfo(p: TablePaginationProps & { texts: TablePaginationT
 }
 
 function L(p: MayHaveChildren): JSXElement {
-  return <span class={"text-gray-700 dark:text-gray-300"}>{p.children}</span>
+  return <span class={"text-gray-700 dark:text-neutral-300"}>{p.children}</span>
 }
 
 function B(p: MayHaveChildren): JSXElement {

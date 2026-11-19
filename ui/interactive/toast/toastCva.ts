@@ -10,22 +10,22 @@ const baseClasses = classArr(
 const variantClasses = {
   // filled grayscale
   filled: classArr(
-    "dark:text-slate-100", // text
+    "dark:text-neutral-100", // text
     "bg-white dark:bg-background", // bg
-    "hover:bg-slate-50 dark:hover:bg-slate-900", // bg hover
-    "border border-slate-200 dark:border-slate-700", // border
+    "hover:bg-slate-50 dark:hover:bg-neutral-900", // bg hover
+    "border border-slate-200 dark:border-neutral-700", // border
   ),
   subtle: classArr(
-    "text-slate-900 dark:text-slate-100", // text
-    "bg-slate-100 hover:bg-slate-200 dark:bg-slate-700", // bg
+    "text-slate-900 dark:text-neutral-100", // text
+    "bg-slate-100 hover:bg-slate-200 dark:bg-neutral-700", // bg
   ),
   default: classArr(
-    "text-white dark:text-slate-900 dark:hover:text-slate-900", // text
-    "bg-slate-900 dark:bg-slate-50", // bg
-    "hover:bg-slate-700 dark:hover:bg-slate-300", // bg hover
+    "text-white dark:text-neutral-900 dark:hover:text-neutral-900", // text
+    "bg-slate-900 dark:bg-neutral-50", // bg
+    "hover:bg-slate-700 dark:hover:bg-neutral-300", // bg hover
   ),
   // filled colors
-  primary: "bg-indigo-500 text-white hover:bg-indigo-700 dark:bg-slate-800 dark:border-slate-700",
+  primary: "bg-indigo-500 text-white hover:bg-indigo-700 dark:bg-neutral-800 dark:border-neutral-700",
   // filled colors status
   success: "bg-green-500 text-white border-green-500",
   error: "bg-red-600 text-white border-red-600 dark:border-red-600",

@@ -74,7 +74,7 @@ function ThemeControlsDemo() {
           </Button>
         ))}
       </div>
-      <div class="mt-4 p-4 border rounded-lg bg-gray-50 dark:bg-gray-900/20">
+      <div class="mt-4 p-4 border rounded-lg bg-gray-50 dark:bg-neutral-900/20">
         <p class="text-sm text-muted-foreground">Use Alt+S to cycle through themes, or Alt+D to go to demos.</p>
       </div>
     </div>

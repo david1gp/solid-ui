@@ -93,7 +93,7 @@ function _TablePaginationInfo2(p: AtomizedTablePaginationProps & { texts: TableP
 }
 
 function T({ children }: MayHaveChildren): JSXElement {
-  return <span class={"text-gray-700 dark:text-gray-300"}>{children}</span>
+  return <span class={"text-gray-700 dark:text-neutral-300"}>{children}</span>
 }
 
 function A({ children }: MayHaveChildren): JSXElement {

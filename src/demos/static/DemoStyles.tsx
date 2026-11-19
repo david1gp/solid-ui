@@ -71,8 +71,8 @@ export function DemoStyles() {
           >
             <h2 class="text-4xl font-bold mb-4">{style.name}</h2>
             <CardWrapper class="max-w-md text-center p-6">
-              <p class="text-gray-600 dark:text-gray-300">{style.description}</p>
-              <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">
+              <p class="text-gray-600 dark:text-neutral-300">{style.description}</p>
+              <p class="text-gray-500 dark:text-neutral-400 text-sm mt-2">
                 Sample text to test readability on this background pattern.
               </p>
             </CardWrapper>

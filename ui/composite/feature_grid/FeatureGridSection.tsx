@@ -46,7 +46,7 @@ export function FeatureGridSection(p: FeatureGridSectionProps) {
           >
             <Icon
               path="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-              class="size-6 fill-gray-500 dark:fill-gray-500"
+              class="size-6 fill-gray-500 dark:fill-neutral-500"
             />
           </a>
         </h2>
@@ -56,7 +56,7 @@ export function FeatureGridSection(p: FeatureGridSectionProps) {
 
       <div class={cn("grid md:grid-cols-2 lg:grid-cols-3 gap-8", "max-w-7xl mx-auto", s.gridClass)}>
         {s.features.map((feature) => (
-          <div class={cn("bg-white dark:bg-gray-800", "rounded-lg p-6", "shadow-md lg:shadow-lg", s.cardClass)}>
+          <div class={cn("bg-white dark:bg-neutral-800", "rounded-lg p-6", "shadow-md lg:shadow-lg", s.cardClass)}>
             <div class="flex items-center gap-3 mb-4">
               <Icon path={feature.icon} class="size-8" />
               <h3 class="text-xl font-semibold">{feature.title}</h3>

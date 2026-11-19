@@ -65,7 +65,7 @@ export function SearchBox(p: SearchBoxProps) {
 
   return (
     <div ref={containerRef} class="relative z-[120] isolate max-w-3xl mx-auto">
-      <div class="relative rounded-[22px] bg-white dark:bg-slate-700 p-5 backdrop-blur-2xl sm:p-7 border border-slate-200 dark:border-slate-600">
+      <div class="relative rounded-[22px] bg-white dark:bg-neutral-700 p-5 backdrop-blur-2xl sm:p-7 border border-slate-200 dark:border-neutral-600">
         <SearchInput searchQuerySignal={p.searchQuerySignal} placeholder={p.placeholder} />
 
         <FilterButtons
@@ -124,14 +124,14 @@ function SearchInput(p: { searchQuerySignal: SignalObject<string>; placeholder?:
       <div class="relative group">
         <Icon
           path={mdiMagnify}
-          class="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors"
+          class="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-neutral-500 group-focus-within:text-blue-500 transition-colors"
         />
         <input
           type="text"
           placeholder={p.placeholder ?? "Search..."}
           value={p.searchQuerySignal.get()}
           onInput={(e) => p.searchQuerySignal.set(e.currentTarget.value)}
-          class="w-full pl-11 pr-4 py-3.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white dark:focus:bg-slate-900 transition-all text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
+          class="w-full pl-11 pr-4 py-3.5 bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white dark:focus:bg-neutral-900 transition-all text-gray-900 dark:text-neutral-100 placeholder:text-gray-400 dark:placeholder:text-neutral-500"
         />
       </div>
     </div>
@@ -145,24 +145,24 @@ function FilterDropdown(p: { filter: SearchFilterEntry; isActive: boolean; onSel
   const isSelected = (option: string) => p.filter.valueSignal.get() === option
 
   return (
-    <div class="w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm">
+    <div class="w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-sm">
       <Show when={p.filter.isSearchable}>
-        <div class="sticky top-0 z-10 flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3">
-          <div class="shrink-0 text-sm font-semibold text-slate-900 dark:text-slate-100">{p.filter.label}</div>
+        <div class="sticky top-0 z-10 flex items-center gap-3 border-b border-slate-100 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 py-3">
+          <div class="shrink-0 text-sm font-semibold text-slate-900 dark:text-neutral-100">{p.filter.label}</div>
           <div class="flex-1">
             <input
               type="text"
               value={filterQuery()}
               onInput={(e) => setFilterQuery(e.currentTarget.value)}
               placeholder={`Search ${p.filter.label}`}
-              class="h-10 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-emerald-300 dark:focus:border-emerald-600 focus:bg-white dark:focus:bg-slate-900 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+              class="h-10 w-full rounded-xl border border-slate-200 dark:border-neutral-700 bg-slate-50 dark:bg-neutral-800 px-3 text-sm text-slate-900 dark:text-neutral-100 outline-none transition focus:border-emerald-300 dark:focus:border-emerald-600 focus:bg-white dark:focus:bg-neutral-900 placeholder:text-slate-400 dark:placeholder:text-neutral-500"
             />
           </div>
         </div>
       </Show>
 
       <Show when={!p.filter.isSearchable}>
-        <div class="border-b border-slate-100 dark:border-slate-800 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-100">
+        <div class="border-b border-slate-100 dark:border-neutral-800 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-neutral-100">
           {p.filter.label}
         </div>
       </Show>
@@ -184,10 +184,10 @@ function FilterDropdown(p: { filter: SearchFilterEntry; isActive: boolean; onSel
               aria-selected={isSelected(option)}
               onClick={() => p.onSelect(option)}
               class={cn(
-                "flex w-full items-center justify-between border-t border-slate-100 dark:border-slate-800 px-4 py-2.5 text-left text-sm transition-colors",
+                "flex w-full items-center justify-between border-t border-slate-100 dark:border-neutral-800 px-4 py-2.5 text-left text-sm transition-colors",
                 isSelected(option)
                   ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-900 dark:text-emerald-100"
-                  : "text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800",
+                  : "text-slate-700 dark:text-neutral-300 hover:bg-slate-50 dark:hover:bg-neutral-800",
               )}
             >
               <span>{getOptionText(p.filter, option)}</span>
@@ -201,7 +201,7 @@ function FilterDropdown(p: { filter: SearchFilterEntry; isActive: boolean; onSel
         </For>
 
         <Show when={filteredOptions().length === 0}>
-          <div class="px-4 py-4 text-sm text-slate-500 dark:text-slate-400">No results found.</div>
+          <div class="px-4 py-4 text-sm text-slate-500 dark:text-neutral-400">No results found.</div>
         </Show>
       </div>
     </div>

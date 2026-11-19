@@ -39,7 +39,7 @@ function MobileEntryOther({
 } & MayHaveChildren) {
   return (
     <span class={cn("flex flex-wrap justify-between", c?.entry)}>
-      <span class={cn("text-gray-600 dark:text-gray-400", c?.header)}>{`${headerName}:`}</span>
+      <span class={cn("text-gray-600 dark:text-neutral-400", c?.header)}>{`${headerName}:`}</span>
       <span class={cn("text-right", c?.other)}>{children}</span>
     </span>
   )

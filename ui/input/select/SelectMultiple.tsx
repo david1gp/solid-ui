@@ -234,7 +234,7 @@ function NoItems(p: NoItemsProps) {
         "py-2 px-3",
         // button
         "rounded-md ring-offset-background", // rounded, rings
-        "border border-slate-200 dark:border-slate-700 dark:hover:bg-slate-900", // border
+        "border border-slate-200 dark:border-neutral-700 dark:hover:bg-neutral-900", // border
         p.class,
       )}
     >

@@ -44,7 +44,7 @@ export function SwitchSingle(p: SwitchSingleProps) {
         "flex flex-wrap gap-2",
         // "grid gap-2 rounded-md p-2",
         filled && "bg-white dark:bg-background", // bg
-        filled && "border border-slate-200 dark:border-slate-700", // border
+        filled && "border border-slate-200 dark:border-neutral-700", // border
         p.class,
       )}
     >
@@ -89,7 +89,7 @@ function Option(p: Option2Props) {
         "cursor-pointer select-none",
         "rounded-sm",
         "px-3 py-2 text-center",
-        isChecked(p) ? "bg-blue-500 text-white" : "hover:bg-slate-50 dark:hover:bg-slate-900", // bg hover
+        isChecked(p) ? "bg-blue-500 text-white" : "hover:bg-slate-50 dark:hover:bg-neutral-900", // bg hover
         "flex gap-2",
         "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-blue-500",
         p.class,

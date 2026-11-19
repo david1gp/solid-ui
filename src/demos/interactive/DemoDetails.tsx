@@ -22,7 +22,7 @@ function BasicDetailsDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Basic Details</h2>
       <Details title="Basic Example">
-        <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+        <div class="p-6 border-t border-gray-200 dark:border-neutral-700">
           <p>This is the content that expands when you click the summary.</p>
           <p class="mt-2">You can put any content here, including lists, images, or other components.</p>
         </div>
@@ -36,7 +36,7 @@ function DetailsWithIconDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Details with Icon</h2>
       <Details icon={mdiInformation} title="Information Panel">
-        <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+        <div class="p-6 border-t border-gray-200 dark:border-neutral-700">
           <p>This details component includes an icon in the summary.</p>
           <p class="mt-2">Icons help users quickly identify the type of content.</p>
         </div>
@@ -50,7 +50,7 @@ function DetailsWithSubtitleDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Details with Subtitle</h2>
       <Details icon={mdiAccount} title="User Profile" subtitle="View and edit your account information">
-        <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+        <div class="p-6 border-t border-gray-200 dark:border-neutral-700">
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-medium mb-1">
@@ -84,7 +84,7 @@ function CustomSummaryDemo() {
           </div>
         }
       >
-        <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+        <div class="p-6 border-t border-gray-200 dark:border-neutral-700">
           <ul class="list-disc list-inside space-y-1">
             <li>First item</li>
             <li>Second item</li>
@@ -101,14 +101,14 @@ function NestedContentDemo() {
     <div>
       <h2 class="text-2xl font-bold mb-4">Nested Content</h2>
       <Details title="FAQ Section">
-        <div class="border-t border-gray-200 dark:border-gray-700">
+        <div class="border-t border-gray-200 dark:border-neutral-700">
           <Details title="What is this component?">
-            <div class="p-6 border-t border-gray-200 dark:border-gray-700 ml-4">
+            <div class="p-6 border-t border-gray-200 dark:border-neutral-700 ml-4">
               <p>The Details component is a collapsible container that uses the HTML &lt;details&gt; element.</p>
             </div>
           </Details>
           <Details title="How do I customize it?">
-            <div class="p-6 border-t border-gray-200 dark:border-gray-700 ml-4">
+            <div class="p-6 border-t border-gray-200 dark:border-neutral-700 ml-4">
               <p>You can pass props like title, subtitle, icon, and custom summary elements.</p>
             </div>
           </Details>

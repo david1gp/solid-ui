@@ -20,7 +20,7 @@ export function Details(p: DetailsProps) {
     <details
       class={cn(
         "group",
-        "bg-white dark:bg-gray-800",
+        "bg-white dark:bg-neutral-800",
         "rounded-lg border border-gray-200",
         "shadow-sm",
         "overflow-hidden",
@@ -31,7 +31,7 @@ export function Details(p: DetailsProps) {
         class={cn(
           "flex flex-col sm:flex-row items-center justify-between",
           "p-6",
-          "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors",
+          "cursor-pointer hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors",
           p.summaryClass,
         )}
       >
@@ -51,7 +51,11 @@ export function Details(p: DetailsProps) {
         <Show when={p.summaryEl}>{p.summaryEl}</Show>
         <Icon
           path={mdiChevronDown}
-          class={classArr("size-7", "text-gray-400 dark:text-gray-600", "transition-transform group-open:rotate-180")}
+          class={classArr(
+            "size-7",
+            "text-gray-400 dark:text-neutral-600",
+            "transition-transform group-open:rotate-180",
+          )}
         />
       </summary>
       {p.children}

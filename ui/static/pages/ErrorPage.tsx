@@ -23,7 +23,7 @@ export function ErrorPage(p: ErrorPageProps) {
       <div
         class={cn(
           "max-w-md w-full", // sizing
-          "bg-white dark:bg-gray-800", // bg
+          "bg-white dark:bg-neutral-800", // bg
           "rounded-lg shadow-md", // styling
           "p-8 text-center", // spacing + typography
         )}
@@ -49,7 +49,7 @@ export function ErrorPage(p: ErrorPageProps) {
         {p.subtitle && (
           <p
             class={cn(
-              "text-gray-600 dark:text-gray-300", // color
+              "text-gray-600 dark:text-neutral-300", // color
               "mt-2", // spacing
               p.subtitleClass,
             )}

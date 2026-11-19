@@ -18,13 +18,13 @@ export interface ConsentCategoryCardProps {
 /** Cookie consent category card with toggle switch. */
 export function ConsentCategoryCard(p: ConsentCategoryCardProps) {
   return (
-    <section class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/50">
+    <section class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-neutral-700 dark:bg-neutral-800/50">
       <div class="flex items-start justify-between gap-4">
         <div>
           <h3 class="font-semibold">{p.title}</h3>
-          <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{p.description}</p>
-          <p class="mt-2 text-sm text-slate-500 dark:text-slate-500">
-            <span class="font-medium text-slate-700 dark:text-slate-300">{p.servicesLabel}</span> {p.tools}
+          <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-neutral-400">{p.description}</p>
+          <p class="mt-2 text-sm text-slate-500 dark:text-neutral-500">
+            <span class="font-medium text-slate-700 dark:text-neutral-300">{p.servicesLabel}</span> {p.tools}
           </p>
         </div>
         <ConsentSwitch

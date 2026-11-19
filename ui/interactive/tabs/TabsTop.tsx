@@ -42,7 +42,7 @@ export function TabsTop(p: TabsTopProps) {
           "flex flex-wrap gap-2",
           // "grid gap-2 rounded-md p-2",
           "bg-white dark:bg-background", // bg
-          "border border-slate-200 dark:border-slate-700", // border
+          "border border-slate-200 dark:border-neutral-700", // border
           p.class,
         )}
       >
@@ -111,7 +111,7 @@ function TabOption(p: TabOptionProps): JSXElement {
         "cursor-pointer select-none",
         "rounded-sm",
         "px-3 py-2 text-center",
-        isSelected(p) ? "bg-blue-500 text-white" : "hover:bg-slate-50 dark:hover:bg-slate-900", // bg hover
+        isSelected(p) ? "bg-blue-500 text-white" : "hover:bg-slate-50 dark:hover:bg-neutral-900", // bg hover
         "flex gap-2",
         p.class,
       )}

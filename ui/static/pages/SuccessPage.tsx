@@ -19,7 +19,7 @@ export interface SuccessPageProps extends MayHaveClass, MayHaveInnerClass, MayHa
 
 const classesPageWrapperInner = classArr(
   "max-w-md w-full", // sizing
-  "bg-white dark:bg-gray-800", // background
+  "bg-white dark:bg-neutral-800", // background
   "rounded-lg shadow-md", // styling
   "p-8", // spacing
 )
@@ -54,7 +54,7 @@ export function SuccessPage(p: SuccessPageProps) {
         <Show when={p.subtitle}>
           <p
             class={cn(
-              "text-gray-600 dark:text-gray-300", // text color
+              "text-gray-600 dark:text-neutral-300", // text color
               "mt-2", // spacing
               "text-center", // text
               p.subtitleClass,

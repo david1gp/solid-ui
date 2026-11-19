@@ -54,7 +54,7 @@ function SeparatorWithTextDemo() {
         </div>
 
         <SeparatorWithText>
-          <span class="px-4 text-sm font-medium text-gray-500 dark:text-gray-400">Continue Reading</span>
+          <span class="px-4 text-sm font-medium text-gray-500 dark:text-neutral-400">Continue Reading</span>
         </SeparatorWithText>
 
         <div class="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
@@ -95,9 +95,9 @@ function SeparatorStylesDemo() {
         <div>
           <h3 class="text-lg font-semibold mb-2">Vertical Separator</h3>
           <div class="flex items-center gap-4">
-            <div class="p-2 bg-gray-100 dark:bg-gray-800 rounded">Left</div>
-            <div class="h-8 w-0.5 bg-gray-300 dark:bg-gray-600" />
-            <div class="p-2 bg-gray-100 dark:bg-gray-800 rounded">Right</div>
+            <div class="p-2 bg-gray-100 dark:bg-neutral-800 rounded">Left</div>
+            <div class="h-8 w-0.5 bg-gray-300 dark:bg-neutral-600" />
+            <div class="p-2 bg-gray-100 dark:bg-neutral-800 rounded">Right</div>
           </div>
         </div>
 
@@ -157,7 +157,7 @@ function SeparatorInFormsDemo() {
         </div>
 
         <SeparatorWithText>
-          <span class="px-4 text-sm font-medium text-gray-500 dark:text-gray-400">Optional</span>
+          <span class="px-4 text-sm font-medium text-gray-500 dark:text-neutral-400">Optional</span>
         </SeparatorWithText>
 
         <div class="space-y-4">

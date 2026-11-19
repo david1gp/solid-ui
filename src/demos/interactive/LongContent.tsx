@@ -38,15 +38,15 @@ export function LongContent() {
           accordance with this policy.
         </p>
         <div class="mt-4 space-y-3">
-          <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div class="p-4 bg-gray-50 dark:bg-neutral-800 rounded-lg">
             <h4 class="font-medium mb-2">Information We Collect</h4>
             <p class="text-sm text-muted-foreground">Personal information, usage data, and device information</p>
           </div>
-          <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div class="p-4 bg-gray-50 dark:bg-neutral-800 rounded-lg">
             <h4 class="font-medium mb-2">How We Use Information</h4>
             <p class="text-sm text-muted-foreground">To provide, maintain, and improve our services</p>
           </div>
-          <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div class="p-4 bg-gray-50 dark:bg-neutral-800 rounded-lg">
             <h4 class="font-medium mb-2">Data Protection</h4>
             <p class="text-sm text-muted-foreground">Industry-standard encryption and security measures</p>
           </div>

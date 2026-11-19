@@ -298,11 +298,11 @@ export function DemoSearchBox() {
   const getCategoryEmoji = (name: string) => categories.find((c) => c.name === name)?.emoji ?? ""
 
   return (
-    <div class="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 p-8">
+    <div class="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 dark:from-neutral-800 dark:to-neutral-900 p-8">
       <div class="max-w-3xl mx-auto">
         <div class="mb-8 text-center">
-          <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">SearchBox Demo</h1>
-          <p class="text-slate-600 dark:text-slate-400">A generic search component with filterable dropdowns</p>
+          <h1 class="text-3xl font-bold text-slate-900 dark:text-neutral-100 mb-2">SearchBox Demo</h1>
+          <p class="text-slate-600 dark:text-neutral-400">A generic search component with filterable dropdowns</p>
         </div>
 
         <SearchBox
@@ -316,42 +316,42 @@ export function DemoSearchBox() {
 
         <div id="results" class="mt-8">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-neutral-100">
               Results ({filteredGroups().length})
             </h2>
-            <div class="text-sm text-slate-500 dark:text-slate-400">
-              City: <span class="font-medium text-slate-700 dark:text-slate-300">{citySignal.get() || "All"}</span> |
+            <div class="text-sm text-slate-500 dark:text-neutral-400">
+              City: <span class="font-medium text-slate-700 dark:text-neutral-300">{citySignal.get() || "All"}</span> |
               Category:{" "}
-              <span class="font-medium text-slate-700 dark:text-slate-300">{categorySignal.get() || "All"}</span> |
-              Sort: <span class="font-medium text-slate-700 dark:text-slate-300">{sortSignal.get() || "Newest"}</span>
+              <span class="font-medium text-slate-700 dark:text-neutral-300">{categorySignal.get() || "All"}</span> |
+              Sort: <span class="font-medium text-slate-700 dark:text-neutral-300">{sortSignal.get() || "Newest"}</span>
             </div>
           </div>
 
           <div class="space-y-3">
             {filteredGroups().length === 0 ? (
-              <div class="p-8 text-center bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
-                <p class="text-slate-500 dark:text-slate-400">No groups found.</p>
+              <div class="p-8 text-center bg-white dark:bg-neutral-800 rounded-xl border border-slate-200 dark:border-neutral-700">
+                <p class="text-slate-500 dark:text-neutral-400">No groups found.</p>
               </div>
             ) : (
               filteredGroups().map((group) => (
                 <div
                   data-id={group.id}
-                  class="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm"
+                  class="bg-white dark:bg-neutral-800 rounded-xl p-4 border border-slate-200 dark:border-neutral-700 shadow-sm"
                 >
                   <div class="flex items-start justify-between">
                     <div class="flex-1">
                       <div class="flex items-center gap-2 mb-1">
-                        <h3 class="font-semibold text-slate-900 dark:text-slate-100">{group.name}</h3>
+                        <h3 class="font-semibold text-slate-900 dark:text-neutral-100">{group.name}</h3>
                         <span class="text-sm">{getCategoryEmoji(group.category)}</span>
                       </div>
-                      <div class="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+                      <div class="flex items-center gap-4 text-sm text-slate-500 dark:text-neutral-400">
                         <span>{group.city}</span>
                         <span>{group.category}</span>
                       </div>
                     </div>
                     <div class="text-right text-sm">
-                      <div class="text-slate-900 dark:text-slate-100 font-medium">{group.members} members</div>
-                      <div class="text-slate-500 dark:text-slate-400">Activity: {group.activity}%</div>
+                      <div class="text-slate-900 dark:text-neutral-100 font-medium">{group.members} members</div>
+                      <div class="text-slate-500 dark:text-neutral-400">Activity: {group.activity}%</div>
                     </div>
                   </div>
                 </div>

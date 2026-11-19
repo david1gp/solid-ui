@@ -30,7 +30,7 @@ export function NavDemo(p: DemoNavProps) {
   return (
     <header
       class={
-        "w-full bg-gray-100 dark:bg-background [&_a:hover]:bg-gray-200 [&_button:hover]:bg-gray-200 dark:[&_a:hover]:bg-slate-800 dark:[&_button:hover]:bg-slate-800"
+        "w-full bg-gray-100 dark:bg-background [&_a:hover]:bg-gray-200 [&_button:hover]:bg-gray-200 dark:[&_a:hover]:bg-neutral-800 dark:[&_button:hover]:bg-neutral-800"
       }
     >
       <nav class={cn("flex flex-wrap items-center justify-between py-1 gap-1 w-full", s.class)} {...rest}>

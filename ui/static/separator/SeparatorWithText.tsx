@@ -13,5 +13,5 @@ export function SeparatorWithText(p: MayHaveChildrenAndClass) {
 }
 
 function Line() {
-  return <div class="flex-1 h-0.5 bg-gray-400 dark:bg-gray-600 mx-4" />
+  return <div class="flex-1 h-0.5 bg-gray-400 dark:bg-neutral-600 mx-4" />
 }

@@ -7,8 +7,8 @@ export const classesDialogContent = [
   "max-h-[95vh]", // max height to allow scrolling
   "overflow-auto", // enable scrolling when content overflows
   "p-6", // spacing
-  "bg-white dark:bg-gray-900", // background
-  "border border-gray-200 dark:border-gray-700", // border
+  "bg-white dark:bg-neutral-900", // background
+  "border border-gray-200 dark:border-neutral-700", // border
   "rounded-lg shadow-lg", // border/shadow
   "data-open:animate-in data-open:fade-in-50% data-open:zoom-in-95% data-closed:animate-out data-closed:fade-out-50% data-closed:zoom-out-95%", // animations
 ]

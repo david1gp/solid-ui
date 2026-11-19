@@ -11,7 +11,7 @@ export const CodeBlock: Component<CodeBlockProps> = (p) => {
   const [s, rest] = splitProps(p, ["class", "data"])
   return (
     <pre
-      class={cn("p-2 rounded-lg text-sm whitespace-pre-wrap wrap-anywhere bg-slate-100 dark:bg-slate-900", s.class)}
+      class={cn("p-2 rounded-lg text-sm whitespace-pre-wrap wrap-anywhere bg-slate-100 dark:bg-neutral-900", s.class)}
       {...rest}
     >
       {getCodeContent(s.data)}

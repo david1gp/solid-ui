@@ -29,7 +29,7 @@ export interface DetailsDialogProps extends MayHaveClass {
 
 const detailsClasses = [
   "group",
-  "bg-white dark:bg-gray-800",
+  "bg-white dark:bg-neutral-800",
   "rounded-lg border border-gray-200",
   "shadow-sm",
   "overflow-hidden",
@@ -55,7 +55,7 @@ export function DetailsDialog(p: DetailsDialogProps) {
       {p.summaryEl ? p.summaryEl() : <h3 class="text-xl font-semibold">{p.title}</h3>}
       <Icon
         path={mdiChevronDown}
-        class="size-7 text-gray-400 transition-transform group-open:rotate-180 group-data-open:rotate-180 dark:text-gray-600"
+        class="size-7 text-gray-400 transition-transform group-open:rotate-180 group-data-open:rotate-180 dark:text-neutral-600"
       />
     </>
   )
@@ -66,11 +66,11 @@ export function DetailsDialog(p: DetailsDialogProps) {
       fallback={
         <details class={cn(detailsClasses, p.class)}>
           <summary
-            class={cn(summaryClasses, "hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors", p.summaryClass)}
+            class={cn(summaryClasses, "hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors", p.summaryClass)}
           >
             {face()}
           </summary>
-          <div class="p-6 border-t border-gray-200 dark:border-gray-700">{p.content()}</div>
+          <div class="p-6 border-t border-gray-200 dark:border-neutral-700">{p.content()}</div>
         </details>
       }
     >
@@ -80,7 +80,7 @@ export function DetailsDialog(p: DetailsDialogProps) {
             "group",
             detailsClasses,
             summaryClasses,
-            "hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors",
+            "hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors",
             p.summaryClass,
             p.class,
           )}

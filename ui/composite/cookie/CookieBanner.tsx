@@ -153,7 +153,7 @@ export function CookieBanner(p: CookieBannerProps) {
       <Dialog.Portal>
         <Dialog.Overlay class={classesDialogOverlayMerge("z-80 bg-black/30 backdrop-blur-xs")} />
         <Dialog.Content class="fixed inset-0 z-80 flex items-end justify-center p-3 focus:outline-none sm:p-6">
-          <div class="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white text-slate-900 shadow-2xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+          <div class="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white text-slate-900 shadow-2xl dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100">
             <div class="max-h-[calc(100svh-1.5rem)] overflow-y-auto">
               <div class="p-5 sm:p-6">
                 <div class="flex items-start justify-between gap-3">
@@ -163,7 +163,7 @@ export function CookieBanner(p: CookieBannerProps) {
                         {labels().settingsTitle}
                       </Show>
                     </Dialog.Label>
-                    <Dialog.Description class="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base dark:text-slate-400">
+                    <Dialog.Description class="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base dark:text-neutral-400">
                       <Show when={showSettings()} fallback={labels().defaultDescription}>
                         {labels().settingsDescription}
                       </Show>
@@ -204,7 +204,7 @@ export function CookieBanner(p: CookieBannerProps) {
                 </Show>
               </div>
 
-              <div class="sticky bottom-0 border-t border-slate-200 bg-white/95 p-4 backdrop-blur sm:p-5 dark:border-slate-700 dark:bg-slate-900/95">
+              <div class="sticky bottom-0 border-t border-slate-200 bg-white/95 p-4 backdrop-blur sm:p-5 dark:border-neutral-700 dark:bg-neutral-900/95">
                 <div class="grid gap-2 sm:grid-cols-3">
                   <Button
                     variant={buttonVariant.outline}

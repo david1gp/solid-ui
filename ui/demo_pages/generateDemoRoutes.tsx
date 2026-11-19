@@ -70,7 +70,7 @@ function getDemosL1(demoList: DemoListType, prefix: string, Nav: (p: DemoNavData
           <div
             class={classArr(
               "flex flex-col items-center justify-center", // layout
-              "bg-gray-50 dark:bg-gray-900", // background
+              "bg-gray-50 dark:bg-neutral-900", // background
               "p-4", // spacing
             )}
           >
@@ -107,7 +107,7 @@ function getDemosL0(
             <div
               class={classArr(
                 "flex flex-col items-center justify-center", // layout
-                "bg-gray-50 dark:bg-gray-700", // background
+                "bg-gray-50 dark:bg-neutral-700", // background
                 "p-4", // spacing
               )}
             >

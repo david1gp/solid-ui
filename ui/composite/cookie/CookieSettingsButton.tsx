@@ -18,7 +18,7 @@ export function CookieSettingsButton(p: CookieSettingsButtonProps) {
       type="button"
       onClick={() => openCookiePreferences(resolveConsentConfig(p.consentConfig))}
       class={cn(
-        "cursor-pointer text-sm text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100",
+        "cursor-pointer text-sm text-slate-500 transition-colors hover:text-slate-900 dark:text-neutral-400 dark:hover:text-neutral-100",
         p.class,
       )}
     >

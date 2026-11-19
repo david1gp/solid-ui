@@ -53,12 +53,12 @@
   }
 
   .dark {
-    --background: oklch(0.2 0.04 262); /* dark navy blue instead of black */
+    --background: #222326; /* neutral dark gray, no navy tint */
     --foreground: oklch(0.985 0 0);
-    --muted: oklch(0.27 0.04 262);
-    --muted-foreground: oklch(82.812% 0.02718 104.695);
-    --border: oklch(0.32 0.035 262);
-    --input: oklch(0.37 0.035 262);
+    --muted: #292a2d;
+    --muted-foreground: oklch(0.83 0 0);
+    --border: oklch(1 0 0 / 0.1);
+    --input: oklch(1 0 0 / 0.15);
   }
 
   /* Tailwind v4 soft-border fix: default border color is currentColor */
