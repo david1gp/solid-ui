@@ -19,7 +19,6 @@ import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { toastDismiss } from "#ui/interactive/toast/toastDismiss.js"
 import { AppSettingsNav } from "#ui/modules/app_sidebar/AppSettingsNav.jsx"
 import { AppSettingsPanel } from "#ui/modules/app_sidebar/AppSettingsPanel.jsx"
-import { AppSettingsProfileHeader } from "#ui/modules/app_sidebar/AppSettingsProfileHeader.jsx"
 import { AppSettingsSidebar } from "#ui/modules/app_sidebar/AppSettingsSidebar.jsx"
 import { AppSidebar } from "#ui/modules/app_sidebar/AppSidebar.jsx"
 import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
@@ -311,13 +310,6 @@ export function DemoAppSidebar() {
             </Match>
             <Match when={settingsPage.get() === "personal"}>
               <div class={"flex flex-col gap-3 max-w-2xl"}>
-                <AppSettingsProfileHeader
-                  name={fullName()}
-                  email={email.get()}
-                  userAvatar={<AppSidebarCssAvatar />}
-                  banner={<AppSidebarCssBanner accentColor={accentColor.get()} />}
-                  hideIdentity
-                />
                 <SettingsCard>
                   <div class={"grid gap-4 sm:grid-cols-2"}>
                     <Field label={"Vorname"} for={"settings-first-name"}>
