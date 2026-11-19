@@ -113,8 +113,8 @@ export function DemoAppSidebar() {
     },
   ]
   return (
-    <div class={"flex h-[640px] w-full overflow-hidden bg-background"}>
-      <div class={"relative flex shrink-0 h-full"}>
+    <div class={"flex flex-1 h-0 min-h-[480px] w-full overflow-hidden bg-background"}>
+      <div class={"relative flex shrink-0"}>
         <AppSidebar
           collapsed={collapsed}
           logo={
