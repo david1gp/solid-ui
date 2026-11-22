@@ -1,0 +1,13 @@
+diff --git a/dist/index.jsx b/dist/index.jsx
+index dd48c8586224fc6850c7c5d339aa9b8d74c622a5..f05799b7e0a201ff5589ffcd3310a70f7f83528f 100644
+--- a/dist/index.jsx
++++ b/dist/index.jsx
+@@ -531,7 +531,7 @@ var DialogTrigger = (props) => {
+     "ref",
+     "onClick"
+   );
+-  const context = useInternalDialogContext(props.contextId);
++  const context = useInternalDialogContext(untrack(() => props.contextId));
+   const onClick = (e) => {
+     !callEventHandler2(props.onClick, e) && context.setOpen((open) => !open);
+   };

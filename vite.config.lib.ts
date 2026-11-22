@@ -37,9 +37,8 @@ export default defineConfig({
     rollupOptions: {
       // Externalize dependencies that shouldn't be bundled
       external: [
-        "solid-js",
-        "solid-js/web",
-        "solid-js/store",
+        /^solid-js(?:\/|$)/,
+        /^@solidjs\/web(?:\/|$)/,
         "@adaptive-ds/utils",
         /^@adaptive-ds\/mdi(?:\/|$)/,
         "@solid-primitives/keyed",

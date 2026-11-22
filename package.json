@@ -7,7 +7,9 @@
     "build:site": "bun run vite:build",
     "build:lib": "clear ; rm -rf ./dist ; vite build --config vite.config.lib.ts",
     "ts:build": "rm -rf ./export ; tsc -p ./tsconfig.lib.json",
-    "compile": "bun check",
+    "compile": "bun run check",
+    "check": "tsc --noEmit -p . && biome format src ui test package.json tsconfig.json tsconfig.lib.json biome.json && bun run test",
+    "test": "bun test --isolate --conditions=browser --conditions=development ./test",
     "vite:dev": "nice -5 vite dev --debug hmr",
     "vite:build": "nice -15 vite build",
     "vite:deploy": "bun run vite:build && bun run upload && bun run tag:deployed",
@@ -22,7 +24,7 @@
     "generateIndexAgents": "bun run ./src/app/generateIndexAgents.cli.ts",
     "update": "nice -15 bun x npm-check-updates -u && bun i",
     "update:commit": "bun x npm-check-updates -u && bun i && git add package.json && bun check && git commit -m \"chore(deps): update dependencies\" && git push",
-    "format": "biome format --write src ui package.json tsconfig.json tsconfig.lib.json biome.json",
+    "format": "biome format --write src ui test package.json tsconfig.json tsconfig.lib.json biome.json",
     "clean": "rm -rf ./dist",
     "reset": "rm -rf ./node_modules"
   },
@@ -107,6 +109,10 @@
     "solid-js": "^2.0.1"
   },
   "patchedDependencies": {
-    "@corvu-next/focus-trap@0.1.4": "patches/@corvu-next%2Ffocus-trap@0.1.4.patch"
+    "@corvu-next/focus-trap@0.1.4": "patches/@corvu-next%2Ffocus-trap@0.1.4.patch",
+    "@corvu-next/utils@0.1.4": "patches/@corvu-next%2Futils@0.1.4.patch",
+    "@corvu-next/popover@0.1.5": "patches/@corvu-next%2Fpopover@0.1.5.patch",
+    "@tanstack/router-core@1.171.22": "patches/@tanstack%2Frouter-core@1.171.22.patch",
+    "@corvu-next/dialog@0.1.4": "patches/@corvu-next%2Fdialog@0.1.4.patch"
   }
 }
