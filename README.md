@@ -4,7 +4,7 @@ A library of reusable UI components for Solid.js projects. Built with TypeScript
 
 [![npm version](https://badge.fury.io/js/%40adaptive-sm%2Fsolid-ui.svg)](https://badge.fury.io/js/%40adaptive-sm%2Fsolid-ui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Solid.js](https://img.shields.io/badge/Solid.js-1.9.9-blue.svg)](https://www.solidjs.com/)
+[![Solid.js](https://img.shields.io/badge/Solid.js-2.x-blue.svg)](https://www.solidjs.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.13-blueviolet.svg)](https://tailwindcss.com/)
 
 Quick link
@@ -41,11 +41,9 @@ This is the recommended setup for two reasons:
 1. Some bundlers can end up pulling in duplicate `solid-js` instances when components are imported directly from `node_modules`.
 2. Keeping the components local makes them easy to tweak, restyle, and overwrite as your design evolves, in the same spirit as `shadcn/ui`.
 
-Ensure you have the peer dependencies installed:
+This version of the source kit requires **Solid 2**. If your app is on Solid 1, keep your existing copy of `ui/` until you migrate the app. Use `@solidjs/web` as `jsxImportSource` and a Solid 2 compiler (for Vite, `@solidjs/vite-plugin`).
 
-```bash
-bun add solid-js cn valibot dayjs @solid-primitives/keyed @solid-primitives/scheduled @adaptive-ds/mdi
-```
+Install the peer dependencies for the components you use; see [`package.json`](package.json) for the version ranges. The Corvu-backed controls temporarily use `@corvu-next/dialog` and `@corvu-next/popover`. Bun apps that copy those controls should also copy the `@corvu-next/*` patches in [`patches/`](patches/) and the corresponding `patchedDependencies` and `solid-js` override from this package. Those patches repair focus restore and compatibility with the Solid 2 runtime.
 
 ## Setup: Tailwind CSS Configuration
 
@@ -175,9 +173,9 @@ For detailed API and props, see the [documentation](https://github.com/david1gp/
 
 ### Scripts
 
-- `bun run dev`: Start development server (Rsbuild).
-- `bun run build`: Build for production.
-- `bun run vite:dev`: Alternative dev server with Vite.
+- `bun run dev`: Start the Vite/TanStack Start development server.
+- `bun run build`: Build and prerender the catalog for production.
+- `bun run check`: Type-check, check formatting, and run unit tests.
 - `bun run generateDemoList`: Generate demo list for components.
 - `bun run publish`: Publish to npm.
 
