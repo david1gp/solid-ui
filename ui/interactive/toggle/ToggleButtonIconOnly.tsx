@@ -43,7 +43,16 @@ export const ToggleButtonIconOnly: Component<ToggleButtonIconOnlyProps> = (p) =>
   )
   return (
     <button
-      class={buttonCvaIconOnly(p.variant, isLoading(p), isDisabled(p), classesButtonClickAnimation, p.class)}
+      class={[
+        buttonCvaIconOnly(
+          p.variant,
+          isLoading(p),
+          isDisabled(p),
+          classesButtonClickAnimation,
+          typeof p.class === "string" ? p.class : undefined,
+        ),
+        typeof p.class === "string" ? undefined : p.class,
+      ]}
       title={p.title}
       type={p.type ?? "button"}
       aria-pressed={p.pressedSignal.get() ? "true" : "false"}

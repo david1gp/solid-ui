@@ -10,5 +10,13 @@ export interface BadgeProps extends ComponentProps<"div"> {
 /** Small styled badge label with variant. */
 export const Badge: Component<BadgeProps> = (p) => {
   const rest = omit(p, "variant", "class")
-  return <div class={badgeCva1(p.variant, p.class)} {...rest} />
+  return (
+    <div
+      class={[
+        badgeCva1(p.variant, typeof p.class === "string" ? p.class : undefined),
+        typeof p.class === "string" ? undefined : p.class,
+      ]}
+      {...rest}
+    />
+  )
 }

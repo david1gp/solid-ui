@@ -1,4 +1,4 @@
-import { type JSX } from "@solidjs/web";
+import { type JSX } from "@solidjs/web"
 
 export const stylesBgGrid = {
   "background-image": `linear-gradient(to right, #aeaeae69 1px, transparent 1px),

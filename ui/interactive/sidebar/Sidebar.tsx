@@ -26,11 +26,11 @@ export interface SidebarProps extends MayHaveClass {
 export function Sidebar(p: SidebarProps) {
   const rest = omit(p, "state", "defaultWidth", "debounceMs", "class", "desktopChildren", "mobileChildren")
 
+  const checkMobile = debounce(
+    () => p.state.isMobile.set(window.innerWidth < (p.defaultWidth ?? 768)),
+    p.debounceMs ?? 100,
+  )
   onSettled(() => {
-    const checkMobile = debounce(
-      () => p.state.isMobile.set(window.innerWidth < (p.defaultWidth ?? 768)),
-      p.debounceMs ?? 100,
-    )
     checkMobile()
     window.addEventListener("resize", checkMobile)
     return () => window.removeEventListener("resize", checkMobile)

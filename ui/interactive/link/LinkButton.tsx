@@ -22,11 +22,14 @@ function ButtonAnchor(p: ButtonAnchorProps) {
   )
   return (
     <a
-      class={buttonCva2(
-        p.variant,
-        "break-all", // line breaks for long links
-        p.class,
-      )}
+      class={[
+        buttonCva2(
+          p.variant,
+          "break-all", // line breaks for long links
+          typeof p.class === "string" ? p.class : undefined,
+        ),
+        typeof p.class === "string" ? undefined : p.class,
+      ]}
       target={p.newTab ? "_blank" : p.target}
       rel={p.newTab ? "noopener noreferrer" : p.rel}
       {...rest}

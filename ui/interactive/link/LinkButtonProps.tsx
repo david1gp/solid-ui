@@ -1,6 +1,6 @@
 import type { ButtonCvaProps } from "#ui/interactive/button/buttonCva.js"
 import type { MayHaveIsLoading } from "#ui/utils/MayHaveIsLoading.js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 /**
  * Style and content props for the anchor wrapped by `createLink` to build the

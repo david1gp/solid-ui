@@ -12,7 +12,15 @@ export const Button: Component<ButtonProps> = (p) => {
   const rest = omit(p, "variant", "class", "type")
   return (
     <button
-      class={buttonCva2(p.variant, classesButtonClickAnimation, p.disabled && classesDisabledDirectly, p.class)}
+      class={[
+        buttonCva2(
+          p.variant,
+          classesButtonClickAnimation,
+          p.disabled && classesDisabledDirectly,
+          typeof p.class === "string" ? p.class : undefined,
+        ),
+        typeof p.class === "string" ? undefined : p.class,
+      ]}
       type={p.type ?? "button"}
       {...rest}
     />
