@@ -1,4 +1,4 @@
-import { createSignal, type JSXElement, Show } from "solid-js"
+import { createSignal, type Element as JSXElement, Show } from "solid-js"
 
 /** Shared avatar: custom content takes precedence over a URL, then initials. */
 export function AppSidebarAvatar(p: {

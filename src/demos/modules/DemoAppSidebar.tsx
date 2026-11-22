@@ -18,7 +18,7 @@ import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
 import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
-import { createRoot, createSignal, For, type JSXElement, Match, onMount, Show, Switch } from "solid-js"
+import { createRoot, createSignal, For, type Element as JSXElement, Match, onSettled, Show, Switch } from "solid-js"
 import { Input } from "#ui/input/input/Input.jsx"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
@@ -65,7 +65,7 @@ const accentColors = [
 
 export function DemoAppSidebar() {
   // Fullscreen demo has no nav ThemeButton, so load the stored theme here for the tiles' selection.
-  onMount(themeInit)
+  onSettled(themeInit)
   const collapsed = createSignalObject(false)
   const accentColor = createSignalObject(accentColors[0]!.color)
   const language = createSignalObject("DE")

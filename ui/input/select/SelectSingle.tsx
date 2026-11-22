@@ -1,7 +1,7 @@
 import { mdiCheck } from "@adaptive-ds/mdi/mdiCheck.js"
-import Popover from "@corvu/popover"
+import Popover from "@corvu-next/popover"
 import { cn } from "cn"
-import { For, type JSX, Show } from "solid-js"
+import { For, Show } from "solid-js"
 import type { SelectSingleEntry, SelectSingleGroupEntry } from "#ui/input/select/SelectSingleEntry.js"
 import type { SelectSingleTexts } from "#ui/input/select/SelectSingleTexts.js"
 import { selectSingleTextDefault } from "#ui/input/select/SelectSingleTexts.js"
@@ -19,6 +19,7 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled.js"
 import type { MayHaveId } from "#ui/utils/MayHaveId.js"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
+import { type JSX } from "@solidjs/web";
 
 export interface SelectSingleProps
   extends HasValueSignalString,

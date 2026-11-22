@@ -3,7 +3,7 @@ import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { Key } from "@solid-primitives/keyed"
 import { cn } from "cn"
-import { For, mergeProps } from "solid-js"
+import { For, merge } from "solid-js"
 import type { SelectMultipleTexts } from "#ui/input/select/SelectMultipleTexts.js"
 import { selectMultipleTextDefault } from "#ui/input/select/SelectMultipleTexts.js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
@@ -48,7 +48,7 @@ export function SelectMultiple(p: SelectMultipleProps) {
   const texts = p.texts ?? selectMultipleTextDefault
 
   const buttonClass = cn(p.addEntryClass, p.buttonProps.class)
-  const buttonProps = mergeProps(p.buttonProps, {
+  const buttonProps = merge(p.buttonProps, {
     icon: mdiPlus,
     children: p.textAddEntry ?? texts.addEntry,
     class: buttonClass,

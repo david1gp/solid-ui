@@ -1,5 +1,5 @@
 import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
-import type { JSXElement } from "solid-js"
+import type { Element as JSXElement } from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"

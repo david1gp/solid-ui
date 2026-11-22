@@ -4,20 +4,17 @@ import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { mdiDotsHorizontal } from "@adaptive-ds/mdi/mdiDotsHorizontal.js"
 import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
-import Popover from "@corvu/popover"
+import Popover from "@corvu-next/popover"
 import { Key } from "@solid-primitives/keyed"
 import {
-  type ComponentProps,
   children,
   createEffect,
   createMemo,
   createSignal,
-  type JSXElement,
+  type Element as JSXElement,
   onCleanup,
   Show,
-  splitProps,
-  untrack,
-} from "solid-js"
+  untrack, omit } from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
 import { AppSidebarAccentBar } from "#ui/modules/app_sidebar/AppSidebarAccentBar.jsx"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
@@ -30,6 +27,7 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { type ComponentProps } from "@solidjs/web";
 
 export interface AppSidebarProps extends MayHaveClass {
   /** true = icon-only rail. */
@@ -842,23 +840,14 @@ type UserButtonProps = Pick<
 
 /** Footer button with avatar initials and name; also used as popover trigger. */
 function UserButton(p: UserButtonProps) {
-  const [s, rest] = splitProps(p, [
-    "userName",
-    "userInitials",
-    "userAvatar",
-    "userImageUrl",
-    "onUserClick",
-    "isOpen",
-    "fade",
-    "class",
-  ])
+  const rest = omit(p, "userName", "userInitials", "userAvatar", "userImageUrl", "onUserClick", "isOpen", "fade", "class")
   return (
     <button
       type={"button"}
-      title={s.userName}
+      title={p.userName}
       {...rest}
       onClick={(e) => {
-        s.onUserClick?.()
+        p.onUserClick?.()
         if (typeof rest.onClick === "function") rest.onClick(e)
       }}
       class={classArr(
@@ -867,9 +856,9 @@ function UserButton(p: UserButtonProps) {
         "hover:bg-black/5 dark:hover:bg-white/10 data-expanded:bg-black/5 dark:data-expanded:bg-white/10", // hover
       )}
     >
-      <AppSidebarAvatar userAvatar={s.userAvatar} userImageUrl={s.userImageUrl} userInitials={s.userInitials} />
-      <Show when={s.userName}>
-        <span class={classArr("min-w-0 truncate whitespace-nowrap", s.fade)}>{s.userName}</span>
+      <AppSidebarAvatar userAvatar={p.userAvatar} userImageUrl={p.userImageUrl} userInitials={p.userInitials} />
+      <Show when={p.userName}>
+        <span class={classArr("min-w-0 truncate whitespace-nowrap", p.fade)}>{p.userName}</span>
       </Show>
     </button>
   )

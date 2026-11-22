@@ -1,6 +1,5 @@
 import { cn } from "cn"
-import type { ComponentProps } from "solid-js"
-import { createSignal, lazy, onMount, Show, splitProps } from "solid-js"
+import { createSignal, lazy, onSettled, Show, omit } from "solid-js"
 import type { DemoNavDataProps } from "#ui/demo_pages/DemoNavDataProps.js"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
@@ -11,8 +10,9 @@ import { iconNpm } from "#ui/static/icons/iconNpm.js"
 import { LogoImageText } from "#ui/static/logo/LogoImageText.jsx"
 import { objectEntries } from "#utils/obj/objectEntries.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
+import { type ComponentProps } from "@solidjs/web";
 
-// `@corvu/popover` is precompiled to client-only DOM templates (`template()` at
+// `@corvu-next/popover` is precompiled to client-only DOM templates (`template()` at
 // module load), so it must stay out of the SSR import graph. Load it via a
 // dynamic import and render it only after mount on the client.
 const CorvuPopoverLazy = lazy(() =>
@@ -24,7 +24,7 @@ const CorvuPopoverLazy = lazy(() =>
 export interface DemoNavProps extends DemoNavDataProps, ComponentProps<"nav"> {}
 
 export function NavDemo(p: DemoNavProps) {
-  const [s, rest] = splitProps(p, ["class", "children", "category", "compName", "demoList", "demoPrefix"])
+  const rest = omit(p, "class", "children", "category", "compName", "demoList", "demoPrefix")
   const githubUrl = "https://github.com/david1gp/solid-ui"
   const npmUrl = "https://www.npmjs.com/package/@adaptive-ds/solid-ui"
   return (
@@ -33,30 +33,30 @@ export function NavDemo(p: DemoNavProps) {
         "w-full bg-gray-100 dark:bg-background [&_a:hover]:bg-gray-200 [&_button:hover]:bg-gray-200 dark:[&_a:hover]:bg-neutral-800 dark:[&_button:hover]:bg-neutral-800"
       }
     >
-      <nav class={cn("flex flex-wrap items-center justify-between py-1 gap-1 w-full", s.class)} {...rest}>
+      <nav class={cn("flex flex-wrap items-center justify-between py-1 gap-1 w-full", p.class)} {...rest}>
         <div class={"flex flex-wrap gap-1"}>
           <LogoImageText logoText="adaptive-solid-ui" logoTextClass="text-lg font-semibold" />
           {/* <LogoImageOnly /> */}
-          {s.category && (
+          {p.category && (
             <>
               <NavSeparatingSlash />
               <LinkButtonInternal
                 variant={buttonVariant.ghost}
                 to="/$"
                 params={{
-                  _splat: `${s.demoPrefix}/${s.category}/`.replace(/^\//, ""),
+                  _splat: `${p.demoPrefix}/${p.category}/`.replace(/^\//, ""),
                 }}
               >
-                <span class={"capitalize"}>{s.category}</span>
+                <span class={"capitalize"}>{p.category}</span>
               </LinkButtonInternal>
-              {s.compName && (
+              {p.compName && (
                 <>
                   <NavSeparatingSlash />
                   <ComponentPopover
-                    demoList={s.demoList}
-                    category={s.category}
-                    compName={s.compName}
-                    demoPrefix={s.demoPrefix}
+                    demoList={p.demoList}
+                    category={p.category}
+                    compName={p.compName}
+                    demoPrefix={p.demoPrefix}
                   />
                 </>
               )}
@@ -87,7 +87,7 @@ function ComponentPopover(
     .flatMap(([category, tree]) => objectKeys(tree).map((compName) => `${s.demoPrefix}/${category}/${compName}`))
   if (!links || links.length <= 0) return null
   const [mounted, setMounted] = createSignal(false)
-  onMount(() => setMounted(true))
+  onSettled(() => setMounted(true))
   return (
     <Show
       when={mounted()}

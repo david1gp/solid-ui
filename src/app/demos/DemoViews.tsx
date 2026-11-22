@@ -1,5 +1,5 @@
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
-import { createSignal, ErrorBoundary, For, onMount, Show } from "solid-js"
+import { createSignal, Errored, For, onSettled, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
 import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
 import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreate.js"
@@ -106,14 +106,14 @@ export function DemoComponent(props: { category: string; compName: string }) {
   const Comp = tree[props.compName as keyof typeof tree] as () => ReturnType<typeof LayoutWrapperDemo>
   // Each demo is lazy()-imported (see demoList) so it sits in its own chunk.
   // Some demos pull client-only deps that call `template()` at module load —
-  // e.g. @corvu/utils' FloatingArrow — which on the server resolves to
+  // e.g. @corvu-next/utils' FloatingArrow — which on the server resolves to
   // solid-js/web's notSup() and throws "Client-only API called on the server
   // side", crashing the prerender. Gating render on mount means the prerender
   // never renders the demo (so its chunk is never imported server-side); it
   // loads on the client only. The chrome (nav, title, links, JSON-LD) still
   // prerenders for SEO. Verified: removing this gate breaks `vite build`.
   const [mounted, setMounted] = createSignal(false)
-  onMount(() => setMounted(true))
+  onSettled(() => setMounted(true))
   return (
     <LayoutWrapperDemo title={props.compName}>
       <Show
@@ -125,9 +125,9 @@ export function DemoComponent(props: { category: string; compName: string }) {
         <HomeButtonFloating />
       </Show>
       <Show when={mounted()}>
-        <ErrorBoundary fallback={(err) => <DemoLoadError error={err} />}>
+        <Errored fallback={(err) => <DemoLoadError error={err} />}>
           <Comp />
-        </ErrorBoundary>
+        </Errored>
       </Show>
     </LayoutWrapperDemo>
   )

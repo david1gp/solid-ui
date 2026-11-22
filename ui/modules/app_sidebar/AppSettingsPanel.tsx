@@ -1,5 +1,5 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
-import { createEffect, createSignal, For, type JSXElement, Match, Show, Switch } from "solid-js"
+import { createEffect, createSignal, For, type Element as JSXElement, Match, Show, Switch } from "solid-js"
 import { AppSettingsProfileHeader } from "#ui/modules/app_sidebar/AppSettingsProfileHeader.jsx"
 import type {
   AppSidebarUserMenuOption,

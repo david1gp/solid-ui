@@ -1,5 +1,5 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
-import { For, type JSXElement, Show } from "solid-js"
+import { For, type Element as JSXElement, Show } from "solid-js"
 import { AppSidebarAccentBar } from "#ui/modules/app_sidebar/AppSidebarAccentBar.jsx"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import type { AppSidebarNavItem } from "#ui/modules/app_sidebar/AppSidebarNavItem.js"

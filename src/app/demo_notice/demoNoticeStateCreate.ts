@@ -1,11 +1,11 @@
-import { createSignal, onMount } from "solid-js"
+import { createSignal, onSettled } from "solid-js"
 
 const demoNoticeStorageKey = "demo-notice-dismissed"
 
 /** Visibility of the demo notice: shown after mount until dismissed for the current browser session. */
 export function demoNoticeStateCreate() {
   const [visible, setVisible] = createSignal(false)
-  onMount(() => {
+  onSettled(() => {
     try {
       if (sessionStorage.getItem(demoNoticeStorageKey)) return
     } catch {}

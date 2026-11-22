@@ -1,5 +1,5 @@
 import { Key } from "@solid-primitives/keyed"
-import type { JSXElement } from "solid-js"
+import type { Element as JSXElement } from "solid-js"
 import { createUniqueId } from "solid-js"
 import type { TabsTopText } from "#ui/interactive/tabs/TabsTopText.js"
 import { tabsTopTextDefault } from "#ui/interactive/tabs/TabsTopText.js"

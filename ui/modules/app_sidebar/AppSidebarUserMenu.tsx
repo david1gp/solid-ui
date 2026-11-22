@@ -1,5 +1,5 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
-import { createEffect, createSignal, For, type JSXElement, Show } from "solid-js"
+import { createEffect, createSignal, For, type Element as JSXElement, Show } from "solid-js"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"

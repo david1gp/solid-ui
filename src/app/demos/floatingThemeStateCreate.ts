@@ -1,11 +1,11 @@
-import { onCleanup, onMount } from "solid-js"
+import { onCleanup, onSettled } from "solid-js"
 import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
 import { themeVariant } from "#ui/interactive/theme/themeVariant.js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export function floatingThemeStateCreate() {
   const osDark = createSignalObject(false)
-  onMount(() => {
+  onSettled(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)")
     const update = () => osDark.set(media.matches)
     update()
