@@ -1,7 +1,7 @@
 import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import Dialog from "@corvu-next/dialog"
 import { cn } from "cn"
-import type { Accessor } from "solid-js"
+import { type Accessor, createSignal } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
 import { type ButtonCvaProps, buttonCva2, buttonCvaIconOnly, buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
@@ -39,10 +39,18 @@ export interface CorvuDialogProps
 /** Modal dialog with titled header and trigger button. */
 export function CorvuDialog(p: CorvuDialogProps) {
   const texts = () => p.texts ?? corvuDialogTextDefault
+  const [trigger, setTrigger] = createSignal<HTMLElement>()
+  // A controlled mobile drawer may use a hidden trigger; let the trap restore
+  // the real opener in that case rather than trying to focus the hidden button.
+  const finalFocusEl = () => {
+    const element = trigger()
+    return element?.getClientRects().length ? element : undefined
+  }
 
   return (
-    <Dialog open={p.open} onOpenChange={p.onOpenChange}>
+    <Dialog open={p.open} onOpenChange={p.onOpenChange} finalFocusEl={finalFocusEl()}>
       <Dialog.Trigger
+        ref={setTrigger}
         disabled={p.disabled === "" || p.disabled === true || p.isDisabled?.()}
         class={buttonCva2(
           p.variant,

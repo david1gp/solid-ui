@@ -48,6 +48,7 @@ const summaryClasses = ["flex items-center justify-between gap-4", "p-6", "curso
 export function DetailsDialog(p: DetailsDialogProps) {
   const texts = () => p.texts ?? corvuDialogTextDefault
   const [enhanced, setEnhanced] = createSignal(false)
+  const [trigger, setTrigger] = createSignal<HTMLElement>()
   onSettled(() => {
     setEnhanced(true)
   })
@@ -76,8 +77,9 @@ export function DetailsDialog(p: DetailsDialogProps) {
         </details>
       }
     >
-      <Dialog>
+      <Dialog finalFocusEl={trigger()}>
         <Dialog.Trigger
+          ref={setTrigger}
           class={cn(
             "group",
             detailsClasses,

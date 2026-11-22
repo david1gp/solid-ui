@@ -1,7 +1,7 @@
 import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import Dialog, { type TriggerProps } from "@corvu-next/dialog"
 import { cn } from "cn"
-import { type Component, omit } from "solid-js"
+import { type Component, createSignal, omit, untrack } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
 import { type ButtonCvaProps, buttonCvaIconOnly, buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
@@ -37,6 +37,7 @@ export interface CorvuDialogIconProps
 
 /** Modal dialog opened by an icon-only trigger. */
 export const CorvuDialogIcon: Component<CorvuDialogIconProps> = (p) => {
+  const [trigger, setTrigger] = createSignal<HTMLElement>()
   const rest = omit(
     p,
     "variant",
@@ -53,13 +54,19 @@ export const CorvuDialogIcon: Component<CorvuDialogIconProps> = (p) => {
     "titleClass",
     "descriptionClass",
     "texts",
+    "ref",
   )
 
   const texts = () => p.texts ?? corvuDialogTextDefault
 
   return (
-    <Dialog>
+    <Dialog finalFocusEl={trigger()}>
       <Dialog.Trigger
+        ref={(element) => {
+          setTrigger(element)
+          const ref = untrack(() => p.ref)
+          if (typeof ref === "function") ref(element)
+        }}
         class={buttonCvaIconOnly(
           p.variant,
           isLoading(p),
