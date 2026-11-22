@@ -25,22 +25,15 @@ export function Table1MEntry<T>(p: Table1aMEntryProps<T>) {
   )
 }
 
-function MobileEntryFirst({ mobileClasses: c, children }: { mobileClasses?: MobileTableClassNames } & MayHaveChildren) {
-  return <span class={cn("font-semibold", c?.first)}>{children}</span>
+function MobileEntryFirst(p: { mobileClasses?: MobileTableClassNames } & MayHaveChildren) {
+  return <span class={cn("font-semibold", p.mobileClasses?.first)}>{p.children}</span>
 }
 
-function MobileEntryOther({
-  mobileClasses: c,
-  headerName,
-  children,
-}: {
-  headerName: string
-  mobileClasses?: MobileTableClassNames
-} & MayHaveChildren) {
+function MobileEntryOther(p: { headerName: string; mobileClasses?: MobileTableClassNames } & MayHaveChildren) {
   return (
-    <span class={cn("flex flex-wrap justify-between", c?.entry)}>
-      <span class={cn("text-gray-600 dark:text-neutral-400", c?.header)}>{`${headerName}:`}</span>
-      <span class={cn("text-right", c?.other)}>{children}</span>
+    <span class={cn("flex flex-wrap justify-between", p.mobileClasses?.entry)}>
+      <span class={cn("text-gray-600 dark:text-neutral-400", p.mobileClasses?.header)}>{`${p.headerName}:`}</span>
+      <span class={cn("text-right", p.mobileClasses?.other)}>{p.children}</span>
     </span>
   )
 }

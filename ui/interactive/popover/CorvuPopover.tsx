@@ -1,5 +1,5 @@
-import Popover from "@corvu-next/popover"
-import type { Accessor } from "solid-js"
+import Popover, { type TriggerProps } from "@corvu-next/popover"
+import { type Accessor, createSignal, omit } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
 import { type ButtonCvaProps, buttonCva2 } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
@@ -12,11 +12,12 @@ import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
 import { type ComponentProps, type JSX } from "@solidjs/web"
 
 export interface CorvuPopoverProps
-  extends Omit<ComponentProps<"button">, "class">,
+  extends Omit<ComponentProps<"button">, "class" | "ref" | "type">,
     ButtonCvaProps,
     MayHaveClass,
     MayHaveInnerClass,
-    MayHaveChildren {
+    MayHaveChildren,
+    Pick<TriggerProps, "ref" | "type"> {
   icon?: string
   iconRight?: string
   iconClass?: string
@@ -29,9 +30,12 @@ export interface CorvuPopoverProps
 
 /** Popover anchored to a labeled trigger button. */
 export function CorvuPopover(p: CorvuPopoverProps) {
-  // const [a, buttonProps] = splitProps(p.buttonProps, ["onClick"])
+  const [trigger, setTrigger] = createSignal<HTMLElement>()
+  const rest = omit(p, "ref", "variant", "class", "disabled", "isDisabled", "icon", "iconRight", "iconClass", "buttonChildren", "innerClass", "children", "open", "onOpenChange")
+  const disabled = () => p.disabled === "" || p.disabled === true || p.isDisabled?.()
   return (
     <Popover
+      finalFocusEl={trigger()}
       floatingOptions={{
         offset: 8,
         flip: true,
@@ -41,12 +45,13 @@ export function CorvuPopover(p: CorvuPopoverProps) {
       onOpenChange={p.onOpenChange}
     >
       <Popover.Trigger
-        class={buttonCva2(
-          p.variant,
-          classesButtonClickAnimation,
-          (p.disabled || p.isDisabled?.()) && classesDisabledDirectly,
-          p.class,
-        )}
+        {...rest}
+        ref={(element) => {
+          setTrigger(element)
+          if (typeof p.ref === "function") p.ref(element)
+        }}
+        disabled={disabled()}
+        class={buttonCva2(p.variant, classesButtonClickAnimation, disabled() && classesDisabledDirectly, p.class)}
       >
         {p.icon && <Icon path={p.icon} class={buttonIconCva(p.variant, p.buttonChildren && "mr-2", p.iconClass)} />}
         {p.buttonChildren}

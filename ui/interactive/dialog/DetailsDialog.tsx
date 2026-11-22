@@ -46,9 +46,11 @@ const summaryClasses = ["flex items-center justify-between gap-4", "p-6", "curso
  * modal (focus trap, scroll lock, escape) opened by an equivalent trigger button.
  */
 export function DetailsDialog(p: DetailsDialogProps) {
-  const texts = p.texts ?? corvuDialogTextDefault
+  const texts = () => p.texts ?? corvuDialogTextDefault
   const [enhanced, setEnhanced] = createSignal(false)
-  onSettled(() => setEnhanced(true))
+  onSettled(() => {
+    setEnhanced(true)
+  })
 
   const face = () => (
     <>
@@ -93,7 +95,7 @@ export function DetailsDialog(p: DetailsDialogProps) {
           <Dialog.Content class={classesDialogContentMerge(p.innerClass)}>
             <header class="flex items-center justify-between gap-2 mb-4">
               <Dialog.Label class="text-lg font-semibold">{p.title}</Dialog.Label>
-              <Dialog.Close class={buttonCvaIconOnly(buttonVariant.outline, false, false)} title={texts.closeDialog}>
+              <Dialog.Close class={buttonCvaIconOnly(buttonVariant.outline, false, false)} title={texts().closeDialog}>
                 <Icon path={mdiClose} class={buttonIconCva(buttonVariant.outline, "")} />
               </Dialog.Close>
             </header>

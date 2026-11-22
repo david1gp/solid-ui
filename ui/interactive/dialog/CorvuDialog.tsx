@@ -16,7 +16,7 @@ import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
 import { type ComponentProps, type JSX } from "@solidjs/web";
 
 export interface CorvuDialogProps
-  extends ComponentProps<"button">,
+  extends Omit<ComponentProps<"button">, "class">,
     ButtonCvaProps,
     MayHaveClass,
     MayHaveInnerClass,
@@ -38,15 +38,16 @@ export interface CorvuDialogProps
 
 /** Modal dialog with titled header and trigger button. */
 export function CorvuDialog(p: CorvuDialogProps) {
-  const texts = p.texts ?? corvuDialogTextDefault
+  const texts = () => p.texts ?? corvuDialogTextDefault
 
   return (
     <Dialog open={p.open} onOpenChange={p.onOpenChange}>
       <Dialog.Trigger
+        disabled={p.disabled === "" || p.disabled === true || p.isDisabled?.()}
         class={buttonCva2(
           p.variant,
           classesButtonClickAnimation,
-          (p.disabled || p.isDisabled?.()) && classesDisabledDirectly,
+          (p.disabled === "" || p.disabled === true || p.isDisabled?.()) && classesDisabledDirectly,
           p.class,
         )}
       >
@@ -68,7 +69,7 @@ export function CorvuDialog(p: CorvuDialogProps) {
                 </Dialog.Description>
               )}
             </div>
-            <Dialog.Close class={buttonCvaIconOnly(buttonVariant.outline, false, false)} title={texts.closeDialog}>
+            <Dialog.Close class={buttonCvaIconOnly(buttonVariant.outline, false, false)} title={texts().closeDialog}>
               <Icon path={mdiClose} class={buttonIconCva(buttonVariant.outline, "")} />
             </Dialog.Close>
           </header>

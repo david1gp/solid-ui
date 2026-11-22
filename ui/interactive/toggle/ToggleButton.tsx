@@ -2,21 +2,14 @@ import { cn } from "cn"
 import { omit } from "solid-js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { isDisabled, type MayHaveDisabledAccessor } from "#ui/utils/MayHaveDisabledAccessor.js"
+import { isDisabled } from "#ui/utils/MayHaveDisabledAccessor.js"
 import { type ComponentProps } from "@solidjs/web";
 
 /**
  * https://github.com/radix-ui/primitives/blob/main/packages/react/toggle/src/Toggle.tsx
  * https://github.com/mui/base-ui/blob/master/packages/react/src/toggle/useToggle.ts
  */
-export interface ToggleButtonProps
-  extends ToggleButtonStateProps,
-    MayHaveClass,
-    MayHaveChildren,
-    Omit<MayHaveDisabledAccessor, "disabled">,
-    ComponentProps<"button"> {
+export interface ToggleButtonProps extends ToggleButtonStateProps, ComponentProps<"button"> {
   title: string
   onClick?: (e: MouseEvent & { currentTarget: HTMLButtonElement; target: Element }) => void
   onPressedChange?: (pressed: boolean) => void
@@ -33,7 +26,8 @@ export function ToggleButton(p: ToggleButtonProps) {
     <ButtonIcon
       type="button"
       title={p.title}
-      aria-pressed={p.pressedSignal.get()}
+      aria-pressed={p.pressedSignal.get() ? "true" : "false"}
+      disabled={isDisabled(p)}
       data-state={p.pressedSignal.get() ? "on" : "off"}
       data-disabled={isDisabled(p)}
       // Visible pressed state; without it toggles look identical on and off.

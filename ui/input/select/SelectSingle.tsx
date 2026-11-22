@@ -1,7 +1,7 @@
 import { mdiCheck } from "@adaptive-ds/mdi/mdiCheck.js"
 import Popover from "@corvu-next/popover"
 import { cn } from "cn"
-import { For, Show } from "solid-js"
+import { createSignal, For, Show } from "solid-js"
 import type { SelectSingleEntry, SelectSingleGroupEntry } from "#ui/input/select/SelectSingleEntry.js"
 import type { SelectSingleTexts } from "#ui/input/select/SelectSingleTexts.js"
 import { selectSingleTextDefault } from "#ui/input/select/SelectSingleTexts.js"
@@ -11,7 +11,7 @@ import type { CorvuPopoverProps } from "#ui/interactive/popover/CorvuPopover.jsx
 import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
 import { classesGridCols3xl } from "#ui/static/grid/classesGridCols.js"
 import { classArr } from "#ui/utils/classArr.js"
-import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
+import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import type { HasValueSignalString } from "#ui/utils/HasValueSignalString.js"
 import type { MayHaveValueText } from "#ui/utils/HasValueText.js"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
@@ -39,11 +39,11 @@ export interface SelectSingleProps
 
 /** Popover select choosing one value, with optional inline group headings. */
 export function SelectSingle(p: SelectSingleProps) {
-  const texts = p.texts ?? selectSingleTextDefault
-  const open = createSignalObject(p.buttonProps.open ?? false)
+  const texts = () => p.texts ?? selectSingleTextDefault
+  const [open, setOpen] = createSignal(() => p.buttonProps.open ?? false)
 
   function handleOpenChange(nextOpen: boolean): void {
-    open.set(nextOpen)
+    setOpen(nextOpen)
     p.buttonProps.onOpenChange?.(nextOpen)
   }
 
@@ -51,12 +51,12 @@ export function SelectSingle(p: SelectSingleProps) {
     <div id={p.id} class={classArr("inline-flex", p.class)}>
       <CorvuPopover
         {...p.buttonProps}
-        open={open.get()}
+        open={open()}
         onOpenChange={handleOpenChange}
         aria-haspopup="listbox"
-        aria-label={getTriggerLabel(p, texts)}
+        aria-label={getTriggerLabel(p, texts())}
         buttonChildren={
-          <TriggerValue valueSignal={p.valueSignal} valueText={p.valueText} renderItem={p.renderItem} texts={texts} />
+          <TriggerValue valueSignal={p.valueSignal} valueText={p.valueText} renderItem={p.renderItem} texts={texts()} />
         }
         disabled={p.disabled}
       >
@@ -70,7 +70,7 @@ export function SelectSingle(p: SelectSingleProps) {
           innerClass={p.innerClass}
           disabled={p.disabled}
           closePopover={() => handleOpenChange(false)}
-          texts={texts}
+          texts={texts()}
         />
       </CorvuPopover>
     </div>
@@ -86,7 +86,7 @@ interface TriggerValueProps extends MayHaveValueText {
 function TriggerValue(p: TriggerValueProps) {
   return (
     <Show when={p.valueSignal.get()} keyed fallback={p.texts.selectEntry}>
-      {(value) => (p.renderItem ? p.renderItem(value) : getDisplayValue(value, p.valueText))}
+      {(value) => <>{p.renderItem ? p.renderItem(value) : getDisplayValue(value, p.valueText)}</>}
     </Show>
   )
 }
@@ -154,12 +154,14 @@ interface GroupHeadingProps {
 }
 
 function GroupHeading(p: GroupHeadingProps) {
-  if (p.entry.type !== "group") return null
-
   return (
-    <div role="presentation" class={classArr("px-3 pt-2 text-sm font-semibold", "text-muted-foreground")}>
-      {p.entry.label}
-    </div>
+    <Show when={p.entry.type === "group" ? p.entry : undefined}>
+      {(entry) => (
+        <div role="presentation" class={classArr("px-3 pt-2 text-sm font-semibold", "text-muted-foreground")}>
+          {entry().label}
+        </div>
+      )}
+    </Show>
   )
 }
 
@@ -180,7 +182,7 @@ function ListOption(p: ListOptionProps) {
       as={ButtonIcon}
       role="option"
       aria-label={label()}
-      aria-selected={isSelected()}
+      aria-selected={isSelected() ? "true" : "false"}
       iconRight={isSelected() ? mdiCheck : undefined}
       onKeyDown={(event) => handleOptionKeyDown(event, p.option, p.valueSignal, p.closePopover)}
       onClick={() => p.valueSignal.set(p.option)}

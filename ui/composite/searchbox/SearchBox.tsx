@@ -2,7 +2,7 @@ import { mdiCheck } from "@adaptive-ds/mdi/mdiCheck.js"
 import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { mdiUndo } from "@adaptive-ds/mdi/mdiUndo.js"
 import { cn } from "cn"
-import { createSignal, For, onCleanup, Show } from "solid-js"
+import { createSignal, For, onSettled, Show } from "solid-js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
@@ -40,8 +40,10 @@ export function SearchBox(p: SearchBoxProps) {
     }
   }
 
-  document.addEventListener("mousedown", handleClickOutside)
-  onCleanup(() => document.removeEventListener("mousedown", handleClickOutside))
+  onSettled(() => {
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  })
 
   const handleFilterClick = (key: string) => {
     if (activeFilterKey() === key) {
@@ -181,7 +183,7 @@ function FilterDropdown(p: { filter: SearchFilterEntry; isActive: boolean; onSel
             <button
               type="button"
               role="option"
-              aria-selected={isSelected(option)}
+              aria-selected={isSelected(option) ? "true" : "false"}
               onClick={() => p.onSelect(option)}
               class={cn(
                 "flex w-full items-center justify-between border-t border-slate-100 dark:border-neutral-800 px-4 py-2.5 text-left text-sm transition-colors",
@@ -226,7 +228,7 @@ function FilterButtons(p: {
                 variant={
                   isButtonActive(filter) ? buttonVariant.filled : (filter.buttonVariant ?? buttonVariant.outline)
                 }
-                aria-pressed={p.activeFilterKey() === filter.key}
+                aria-pressed={p.activeFilterKey() === filter.key ? "true" : "false"}
                 onClick={() => p.onFilterClick(filter.key)}
                 class="min-w-0 flex-1 justify-center rounded-full border text-sm font-medium shadow-sm"
               >

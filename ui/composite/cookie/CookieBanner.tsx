@@ -1,7 +1,7 @@
 import { mdiCookie } from "@adaptive-ds/mdi/mdiCookie.js"
 import { mdiShieldCheckOutline } from "@adaptive-ds/mdi/mdiShieldCheckOutline.js"
 import Dialog from "@corvu-next/dialog"
-import { createSignal, For, onCleanup, onSettled, Show } from "solid-js"
+import { createSignal, For, onSettled, Show, untrack } from "solid-js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { classesDialogOverlayMerge } from "#ui/interactive/dialog/classesDialogContent.js"
@@ -82,14 +82,15 @@ export function CookieBanner(p: CookieBannerProps) {
   onSettled(() => {
     initConsentMode()
 
-    const stored = getStoredConsent(config())
+    const consentConfig = untrack(config)
+    const stored = getStoredConsent(consentConfig)
     if (stored) {
       setChoices({
         statistics: stored.statistics,
         marketing: stored.marketing,
       })
       // Returning visitor with prior consent — re-arm Google tracking on this page load.
-      enableGoogleTracking(trackingConfig(), config())
+      enableGoogleTracking(untrack(trackingConfig), consentConfig)
     } else {
       setVisible(true)
     }
@@ -105,9 +106,9 @@ export function CookieBanner(p: CookieBannerProps) {
       setVisible(true)
     }
 
-    const event = config().preferencesEvent
+    const event = consentConfig.preferencesEvent
     window.addEventListener(event, openPreferences)
-    onCleanup(() => window.removeEventListener(event, openPreferences))
+    return () => window.removeEventListener(event, openPreferences)
   })
 
   const close = () => {
