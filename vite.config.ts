@@ -3,7 +3,7 @@ import { tanstackStart } from "@tanstack/solid-start/plugin/vite"
 import { visualizer } from "rollup-plugin-visualizer"
 import type { Plugin } from "vite"
 import { defineConfig } from "vite"
-import solid from "vite-plugin-solid"
+import solid from "@solidjs/vite-plugin"
 import { getPrerenderPages } from "./src/lib/prerenderPages"
 import { siteUrl } from "./src/lib/seo"
 

@@ -29,36 +29,38 @@
   "peerDependencies": {
     "@adaptive-ds/mdi": "^0.1.2",
     "@adaptive-ds/utils": "^0.12.0",
-    "@corvu/dialog": "^0.2.4",
-    "@corvu/popover": "^0.2.0",
-    "@solid-primitives/keyed": "^1.5.3",
-    "@solid-primitives/scheduled": "^1.5.2",
-    "@tanstack/solid-router": "^1.170.0",
+    "@solid-primitives/keyed": "^3.0.0",
+    "@solid-primitives/scheduled": "^2.0.0",
+    "@tanstack/solid-router": "2.0.0-rc.10",
     "cn": "^0.2.4",
     "dayjs": "^1.11.19",
-    "solid-js": "^1.9.10",
-    "valibot": "^1.1.0"
+    "solid-js": "^2.0.1",
+    "valibot": "^1.1.0",
+    "@corvu-next/dialog": "^0.1.5",
+    "@corvu-next/popover": "^0.1.5",
+    "@solidjs/web": "^2.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.4",
     "@rsbuild/core": "^2.0.12",
     "@rsbuild/plugin-node-polyfill": "^1.4.6",
-    "@rsbuild/plugin-solid": "^1.2.2",
+    "@rsbuild/plugin-solid": "^2.0.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/vite": "^4.3.0",
-    "@tanstack/solid-router": "^1.170.0",
-    "@tanstack/solid-start": "^1.168.0",
+    "@tanstack/solid-router": "2.0.0-rc.10",
+    "@tanstack/solid-start": "2.0.0-rc.10",
     "@types/bun": "latest",
     "glob": "^13.0.6",
     "image-size": "^2.0.2",
     "prettier": "^3.8.4",
     "rollup-plugin-visualizer": "^7.0.1",
     "tailwindcss": "^4.3.0",
+    "ts-morph": "^28.0.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.16",
     "vite-plugin-dts": "^5.0.2",
-    "vite-plugin-solid": "^2.11.12",
-    "wrangler": "^4.100.0"
+    "wrangler": "^4.100.0",
+    "@solidjs/vite-plugin": "^3.0.1"
   },
   "imports": {
     "#src/*.js": "./src/*.ts",
@@ -101,5 +103,11 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "overrides": {
+    "solid-js": "^2.0.1"
+  },
+  "patchedDependencies": {
+    "@corvu-next/focus-trap@0.1.4": "patches/@corvu-next%2Ffocus-trap@0.1.4.patch"
+  }
 }
