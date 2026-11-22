@@ -11,7 +11,7 @@ import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
 import { type ButtonVariant, buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import { safeParseInt } from "#utils/int/safeParseInt.js"
-import { type ComponentProps, type JSX } from "@solidjs/web";
+import { type ComponentProps, type JSX } from "@solidjs/web"
 
 export interface NumberInputSProps extends ComponentProps<"input"> {
   valueSignal: SignalObject<number>
@@ -31,8 +31,23 @@ export interface NumberInputSProps extends ComponentProps<"input"> {
 
 /** Number input with increment and decrement buttons, signal-bound. */
 export function NumberInputS(p: NumberInputSProps) {
-  const rest = omit(p, "valueSignal", "onValueChange", "min", "max", "incrDecrAmount", "incrDecrAmountMajor", "disabled", "class", "inputClass", "variant", "buttonClass", "id", "texts")
-  const hasMajor = p.incrDecrAmountMajor !== undefined
+  const rest = omit(
+    p,
+    "valueSignal",
+    "onValueChange",
+    "min",
+    "max",
+    "incrDecrAmount",
+    "incrDecrAmountMajor",
+    "disabled",
+    "class",
+    "inputClass",
+    "variant",
+    "buttonClass",
+    "id",
+    "texts",
+  )
+  const hasMajor = () => p.incrDecrAmountMajor !== undefined
   const onChange: JSX.InputEventHandlerUnion<HTMLInputElement, InputEvent> | undefined = (e) => {
     const n = p.valueSignal.get()
     let newN = safeParseInt(e.target.value, n)
@@ -71,14 +86,14 @@ export function NumberInputS(p: NumberInputSProps) {
   }
   const defaultVariant = buttonVariant.ghost
 
-  const texts = p.texts ?? numberInputTextDefault
+  const texts = () => p.texts ?? numberInputTextDefault
 
   return (
     <div class={cn("flex flex-row flex-nowrap items-center", p.class)}>
       {p.incrDecrAmountMajor && (
         <ButtonIconOnly
           icon={mdiMinusBox}
-          title={texts.decreaseByX(p.incrDecrAmountMajor)}
+          title={texts().decreaseByX(p.incrDecrAmountMajor)}
           onClick={decrementMajor}
           variant={p.variant ?? defaultVariant}
           class={cn("rounded-r-none", p.buttonClass)}
@@ -88,10 +103,10 @@ export function NumberInputS(p: NumberInputSProps) {
       )}
       <ButtonIconOnly
         icon={mdiMinus}
-        title={texts.decreaseByX(p.incrDecrAmount ?? 1)}
+        title={texts().decreaseByX(p.incrDecrAmount ?? 1)}
         onClick={decrement}
         variant={p.variant ?? defaultVariant}
-        class={cn(hasMajor ? "rounded-none" : "rounded-r-none", p.buttonClass)}
+        class={cn(hasMajor() ? "rounded-none" : "rounded-r-none", p.buttonClass)}
         disabled={p.disabled || (p.min !== undefined && p.valueSignal.get() <= p.min)}
         type={"button"}
       />
@@ -108,17 +123,17 @@ export function NumberInputS(p: NumberInputSProps) {
       />
       <ButtonIconOnly
         icon={mdiPlus}
-        title={texts.increaseByX(p.incrDecrAmount ?? 1)}
+        title={texts().increaseByX(p.incrDecrAmount ?? 1)}
         onClick={increment}
         variant={p.variant ?? defaultVariant}
-        class={cn(hasMajor ? "rounded-none" : "rounded-l-none", p.buttonClass)}
+        class={cn(hasMajor() ? "rounded-none" : "rounded-l-none", p.buttonClass)}
         disabled={p.disabled || (p.max !== undefined && p.valueSignal.get() >= p.max)}
         type={"button"}
       />
       {p.incrDecrAmountMajor && (
         <ButtonIconOnly
           icon={mdiPlusBox}
-          title={texts.increaseByX(p.incrDecrAmountMajor)}
+          title={texts().increaseByX(p.incrDecrAmountMajor)}
           onClick={incrementMajor}
           variant={p.variant ?? defaultVariant}
           class={cn("rounded-l-none", p.buttonClass)}

@@ -69,15 +69,22 @@ export function DemoAppSidebar() {
   const collapsed = createSignalObject(false)
   const accentColor = createSignalObject(accentColors[0]!.color)
   const language = createSignalObject("DE")
-  const firstName = createSignalObject("Max")
-  const lastName = createSignalObject("Mustermann")
-  const username = createSignalObject("maxmustermann")
-  const phone = createSignalObject("+49 170 1234567")
-  const email = createSignalObject("max.mustermann@example.com")
+  const initial = {
+    firstName: "Max",
+    lastName: "Mustermann",
+    username: "maxmustermann",
+    phone: "+49 170 1234567",
+    email: "max.mustermann@example.com",
+  }
+  const firstName = createSignalObject(initial.firstName)
+  const lastName = createSignalObject(initial.lastName)
+  const username = createSignalObject(initial.username)
+  const phone = createSignalObject(initial.phone)
+  const email = createSignalObject(initial.email)
   // Settings forms edit drafts; nothing is applied until "Speichern".
-  const firstNameDraft = createSignalObject(firstName.get())
-  const lastNameDraft = createSignalObject(lastName.get())
-  const phoneDraft = createSignalObject(phone.get())
+  const firstNameDraft = createSignalObject(initial.firstName)
+  const lastNameDraft = createSignalObject(initial.lastName)
+  const phoneDraft = createSignalObject(initial.phone)
   const profileDirty = () =>
     firstNameDraft.get() !== firstName.get() ||
     lastNameDraft.get() !== lastName.get() ||
@@ -89,14 +96,19 @@ export function DemoAppSidebar() {
   }
   const saveProfile = () => {
     if (!profileDirty()) return
-    firstName.set(firstNameDraft.get().trim())
-    lastName.set(lastNameDraft.get().trim())
-    phone.set(phoneDraft.get().trim())
-    discardProfile()
+    const nextFirstName = firstNameDraft.get().trim()
+    const nextLastName = lastNameDraft.get().trim()
+    const nextPhone = phoneDraft.get().trim()
+    firstName.set(nextFirstName)
+    lastName.set(nextLastName)
+    phone.set(nextPhone)
+    firstNameDraft.set(nextFirstName)
+    lastNameDraft.set(nextLastName)
+    phoneDraft.set(nextPhone)
     toastAdd({ title: "Profil gespeichert", duration: 3000 })
   }
-  const usernameDraft = createSignalObject(username.get())
-  const emailDraft = createSignalObject(email.get())
+  const usernameDraft = createSignalObject(initial.username)
+  const emailDraft = createSignalObject(initial.email)
   const pendingEmail = createSignalObject<string | undefined>(undefined)
   const accountDirty = () => usernameDraft.get() !== username.get() || emailDraft.get() !== email.get()
   const discardAccount = () => {
@@ -110,7 +122,9 @@ export function DemoAppSidebar() {
       toastAdd({ title: "Bitte eine gültige E-Mail-Adresse eingeben", duration: 4000 })
       return
     }
-    username.set(usernameDraft.get().trim())
+    const nextUsername = usernameDraft.get().trim()
+    username.set(nextUsername)
+    usernameDraft.set(nextUsername)
     // A new e-mail only takes effect once confirmed via the link sent to it.
     if (nextEmail !== email.get()) {
       pendingEmail.set(nextEmail)
@@ -118,7 +132,7 @@ export function DemoAppSidebar() {
     } else {
       toastAdd({ title: "Konto gespeichert", duration: 3000 })
     }
-    discardAccount()
+    emailDraft.set(email.get())
   }
   const confirmEmail = () => {
     const pending = pendingEmail.get()

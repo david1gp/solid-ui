@@ -4,8 +4,8 @@ import { visualizer } from "rollup-plugin-visualizer"
 import type { Plugin } from "vite"
 import { defineConfig } from "vite"
 import solid from "@solidjs/vite-plugin"
-import { getPrerenderPages } from "./src/lib/prerenderPages"
-import { siteUrl } from "./src/lib/seo"
+import { getPrerenderPages } from "./src/lib/prerenderPages.ts"
+import { siteUrl } from "./src/lib/seo.ts"
 
 const prerenderPages = getPrerenderPages()
 
@@ -32,6 +32,11 @@ export default defineConfig({
       ignored: ["**/.github/**", "**/data/**", "**/dist/**", "**/ops/**", "**/out/**", "**/docs/**", "**/test/**"],
     },
     allowedHosts: ["solid-ui.david-siewert.com"],
+  },
+  // Scan lazy demos up front so the first visit to one does not invalidate the
+  // browser's optimized dependencies in the middle of hydration.
+  optimizeDeps: {
+    entries: ["src/router.tsx", "src/routes/*.tsx", "src/demos/**/*.tsx"],
   },
   plugins: [
     tanstackStart({

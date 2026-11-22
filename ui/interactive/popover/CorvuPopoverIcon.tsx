@@ -1,5 +1,5 @@
 import Popover, { type TriggerProps } from "@corvu-next/popover"
-import { createSignal, type Component, omit } from "solid-js"
+import { createSignal, type Component, omit, untrack } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
 import { type ButtonCvaProps, buttonCvaIconOnly } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
@@ -61,10 +61,18 @@ export const CorvuPopoverIcon: Component<CorvuPopoverIconProps> = (p) => {
       <Popover.Trigger
         ref={(element) => {
           setTrigger(element)
-          if (typeof p.ref === "function") p.ref(element)
+          const ref = untrack(() => p.ref)
+          if (typeof ref === "function") ref(element)
         }}
-        class={buttonCvaIconOnly(p.variant, isLoading(p), p.disabled === "" || p.disabled === true, classesButtonClickAnimation, p.class)}
+        class={buttonCvaIconOnly(
+          p.variant,
+          isLoading(p),
+          p.disabled === "" || p.disabled === true,
+          classesButtonClickAnimation,
+          p.class,
+        )}
         title={p.title}
+        disabled={p.disabled}
         {...rest}
       >
         <Icon

@@ -1,5 +1,5 @@
 import { debounce } from "@solid-primitives/scheduled"
-import { type Element as JSXElement, onSettled, Show, omit } from "solid-js"
+import { type Element as JSXElement, onSettled, Show, omit, untrack } from "solid-js"
 import type { CorcuDialogTexts } from "#ui/interactive/dialog/CorcuDialogTexts.js"
 import { SidebarMobileDrawer } from "#ui/interactive/sidebar/SidebarMobileDrawer.jsx"
 import type { SidebarState } from "#ui/interactive/sidebar/SidebarState.jsx"
@@ -28,7 +28,7 @@ export function Sidebar(p: SidebarProps) {
 
   const checkMobile = debounce(
     () => p.state.isMobile.set(window.innerWidth < (p.defaultWidth ?? 768)),
-    p.debounceMs ?? 100,
+    untrack(() => p.debounceMs ?? 100),
   )
   onSettled(() => {
     checkMobile()

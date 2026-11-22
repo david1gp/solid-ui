@@ -1,6 +1,6 @@
 import { cn } from "cn"
 import { type ComponentProps, clientOnly } from "@solidjs/web"
-import { createMemo, omit, Show } from "solid-js"
+import { createMemo, createSignal, omit, Show } from "solid-js"
 import type { DemoNavDataProps } from "#ui/demo_pages/DemoNavDataProps.js"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
@@ -79,6 +79,7 @@ export function NavDemo(p: DemoNavProps) {
 function ComponentPopover(
   s: Pick<DemoNavProps, "class" | "children" | "category" | "compName" | "demoList" | "demoPrefix">,
 ) {
+  const [open, setOpen] = createSignal(false)
   const links = createMemo(() => {
     const prefix = s.demoPrefix
     const active = s.category
@@ -91,6 +92,8 @@ function ComponentPopover(
       <CorvuPopoverLazy
         variant={buttonVariant.ghost}
         buttonChildren={s.compName}
+        open={open()}
+        onOpenChange={setOpen}
         fallback={
           <LinkButtonInternal
             variant={buttonVariant.ghost}
@@ -104,9 +107,10 @@ function ComponentPopover(
         }
       >
         <LinkBlock
-          header={s.category?.charAt(0).toUpperCase() + (s.category?.slice(1) ?? "")}
+          header={(s.category?.charAt(0).toUpperCase() ?? "") + (s.category?.slice(1) ?? "")}
           removeUrlPrefix={`${s.demoPrefix}/${s.category}/`}
           links={links()}
+          onLinkClick={() => setOpen(false)}
         />
       </CorvuPopoverLazy>
     </Show>

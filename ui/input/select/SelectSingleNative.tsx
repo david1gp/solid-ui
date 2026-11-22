@@ -28,7 +28,7 @@ export interface SelectSingleNativeProps
 
 /** Native dropdown selecting a single signal-bound value. */
 export function SelectSingleNative(p: SelectSingleNativeProps) {
-  const texts = p.texts ?? selectSingleNativeTextDefault
+  const texts = () => p.texts ?? selectSingleNativeTextDefault
 
   return (
     <div class="relative w-full min-w-0">
@@ -48,7 +48,7 @@ export function SelectSingleNative(p: SelectSingleNativeProps) {
         onChange={(e) => onChange(e, p)}
         disabled={p.disabled}
       >
-        <Key each={p.getOptions()} by={(item) => item} fallback={<NoItems texts={texts} />}>
+        <Key each={p.getOptions()} by={(item) => item} fallback={<NoItems texts={texts()} />}>
           {(getItem) => <SelectItem itemValue={getItem()} valueText={p.valueText} />}
         </Key>
       </select>
@@ -78,7 +78,11 @@ interface NoItemsProps extends MayHaveClass {
 }
 
 function NoItems(p: NoItemsProps) {
-  return <div class={p.class}>{p.texts.noEntries}</div>
+  return (
+    <option value="" class={p.class} disabled>
+      {p.texts.noEntries}
+    </option>
+  )
 }
 
 interface SelectItemProps extends MayHaveClass {

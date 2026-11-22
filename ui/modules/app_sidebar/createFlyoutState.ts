@@ -25,26 +25,30 @@ export function createFlyoutState(): FlyoutState {
   const [open, setOpenRaw] = createSignal(false)
   const [closing, setClosing] = createSignal(false)
   let timer: ReturnType<typeof setTimeout> | undefined
+  // Imperative state for the transition; a same-tick close cannot read the batched signal yet.
+  let isOpen = false
   onCleanup(() => clearTimeout(timer))
 
   function setOpen(next: boolean) {
     clearTimeout(timer)
     if (next) {
+      isOpen = true
       setClosing(false)
       setOpenRaw(true)
       return
     }
-    if (!open()) return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setClosing(false)
+    if (!isOpen) return
+    const finishClosing = () => {
+      isOpen = false
       setOpenRaw(false)
+      setClosing(false)
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      finishClosing()
       return
     }
     setClosing(true)
-    timer = setTimeout(() => {
-      setOpenRaw(false)
-      setClosing(false)
-    }, closeMs)
+    timer = setTimeout(finishClosing, closeMs)
   }
 
   const contentClass = () =>

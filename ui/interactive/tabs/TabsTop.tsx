@@ -80,8 +80,7 @@ export function TabsTop(p: TabsTopProps) {
 }
 
 function NoTabOptions(p: { class?: string; texts?: TabsTopText }) {
-  const texts = p.texts ?? tabsTopTextDefault
-  return <div class={p.class}>{texts.noEntries}</div>
+  return <div class={p.class}>{(p.texts ?? tabsTopTextDefault).noEntries}</div>
 }
 
 interface TabOptionProps extends MayHaveClass {

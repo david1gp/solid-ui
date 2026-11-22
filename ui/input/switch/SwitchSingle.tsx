@@ -29,11 +29,7 @@ export type SwitchSingleTexts = {
 /** Segmented radio-group switch selecting one value. */
 export function SwitchSingle(p: SwitchSingleProps) {
   const filled = true
-  const texts =
-    p.texts ??
-    ({
-      noEntries: ttt("No entries"),
-    } as const satisfies SwitchSingleTexts)
+  const texts = () => p.texts ?? { noEntries: ttt("No entries") }
 
   return (
     <div
@@ -48,7 +44,7 @@ export function SwitchSingle(p: SwitchSingleProps) {
         p.class,
       )}
     >
-      <Key each={p.getOptions()} by={(item) => item} fallback={<NoItems texts={texts} />}>
+      <Key each={p.getOptions()} by={(item) => item} fallback={<NoItems texts={texts()} />}>
         {(item) => (
           <Option
             item={item()}

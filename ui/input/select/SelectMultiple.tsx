@@ -3,7 +3,7 @@ import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { Key } from "@solid-primitives/keyed"
 import { cn } from "cn"
-import { For, merge } from "solid-js"
+import { For } from "solid-js"
 import type { SelectMultipleTexts } from "#ui/input/select/SelectMultipleTexts.js"
 import { selectMultipleTextDefault } from "#ui/input/select/SelectMultipleTexts.js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
@@ -45,15 +45,7 @@ export interface SelectMultipleProps
 
 /** Popover multi-select showing chosen values as removable chips. */
 export function SelectMultiple(p: SelectMultipleProps) {
-  const texts = p.texts ?? selectMultipleTextDefault
-
-  const buttonClass = cn(p.addEntryClass, p.buttonProps.class)
-  const buttonProps = merge(p.buttonProps, {
-    icon: mdiPlus,
-    children: p.textAddEntry ?? texts.addEntry,
-    class: buttonClass,
-    disabled: p.disabled,
-  })
+  const texts = () => p.texts ?? selectMultipleTextDefault
   return (
     <div
       id={p.id}
@@ -67,8 +59,19 @@ export function SelectMultiple(p: SelectMultipleProps) {
         p.class,
       )}
     >
-      <SelectedValues valueSignal={p.valueSignal} valueText={p.valueText} noItemsClass={p.noItemsClass} texts={texts} />
-      <CorvuPopover {...buttonProps}>
+      <SelectedValues
+        valueSignal={p.valueSignal}
+        valueText={p.valueText}
+        noItemsClass={p.noItemsClass}
+        texts={texts()}
+      />
+      <CorvuPopover
+        {...p.buttonProps}
+        icon={p.buttonProps.icon ?? mdiPlus}
+        buttonChildren={p.buttonProps.buttonChildren ?? p.textAddEntry ?? texts().addEntry}
+        class={cn(p.addEntryClass, p.buttonProps.class)}
+        disabled={p.disabled ?? p.buttonProps.disabled}
+      >
         <OptionList
           id={p.id}
           valueSignal={p.valueSignal}
@@ -78,7 +81,7 @@ export function SelectMultiple(p: SelectMultipleProps) {
           listOptionClass={p.listOptionClass}
           innerClass={p.innerClass}
           disabled={p.disabled}
-          texts={texts}
+          texts={texts()}
         />
       </CorvuPopover>
     </div>

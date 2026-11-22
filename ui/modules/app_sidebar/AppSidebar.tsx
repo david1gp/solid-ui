@@ -28,7 +28,7 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 export interface AppSidebarProps extends MayHaveClass {
   /** true = icon-only rail. */
@@ -91,7 +91,10 @@ export function AppSidebar(p: AppSidebarProps) {
       )}
     >
       <div class={"flex items-center h-11 px-2"}>
-        <div class={classArr("flex flex-1 min-w-0 items-center gap-2 overflow-hidden", fade())} aria-hidden={isOpen() ? "false" : "true"}>
+        <div
+          class={classArr("flex flex-1 min-w-0 items-center gap-2 overflow-hidden", fade())}
+          aria-hidden={isOpen() ? "false" : "true"}
+        >
           <span class={"shrink-0 pl-1"}>{p.logo}</span>
           <div class={"min-w-0 truncate whitespace-nowrap text-base font-semibold"}>{p.brand}</div>
         </div>
@@ -310,7 +313,7 @@ function NavItemButton(p: NavItemButtonProps) {
   }
   // Only one entry menu at a time: opening another one (e.g. via right-click) closes this one.
   createEffect(openItemMenu, (token) => {
-    if (token !== menuToken && menu.open()) menu.setOpen(false)
+    if (token !== menuToken && untrack(menu.open)) menu.setOpen(false)
   })
   // Escape must close the menu even when focus did not move into it (e.g. after a right-click).
   createEffect(menu.open, (open) => {
@@ -841,7 +844,17 @@ type UserButtonProps = Pick<
 
 /** Footer button with avatar initials and name; also used as popover trigger. */
 function UserButton(p: UserButtonProps) {
-  const rest = omit(p, "userName", "userInitials", "userAvatar", "userImageUrl", "onUserClick", "isOpen", "fade", "class")
+  const rest = omit(
+    p,
+    "userName",
+    "userInitials",
+    "userAvatar",
+    "userImageUrl",
+    "onUserClick",
+    "isOpen",
+    "fade",
+    "class",
+  )
   return (
     <button
       type={"button"}

@@ -1,5 +1,5 @@
 import Popover, { type TriggerProps } from "@corvu-next/popover"
-import { type Accessor, createSignal, omit } from "solid-js"
+import { type Accessor, createSignal, omit, untrack } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
 import { type ButtonCvaProps, buttonCva2 } from "#ui/interactive/button/buttonCva.js"
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
@@ -31,7 +31,22 @@ export interface CorvuPopoverProps
 /** Popover anchored to a labeled trigger button. */
 export function CorvuPopover(p: CorvuPopoverProps) {
   const [trigger, setTrigger] = createSignal<HTMLElement>()
-  const rest = omit(p, "ref", "variant", "class", "disabled", "isDisabled", "icon", "iconRight", "iconClass", "buttonChildren", "innerClass", "children", "open", "onOpenChange")
+  const rest = omit(
+    p,
+    "ref",
+    "variant",
+    "class",
+    "disabled",
+    "isDisabled",
+    "icon",
+    "iconRight",
+    "iconClass",
+    "buttonChildren",
+    "innerClass",
+    "children",
+    "open",
+    "onOpenChange",
+  )
   const disabled = () => p.disabled === "" || p.disabled === true || p.isDisabled?.()
   return (
     <Popover
@@ -48,7 +63,8 @@ export function CorvuPopover(p: CorvuPopoverProps) {
         {...rest}
         ref={(element) => {
           setTrigger(element)
-          if (typeof p.ref === "function") p.ref(element)
+          const ref = untrack(() => p.ref)
+          if (typeof ref === "function") ref(element)
         }}
         disabled={disabled()}
         class={buttonCva2(p.variant, classesButtonClickAnimation, disabled() && classesDisabledDirectly, p.class)}
