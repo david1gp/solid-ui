@@ -86,7 +86,6 @@ function deleteData(d: Person) {
 }
 
 function Actions(p: { d: Person }) {
-  console.log("rendered Actions for", p.d.id)
   return (
     <>
       <ButtonIconOnly
@@ -164,11 +163,11 @@ function EditDialog(p: { d: Person }) {
     >
       <form onSubmit={onSubmit}>
         <label for={"id"} class={"grid w-full max-w-sm items-center gap-1.5"}>
-          <span>Email</span>
+          <span>Id</span>
           <InputS type={"number"} id={"id"} placeholder={"Id"} valueSignal={formState.id} />
         </label>
         <label for={"name"} class={"grid w-full max-w-sm items-center gap-1.5"}>
-          <span>Email</span>
+          <span>Name</span>
           <InputS type={"text"} id={"name"} placeholder={"Name"} valueSignal={formState.name} />
         </label>
         <Button type="submit">Save changes</Button>

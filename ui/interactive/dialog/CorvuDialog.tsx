@@ -51,6 +51,9 @@ export function CorvuDialog(p: CorvuDialogProps) {
     <Dialog open={p.open} onOpenChange={p.onOpenChange} finalFocusEl={finalFocusEl()}>
       <Dialog.Trigger
         ref={setTrigger}
+        onClick={p.onClick}
+        title={p.title}
+        aria-label={p["aria-label"]}
         disabled={p.disabled === "" || p.disabled === true || p.isDisabled?.()}
         class={buttonCva2(
           p.variant,
