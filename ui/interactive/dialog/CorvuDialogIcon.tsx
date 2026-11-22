@@ -16,7 +16,7 @@ import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
 import { isLoading, type MayHaveIsLoading } from "#ui/utils/MayHaveIsLoading.js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 export interface CorvuDialogIconProps
   extends Omit<ComponentProps<"button">, "title" | "class" | "ref" | "type">,
@@ -37,14 +37,36 @@ export interface CorvuDialogIconProps
 
 /** Modal dialog opened by an icon-only trigger. */
 export const CorvuDialogIcon: Component<CorvuDialogIconProps> = (p) => {
-  const rest = omit(p, "variant", "class", "isLoading", "disabled", "title", "icon", "iconClass", "innerClass", "children", "dialogTitle", "description", "titleClass", "descriptionClass", "texts")
+  const rest = omit(
+    p,
+    "variant",
+    "class",
+    "isLoading",
+    "disabled",
+    "title",
+    "icon",
+    "iconClass",
+    "innerClass",
+    "children",
+    "dialogTitle",
+    "description",
+    "titleClass",
+    "descriptionClass",
+    "texts",
+  )
 
   const texts = () => p.texts ?? corvuDialogTextDefault
 
   return (
     <Dialog>
       <Dialog.Trigger
-        class={buttonCvaIconOnly(p.variant, isLoading(p), p.disabled === "" || p.disabled === true, classesButtonClickAnimation, p.class)}
+        class={buttonCvaIconOnly(
+          p.variant,
+          isLoading(p),
+          p.disabled === "" || p.disabled === true,
+          classesButtonClickAnimation,
+          p.class,
+        )}
         disabled={p.disabled}
         title={p.title}
         {...rest}

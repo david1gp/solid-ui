@@ -2,7 +2,7 @@ import { cn } from "cn"
 import type { Component } from "solid-js"
 import { omit } from "solid-js"
 import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier.js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 /** Styled native multiline textarea element. */
 export const Textarea: Component<ComponentProps<"textarea">> = (p) => {

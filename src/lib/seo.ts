@@ -4,7 +4,7 @@
 // prerender pages) as well as by route components, so it must use **relative
 // imports only** — the `#src`/`#ui` subpath aliases are not resolved by Vite's
 // config loader.
-import { type JSX } from "@solidjs/web";
+import { type JSX } from "@solidjs/web"
 
 // TanStack's `<HeadContent>` renders `title` and `property` (Open Graph) meta
 // entries, but Solid's `MetaHTMLAttributes` JSX type doesn't model them, so the

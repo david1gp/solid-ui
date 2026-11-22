@@ -10,7 +10,7 @@ import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import { objectEntries } from "#utils/obj/objectEntries.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
-import { type JSX } from "@solidjs/web";
+import { type JSX } from "@solidjs/web"
 
 const log = false
 

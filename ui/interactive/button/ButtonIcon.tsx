@@ -6,7 +6,7 @@ import type { ButtonCvaProps, ButtonVariant } from "#ui/interactive/button/butto
 import { buttonIconCva } from "#ui/interactive/button/buttonIconCva.js"
 import { classesButtonClickAnimation } from "#ui/interactive/button/classesButtonClickAnimation.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 export interface ButtonIconProps extends ComponentProps<"button">, ButtonCvaProps {
   // icon
@@ -23,7 +23,21 @@ export interface ButtonIconProps extends ComponentProps<"button">, ButtonCvaProp
 
 /** Button with icon, loading, and validation states. */
 export const ButtonIcon: Component<ButtonIconProps> = (p) => {
-  const rest = omit(p, "icon", "iconRight", "iconClass", "isLoading", "validationMessage", "validationVariant", "validationIcon", "variant", "class", "disabled", "onClick", "children")
+  const rest = omit(
+    p,
+    "icon",
+    "iconRight",
+    "iconClass",
+    "isLoading",
+    "validationMessage",
+    "validationVariant",
+    "validationIcon",
+    "variant",
+    "class",
+    "disabled",
+    "onClick",
+    "children",
+  )
   const onClick2 = (e: any) => {
     if (p.disabled) return
     if (p.isLoading) return

@@ -6,7 +6,7 @@ import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { arrCreate } from "#utils/arr/arrCreate.js"
-import { type JSX } from "@solidjs/web";
+import { type JSX } from "@solidjs/web"
 
 const basicEntries: SelectSingleEntry[] = [
   { type: "item", value: "Apple" },

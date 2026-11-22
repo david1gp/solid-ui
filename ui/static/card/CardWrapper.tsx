@@ -1,7 +1,7 @@
 import { cn } from "cn"
 import { omit } from "solid-js"
 import { classesCardWrapperP4 } from "#ui/static/card/classesCardWrapper.js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 export interface CardWrapperProps extends ComponentProps<"article"> {
   id?: string

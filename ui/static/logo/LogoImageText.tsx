@@ -3,7 +3,7 @@ import { type ButtonVariant, buttonVariant } from "#ui/interactive/button/button
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { Img } from "#ui/static/img/Img.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 export interface LogoImageTextProps extends MayHaveClass {
   /** Typed internal route to navigate to; defaults to `"/"`. */

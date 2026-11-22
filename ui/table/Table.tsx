@@ -1,7 +1,7 @@
 import { cn } from "cn"
 import type { Component } from "solid-js"
 import { omit } from "solid-js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 const Table: Component<ComponentProps<"table">> = (p) => {
   const rest = omit(p, "class")

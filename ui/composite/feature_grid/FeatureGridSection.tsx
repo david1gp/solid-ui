@@ -3,7 +3,7 @@ import { omit } from "solid-js"
 import type { GridFeatureType } from "#ui/static/grid/GridFeatureType.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 export interface FeatureGridSectionProps extends ComponentProps<"section"> {
   id: string
@@ -21,7 +21,21 @@ export interface FeatureGridSectionProps extends ComponentProps<"section"> {
 
 /** Section displaying features in a responsive icon grid. */
 export function FeatureGridSection(p: FeatureGridSectionProps) {
-  const rest = omit(p, "id", "title", "titleClass", "subtitle1", "subtitle1Class", "subtitle2", "subtitle2Class", "features", "headerClass", "gridClass", "cardClass", "class")
+  const rest = omit(
+    p,
+    "id",
+    "title",
+    "titleClass",
+    "subtitle1",
+    "subtitle1Class",
+    "subtitle2",
+    "subtitle2Class",
+    "features",
+    "headerClass",
+    "gridClass",
+    "cardClass",
+    "class",
+  )
   return (
     <section id={p.id} class={cn("w-full", "py-25 px-4", p.class)} {...rest}>
       <div class={classArr("max-w-7xl mx-auto", "text-center mb-8", p.headerClass)}>

@@ -13,7 +13,7 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
-import { type ComponentProps, type JSX } from "@solidjs/web";
+import { type ComponentProps, type JSX } from "@solidjs/web"
 
 export interface CorvuDialogProps
   extends Omit<ComponentProps<"button">, "class">,

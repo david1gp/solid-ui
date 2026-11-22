@@ -1,7 +1,7 @@
 import { cn } from "cn"
 import type { ParentComponent } from "solid-js"
 import { type Component, type Element as JSXElement, merge, Show, omit } from "solid-js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 export interface TimelinePropsItem
   extends Omit<TimelineItemProps, "isActive" | "isActiveBullet" | "bulletSize" | "lineSize"> {
@@ -61,7 +61,18 @@ export type TimelineItemProps = {
 }
 
 const TimelineItem: Component<TimelineItemProps> = (p) => {
-  const rest = omit(p, "class", "bullet", "description", "title", "isLast", "isActive", "isActiveBullet", "bulletSize", "lineSize")
+  const rest = omit(
+    p,
+    "class",
+    "bullet",
+    "description",
+    "title",
+    "isLast",
+    "isActive",
+    "isActiveBullet",
+    "bulletSize",
+    "lineSize",
+  )
   return (
     <li
       class={cn(

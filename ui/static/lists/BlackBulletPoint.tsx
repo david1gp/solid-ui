@@ -1,6 +1,6 @@
 import { cn } from "cn"
 import { omit } from "solid-js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 export interface BlackBulletPointProps extends ComponentProps<"span"> {}
 

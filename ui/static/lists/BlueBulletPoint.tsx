@@ -1,7 +1,7 @@
 import { cn } from "cn"
 import { omit } from "solid-js"
 import { classesTextLink } from "#ui/classes/classesTextLink.js"
-import { type ComponentProps } from "@solidjs/web";
+import { type ComponentProps } from "@solidjs/web"
 
 export interface BlueBulletPointProps extends ComponentProps<"span"> {}
 

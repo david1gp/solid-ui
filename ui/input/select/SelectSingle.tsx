@@ -19,7 +19,7 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled.js"
 import type { MayHaveId } from "#ui/utils/MayHaveId.js"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
-import { type JSX } from "@solidjs/web";
+import { type JSX } from "@solidjs/web"
 
 export interface SelectSingleProps
   extends HasValueSignalString,
