@@ -1,5 +1,5 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
-import { createEffect, createSignal, For, type Element as JSXElement, Match, Show, Switch } from "solid-js"
+import { createSignal, For, type Element as JSXElement, Match, Show, Switch } from "solid-js"
 import { AppSettingsProfileHeader } from "#ui/modules/app_sidebar/AppSettingsProfileHeader.jsx"
 import type {
   AppSidebarUserMenuOption,
@@ -94,8 +94,7 @@ function Card(p: { class?: string; compact?: boolean; children: JSXElement }) {
 
 /** Tile row with its own selection so tiles are clickable without any app logic behind them. */
 function TileSection(p: { section: AppSidebarUserMenuSection }) {
-  const [selected, setSelected] = createSignal(p.section.options.findIndex((o) => o.selected))
-  createEffect(() => setSelected(p.section.options.findIndex((o) => o.selected)))
+  const [selected, setSelected] = createSignal(() => p.section.options.findIndex((o) => o.selected))
   const sectionIcon = () => p.section.icon
   const select = (o: AppSidebarUserMenuOption, i: number) => {
     setSelected(i)
@@ -137,7 +136,7 @@ function Swatch(p: { option: AppSidebarUserMenuOption; selected: boolean; onClic
   return (
     <button
       type={"button"}
-      aria-pressed={p.selected}
+      aria-pressed={p.selected ? "true" : "false"}
       aria-label={p.option.label}
       title={p.option.label}
       onClick={() => p.onClick()}
@@ -161,7 +160,7 @@ function Tile(p: { option: AppSidebarUserMenuOption; selected: boolean; onClick:
   return (
     <button
       type={"button"}
-      aria-pressed={p.selected}
+      aria-pressed={p.selected ? "true" : "false"}
       onClick={() => p.onClick()}
       class={"group flex flex-col items-center gap-2 cursor-pointer text-sm font-medium"}
     >
@@ -183,7 +182,7 @@ function Tile(p: { option: AppSidebarUserMenuOption; selected: boolean; onClick:
                 when={p.option.leading}
                 fallback={
                   <Show when={p.option.flag}>
-                    <span aria-hidden={true}>{p.option.flag}</span>
+                    <span aria-hidden="true">{p.option.flag}</span>
                   </Show>
                 }
               >
@@ -234,8 +233,8 @@ function WindowPreview(p: { variant: "light" | "dark" | "system" }) {
 }
 
 function Window(p: { dark: boolean }) {
-  const dot = p.dark ? "bg-neutral-500" : "bg-neutral-300"
-  const line = p.dark ? "bg-neutral-600" : "bg-neutral-300"
+  const dot = () => (p.dark ? "bg-neutral-500" : "bg-neutral-300")
+  const line = () => (p.dark ? "bg-neutral-600" : "bg-neutral-300")
   return (
     <span
       class={classArr(
@@ -244,16 +243,16 @@ function Window(p: { dark: boolean }) {
       )}
     >
       <span class={"flex gap-0.5"}>
-        <span class={classArr("size-1 rounded-full", dot)} />
-        <span class={classArr("size-1 rounded-full", dot)} />
-        <span class={classArr("size-1 rounded-full", dot)} />
+        <span class={classArr("size-1 rounded-full", dot())} />
+        <span class={classArr("size-1 rounded-full", dot())} />
+        <span class={classArr("size-1 rounded-full", dot())} />
       </span>
       <span class={"flex flex-1 items-center gap-1.5"}>
         <span class={classArr("aspect-square h-[70%] rounded-full", p.dark ? "bg-neutral-700" : "bg-neutral-300")} />
         <span class={"flex flex-1 flex-col gap-1"}>
-          <span class={classArr("h-1 w-1/2 rounded-full", line)} />
-          <span class={classArr("h-1 w-full rounded-full", line)} />
-          <span class={classArr("h-1 w-3/4 rounded-full", line)} />
+          <span class={classArr("h-1 w-1/2 rounded-full", line())} />
+          <span class={classArr("h-1 w-full rounded-full", line())} />
+          <span class={classArr("h-1 w-3/4 rounded-full", line())} />
         </span>
       </span>
     </span>

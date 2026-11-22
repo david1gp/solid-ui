@@ -1,5 +1,5 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
-import { createEffect, createSignal, For, type Element as JSXElement, Show } from "solid-js"
+import { createSignal, For, type Element as JSXElement, Show } from "solid-js"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
@@ -86,8 +86,7 @@ export function AppSidebarUserMenu(p: AppSidebarUserMenuProps) {
 
 /** Segmented choice row; keeps its own selection so options are clickable without any app logic behind them. */
 function SegmentedSection(p: { section: AppSidebarUserMenuSection }) {
-  const [selected, setSelected] = createSignal(p.section.options.findIndex((o) => o.selected))
-  createEffect(() => setSelected(p.section.options.findIndex((o) => o.selected)))
+  const [selected, setSelected] = createSignal(() => p.section.options.findIndex((o) => o.selected))
   return (
     <Section label={p.section.label}>
       <div class={"grid grid-flow-col auto-cols-fr gap-1"}>
@@ -104,7 +103,7 @@ function SegmentedSection(p: { section: AppSidebarUserMenuSection }) {
                 when={o.leading}
                 fallback={
                   <Show when={o.flag}>
-                    <span aria-hidden={true}>{o.flag}</span>
+                    <span aria-hidden="true">{o.flag}</span>
                   </Show>
                 }
               >
@@ -133,7 +132,7 @@ function Segment(p: { selected: boolean; onClick: () => void; children: JSXEleme
   return (
     <button
       type={"button"}
-      aria-pressed={p.selected}
+      aria-pressed={p.selected ? "true" : "false"}
       onClick={() => p.onClick()}
       class={classArr(
         "flex items-center justify-center gap-1.5 h-8 px-2 rounded-md cursor-pointer text-sm font-medium", // layout

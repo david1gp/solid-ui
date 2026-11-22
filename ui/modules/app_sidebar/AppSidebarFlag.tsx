@@ -4,7 +4,7 @@ import { Match, Switch } from "solid-js"
 export function AppSidebarFlag(p: { language: "de" | "en"; class?: string }) {
   return (
     <svg
-      aria-hidden={true}
+      aria-hidden="true"
       viewBox={"0 0 30 20"}
       class={`inline-block w-5 h-auto shrink-0 rounded-[2px] ${p.class ?? ""}`}
     >

@@ -27,7 +27,7 @@ export function AppSettingsSidebar(p: AppSettingsSidebarProps) {
   return (
     <>
       <div
-        aria-hidden={true}
+        aria-hidden="true"
         onClick={() => p.open.set(false)}
         class={classArr(
           "absolute top-0 left-full z-30 h-full w-screen bg-black/10 dark:bg-black/30", // layout + look
@@ -37,7 +37,7 @@ export function AppSettingsSidebar(p: AppSettingsSidebarProps) {
         )}
       />
       <aside
-        aria-hidden={!isOpen()}
+        aria-hidden={isOpen() ? "false" : "true"}
         inert={!isOpen()}
         onKeyDown={(e) => e.key === "Escape" && p.open.set(false)}
         class={classArr(

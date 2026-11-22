@@ -2,7 +2,7 @@
 export function AppSidebarCssAvatar(p: { class?: string }) {
   return (
     <span
-      aria-hidden={true}
+      aria-hidden="true"
       class={`relative block size-full overflow-hidden rounded-full bg-gradient-to-br from-sky-200 to-indigo-300 ${p.class ?? ""}`}
     >
       <span class={"absolute left-[32%] top-[19%] size-[36%] rounded-full bg-white/80"} />

@@ -4,7 +4,7 @@ import { classArr } from "#ui/utils/classArr.js"
 export function AppSidebarAccentBar(p: { active: boolean; accentColor?: string }) {
   return (
     <span
-      aria-hidden={true}
+      aria-hidden="true"
       style={p.accentColor ? { "background-color": p.accentColor } : undefined}
       class={classArr(
         "absolute -left-1.5 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full", // layout

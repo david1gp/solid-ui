@@ -8,7 +8,7 @@ import { classArr } from "#ui/utils/classArr.js"
 export function AppSidebarCssBanner(p: { class?: string; accentColor?: string }) {
   return (
     <span
-      aria-hidden={true}
+      aria-hidden="true"
       style={p.accentColor ? { "--app-banner-accent": p.accentColor } : undefined}
       class={classArr(
         "relative block size-full overflow-hidden bg-gradient-to-br transition-colors duration-300 motion-reduce:transition-none",

@@ -12,9 +12,10 @@ import {
   createMemo,
   createSignal,
   type Element as JSXElement,
-  onCleanup,
+  omit,
   Show,
-  untrack, omit } from "solid-js"
+  untrack,
+} from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
 import { AppSidebarAccentBar } from "#ui/modules/app_sidebar/AppSidebarAccentBar.jsx"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
@@ -90,7 +91,7 @@ export function AppSidebar(p: AppSidebarProps) {
       )}
     >
       <div class={"flex items-center h-11 px-2"}>
-        <div class={classArr("flex flex-1 min-w-0 items-center gap-2 overflow-hidden", fade())} aria-hidden={!isOpen()}>
+        <div class={classArr("flex flex-1 min-w-0 items-center gap-2 overflow-hidden", fade())} aria-hidden={isOpen() ? "false" : "true"}>
           <span class={"shrink-0 pl-1"}>{p.logo}</span>
           <div class={"min-w-0 truncate whitespace-nowrap text-base font-semibold"}>{p.brand}</div>
         </div>
@@ -99,7 +100,7 @@ export function AppSidebar(p: AppSidebarProps) {
           onClick={() => p.collapsed.set(!p.collapsed.get())}
           title={isOpen() ? ttt("Close sidebar") : ttt("Open sidebar")}
           aria-label={isOpen() ? ttt("Close sidebar") : ttt("Open sidebar")}
-          aria-expanded={isOpen()}
+          aria-expanded={isOpen() ? "true" : "false"}
           class={classArr(
             "flex items-center justify-center shrink-0 size-8 rounded-md cursor-pointer", // layout
             "hover:bg-black/5 dark:hover:bg-white/10", // hover
@@ -162,7 +163,7 @@ export function AppSidebar(p: AppSidebarProps) {
                         <button
                           type={"button"}
                           onClick={() => setDrawerOpen(!drawerOpen())}
-                          aria-expanded={drawerOpen()}
+                          aria-expanded={drawerOpen() ? "true" : "false"}
                           class={classArr(
                             labelClass,
                             "flex items-center gap-1 w-full rounded-md cursor-pointer text-left", // layout
@@ -288,7 +289,7 @@ function NavItemButton(p: NavItemButtonProps) {
   // them from event handlers would create unowned computations.
   const canRename = createMemo(() => !!p.item.onRename && !p.title)
   // Only the visible, labelled instance may auto-edit; hidden copies (collapsed rail) must not steal focus.
-  const [editing, setEditing] = createSignal(!!p.item.autoEdit && canRename())
+  const [editing, setEditing] = createSignal(untrack(() => !!p.item.autoEdit && canRename()))
   let button: HTMLButtonElement | undefined
   let trigger: HTMLButtonElement | undefined
   let menuContent: HTMLDivElement | undefined
@@ -308,12 +309,12 @@ function NavItemButton(p: NavItemButtonProps) {
     menu.setOpen(open)
   }
   // Only one entry menu at a time: opening another one (e.g. via right-click) closes this one.
-  createEffect(() => {
-    if (openItemMenu() !== menuToken && untrack(menu.open)) menu.setOpen(false)
+  createEffect(openItemMenu, (token) => {
+    if (token !== menuToken && menu.open()) menu.setOpen(false)
   })
   // Escape must close the menu even when focus did not move into it (e.g. after a right-click).
-  createEffect(() => {
-    if (!menu.open()) return
+  createEffect(menu.open, (open) => {
+    if (!open) return
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape" || event.defaultPrevented) return
       event.preventDefault()
@@ -321,7 +322,7 @@ function NavItemButton(p: NavItemButtonProps) {
       trigger?.focus()
     }
     document.addEventListener("keydown", onKeyDown)
-    onCleanup(() => document.removeEventListener("keydown", onKeyDown))
+    return () => document.removeEventListener("keydown", onKeyDown)
   })
   const openMenu = () => {
     setMenuOpen(true)
@@ -353,7 +354,7 @@ function NavItemButton(p: NavItemButtonProps) {
             p.dropAfter &&
               "after:absolute after:z-10 after:inset-x-1 after:bottom-0 after:h-0.5 after:bg-[var(--app-sidebar-accent,var(--color-blue-500))]",
           )}
-          draggable={p.draggable}
+          draggable={p.draggable ? "true" : undefined}
           onDragStart={(event) => {
             if (pressOnTrigger) {
               event.preventDefault()
@@ -428,7 +429,7 @@ function NavItemButton(p: NavItemButtonProps) {
               <Popover.Trigger
                 ref={trigger}
                 type={"button"}
-                draggable={false}
+                draggable="false"
                 onPointerDown={(event) => {
                   event.stopPropagation()
                   pressOnTrigger = true
@@ -823,7 +824,7 @@ function Collapsible(p: { open: boolean; children: JSXElement }) {
         motion,
         p.open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
       )}
-      aria-hidden={!p.open}
+      aria-hidden={p.open ? "false" : "true"}
       inert={!p.open}
     >
       {/* -mx-2 px-2: extend the clip box into the nav padding so the active accent bar is not cut off */}
