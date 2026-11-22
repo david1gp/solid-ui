@@ -72,7 +72,7 @@ export function demoRegisterLoginStateCreate() {
     loading,
     score,
     changeMode,
-    toggleVisible: () => setVisible(!visible()),
+    toggleVisible: () => setVisible((prev) => !prev),
     passwordInput: setPassword,
     emailInput: setEmail,
     submit,

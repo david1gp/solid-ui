@@ -1,4 +1,4 @@
-import { onCleanup, onSettled } from "solid-js"
+import { onSettled } from "solid-js"
 import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
 import { themeVariant } from "#ui/interactive/theme/themeVariant.js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
@@ -10,8 +10,8 @@ export function floatingThemeStateCreate() {
     const update = () => osDark.set(media.matches)
     update()
     media.addEventListener("change", update)
-    onCleanup(() => media.removeEventListener("change", update))
     themeInit()
+    return () => media.removeEventListener("change", update)
   })
   const isDark = () =>
     themeSignal.get() === themeVariant.dark || (themeSignal.get() === themeVariant.os && osDark.get())

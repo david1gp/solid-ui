@@ -30,7 +30,7 @@ export function DemoRegisterLogin() {
                 class="tab"
                 type="button"
                 role="tab"
-                aria-selected={state.mode() === "login"}
+                aria-selected={state.mode() === "login" ? "true" : "false"}
                 aria-controls="authForm"
                 onClick={() => state.changeMode("login")}
               >
@@ -40,7 +40,7 @@ export function DemoRegisterLogin() {
                 class="tab"
                 type="button"
                 role="tab"
-                aria-selected={state.mode() === "register"}
+                aria-selected={state.mode() === "register" ? "true" : "false"}
                 aria-controls="authForm"
                 onClick={() => state.changeMode("register")}
               >
@@ -51,7 +51,7 @@ export function DemoRegisterLogin() {
               ref={state.setForm}
               class="form-stack"
               id="authForm"
-              noValidate
+              novalidate
               onSubmit={state.submit}
               onInput={state.clearError}
               onChange={state.clearError}
@@ -66,7 +66,7 @@ export function DemoRegisterLogin() {
                     autocomplete="name"
                     placeholder="Max Mustermann"
                     required
-                    aria-invalid={!!state.errors().name || undefined}
+                    aria-invalid={state.errors().name ? "true" : undefined}
                     aria-describedby={state.errors().name ? "nameError" : undefined}
                   />
                   <FieldError id="nameError" message={state.errors().name} />
@@ -81,7 +81,7 @@ export function DemoRegisterLogin() {
                   autocomplete="email"
                   placeholder="name@beispiel.de"
                   required
-                  aria-invalid={!!state.errors().email || undefined}
+                  aria-invalid={state.errors().email ? "true" : undefined}
                   aria-describedby={state.errors().email ? "emailError" : undefined}
                   onInput={(e) => state.emailInput(e.currentTarget.value)}
                 />
@@ -103,9 +103,9 @@ export function DemoRegisterLogin() {
                     type={state.visible() ? "text" : "password"}
                     autocomplete={state.mode() === "register" ? "new-password" : "current-password"}
                     placeholder="Dein Passwort"
-                    minLength={8}
+                    minlength={8}
                     required
-                    aria-invalid={!!state.errors().password || undefined}
+                    aria-invalid={state.errors().password ? "true" : undefined}
                     aria-describedby={state.errors().password ? "passwordError" : undefined}
                     onInput={(e) => state.passwordInput(e.currentTarget.value)}
                   />
@@ -113,7 +113,7 @@ export function DemoRegisterLogin() {
                     class="password-toggle"
                     type="button"
                     aria-label={state.visible() ? "Passwort ausblenden" : "Passwort anzeigen"}
-                    aria-pressed={state.visible()}
+                    aria-pressed={state.visible() ? "true" : "false"}
                     onClick={state.toggleVisible}
                   >
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -145,13 +145,15 @@ export function DemoRegisterLogin() {
                       <For each={[0, 1, 2, 3]}>
                         {(index) => (
                           <span
-                            class="strength-bar"
-                            classList={{
-                              active: index < state.score(),
-                              weak: state.score() <= 1,
-                              medium: state.score() > 1 && state.score() <= 3,
-                              strong: state.score() === 4,
-                            }}
+                            class={[
+                              "strength-bar",
+                              {
+                                active: index < state.score(),
+                                weak: state.score() <= 1,
+                                medium: state.score() > 1 && state.score() <= 3,
+                                strong: state.score() === 4,
+                              },
+                            ]}
                           />
                         )}
                       </For>
@@ -173,7 +175,7 @@ export function DemoRegisterLogin() {
                         type="checkbox"
                         name="terms"
                         required
-                        aria-invalid={!!state.errors().terms || undefined}
+                        aria-invalid={state.errors().terms ? "true" : undefined}
                         aria-describedby={state.errors().terms ? "termsError" : undefined}
                       />
                       <span class="checkbox" aria-hidden="true">
@@ -296,7 +298,7 @@ export function DemoRegisterLogin() {
           }
         }}
       >
-        <form class="dialog-content" noValidate onSubmit={state.submitReset} onInput={state.clearResetError}>
+        <form class="dialog-content" novalidate onSubmit={state.submitReset} onInput={state.clearResetError}>
           <div class="dialog-head">
             <div>
               <h2 id="resetTitle">Passwort zurücksetzen</h2>
@@ -318,7 +320,7 @@ export function DemoRegisterLogin() {
               autocomplete="email"
               placeholder="name@beispiel.de"
               required
-              aria-invalid={!!state.resetErrors().resetEmail || undefined}
+              aria-invalid={state.resetErrors().resetEmail ? "true" : undefined}
               aria-describedby={state.resetErrors().resetEmail ? "resetEmailError" : undefined}
             />
             <FieldError id="resetEmailError" message={state.resetErrors().resetEmail} />

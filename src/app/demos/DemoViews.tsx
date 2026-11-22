@@ -1,5 +1,6 @@
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
-import { createSignal, Errored, For, onSettled, Show } from "solid-js"
+import { dynamic } from "@solidjs/web"
+import { type Component, createMemo, createSignal, Errored, For, Loading, onSettled, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
 import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
 import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreate.js"
@@ -79,9 +80,11 @@ export function DemosOverview() {
 
 /** L1 — a single category, listing its component demos. */
 export function DemosCategory(props: { category: string }) {
-  const tree = demoList[props.category as keyof typeof demoList]
-  const links = objectKeys(tree).map((name) => `${prefix}/${props.category}/${name}`)
-  const removePrefix = `${prefix}/${props.category}/`
+  const links = createMemo(() => {
+    const category = props.category
+    const tree = demoList[category as keyof typeof demoList]
+    return Object.keys(tree ?? {}).map((name) => `${prefix}/${category}/${name}`)
+  })
   return (
     <LayoutWrapperDemo title={props.category}>
       <NavDemo demoList={demoList} category={props.category} demoPrefix={prefix} />
@@ -93,7 +96,11 @@ export function DemosCategory(props: { category: string }) {
         )}
       >
         <div>
-          <LinkBlock header={capitalizeFirst(props.category)} removeUrlPrefix={removePrefix} links={links} />
+          <LinkBlock
+            header={capitalizeFirst(props.category)}
+            removeUrlPrefix={`${prefix}/${props.category}/`}
+            links={links()}
+          />
         </div>
       </div>
     </LayoutWrapperDemo>
@@ -102,18 +109,16 @@ export function DemosCategory(props: { category: string }) {
 
 /** L2 — a single component demo. */
 export function DemoComponent(props: { category: string; compName: string }) {
-  const tree = demoList[props.category as keyof typeof demoList]
-  const Comp = tree[props.compName as keyof typeof tree] as () => ReturnType<typeof LayoutWrapperDemo>
-  // Each demo is lazy()-imported (see demoList) so it sits in its own chunk.
-  // Some demos pull client-only deps that call `template()` at module load —
-  // e.g. @corvu-next/utils' FloatingArrow — which on the server resolves to
-  // solid-js/web's notSup() and throws "Client-only API called on the server
-  // side", crashing the prerender. Gating render on mount means the prerender
-  // never renders the demo (so its chunk is never imported server-side); it
-  // loads on the client only. The chrome (nav, title, links, JSON-LD) still
-  // prerenders for SEO. Verified: removing this gate breaks `vite build`.
+  const Demo = dynamic<Component>(() => {
+    const tree: Record<string, Component> | undefined = demoList[props.category as keyof typeof demoList]
+    return tree?.[props.compName]
+  })
+  // Keep client-only dependencies, including Corvu's DOM templates, out of
+  // prerender while preserving the catalog chrome and metadata.
   const [mounted, setMounted] = createSignal(false)
-  onSettled(() => setMounted(true))
+  onSettled(() => {
+    setMounted(true)
+  })
   return (
     <LayoutWrapperDemo title={props.compName}>
       <Show
@@ -125,8 +130,10 @@ export function DemoComponent(props: { category: string; compName: string }) {
         <HomeButtonFloating />
       </Show>
       <Show when={mounted()}>
-        <Errored fallback={(err) => <DemoLoadError error={err} />}>
-          <Comp />
+        <Errored fallback={(err) => <DemoLoadError error={err()} />}>
+          <Loading>
+            <Demo />
+          </Loading>
         </Errored>
       </Show>
     </LayoutWrapperDemo>

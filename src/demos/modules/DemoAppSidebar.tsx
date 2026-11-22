@@ -457,7 +457,7 @@ export function DemoAppSidebar() {
                 <form
                   class={"flex flex-col gap-3"}
                   // Own German validation message instead of the browser's (English) native popup.
-                  noValidate
+                  novalidate
                   onSubmit={(e) => {
                     e.preventDefault()
                     saveAccount()

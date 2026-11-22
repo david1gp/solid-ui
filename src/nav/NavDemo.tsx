@@ -1,5 +1,6 @@
 import { cn } from "cn"
-import { createSignal, lazy, onSettled, Show, omit } from "solid-js"
+import { type ComponentProps, clientOnly } from "@solidjs/web"
+import { createMemo, omit, Show } from "solid-js"
 import type { DemoNavDataProps } from "#ui/demo_pages/DemoNavDataProps.js"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
@@ -10,12 +11,9 @@ import { iconNpm } from "#ui/static/icons/iconNpm.js"
 import { LogoImageText } from "#ui/static/logo/LogoImageText.jsx"
 import { objectEntries } from "#utils/obj/objectEntries.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
-import { type ComponentProps } from "@solidjs/web";
 
-// `@corvu-next/popover` is precompiled to client-only DOM templates (`template()` at
-// module load), so it must stay out of the SSR import graph. Load it via a
-// dynamic import and render it only after mount on the client.
-const CorvuPopoverLazy = lazy(() =>
+// Corvu's DOM templates must stay out of the SSR import graph.
+const CorvuPopoverLazy = clientOnly(() =>
   import("#ui/interactive/popover/CorvuPopover.jsx").then((m) => ({
     default: m.CorvuPopover,
   })),
@@ -81,33 +79,34 @@ export function NavDemo(p: DemoNavProps) {
 function ComponentPopover(
   s: Pick<DemoNavProps, "class" | "children" | "category" | "compName" | "demoList" | "demoPrefix">,
 ) {
-  if (!s.category || !s.compName) return null
-  const links = objectEntries(s.demoList)
-    .filter(([category, _tree]) => category === s.category)
-    .flatMap(([category, tree]) => objectKeys(tree).map((compName) => `${s.demoPrefix}/${category}/${compName}`))
-  if (!links || links.length <= 0) return null
-  const [mounted, setMounted] = createSignal(false)
-  onSettled(() => setMounted(true))
+  const links = createMemo(() => {
+    const prefix = s.demoPrefix
+    const active = s.category
+    return objectEntries(s.demoList)
+      .filter(([category]) => category === active)
+      .flatMap(([category, tree]) => objectKeys(tree).map((compName) => `${prefix}/${category}/${compName}`))
+  })
   return (
-    <Show
-      when={mounted()}
-      fallback={
-        <LinkButtonInternal
-          variant={buttonVariant.ghost}
-          to="/$"
-          params={{
-            _splat: `${s.demoPrefix}/${s.category}/${s.compName}`.replace(/^\//, ""),
-          }}
-        >
-          {s.compName}
-        </LinkButtonInternal>
-      }
-    >
-      <CorvuPopoverLazy variant={buttonVariant.ghost} buttonChildren={s.compName}>
+    <Show when={s.category && s.compName && links().length > 0}>
+      <CorvuPopoverLazy
+        variant={buttonVariant.ghost}
+        buttonChildren={s.compName}
+        fallback={
+          <LinkButtonInternal
+            variant={buttonVariant.ghost}
+            to="/$"
+            params={{
+              _splat: `${s.demoPrefix}/${s.category}/${s.compName}`.replace(/^\//, ""),
+            }}
+          >
+            {s.compName}
+          </LinkButtonInternal>
+        }
+      >
         <LinkBlock
-          header={s.category.charAt(0).toUpperCase() + s.category.slice(1)}
+          header={s.category?.charAt(0).toUpperCase() + (s.category?.slice(1) ?? "")}
           removeUrlPrefix={`${s.demoPrefix}/${s.category}/`}
-          links={links}
+          links={links()}
         />
       </CorvuPopoverLazy>
     </Show>

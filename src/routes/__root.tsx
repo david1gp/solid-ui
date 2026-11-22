@@ -1,6 +1,5 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/solid-router"
-import { Loading } from "solid-js"
-import { HydrationScript } from "@solidjs/web"
+import { type Element, Loading } from "solid-js"
 import { DemoNoticePopup } from "#src/app/demo_notice/DemoNoticePopup.jsx"
 import { DemosNotFound } from "#src/app/demos/DemoViews.jsx"
 import { pageMeta, siteName, softwareSourceCodeJsonLd, websiteJsonLd } from "#src/lib/seo.js"
@@ -9,7 +8,6 @@ import "../tailwind.css"
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1.0" },
       { name: "theme-color", content: "#222326" },
       ...pageMeta({ title: siteName, path: "/" }),
@@ -47,14 +45,14 @@ const themeBootScript = `(function(){try{var t=localStorage.getItem('theme');var
 // Vite emits `vite:preloadError` then; reload once (guarded per minute) to pick up the new build.
 const chunkReloadScript = `window.addEventListener('vite:preloadError',function(e){try{var k='chunk-reload',l=+sessionStorage.getItem(k)||0;if(Date.now()-l<60000)return;sessionStorage.setItem(k,String(Date.now()));e.preventDefault();location.reload()}catch(_){}});`
 
-function RootDocument(props: { children: any }) {
+function RootDocument(props: { children: Element }) {
   return (
     <html lang="en">
       <head>
-        <script innerHTML={themeBootScript} />
-        <script innerHTML={chunkReloadScript} />
-        <script type="speculationrules" innerHTML={speculationRules} />
-        <HydrationScript />
+        <meta charset="utf-8" />
+        <script>{themeBootScript}</script>
+        <script>{chunkReloadScript}</script>
+        <script type="speculationrules">{speculationRules}</script>
         <HeadContent />
       </head>
       <body class="min-h-dvh w-full font-sans antialiased text-foreground bg-background">
