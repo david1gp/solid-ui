@@ -62,6 +62,7 @@ const motion = "duration-500 ease-in-out motion-reduce:transition-none"
 export function AppSidebar(p: AppSidebarProps) {
   const isOpen = () => !p.collapsed.get()
   const menu = createFlyoutState()
+  const [accountTrigger, setAccountTrigger] = createSignal<HTMLElement>()
   // Drawer state keyed by group label, so it survives `groups` being re-created on every update.
   const [drawerState, setDrawerState] = createSignal<Record<string, boolean>>({})
   const [searchQuery, setSearchQuery] = createSignal("")
@@ -227,11 +228,13 @@ export function AppSidebar(p: AppSidebarProps) {
             <Popover
               open={menu.open()}
               onOpenChange={menu.setOpen}
+              finalFocusEl={accountTrigger()}
               placement={isOpen() ? "top-start" : "right-end"}
               floatingOptions={{ offset: 8, flip: true, shift: { padding: 8 } }}
             >
               <Popover.Trigger
                 as={UserButton}
+                ref={setAccountTrigger}
                 onClick={menu.onTriggerClick}
                 userName={p.userName}
                 userInitials={p.userInitials}
@@ -716,13 +719,14 @@ function GroupItems(p: {
 /** Icon-rail stand-in for a closed drawer: one group icon that opens a flyout with its items. */
 function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string }) {
   const flyout = createFlyoutState()
-  let trigger: HTMLButtonElement | undefined
+  const [trigger, setTrigger] = createSignal<HTMLElement>()
   const hasActive = () => p.group.items.some((i) => i.isActive)
   const icon = () => p.group.icon ?? p.group.items[0]?.icon ?? (p.group.addItem ? mdiPlus : undefined)
   return (
     <Popover
       open={flyout.open()}
       onOpenChange={flyout.setOpen}
+      finalFocusEl={trigger()}
       onOutsidePointer={(event) => {
         if (event.target instanceof Element && event.target.closest("[data-sidebar-item-menu]")) event.preventDefault()
       }}
@@ -730,7 +734,7 @@ function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string })
       floatingOptions={{ offset: 8, flip: true, shift: { padding: 8 } }}
     >
       <Popover.Trigger
-        ref={trigger}
+        ref={setTrigger}
         onClick={flyout.onTriggerClick}
         title={p.group.label}
         aria-label={p.group.label}
@@ -760,7 +764,7 @@ function RailGroupButton(p: { group: AppSidebarNavGroup; accentColor?: string })
             showLabels={true}
             onSelect={() => flyout.setOpen(false)}
             onEditStart={() => flyout.setOpen(true)}
-            onEmptyFocus={() => trigger?.closest<HTMLElement>("nav")?.focus()}
+            onEmptyFocus={() => trigger()?.closest<HTMLElement>("nav")?.focus()}
           />
         </Popover.Content>
       </Popover.Portal>
