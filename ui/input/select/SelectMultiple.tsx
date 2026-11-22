@@ -1,7 +1,6 @@
 import { mdiCheck } from "@adaptive-ds/mdi/mdiCheck.js"
 import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
-import { Key } from "@solid-primitives/keyed"
 import { cn } from "cn"
 import { For } from "solid-js"
 import type { SelectMultipleTexts } from "#ui/input/select/SelectMultipleTexts.js"
@@ -98,11 +97,9 @@ interface SelectedValuesProps {
 function SelectedValues(p: SelectedValuesProps) {
   return (
     <ul class={"flex flex-wrap gap-1 m-0 p-0 list-none"}>
-      <Key each={p.valueSignal.get()} by={(item) => item} fallback={<NoItems class={p.noItemsClass} texts={p.texts} />}>
-        {(item) => (
-          <SelectedValue option={item()} valueSignal={p.valueSignal} valueText={p.valueText} texts={p.texts} />
-        )}
-      </Key>
+      <For each={p.valueSignal.get()} fallback={<NoItems class={p.noItemsClass} texts={p.texts} />}>
+        {(item) => <SelectedValue option={item} valueSignal={p.valueSignal} valueText={p.valueText} texts={p.texts} />}
+      </For>
     </ul>
   )
 }

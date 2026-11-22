@@ -1,5 +1,4 @@
-import { Key } from "@solid-primitives/keyed"
-import type { Element as JSXElement } from "solid-js"
+import { type Element as JSXElement, For } from "solid-js"
 import { Toast } from "#ui/interactive/toast/Toast.jsx"
 import { toasterState } from "#ui/interactive/toast/toasterState.js"
 import { classArr } from "#ui/utils/classArr.js"
@@ -31,9 +30,9 @@ export function Toaster(p: MayHaveClass): JSXElement {
         p.class,
       )}
     >
-      <Key each={toasterState.get().toasts} by={(t) => t.id}>
-        {(t) => <Toast {...t()} />}
-      </Key>
+      <For each={toasterState.get().toasts} keyed={(toast) => toast.id}>
+        {(toast) => <Toast {...toast()} />}
+      </For>
     </ul>
   )
 }

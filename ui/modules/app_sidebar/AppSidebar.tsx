@@ -5,13 +5,13 @@ import { mdiDotsHorizontal } from "@adaptive-ds/mdi/mdiDotsHorizontal.js"
 import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import Popover from "@corvu-next/popover"
-import { Key } from "@solid-primitives/keyed"
 import {
   children,
   createEffect,
   createMemo,
   createSignal,
   type Element as JSXElement,
+  For,
   omit,
   Show,
   untrack,
@@ -146,7 +146,7 @@ export function AppSidebar(p: AppSidebarProps) {
         <Show when={isSearching() && groups().length === 0}>
           <p class={"px-2 py-1 text-sm text-muted-foreground whitespace-nowrap"}>{ttt("No results")}</p>
         </Show>
-        <Key each={groups()} by={"label"}>
+        <For each={groups()} keyed={(group) => group.label}>
           {(group) => {
             const drawerOpen = () => isSearching() || (drawerState()[group().label] ?? group().defaultOpen ?? false)
             const setDrawerOpen = (open: boolean) => setDrawerState((s) => ({ ...s, [group().label]: open }))
@@ -204,7 +204,7 @@ export function AppSidebar(p: AppSidebarProps) {
               </Collapsible>
             )
           }}
-        </Key>
+        </For>
       </nav>
 
       <Show when={p.userName || p.userInitials || p.userAvatar || p.userImageUrl}>
@@ -624,7 +624,7 @@ function GroupItems(p: {
   }
   return (
     <div ref={groupElement} class={"flex flex-col gap-0.5"} tabindex={-1}>
-      <Key each={items()} by={"key"}>
+      <For each={items()} keyed={(item) => item.key}>
         {(item) => (
           <NavItemButton
             item={item()}
@@ -695,7 +695,7 @@ function GroupItems(p: {
             }}
           />
         )}
-      </Key>
+      </For>
       <Show when={p.showLabels && p.group.addItem}>
         {(add) => (
           <button

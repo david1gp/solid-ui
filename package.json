@@ -31,7 +31,6 @@
   "peerDependencies": {
     "@adaptive-ds/mdi": "^0.1.2",
     "@adaptive-ds/utils": "^0.12.0",
-    "@solid-primitives/keyed": "^3.0.0",
     "@solid-primitives/scheduled": "^2.0.0",
     "@tanstack/solid-router": "2.0.0-rc.10",
     "cn": "^0.2.4",

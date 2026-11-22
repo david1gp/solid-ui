@@ -1,6 +1,4 @@
-import { Key } from "@solid-primitives/keyed"
-import type { Element as JSXElement } from "solid-js"
-import { createUniqueId } from "solid-js"
+import { createUniqueId, type Element as JSXElement, For } from "solid-js"
 import type { TabsTopText } from "#ui/interactive/tabs/TabsTopText.js"
 import { tabsTopTextDefault } from "#ui/interactive/tabs/TabsTopText.js"
 import { classArr } from "#ui/utils/classArr.js"
@@ -46,11 +44,11 @@ export function TabsTop(p: TabsTopProps) {
           p.class,
         )}
       >
-        <Key each={p.getOptions()} by={(value) => value} fallback={<NoTabOptions class={p.class} texts={p.texts} />}>
+        <For each={p.getOptions()} fallback={<NoTabOptions class={p.class} texts={p.texts} />}>
           {(value) => (
             <TabOption
               baseId={baseId}
-              value={value()}
+              value={value}
               valueSignal={p.valueSignal}
               disabled={p.disabled}
               valueAmount={p.valueAmount}
@@ -58,14 +56,14 @@ export function TabsTop(p: TabsTopProps) {
               valueChildren={p.valueChildren}
             />
           )}
-        </Key>
+        </For>
       </div>
       <div>
-        <Key each={p.getOptions()} by={(value) => value} fallback={<NoTabOptions class={p.class} texts={p.texts} />}>
+        <For each={p.getOptions()} fallback={<NoTabOptions class={p.class} texts={p.texts} />}>
           {(value) => (
             <TabContent
               baseId={baseId}
-              value={value()}
+              value={value}
               valueSignal={p.valueSignal}
               disabled={p.disabled}
               valueAmount={p.valueAmount}
@@ -73,7 +71,7 @@ export function TabsTop(p: TabsTopProps) {
               valueChildren={p.valueChildren}
             />
           )}
-        </Key>
+        </For>
       </div>
     </>
   )

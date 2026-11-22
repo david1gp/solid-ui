@@ -1,4 +1,4 @@
-import { Key } from "@solid-primitives/keyed"
+import { For } from "solid-js"
 import { ttt } from "#ui/i18n/ttt.js"
 import { classArr } from "#ui/utils/classArr.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
@@ -44,17 +44,17 @@ export function SwitchSingle(p: SwitchSingleProps) {
         p.class,
       )}
     >
-      <Key each={p.getOptions()} by={(item) => item} fallback={<NoItems texts={texts()} />}>
+      <For each={p.getOptions()} fallback={<NoItems texts={texts()} />}>
         {(item) => (
           <Option
-            item={item()}
+            item={item}
             valueSignal={p.valueSignal}
             disabled={p.disabled}
             filled={filled}
             valueText={p.valueText}
           />
         )}
-      </Key>
+      </For>
     </div>
   )
 }

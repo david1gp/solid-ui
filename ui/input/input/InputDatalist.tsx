@@ -1,4 +1,4 @@
-import { createUniqueId, omit } from "solid-js"
+import { createUniqueId, For, omit } from "solid-js"
 import { Input } from "#ui/input/input/Input.jsx"
 import type { HasId } from "#ui/utils/HasId.js"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.js"
@@ -23,7 +23,6 @@ export function InputDatalist(p: ResourceListSearchProps) {
   )
 }
 
-import { Key } from "@solid-primitives/keyed"
 import { type ComponentProps } from "@solidjs/web"
 
 interface DataListProps extends HasId, MayHaveClassAndChildren {
@@ -34,9 +33,9 @@ interface DataListProps extends HasId, MayHaveClassAndChildren {
 function DataList(p: DataListProps) {
   return (
     <datalist id={p.id}>
-      <Key each={p.getOptions()} by={(i) => i}>
-        {(item) => <option value={item()}>{p.optionDisplayText ? p.optionDisplayText(item()) : item()}</option>}
-      </Key>
+      <For each={p.getOptions()}>
+        {(item) => <option value={item}>{p.optionDisplayText ? p.optionDisplayText(item) : item}</option>}
+      </For>
     </datalist>
   )
 }

@@ -41,7 +41,6 @@ export default defineConfig({
         /^@solidjs\/web(?:\/|$)/,
         "@adaptive-ds/utils",
         /^@adaptive-ds\/mdi(?:\/|$)/,
-        "@solid-primitives/keyed",
         "@solid-primitives/scheduled",
         "@tanstack/solid-router",
         "cn",
