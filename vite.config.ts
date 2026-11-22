@@ -33,11 +33,9 @@ export default defineConfig({
     },
     allowedHosts: ["solid-ui.david-siewert.com"],
   },
-  // Scan lazy demos up front so the first visit to one does not invalidate the
-  // browser's optimized dependencies in the middle of hydration.
-  optimizeDeps: {
-    entries: ["src/router.tsx", "src/routes/*.tsx", "src/demos/**/*.tsx"],
-  },
+  // The browser dependencies ship ESM. Don't discover and re-bundle new
+  // dependencies mid-hydration (for example on the first lazy demo visit).
+  environments: { client: { optimizeDeps: { noDiscovery: true } } },
   plugins: [
     tanstackStart({
       srcDirectory: "src",

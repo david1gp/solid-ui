@@ -1,5 +1,4 @@
 import { defineConfig } from "@rsbuild/core"
-import { pluginBabel } from "@rsbuild/plugin-babel"
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
 import { pluginSolid } from "@rsbuild/plugin-solid"
 import tailwindcss from "@tailwindcss/postcss"
@@ -27,9 +26,6 @@ export default defineConfig({
     pluginNodePolyfill({
       // Whether to polyfill `node:` protocol imports.
       protocolImports: true,
-    }),
-    pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
     }),
     pluginSolid({ solid: { moduleName: "@solidjs/web" } }),
   ],
