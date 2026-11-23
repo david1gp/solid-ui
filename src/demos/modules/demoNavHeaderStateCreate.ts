@@ -19,17 +19,19 @@ export function demoNavHeaderStateCreate() {
       isActive: active.get() === label,
       onClick: () => active.set(label),
     }))
-  function attachLogo(element: HTMLDivElement) {
-    const onClick = (event: MouseEvent) => {
-      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return
-      event.preventDefault()
-      event.stopPropagation()
-      active.set("Willkommen")
-      history.replaceState(history.state, "", location.pathname + location.search)
-    }
-    element.addEventListener("click", onClick, true)
-    onCleanup(() => element.removeEventListener("click", onClick, true))
+  let logoElement: HTMLDivElement | undefined
+  const onLogoClick = (event: MouseEvent) => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return
+    event.preventDefault()
+    event.stopPropagation()
+    active.set("Willkommen")
+    history.replaceState(history.state, "", location.pathname + location.search)
   }
+  function attachLogo(element: HTMLDivElement) {
+    logoElement = element
+    element.addEventListener("click", onLogoClick, true)
+  }
+  onCleanup(() => logoElement?.removeEventListener("click", onLogoClick, true))
   const sections: AppSidebarUserMenuSection[] = [
     {
       label: "Darstellung",
