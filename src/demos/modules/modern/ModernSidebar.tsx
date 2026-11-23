@@ -137,7 +137,7 @@ export function ModernSidebar(p: ModernSidebarProps) {
       </div>
 
       <Show when={p.searchable !== false}>
-        <div data-modern-sidebar-search="" class={"px-2 pt-1"}>
+        <div data-modern-sidebar-search="" class={"pl-2 pr-[7px] pt-1"}>
           <Collapsible open={isOpen()}>
             <SearchField
               ref={(el) => {
@@ -162,7 +162,7 @@ export function ModernSidebar(p: ModernSidebarProps) {
         </div>
       </Show>
 
-      <nav tabindex={-1} class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2"}>
+      <nav tabindex={-1} class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-2 pr-[7px] py-2"}>
         <Show when={isSearching() && groups().length === 0}>
           <p class={"px-2 py-1 text-sm text-muted-foreground whitespace-nowrap"}>{ttt("No results")}</p>
         </Show>
