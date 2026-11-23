@@ -1,0 +1,50 @@
+import { mdiBrightnessAuto } from "@adaptive-ds/mdi/mdiBrightnessAuto.js"
+import { mdiPaletteOutline } from "@adaptive-ds/mdi/mdiPaletteOutline.js"
+import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
+import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
+import { onSettled } from "solid-js"
+import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
+import { themeVariant } from "#ui/interactive/theme/themeVariant.js"
+import type { AppSidebarUserMenuSection } from "#ui/modules/app_sidebar/AppSidebarUserMenu.jsx"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
+
+export function demoNavHeaderStateCreate() {
+  onSettled(themeInit)
+  const active = createSignalObject("Start")
+  const loggedIn = createSignalObject(true)
+  const items = () =>
+    ["Start", "Produkte", "Preise", "Blog", "Kontakt"].map((label) => ({
+      label,
+      isActive: active.get() === label,
+      onClick: () => active.set(label),
+    }))
+  const sections: AppSidebarUserMenuSection[] = [
+    {
+      label: "Darstellung",
+      icon: mdiPaletteOutline,
+      options: (
+        [
+          { icon: mdiWhiteBalanceSunny, label: "Hell", preview: "light", theme: themeVariant.light },
+          { icon: mdiWeatherNight, label: "Dunkel", preview: "dark", theme: themeVariant.dark },
+          { icon: mdiBrightnessAuto, label: "System", preview: "system", theme: themeVariant.os },
+        ] as const
+      ).map(({ theme, ...option }) => ({
+        ...option,
+        get selected() {
+          return themeSignal.get() === theme
+        },
+        onClick: () => themeSet(theme, true),
+      })),
+    },
+  ]
+  return {
+    active: active.get,
+    loggedIn: loggedIn.get,
+    items,
+    sections,
+    goHome: () => active.set("Start"),
+    login: () => loggedIn.set(true),
+    logout: () => loggedIn.set(false),
+    toggleLogin: () => loggedIn.set(!loggedIn.get()),
+  }
+}

@@ -5,7 +5,6 @@ import { demoList } from "#src/app/demos/demoList.js"
 import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
 import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreate.js"
 import { NavDemo } from "#src/nav/NavDemo.jsx"
-import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { BulletLinks } from "#ui/interactive/list/BulletLinks.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
@@ -18,12 +17,13 @@ import { objectKeys } from "#utils/obj/objectKeys.js"
 const prefix = ""
 
 /** Full-viewport demos rendered without the demo nav; they get a floating home button instead. */
-const fullscreenDemos = new Set(["DemoAppSidebar", "DemoRegisterLogin", "DemoCMS"])
+const fullscreenDemos = new Set(["DemoAppSidebar", "DemoRegisterLogin", "DemoCMS", "DemoNavHeader"])
 
 /** Display labels overriding the name derived from the demo key (prefix "Demo" stripped). */
 const demoDisplayNames: Record<string, string> = {
   DemoAppSidebar: "Sidebar-Simple",
   DemoCMS: "CMS",
+  DemoNavHeader: "NavHeader-Simple",
   DemoRegisterLogin: "Register-Login",
 }
 
@@ -97,11 +97,17 @@ export function DemosCategory(props: { category: string }) {
         )}
       >
         <div>
-          <LinkBlock
-            header={capitalizeFirst(props.category)}
-            removeUrlPrefix={`${prefix}/${props.category}/`}
-            links={links()}
-          />
+          <h2 class={"text-xl font-semibold"}>{capitalizeFirst(props.category)}</h2>
+          <div class={"flex flex-col"}>
+            <BulletLinks
+              internal
+              urls={links()}
+              display={links().map((link) => {
+                const name = link.split("/").pop() ?? ""
+                return demoDisplayNames[name] ?? name
+              })}
+            />
+          </div>
         </div>
       </div>
     </LayoutWrapperDemo>

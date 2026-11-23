@@ -61,6 +61,11 @@ const DemoCMS = lazy(async () => {
   return { default: c.DemoCMS }
 })
 
+const DemoNavHeader = lazy(async () => {
+  const c = await import("#src/demos/modules/DemoNavHeader.jsx")
+  return { default: c.DemoNavHeader }
+})
+
 const DemoDetails = lazy(async () => {
   const c = await import("#src/demos/interactive/DemoDetails.jsx")
   return { default: c.DemoDetails }
@@ -242,6 +247,7 @@ export const demoList = {
     DemoRegisterLogin: DemoRegisterLogin,
     DemoAppSidebar: DemoAppSidebar,
     DemoCMS: DemoCMS,
+    DemoNavHeader: DemoNavHeader,
   },
   static: {
     DemoTimeline: DemoTimeline,
