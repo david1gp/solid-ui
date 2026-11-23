@@ -27,6 +27,7 @@ const fullscreenDemos = new Set([
   "DemoContact",
   "DemoCMS",
   "DemoNavHeader",
+  "NavbarHeader-Modern",
   "Bottom-Mobile-Navbar",
 ])
 
