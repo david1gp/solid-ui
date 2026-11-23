@@ -17,7 +17,13 @@ import { objectKeys } from "#utils/obj/objectKeys.js"
 const prefix = ""
 
 /** Full-viewport demos rendered without the demo nav; they get a floating home button instead. */
-const fullscreenDemos = new Set(["DemoAppSidebar", "DemoRegisterLogin", "DemoCMS", "DemoNavHeader", "Bottom-Mobile-Navbar"])
+const fullscreenDemos = new Set([
+  "DemoAppSidebar",
+  "DemoRegisterLogin",
+  "DemoCMS",
+  "DemoNavHeader",
+  "Bottom-Mobile-Navbar",
+])
 
 /** Display labels overriding the name derived from the demo key (prefix "Demo" stripped). */
 const demoDisplayNames: Record<string, string> = {
