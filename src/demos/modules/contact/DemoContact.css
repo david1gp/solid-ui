@@ -184,69 +184,6 @@
     font-weight: 450;
   }
 
-  /* Topic picker: segmented radio group in the style of the login/register tabs. */
-  .topic-group {
-    display: grid;
-    gap: 7px;
-    min-width: 0;
-    border: 0;
-  }
-
-  .topic-group legend {
-    margin-bottom: 7px;
-  }
-
-  .topic-options {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 4px;
-    padding: 4px;
-    border-radius: 12px;
-    background: var(--surface-soft);
-  }
-
-  .topic-option {
-    position: relative;
-    min-height: 40px;
-    display: grid;
-    place-items: center;
-    padding: 0 8px;
-    border: 1px solid transparent;
-    border-radius: 9px;
-    color: var(--text-muted);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 650;
-    text-align: center;
-    transition:
-      color var(--transition),
-      background var(--transition),
-      box-shadow var(--transition);
-  }
-
-  .topic-option input {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
-
-  .topic-option:hover {
-    color: var(--text);
-  }
-
-  .topic-option:has(input:checked) {
-    border-color: var(--indicator-border);
-    background: var(--surface);
-    box-shadow: 0 2px 8px rgba(20, 22, 25, 0.07);
-    color: var(--text);
-  }
-
-  .topic-option:has(input:focus-visible) {
-    outline: 2px solid var(--text);
-    outline-offset: 2px;
-  }
-
   input[type="email"],
   input[type="tel"],
   input[type="text"] {
@@ -543,7 +480,7 @@
   .direct-sub {
     color: var(--text-muted);
     font-size: 12px;
-    overflow-wrap: anywhere;
+    white-space: nowrap;
   }
 
   .success {
@@ -666,10 +603,6 @@
     .field-row,
     .direct-links {
       grid-template-columns: 1fr;
-    }
-
-    .topic-options {
-      grid-template-columns: 1fr 1fr;
     }
 
     .site-footer {

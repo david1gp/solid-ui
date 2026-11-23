@@ -1,4 +1,4 @@
-import { For, Show } from "solid-js"
+import { Show } from "solid-js"
 import { Input } from "#ui/input/input/Input.jsx"
 import { Textarea } from "#ui/input/textarea/Textarea.jsx"
 import { Button } from "#ui/interactive/button/Button.jsx"
@@ -8,18 +8,9 @@ import { contactStateCreate } from "./contact/contactStateCreate.js"
 import { FieldError } from "./FieldError.jsx"
 import "./contact/DemoContact.css"
 
-const topics = ["general", "support", "sales", "feedback"] as const
-
 /** Contact form template in the visual language of the register/login demo. */
 export function DemoContact() {
   const state = contactStateCreate()
-  const topicLabel = (topic: (typeof topics)[number]) => {
-    const t = state.texts()
-    if (topic === "support") return t.topicSupport
-    if (topic === "sales") return t.topicSales
-    if (topic === "feedback") return t.topicFeedback
-    return t.topicGeneral
-  }
   const describedBy = (...ids: (string | false | undefined)[]) => ids.filter(Boolean).join(" ") || undefined
   return (
     <div class="contact-demo">
@@ -66,19 +57,6 @@ export function DemoContact() {
                     onInput={state.clearError}
                     onChange={state.clearError}
                   >
-                    <fieldset class="topic-group">
-                      <legend class="field-label">{state.texts().topic}</legend>
-                      <div class="topic-options">
-                        <For each={topics}>
-                          {(topic) => (
-                            <label class="topic-option">
-                              <input type="radio" name="topic" value={topic} checked={topic === "general"} />
-                              <span>{topicLabel(topic)}</span>
-                            </label>
-                          )}
-                        </For>
-                      </div>
-                    </fieldset>
                     <div class="field">
                       <label for="contactName">{state.texts().name}</label>
                       <Input
@@ -245,7 +223,8 @@ export function DemoContact() {
                       </svg>
                       <span class="direct-text">
                         <span class="direct-title">{state.texts().callUs}</span>
-                        <span class="direct-sub">+49 30 1234567 · {state.texts().callHours}</span>
+                        <span class="direct-sub">+49 30 1234567</span>
+                        <span class="direct-sub">{state.texts().callHours}</span>
                       </span>
                     </a>
                   </div>
