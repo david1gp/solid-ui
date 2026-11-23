@@ -111,7 +111,9 @@ export function NavHeader(p: NavHeaderProps) {
                   </span>
                 }
               >
+                {/* Locking body scroll makes it the header's sticky container instead of the viewport. */}
                 <Popover
+                  preventScroll={false}
                   open={state.menu().open()}
                   onOpenChange={(open) => state.menu().setOpen(open)}
                   finalFocusEl={state.accountTrigger.get()}
