@@ -1,9 +1,10 @@
 import { dynamic } from "@solidjs/web"
 import { type Component, createMemo, createSignal, Errored, Loading, onSettled, Show } from "solid-js"
-import { demoList } from "#src/app/demos/demoList.js"
 import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
+import { demoList } from "#src/app/demos/demoList.js"
 import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
 import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreate.js"
+import { HomeHowTo } from "#src/app/demos/HomeHowTo.jsx"
 import { SiteNavHeader } from "#src/nav/site_header/SiteNavHeader.jsx"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { BulletLinks } from "#ui/interactive/list/BulletLinks.jsx"
@@ -44,7 +45,7 @@ const panelClass = "px-6 py-4 rounded-2xl bg-background/70 backdrop-blur-xl dark
 export function DemosOverview() {
   const selectedTab = createSignalObject("overview")
   const categories = objectKeys(demoList)
-  const options = ["overview", ...categories]
+  const options = ["overview", "howto", ...categories]
   return (
     <LayoutWrapperDemo title={"demos"}>
       <DemoShapesBackdrop fixed />
@@ -64,7 +65,7 @@ export function DemosOverview() {
           <TabsTop
             valueSignal={selectedTab}
             getOptions={() => options}
-            valueText={capitalizeFirst}
+            valueText={(value) => (value === "howto" ? "How to" : capitalizeFirst(value))}
             class={"rounded-lg p-1 bg-background/50 dark:bg-background/50"}
             valueChildren={(value) => {
               if (value === "overview") {
@@ -90,6 +91,7 @@ export function DemosOverview() {
                   </div>
                 )
               }
+              if (value === "howto") return <HomeHowTo />
               const tree: Record<string, unknown> | undefined = demoList[value as keyof typeof demoList]
               const names = objectKeys(tree ?? {})
               return (
