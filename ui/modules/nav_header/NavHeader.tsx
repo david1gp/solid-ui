@@ -14,13 +14,15 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface NavHeaderProps extends MayHaveClass {
   logo: JSXElement
-  brand: JSXElement
+  brand?: JSXElement
   onBrandClick?: () => void
   items: NavHeaderNavItem[]
   accentColor?: string
   showThemeToggle?: boolean
   loginLabel?: string
   onLogin?: () => void
+  registerLabel?: string
+  onRegister?: () => void
   userName?: string
   userInitials?: string
   userImageUrl?: string
@@ -35,30 +37,32 @@ export function NavHeader(p: NavHeaderProps) {
   return (
     <header
       class={classArr(
-        "sticky top-0 z-40 w-full border-b border-neutral-200 bg-white/90 backdrop-blur dark:border-white/10 dark:bg-[#202124]/90",
+        "sticky top-0 z-40 w-full border-b border-border bg-background/90 text-foreground backdrop-blur",
         p.class,
       )}
       style={p.accentColor ? { "--nav-header-accent": p.accentColor } : undefined}
     >
       <div
         class={
-          "mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-x-4 px-4 md:grid-cols-[auto_1fr_auto] md:px-6"
+          "mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-x-4 px-4 lg:grid-cols-[auto_1fr_auto] lg:px-6"
         }
       >
-        <button
-          type={"button"}
-          onClick={p.onBrandClick}
-          class={
-            "flex min-w-0 items-center gap-2 py-3 text-left font-semibold focus-visible:outline-2 focus-visible:outline-offset-2"
-          }
-        >
-          <span class={"shrink-0"}>{p.logo}</span>
-          <span class={"truncate"}>{p.brand}</span>
-        </button>
+        <div class={"flex min-w-0 items-center py-2"}>
+          <Show when={p.brand !== undefined} fallback={p.logo}>
+            <button
+              type={"button"}
+              onClick={p.onBrandClick}
+              class={"flex min-w-0 items-center gap-2 text-left font-semibold"}
+            >
+              <span class={"shrink-0"}>{p.logo}</span>
+              <span class={"truncate"}>{p.brand}</span>
+            </button>
+          </Show>
+        </div>
         <Button
           ref={(el) => state.mobileTrigger.set(el)}
           variant={buttonVariant.ghost}
-          class={"md:hidden"}
+          class={"lg:hidden"}
           aria-label={state.mobileOpen.get() ? "Close navigation" : "Open navigation"}
           aria-expanded={state.mobileOpen.get() ? "true" : "false"}
           aria-controls={state.panelId}
@@ -66,34 +70,48 @@ export function NavHeader(p: NavHeaderProps) {
         >
           <Icon path={state.mobileOpen.get() ? mdiClose : mdiMenu} class={"size-5"} />
         </Button>
-        <div id={state.panelId} class={classArr("col-span-2 pb-4 md:contents", !state.mobileOpen.get() && "hidden")}>
+        <div id={state.panelId} class={classArr("col-span-2 pb-4 lg:contents", !state.mobileOpen.get() && "hidden")}>
           <nav
             aria-label={"Main navigation"}
-            class={"flex flex-col gap-1 md:flex-row md:items-center md:justify-center"}
+            class={"flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-center"}
           >
             <For each={p.items}>{(item) => <NavLink item={item} onSelect={state.closeMobile} />}</For>
           </nav>
-          <div
-            class={
-              "flex flex-wrap items-center gap-2 border-t border-neutral-200 pt-3 mt-3 dark:border-white/10 md:mt-0 md:border-0 md:pt-0"
-            }
-          >
+          <div class={"flex flex-wrap items-center gap-2 border-t border-border pt-3 mt-3 lg:mt-0 lg:border-0 lg:pt-0"}>
             {p.actions}
-            <Show when={p.showThemeToggle !== false}>
+            <Show
+              when={
+                p.showThemeToggle !== false &&
+                !(p.userName || p.userInitials || p.userAvatar || p.userImageUrl || p.userMenu)
+              }
+            >
               <ThemeButton />
             </Show>
             <Show
               when={p.userName || p.userInitials || p.userAvatar || p.userImageUrl || p.userMenu}
               fallback={
-                <Button
-                  variant={buttonVariant.contrast}
-                  onClick={() => {
-                    state.closeMobile()
-                    p.onLogin?.()
-                  }}
-                >
-                  {p.loginLabel ?? "Log in"}
-                </Button>
+                <>
+                  <Button
+                    variant={buttonVariant.ghost}
+                    onClick={() => {
+                      state.closeMobile()
+                      p.onLogin?.()
+                    }}
+                  >
+                    {p.loginLabel ?? "Log in"}
+                  </Button>
+                  <Show when={p.onRegister}>
+                    <Button
+                      variant={buttonVariant.contrast}
+                      onClick={() => {
+                        state.closeMobile()
+                        p.onRegister?.()
+                      }}
+                    >
+                      {p.registerLabel ?? "Register"}
+                    </Button>
+                  </Show>
+                </>
               }
             >
               <Show
@@ -124,7 +142,7 @@ export function NavHeader(p: NavHeaderProps) {
                     ref={(el) => state.accountTrigger.set(el)}
                     onClick={(event) => state.menu().onTriggerClick(event)}
                     class={
-                      "flex items-center gap-2 rounded-md p-1 hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-white/10"
+                      "flex items-center gap-2 rounded-md p-1 hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2"
                     }
                     aria-label={p.userName ? `Account: ${p.userName}` : "Account menu"}
                   >
@@ -140,7 +158,7 @@ export function NavHeader(p: NavHeaderProps) {
                   <Popover.Portal>
                     <Popover.Content
                       class={classArr(
-                        "z-50 rounded-xl border border-neutral-200 bg-white p-3 shadow-lg dark:border-white/10 dark:bg-[#202124]",
+                        "z-50 rounded-xl border border-border bg-background p-3 shadow-lg",
                         state.menu().contentClass(),
                       )}
                     >
@@ -160,10 +178,10 @@ export function NavHeader(p: NavHeaderProps) {
 function NavLink(p: { item: NavHeaderNavItem; onSelect: () => void }) {
   const linkClass = () =>
     classArr(
-      "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2",
+      "flex items-center gap-2 rounded-md px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2",
       p.item.isActive
-        ? "text-[var(--nav-header-accent,#2563eb)] bg-black/5 dark:bg-white/10"
-        : "text-neutral-600 hover:bg-black/5 dark:text-neutral-300 dark:hover:bg-white/10",
+        ? "bg-muted text-[var(--nav-header-accent,var(--foreground))] font-medium"
+        : "text-muted-foreground hover:bg-muted hover:text-foreground",
     )
   const select = () => {
     p.onSelect()
