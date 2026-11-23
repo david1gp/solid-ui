@@ -17,6 +17,7 @@ export function DemoNavHeader() {
           </div>
         }
         items={state.items()}
+        showThemeSwitch
         loginLabel={"Anmelden"}
         onLogin={state.login}
         registerLabel={"Registrieren"}

@@ -6,6 +6,7 @@ import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { ThemeButton } from "#ui/interactive/theme/ThemeButton.jsx"
+import { ThemeSwitch } from "#ui/interactive/theme/ThemeSwitch.jsx"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import type { NavHeaderNavItem } from "#ui/modules/nav_header/NavHeaderNavItem.js"
 import { navHeaderStateCreate } from "#ui/modules/nav_header/navHeaderStateCreate.js"
@@ -20,6 +21,8 @@ export interface NavHeaderProps extends MayHaveClass {
   items: NavHeaderNavItem[]
   accentColor?: string
   showThemeToggle?: boolean
+  /** Light/dark switch placed before the login buttons or profile; replaces the theme cycle button. */
+  showThemeSwitch?: boolean
   loginLabel?: string
   onLogin?: () => void
   registerLabel?: string
@@ -83,9 +86,13 @@ export function NavHeader(p: NavHeaderProps) {
           </nav>
           <div class={"flex flex-wrap items-center gap-2 border-t border-border pt-3 mt-3 lg:mt-0 lg:border-0 lg:pt-0"}>
             {p.actions}
+            <Show when={p.showThemeSwitch}>
+              <ThemeSwitch class={"mr-1"} />
+            </Show>
             <Show
               when={
                 p.showThemeToggle !== false &&
+                !p.showThemeSwitch &&
                 !(p.userName || p.userInitials || p.userAvatar || p.userImageUrl || p.userMenu)
               }
             >
