@@ -391,7 +391,7 @@
     background: var(--rc-accent);
   }
 
-  .rc-check input:checked + .rc-check-mark {
+  .rc-check input:checked + .rc-check-box .rc-check-mark {
     opacity: 1;
     transform: scale(1);
   }
