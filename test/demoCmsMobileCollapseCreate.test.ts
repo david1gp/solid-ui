@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test"
 import { createRoot, flush } from "solid-js"
-import { demoCmsMobileCollapseCreate } from "../src/demos/modules/demoCmsMobileCollapseCreate.js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { demoCmsMobileCollapseCreate } from "../src/demos/modules/cms/demoCmsMobileCollapseCreate.js"
 
 test("mobile settings restores only a sidebar collapsed automatically", () => {
   const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window")

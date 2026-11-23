@@ -19,24 +19,24 @@ import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
 import { createRoot, createSignal, For, type Element as JSXElement, Match, onSettled, Show, Switch } from "solid-js"
+import { CmsSettingsNav } from "#src/demos/modules/cms/CmsSettingsNav.jsx"
+import { CmsSettingsPanel } from "#src/demos/modules/cms/CmsSettingsPanel.jsx"
+import { CmsSettingsSidebar } from "#src/demos/modules/cms/CmsSettingsSidebar.jsx"
+import { CmsSidebar } from "#src/demos/modules/cms/CmsSidebar.jsx"
+import { CmsSidebarCssAvatar } from "#src/demos/modules/cms/CmsSidebarCssAvatar.jsx"
+import { CmsSidebarCssBanner } from "#src/demos/modules/cms/CmsSidebarCssBanner.jsx"
+import { CmsSidebarFlag } from "#src/demos/modules/cms/CmsSidebarFlag.jsx"
+import type { CmsSidebarNavGroup } from "#src/demos/modules/cms/CmsSidebarNavGroup.js"
+import { CmsSidebarUserMenu, type CmsSidebarUserMenuSection } from "#src/demos/modules/cms/CmsSidebarUserMenu.jsx"
 import { Input } from "#ui/input/input/Input.jsx"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
 import { themeVariant } from "#ui/interactive/theme/themeVariant.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { toastDismiss } from "#ui/interactive/toast/toastDismiss.js"
-import { AppSettingsNav } from "#ui/modules/app_sidebar/AppSettingsNav.jsx"
-import { AppSettingsPanel } from "#ui/modules/app_sidebar/AppSettingsPanel.jsx"
-import { AppSettingsSidebar } from "#ui/modules/app_sidebar/AppSettingsSidebar.jsx"
-import { AppSidebar } from "#ui/modules/app_sidebar/AppSidebar.jsx"
-import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
-import { AppSidebarCssBanner } from "#ui/modules/app_sidebar/AppSidebarCssBanner.jsx"
-import { AppSidebarFlag } from "#ui/modules/app_sidebar/AppSidebarFlag.jsx"
-import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGroup.js"
-import { AppSidebarUserMenu, type AppSidebarUserMenuSection } from "#ui/modules/app_sidebar/AppSidebarUserMenu.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
-import { demoCmsMobileCollapseCreate } from "./demoCmsMobileCollapseCreate.js"
+import { demoCmsMobileCollapseCreate } from "./cms/demoCmsMobileCollapseCreate.js"
 
 const entries = [
   { icon: mdiFolderMultipleOutline, label: "Projekte" },
@@ -183,7 +183,7 @@ export function DemoCMS() {
   const newProjectId = createSignalObject<string | undefined>(undefined)
   const renameProject = (id: string, label: string) =>
     projects.set(projects.get().map((project) => (project.id === id ? { ...project, label } : project)))
-  const sections: AppSidebarUserMenuSection[] = [
+  const sections: CmsSidebarUserMenuSection[] = [
     {
       label: "Darstellung",
       icon: mdiPaletteOutline,
@@ -219,7 +219,7 @@ export function DemoCMS() {
       options: (["DE", "EN"] as const).map((label) => ({
         label,
         get leading() {
-          return <AppSidebarFlag language={label.toLowerCase() as "de" | "en"} />
+          return <CmsSidebarFlag language={label.toLowerCase() as "de" | "en"} />
         },
         get selected() {
           return language.get() === label
@@ -263,7 +263,7 @@ export function DemoCMS() {
     const toastId = toastAdd({ title: `Projekt „${project.label}“ gelöscht`, duration: 6000, children: undoButton })
     setTimeout(disposeToast, 7000)
   }
-  const groups = (): AppSidebarNavGroup[] => [
+  const groups = (): CmsSidebarNavGroup[] => [
     {
       label: "Navigation",
       items: [
@@ -333,7 +333,7 @@ export function DemoCMS() {
   return (
     <div class={"flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
       <div class={"relative flex shrink-0"}>
-        <AppSidebar
+        <CmsSidebar
           collapsed={collapsed}
           logo={
             <span
@@ -353,34 +353,34 @@ export function DemoCMS() {
           accentColor={accentColor.get()}
           userName={fullName()}
           userInitials={initials()}
-          userAvatar={<AppSidebarCssAvatar />}
+          userAvatar={<CmsSidebarCssAvatar />}
           userMenu={
-            <AppSidebarUserMenu
+            <CmsSidebarUserMenu
               name={fullName()}
               email={email.get()}
-              userAvatar={<AppSidebarCssAvatar />}
+              userAvatar={<CmsSidebarCssAvatar />}
               logoutLabel={"Abmelden"}
             />
           }
         />
-        <AppSettingsSidebar open={settingsOpen} title={settingsLabel}>
-          <AppSettingsPanel
+        <CmsSettingsSidebar open={settingsOpen} title={settingsLabel}>
+          <CmsSettingsPanel
             name={fullName()}
             email={email.get()}
-            userAvatar={<AppSidebarCssAvatar />}
-            banner={<AppSidebarCssBanner accentColor={accentColor.get()} />}
+            userAvatar={<CmsSidebarCssAvatar />}
+            banner={<CmsSidebarCssBanner accentColor={accentColor.get()} />}
             sections={sections}
             logoutLabel={"Abmelden"}
             logoutPlacement={"bottom"}
           />
-        </AppSettingsSidebar>
+        </CmsSettingsSidebar>
       </div>
       <Show when={active() === settingsPageKey}>
-        <AppSettingsNav
+        <CmsSettingsNav
           title={settingsLabel}
           name={fullName()}
           email={email.get()}
-          userAvatar={<AppSidebarCssAvatar />}
+          userAvatar={<CmsSidebarCssAvatar />}
           accentColor={accentColor.get()}
           items={settingsPages.map((page) => ({
             icon: page.icon,
@@ -408,7 +408,7 @@ export function DemoCMS() {
                 <SettingsCard>
                   <div class={"flex items-center gap-4 pb-4 mb-4 border-b border-neutral-200 dark:border-white/10"}>
                     <div class={"size-16 shrink-0 rounded-full overflow-hidden"}>
-                      <AppSidebarCssAvatar />
+                      <CmsSidebarCssAvatar />
                     </div>
                     <div class={"flex flex-col gap-1 min-w-0"}>
                       <span class={"text-sm font-medium"}>Profilbild</span>
@@ -651,7 +651,7 @@ export function DemoCMS() {
               </div>
             </Match>
             <Match when={settingsPage.get() === "appearance"}>
-              <AppSettingsPanel class={"max-w-2xl"} sections={sections} />
+              <CmsSettingsPanel class={"max-w-2xl"} sections={sections} />
             </Match>
           </Switch>
         </Show>
