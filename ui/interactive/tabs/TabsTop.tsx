@@ -21,6 +21,7 @@ export interface TabsTopProps
   id?: string
   disabled?: boolean
   texts?: TabsTopText
+  trailing?: JSXElement
 }
 
 /**
@@ -80,6 +81,7 @@ export function TabsTop(p: TabsTopProps) {
             />
           )}
         </For>
+        {p.trailing}
       </div>
       <div>
         <For each={p.getOptions()} fallback={<NoTabOptions class={p.class} texts={p.texts} />}>
