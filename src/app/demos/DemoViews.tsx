@@ -21,6 +21,7 @@ const fullscreenDemos = new Set([
   "DemoAppSidebar",
   "DemoSidebarModern",
   "DemoRegisterLogin",
+  "DemoRegisterCi",
   "DemoCMS",
   "DemoNavHeader",
   "Bottom-Mobile-Navbar",
@@ -33,6 +34,7 @@ const demoDisplayNames: Record<string, string> = {
   DemoCMS: "CMS",
   DemoNavHeader: "NavHeader-Simple",
   DemoRegisterLogin: "Register-Login",
+  DemoRegisterCi: "Register-CI",
 }
 
 /** L0 — overview grid of every category and its components. */
