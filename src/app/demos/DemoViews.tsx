@@ -1,6 +1,5 @@
-import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { dynamic } from "@solidjs/web"
-import { type Component, createMemo, createSignal, Errored, For, Loading, onSettled, Show } from "solid-js"
+import { type Component, createMemo, createSignal, Errored, Loading, onSettled, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
 import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
@@ -8,10 +7,10 @@ import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreat
 import { NavDemo } from "#src/nav/NavDemo.jsx"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { BulletLinks } from "#ui/interactive/list/BulletLinks.jsx"
-import { Icon } from "#ui/static/icon/Icon.jsx"
+import { TabsTop } from "#ui/interactive/tabs/TabsTop.jsx"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { classArr } from "#ui/utils/classArr.js"
-import { objectEntries } from "#utils/obj/objectEntries.js"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
 
 // Demos live at the site root (prefix ""), e.g. /input, /input/DemoInputS.
@@ -43,7 +42,9 @@ const panelClass = "px-6 py-4 rounded-2xl bg-background/70 backdrop-blur-xl dark
 
 /** L0 — overview grid of every category and its components. */
 export function DemosOverview() {
-  const categories: [string, Record<string, unknown>][] = objectEntries(demoList)
+  const selectedTab = createSignalObject("overview")
+  const categories = objectKeys(demoList)
+  const options = ["overview", ...categories]
   return (
     <LayoutWrapperDemo title={"demos"}>
       <DemoShapesBackdrop fixed />
@@ -57,42 +58,53 @@ export function DemosOverview() {
       >
         <div
           class={classArr(
-            "flex flex-wrap justify-center items-start gap-x-8 gap-y-3", // layout
-            panelClass,
+            "w-full max-w-5xl rounded-2xl border border-border/50 bg-background/60 px-6 py-4 shadow-xl backdrop-blur-xl dark:bg-[#222326]/60", // layout and surface
           )}
         >
-          <For each={categories}>
-            {([category, tree]) => {
-              const categoryLinks = objectKeys(tree).map((compName) => `${prefix}/${category}/${compName}`)
-              const categoryLabels = objectKeys(tree).map(
-                (compName) => demoDisplayNames[compName] ?? compName.replace(/^Demo/, ""),
-              )
-              return (
-                <details class={"group"}>
-                  <summary
-                    class={classArr(
-                      "flex items-center gap-1 cursor-pointer select-none list-none", // layout
-                      "[&::-webkit-details-marker]:hidden", // hide native marker
-                    )}
-                  >
-                    <h2 class={"text-xl font-semibold capitalize"}>{category}</h2>
-                    <Icon
-                      path={mdiChevronDown}
-                      class={"size-6 fill-current transition-transform group-open:rotate-180"}
-                    />
-                  </summary>
-                  <div class={"flex flex-col mt-1"}>
-                    <Show
-                      when={categoryLinks.length > 0}
-                      fallback={<span class={"text-muted-foreground"}>No entries yet</span>}
-                    >
-                      <BulletLinks internal display={categoryLabels} urls={categoryLinks} />
-                    </Show>
+          <TabsTop
+            valueSignal={selectedTab}
+            getOptions={() => options}
+            valueText={capitalizeFirst}
+            class={"rounded-lg p-1 bg-background/50 dark:bg-background/50"}
+            valueChildren={(value) => {
+              if (value === "overview") {
+                return (
+                  <div class={"max-w-3xl space-y-4 py-6"}>
+                    <h2 class={"text-3xl font-semibold"}>Solid UI</h2>
+                    <p class={"text-lg"}>
+                      A platform of ready-made UI/UX templates and components for SolidJS – for a consistent design and
+                      fast, simple implementation.
+                    </p>
+                    <p>
+                      UI (User Interface) is what people see and interact with, such as buttons and forms. UX (User
+                      Experience) is how easy and comfortable those interactions feel.
+                    </p>
+                    <p>Use these building blocks to create applications with:</p>
+                    <ul class={"list-disc space-y-1 pl-6"}>
+                      <li>A consistent look across apps</li>
+                      <li>Accessible components covered by tests</li>
+                      <li>Faster development through reusable building blocks</li>
+                      <li>Light and dark themes and responsive layouts</li>
+                    </ul>
+                    <p>Pick a category tab above to browse live demos.</p>
                   </div>
-                </details>
+                )
+              }
+              const tree: Record<string, unknown> | undefined = demoList[value as keyof typeof demoList]
+              const names = objectKeys(tree ?? {})
+              return (
+                <div class={"grid gap-x-6 gap-y-2 py-6 sm:grid-cols-2 lg:grid-cols-3"}>
+                  <Show when={names.length > 0} fallback={<span class={"text-muted-foreground"}>No entries yet</span>}>
+                    <BulletLinks
+                      internal
+                      urls={names.map((name) => `${prefix}/${value}/${name}`)}
+                      display={names.map((name) => demoDisplayNames[name] ?? name.replace(/^Demo/, ""))}
+                    />
+                  </Show>
+                </div>
               )
             }}
-          </For>
+          />
         </div>
       </div>
     </LayoutWrapperDemo>
