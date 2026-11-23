@@ -1,25 +1,46 @@
 /* Register-CI: dark split-screen auth window. Fully scoped, independent from DemoRegisterLogin. */
 .register-ci {
   & {
-    --rc-bg: #1c1f22;
-    --rc-window: #24282c;
-    --rc-window-edge: rgba(255, 255, 255, 0.07);
+    /* light theme (default); dark overrides live in `.dark .register-ci` at the end of this file */
+    --rc-page-bg:
+      radial-gradient(ellipse at 50% -10%, rgba(255, 255, 255, 0.9), transparent 60%),
+      linear-gradient(180deg, #eef0f3 0%, #e6e9ed 60%, #dfe2e7 100%);
+    --rc-window-bg: linear-gradient(160deg, #ffffff 0%, #f8f9fa 45%, #f2f4f6 100%);
+    --rc-window-edge: rgba(20, 22, 25, 0.08);
+    --rc-window-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 30px 80px rgba(30, 36, 44, 0.14);
     --rc-art-bg: #151618;
-    --rc-text: #e9ebee;
-    --rc-text-muted: #9aa0a8;
-    --rc-text-dim: #7f858e;
-    --rc-input-bg: #1b1e21;
-    --rc-input-border: rgba(255, 255, 255, 0.07);
-    --rc-input-border-hover: rgba(255, 255, 255, 0.14);
-    --rc-focus: rgba(170, 196, 226, 0.22);
-    --rc-accent: #a9c4e2;
-    --rc-primary-top: #6e737b;
-    --rc-primary-bottom: #555a62;
-    --rc-error: #f0a3a3;
-    --rc-error-border: rgba(240, 163, 163, 0.55);
+    --rc-text: #16181b;
+    --rc-text-muted: #5d636b;
+    --rc-text-dim: #737981;
+    --rc-dot-1: rgba(20, 22, 25, 0.38);
+    --rc-dot-2: rgba(20, 22, 25, 0.22);
+    --rc-dot-3: rgba(20, 22, 25, 0.12);
+    --rc-chip-bg: rgba(20, 22, 25, 0.04);
+    --rc-chip-active: #ffffff;
+    --rc-chip-active-shadow: 0 1px 3px rgba(20, 22, 25, 0.12);
+    --rc-input-bg: #ffffff;
+    --rc-input-border: rgba(20, 22, 25, 0.12);
+    --rc-input-border-hover: rgba(20, 22, 25, 0.24);
+    --rc-input-shadow: inset 0 1px 2px rgba(20, 22, 25, 0.04);
+    --rc-hover-bg: rgba(20, 22, 25, 0.05);
+    --rc-track: rgba(20, 22, 25, 0.08);
+    --rc-focus: rgba(84, 120, 160, 0.2);
+    --rc-focus-border: rgba(84, 120, 160, 0.55);
+    --rc-accent: #4f6f93;
+    --rc-check-color: #ffffff;
+    --rc-primary-top: #3a3f46;
+    --rc-primary-bottom: #24282d;
+    --rc-primary-border: rgba(20, 22, 25, 0.2);
+    --rc-primary-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 6px 18px rgba(20, 22, 25, 0.16);
+    --rc-primary-text: #f6f7f8;
+    --rc-social-hover: #f4f5f7;
+    --rc-dialog-shadow: 0 24px 80px rgba(20, 22, 25, 0.22);
+    --rc-backdrop: rgba(20, 22, 25, 0.35);
+    --rc-error: #c25555;
+    --rc-error-border: rgba(194, 85, 85, 0.55);
     --rc-radius: 7px;
     --rc-transition: 160ms ease;
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   *,
@@ -31,9 +52,7 @@
 
   & {
     min-height: 100vh;
-    background:
-      radial-gradient(ellipse at 50% -10%, rgba(255, 255, 255, 0.06), transparent 60%),
-      linear-gradient(180deg, #2a2e33 0%, var(--rc-bg) 60%, #17191b 100%);
+    background: var(--rc-page-bg);
     color: var(--rc-text);
     font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 13px;
@@ -84,10 +103,8 @@
     padding: 10px;
     border: 1px solid var(--rc-window-edge);
     border-radius: 22px;
-    background: linear-gradient(160deg, #2b2f34 0%, var(--rc-window) 45%, #1f2226 100%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 30px 80px rgba(0, 0, 0, 0.45);
+    background: var(--rc-window-bg);
+    box-shadow: var(--rc-window-shadow);
     animation: register-ci-enter 420ms ease both;
   }
 
@@ -114,15 +131,15 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.4);
+    background: var(--rc-dot-1);
   }
 
   .rc-dots span:nth-child(2) {
-    background: rgba(255, 255, 255, 0.22);
+    background: var(--rc-dot-2);
   }
 
   .rc-dots span:nth-child(3) {
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--rc-dot-3);
   }
 
   .rc-lang {
@@ -131,7 +148,7 @@
     padding: 2px;
     border: 1px solid var(--rc-input-border);
     border-radius: 999px;
-    background: rgba(0, 0, 0, 0.18);
+    background: var(--rc-chip-bg);
   }
 
   .rc-lang button {
@@ -152,7 +169,8 @@
   }
 
   .rc-lang button[aria-pressed="true"] {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--rc-chip-active);
+    box-shadow: var(--rc-chip-active-shadow);
     color: var(--rc-text);
   }
 
@@ -223,7 +241,7 @@
     border: 1px solid var(--rc-input-border);
     border-radius: var(--rc-radius);
     background: var(--rc-input-bg);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--rc-input-shadow);
     color: var(--rc-text);
     font-size: 12.5px;
     outline: none;
@@ -241,7 +259,7 @@
   }
 
   .rc-input:focus {
-    border-color: rgba(169, 196, 226, 0.45);
+    border-color: var(--rc-focus-border);
     box-shadow: 0 0 0 3px var(--rc-focus);
   }
 
@@ -282,7 +300,7 @@
   }
 
   .rc-eye:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--rc-hover-bg);
     color: var(--rc-text);
   }
 
@@ -307,7 +325,7 @@
   .rc-strength-bar {
     height: 3px;
     border-radius: 99px;
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--rc-track);
     transition: background var(--rc-transition);
   }
 
@@ -354,7 +372,7 @@
     border: 1px solid var(--rc-input-border-hover);
     border-radius: 4px;
     background: var(--rc-input-bg);
-    color: #1b1e21;
+    color: var(--rc-check-color);
     transition:
       background var(--rc-transition),
       border-color var(--rc-transition);
@@ -400,13 +418,11 @@
     gap: 8px;
     margin-top: 4px;
     padding: 0 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--rc-primary-border);
     border-radius: var(--rc-radius);
     background: linear-gradient(180deg, var(--rc-primary-top), var(--rc-primary-bottom));
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      0 6px 18px rgba(0, 0, 0, 0.25);
-    color: #f4f5f7;
+    box-shadow: var(--rc-primary-shadow);
+    color: var(--rc-primary-text);
     font-size: 12.5px;
     font-weight: 500;
     transition:
@@ -479,7 +495,7 @@
 
   .rc-social:hover {
     border-color: var(--rc-input-border-hover);
-    background: #212428;
+    background: var(--rc-social-hover);
   }
 
   .rc-social svg {
@@ -588,13 +604,13 @@
     margin: auto;
     border: 1px solid var(--rc-window-edge);
     border-radius: 16px;
-    background: var(--rc-window);
+    background: var(--rc-window-bg);
     color: var(--rc-text);
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    box-shadow: var(--rc-dialog-shadow);
   }
 
   .rc-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--rc-backdrop);
     backdrop-filter: blur(3px);
   }
 
@@ -635,7 +651,7 @@
   }
 
   .rc-dialog-close:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--rc-hover-bg);
     color: var(--rc-text);
   }
 
@@ -706,6 +722,45 @@
       transition-duration: 0.01ms !important;
     }
   }
+}
+
+.dark .register-ci {
+  --rc-page-bg:
+    radial-gradient(ellipse at 50% -10%, rgba(255, 255, 255, 0.06), transparent 60%),
+    linear-gradient(180deg, #2a2e33 0%, #1c1f22 60%, #17191b 100%);
+  --rc-window-bg: linear-gradient(160deg, #2b2f34 0%, #24282c 45%, #1f2226 100%);
+  --rc-window-edge: rgba(255, 255, 255, 0.07);
+  --rc-window-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 30px 80px rgba(0, 0, 0, 0.45);
+  --rc-text: #e9ebee;
+  --rc-text-muted: #9aa0a8;
+  --rc-text-dim: #7f858e;
+  --rc-dot-1: rgba(255, 255, 255, 0.4);
+  --rc-dot-2: rgba(255, 255, 255, 0.22);
+  --rc-dot-3: rgba(255, 255, 255, 0.12);
+  --rc-chip-bg: rgba(0, 0, 0, 0.18);
+  --rc-chip-active: rgba(255, 255, 255, 0.1);
+  --rc-chip-active-shadow: none;
+  --rc-input-bg: #1b1e21;
+  --rc-input-border: rgba(255, 255, 255, 0.07);
+  --rc-input-border-hover: rgba(255, 255, 255, 0.14);
+  --rc-input-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+  --rc-hover-bg: rgba(255, 255, 255, 0.06);
+  --rc-track: rgba(255, 255, 255, 0.08);
+  --rc-focus: rgba(170, 196, 226, 0.22);
+  --rc-focus-border: rgba(169, 196, 226, 0.45);
+  --rc-accent: #a9c4e2;
+  --rc-check-color: #1b1e21;
+  --rc-primary-top: #6e737b;
+  --rc-primary-bottom: #555a62;
+  --rc-primary-border: rgba(255, 255, 255, 0.08);
+  --rc-primary-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 6px 18px rgba(0, 0, 0, 0.25);
+  --rc-primary-text: #f4f5f7;
+  --rc-social-hover: #212428;
+  --rc-dialog-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  --rc-backdrop: rgba(0, 0, 0, 0.6);
+  --rc-error: #f0a3a3;
+  --rc-error-border: rgba(240, 163, 163, 0.55);
+  color-scheme: dark;
 }
 
 @keyframes register-ci-enter {
