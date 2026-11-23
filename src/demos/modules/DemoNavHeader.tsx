@@ -21,7 +21,7 @@ export function DemoNavHeader() {
         onLogin={state.login}
         registerLabel={"Registrieren"}
         onRegister={state.login}
-        ctaLabel={"Kontakt aufnehmen"}
+        ctaLabel={"Kontakt"}
         ctaHref={"#kontakt"}
         userName={state.loggedIn() ? "Max Mustermann" : undefined}
         userInitials={state.loggedIn() ? "MM" : undefined}
