@@ -2,7 +2,7 @@ import { mdiBrightnessAuto } from "@adaptive-ds/mdi/mdiBrightnessAuto.js"
 import { mdiPaletteOutline } from "@adaptive-ds/mdi/mdiPaletteOutline.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
-import { onSettled } from "solid-js"
+import { onCleanup, onSettled } from "solid-js"
 import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
 import { themeVariant } from "#ui/interactive/theme/themeVariant.js"
 import type { AppSidebarUserMenuSection } from "#ui/modules/app_sidebar/AppSidebarUserMenu.jsx"
@@ -19,6 +19,17 @@ export function demoNavHeaderStateCreate() {
       isActive: active.get() === label,
       onClick: () => active.set(label),
     }))
+  function attachLogo(element: HTMLDivElement) {
+    const onClick = (event: MouseEvent) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return
+      event.preventDefault()
+      event.stopPropagation()
+      active.set("Willkommen")
+      history.replaceState(history.state, "", location.pathname + location.search)
+    }
+    element.addEventListener("click", onClick, true)
+    onCleanup(() => element.removeEventListener("click", onClick, true))
+  }
   const sections: AppSidebarUserMenuSection[] = [
     {
       label: "Darstellung",
@@ -43,7 +54,7 @@ export function demoNavHeaderStateCreate() {
     loggedIn: loggedIn.get,
     items,
     sections,
-    goHome: () => active.set("Willkommen"),
+    attachLogo,
     login: () => loggedIn.set(true),
     logout: () => loggedIn.set(false),
     toggleLogin: () => loggedIn.set(!loggedIn.get()),

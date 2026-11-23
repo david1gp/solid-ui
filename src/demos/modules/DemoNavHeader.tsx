@@ -12,14 +12,7 @@ export function DemoNavHeader() {
     <div class={"min-h-screen bg-background text-foreground"}>
       <NavHeader
         logo={
-          <div
-            onClick={(event) => {
-              if (!event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey && event.button === 0) {
-                event.preventDefault()
-                state.goHome()
-              }
-            }}
-          >
+          <div ref={state.attachLogo}>
             <LogoImageText logoText={"adaptive-solid-ui"} logoTextClass={"text-lg font-semibold"} />
           </div>
         }
