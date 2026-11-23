@@ -36,7 +36,7 @@ import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGr
 import { AppSidebarUserMenu, type AppSidebarUserMenuSection } from "#ui/modules/app_sidebar/AppSidebarUserMenu.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
-import { demoAppSidebarMobileCollapseCreate } from "./demoAppSidebarMobileCollapseCreate.js"
+import { demoCmsMobileCollapseCreate } from "./demoCmsMobileCollapseCreate.js"
 
 const entries = [
   { icon: mdiFolderMultipleOutline, label: "Projekte" },
@@ -68,7 +68,7 @@ export function DemoCMS() {
   // Fullscreen demo has no nav ThemeButton, so load the stored theme here for the tiles' selection.
   onSettled(themeInit)
   const settingsOpen = createSignalObject(false)
-  const { collapsed } = demoAppSidebarMobileCollapseCreate(settingsOpen)
+  const { collapsed } = demoCmsMobileCollapseCreate(settingsOpen)
   const accentColor = createSignalObject(accentColors[0]!.color)
   const language = createSignalObject("DE")
   const initial = {
