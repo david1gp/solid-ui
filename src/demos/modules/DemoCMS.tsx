@@ -15,8 +15,8 @@ import { mdiPaletteOutline } from "@adaptive-ds/mdi/mdiPaletteOutline.js"
 import { mdiPaletteSwatchOutline } from "@adaptive-ds/mdi/mdiPaletteSwatchOutline.js"
 import { mdiShieldAccountOutline } from "@adaptive-ds/mdi/mdiShieldAccountOutline.js"
 import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
-import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
+import { mdiWeb } from "@adaptive-ds/mdi/mdiWeb.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
 import { createRoot, createSignal, For, type Element as JSXElement, Match, onSettled, Show, Switch } from "solid-js"
 import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
@@ -215,7 +215,7 @@ export function DemoCMS() {
     },
     {
       label: "Sprache",
-      icon: mdiTranslate,
+      icon: mdiWeb,
       hint: "Muss manuell aktiviert werden",
       options: (["DE", "EN"] as const).map((label) => ({
         label,
