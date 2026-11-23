@@ -31,6 +31,7 @@ export function demoRegisterLoginStateCreate() {
     event.preventDefault()
     if (!form) return
     const next = formErrorsGerman(form)
+    if (next.terms) next.terms = "Bitte akzeptiere die Nutzungsbedingungen."
     setErrors(next)
     if (Object.keys(next).length) return
     setLoading(true)
