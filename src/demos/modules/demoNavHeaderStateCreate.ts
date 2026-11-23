@@ -52,13 +52,11 @@ export function demoNavHeaderStateCreate() {
     },
   ]
   return {
-    active: active.get,
     loggedIn: loggedIn.get,
     items,
     sections,
     attachLogo,
     login: () => loggedIn.set(true),
     logout: () => loggedIn.set(false),
-    toggleLogin: () => loggedIn.set(!loggedIn.get()),
   }
 }
