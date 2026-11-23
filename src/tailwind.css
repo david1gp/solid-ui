@@ -44,7 +44,7 @@
     /* Updated color tokens to match DCC design brief with professional orange/neutral palette */
     --background: oklch(1 0 0); /* #ffffff */
     --foreground: oklch(0.35 0 0); /* #4b5563 */
-    --muted: oklch(0.97 0.01 20); /* #fef2f2 */
+    --muted: oklch(0.97 0 0); /* #f5f5f5 neutral gray, no red/beige tint */
     --muted-foreground: oklch(0.35 0 0); /* #4b5563 */
     --border: oklch(0.915 0.005 264);
     --input: oklch(0.87 0.006 264);
