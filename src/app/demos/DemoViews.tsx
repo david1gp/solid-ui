@@ -1,17 +1,18 @@
 import { dynamic } from "@solidjs/web"
-import { type Component, createMemo, createSignal, Errored, Loading, onSettled, Show } from "solid-js"
-import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
+import { type Component, createMemo, createSignal, Errored, For, Loading, onSettled, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
+import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
+import { demosOverviewStateCreate } from "#src/app/demos/demosOverviewStateCreate.js"
 import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
 import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreate.js"
 import { HomeHowTo } from "#src/app/demos/HomeHowTo.jsx"
 import { SiteNavHeader } from "#src/nav/site_header/SiteNavHeader.jsx"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkTextInternal } from "#ui/interactive/link/LinkText.jsx"
 import { BulletLinks } from "#ui/interactive/list/BulletLinks.jsx"
 import { TabsTop } from "#ui/interactive/tabs/TabsTop.jsx"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { classArr } from "#ui/utils/classArr.js"
-import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
 
 // Demos live at the site root (prefix ""), e.g. /input, /input/DemoInputS.
@@ -43,7 +44,7 @@ const panelClass = "px-6 py-4 rounded-2xl bg-background/70 backdrop-blur-xl dark
 
 /** L0 — overview grid of every category and its components. */
 export function DemosOverview() {
-  const selectedTab = createSignalObject("overview")
+  const state = demosOverviewStateCreate(demoList, demoDisplayNames)
   const categories = objectKeys(demoList)
   const options = ["overview", "howto", ...categories]
   return (
@@ -63,11 +64,73 @@ export function DemosOverview() {
           )}
         >
           <TabsTop
-            valueSignal={selectedTab}
+            valueSignal={state.selectedTab}
             getOptions={() => options}
+            trailing={
+              <div class="relative ml-auto flex w-full items-center sm:w-64">
+                <svg
+                  aria-hidden="true"
+                  class="pointer-events-none absolute left-3 h-4 w-4 text-muted-foreground"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-4-4" />
+                </svg>
+                <input
+                  type="search"
+                  aria-label="Search components"
+                  placeholder="Search components…"
+                  class="w-full rounded-md border border-border bg-background py-2 pl-9 pr-9 text-sm [&::-webkit-search-cancel-button]:hidden"
+                  value={state.query.get()}
+                  onInput={(event) => state.setQuery(event.currentTarget.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") {
+                      event.preventDefault()
+                      state.setQuery("")
+                    }
+                  }}
+                />
+                <Show when={state.query.get()}>
+                  <button
+                    type="button"
+                    aria-label="Clear search"
+                    class="absolute right-2 rounded px-1 text-xl text-muted-foreground"
+                    onClick={() => state.setQuery("")}
+                  >
+                    ×
+                  </button>
+                </Show>
+              </div>
+            }
             valueText={(value) => (value === "howto" ? "How to" : capitalizeFirst(value))}
             class={"rounded-lg p-1 bg-background/50 dark:bg-background/50"}
             valueChildren={(value) => {
+              if (state.query.get().trim()) {
+                return (
+                  <div class="space-y-2 py-6">
+                    <Show
+                      when={state.results().length}
+                      fallback={<p class="text-muted-foreground">No results for “{state.query.get().trim()}”</p>}
+                    >
+                      <For each={state.results()}>
+                        {(result) => (
+                          <div class="flex items-baseline gap-2">
+                            <LinkTextInternal to="/$" params={{ _splat: `${result.category}/${result.name}` }}>
+                              {result.displayName}
+                            </LinkTextInternal>
+                            <span class="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                              {capitalizeFirst(result.category)}
+                            </span>
+                          </div>
+                        )}
+                      </For>
+                    </Show>
+                  </div>
+                )
+              }
               if (value === "overview") {
                 return (
                   <div class={"max-w-3xl space-y-4 py-6"}>
