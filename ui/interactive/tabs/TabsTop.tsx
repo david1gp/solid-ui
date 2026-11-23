@@ -22,6 +22,8 @@ export interface TabsTopProps
   disabled?: boolean
   texts?: TabsTopText
   trailing?: JSXElement
+  /** Classes for the selected tab; defaults to "bg-blue-500 text-white". */
+  selectedClass?: string
 }
 
 /**
@@ -68,6 +70,7 @@ export function TabsTop(p: TabsTopProps) {
               baseId={baseId}
               value={value}
               valueSignal={p.valueSignal}
+              selectedClass={p.selectedClass}
               tabIndex={
                 value === p.valueSignal.get() ||
                 (!p.getOptions().includes(p.valueSignal.get()) && value === p.getOptions()[0])
@@ -111,6 +114,7 @@ interface TabOptionProps extends MayHaveClass {
   value: string
   valueSignal: SignalObject<string>
   tabIndex?: number
+  selectedClass?: string
   disabled?: boolean
   valueAmount?: (value: string) => number | undefined
   valueText?: (value: string) => string
@@ -135,7 +139,7 @@ function TabOption(p: TabOptionProps): JSXElement {
         "cursor-pointer select-none",
         "rounded-sm",
         "px-3 py-2 text-center",
-        isSelected(p) ? "bg-blue-500 text-white" : "hover:bg-slate-50 dark:hover:bg-neutral-900", // bg hover
+        isSelected(p) ? (p.selectedClass ?? "bg-blue-500 text-white") : "hover:bg-slate-50 dark:hover:bg-neutral-900", // bg hover
         "flex gap-2",
         p.class,
       )}
