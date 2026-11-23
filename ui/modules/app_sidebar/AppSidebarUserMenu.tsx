@@ -1,5 +1,5 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
-import { createEffect, createSignal, For, type Element as JSXElement, Show } from "solid-js"
+import { createEffect, createSignal, For, type Element as JSXElement, Show, untrack } from "solid-js"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.js"
@@ -87,7 +87,7 @@ export function AppSidebarUserMenu(p: AppSidebarUserMenuProps) {
 /** Segmented choice row with local selection that also follows external selection changes. */
 function SegmentedSection(p: { section: AppSidebarUserMenuSection }) {
   const selectedFromOptions = () => p.section.options.findIndex((o) => o.selected)
-  const [selected, setSelected] = createSignal(selectedFromOptions())
+  const [selected, setSelected] = createSignal(untrack(selectedFromOptions))
   createEffect(selectedFromOptions, (index) => {
     setSelected(index)
   })

@@ -1,5 +1,5 @@
 import { mdiLogout } from "@adaptive-ds/mdi/mdiLogout.js"
-import { createEffect, createSignal, For, type Element as JSXElement, Match, Show, Switch } from "solid-js"
+import { createEffect, createSignal, For, type Element as JSXElement, Match, Show, Switch, untrack } from "solid-js"
 import { AppSettingsProfileHeader } from "#ui/modules/app_sidebar/AppSettingsProfileHeader.jsx"
 import type {
   AppSidebarUserMenuOption,
@@ -95,7 +95,7 @@ function Card(p: { class?: string; compact?: boolean; children: JSXElement }) {
 /** Tile row with local selection that also follows external selection changes. */
 function TileSection(p: { section: AppSidebarUserMenuSection }) {
   const selectedFromOptions = () => p.section.options.findIndex((o) => o.selected)
-  const [selected, setSelected] = createSignal(selectedFromOptions())
+  const [selected, setSelected] = createSignal(untrack(selectedFromOptions))
   createEffect(selectedFromOptions, (index) => {
     setSelected(index)
   })
