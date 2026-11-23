@@ -36,6 +36,23 @@ export function TabsTop(p: TabsTopProps) {
         id={p.id}
         role="tablist"
         data-disabled={p.disabled}
+        onKeyDown={(event) => {
+          if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return
+          const tabs = Array.from(
+            event.currentTarget.querySelectorAll<HTMLButtonElement>(':scope > [role="tab"]:not(:disabled)'),
+          )
+          const index = tabs.indexOf(event.target as HTMLButtonElement)
+          if (index < 0 || tabs.length === 0) return
+          event.preventDefault()
+          const next =
+            event.key === "Home"
+              ? 0
+              : event.key === "End"
+                ? tabs.length - 1
+                : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length
+          tabs[next]?.focus()
+          tabs[next]?.click()
+        }}
         class={classArr(
           "flex flex-wrap gap-2",
           // "grid gap-2 rounded-md p-2",
@@ -50,6 +67,12 @@ export function TabsTop(p: TabsTopProps) {
               baseId={baseId}
               value={value}
               valueSignal={p.valueSignal}
+              tabIndex={
+                value === p.valueSignal.get() ||
+                (!p.getOptions().includes(p.valueSignal.get()) && value === p.getOptions()[0])
+                  ? 0
+                  : -1
+              }
               disabled={p.disabled}
               valueAmount={p.valueAmount}
               valueText={p.valueText}
@@ -85,6 +108,7 @@ interface TabOptionProps extends MayHaveClass {
   baseId: string
   value: string
   valueSignal: SignalObject<string>
+  tabIndex?: number
   disabled?: boolean
   valueAmount?: (value: string) => number | undefined
   valueText?: (value: string) => string
@@ -98,6 +122,7 @@ function TabOption(p: TabOptionProps): JSXElement {
       type="button"
       role="tab"
       aria-selected={isSelected(p) ? "true" : "false"}
+      tabindex={p.tabIndex}
       id={makeTriggerId(p.baseId, p.value)}
       aria-controls={makeContentId(p.baseId, p.value)}
       data-state={isSelected(p) ? "active" : "inactive"}
