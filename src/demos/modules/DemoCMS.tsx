@@ -68,7 +68,7 @@ export function DemoCMS() {
   // Fullscreen demo has no nav ThemeButton, so load the stored theme here for the tiles' selection.
   onSettled(themeInit)
   const settingsOpen = createSignalObject(false)
-  const collapsed = demoAppSidebarMobileCollapseCreate(settingsOpen)
+  const { collapsed } = demoAppSidebarMobileCollapseCreate(settingsOpen)
   const accentColor = createSignalObject(accentColors[0]!.color)
   const language = createSignalObject("DE")
   const initial = {
