@@ -17,7 +17,7 @@ import { objectKeys } from "#utils/obj/objectKeys.js"
 const prefix = ""
 
 /** Full-viewport demos rendered without the demo nav; they get a floating home button instead. */
-const fullscreenDemos = new Set(["DemoAppSidebar", "DemoRegisterLogin", "DemoCMS", "DemoNavHeader"])
+const fullscreenDemos = new Set(["DemoAppSidebar", "DemoRegisterLogin", "DemoCMS", "DemoNavHeader", "Bottom-Mobile-Navbar"])
 
 /** Display labels overriding the name derived from the demo key (prefix "Demo" stripped). */
 const demoDisplayNames: Record<string, string> = {
@@ -134,7 +134,7 @@ export function DemoComponent(props: { category: string; compName: string }) {
           <NavDemo demoList={demoList} category={props.category} compName={props.compName} demoPrefix={prefix} />
         }
       >
-        <HomeButtonFloating />
+        <HomeButtonFloating top={props.compName === "Bottom-Mobile-Navbar"} />
       </Show>
       <Show when={mounted()}>
         <Errored fallback={(err) => <DemoLoadError error={err()} />}>
@@ -148,10 +148,10 @@ export function DemoComponent(props: { category: string; compName: string }) {
 }
 
 /** Icon-only home link pinned to the bottom-right of the viewport. */
-function HomeButtonFloating() {
+function HomeButtonFloating(props: { top?: boolean }) {
   const state = floatingThemeStateCreate()
   return (
-    <div class={"fixed bottom-4 right-4 z-50 flex items-center gap-1.5"}>
+    <div class={classArr("fixed right-4 z-50 flex items-center gap-1.5", props.top ? "top-4" : "bottom-4")}>
       <FloatingGlowButton kind={"theme"} label={state.label()} isDark={state.isDark()} onClick={state.toggle} />
       <FloatingGlowButton kind={"home"} label={"Home"} />
     </div>
