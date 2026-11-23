@@ -18,6 +18,7 @@ const demosDir = join(here, "..", "demos")
 // Catalog keys that differ from their source filenames (see demoList.ts).
 const demoRouteNames: Record<string, string> = {
   "modules/DemoBottomMobileNavbar": "Bottom-Mobile-Navbar",
+  "modules/DemoNavbarHeaderModern": "NavbarHeader-Modern",
 }
 
 function findDemoNames(dir: string): string[] {

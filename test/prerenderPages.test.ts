@@ -7,3 +7,9 @@ test("prerender pages use the catalog route for the bottom mobile navbar", () =>
   expect(paths).toContain("/modules/DemoAppSidebar")
   expect(paths).not.toContain("/modules/DemoBottomMobileNavbar")
 })
+
+test("prerender pages use the catalog route for NavbarHeader-Modern", () => {
+  const paths = getPrerenderPages().map((page) => page.path)
+  expect(paths).toContain("/modules/NavbarHeader-Modern")
+  expect(paths).not.toContain("/modules/DemoNavbarHeaderModern")
+})
