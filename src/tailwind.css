@@ -92,3 +92,13 @@
 body:has([data-bottom-mobile-navbar-demo]) [data-demo-notice] {
   bottom: calc(7rem + env(safe-area-inset-bottom));
 }
+
+@media (width < 40rem) {
+  body:has([data-bottom-mobile-navbar-demo]) [data-demo-floating-buttons] {
+    bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+
+  body:has([data-bottom-mobile-navbar-demo]) [data-demo-notice] {
+    bottom: calc(8rem + env(safe-area-inset-bottom));
+  }
+}

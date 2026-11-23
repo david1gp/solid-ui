@@ -140,7 +140,7 @@ export function DemoComponent(props: { category: string; compName: string }) {
           <NavDemo demoList={demoList} category={props.category} compName={props.compName} demoPrefix={prefix} />
         }
       >
-        <HomeButtonFloating top={props.compName === "Bottom-Mobile-Navbar"} />
+        <HomeButtonFloating />
       </Show>
       <Show when={mounted()}>
         <Errored fallback={(err) => <DemoLoadError error={err()} />}>
@@ -154,10 +154,10 @@ export function DemoComponent(props: { category: string; compName: string }) {
 }
 
 /** Icon-only home link pinned to the bottom-right of the viewport. */
-function HomeButtonFloating(props: { top?: boolean }) {
+function HomeButtonFloating() {
   const state = floatingThemeStateCreate()
   return (
-    <div class={classArr("fixed right-4 z-50 flex items-center gap-1.5", props.top ? "top-4" : "bottom-4")}>
+    <div data-demo-floating-buttons class="fixed bottom-4 right-4 z-50 flex items-center gap-1.5">
       <FloatingGlowButton kind={"theme"} label={state.label()} isDark={state.isDark()} onClick={state.toggle} />
       <FloatingGlowButton kind={"home"} label={"Home"} />
     </div>
