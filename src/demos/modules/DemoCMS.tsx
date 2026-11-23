@@ -19,6 +19,7 @@ import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
 import { createRoot, createSignal, For, type Element as JSXElement, Match, onSettled, Show, Switch } from "solid-js"
+import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { CmsSettingsNav } from "#src/demos/modules/cms/CmsSettingsNav.jsx"
 import { CmsSettingsPanel } from "#src/demos/modules/cms/CmsSettingsPanel.jsx"
 import { CmsSettingsSidebar } from "#src/demos/modules/cms/CmsSettingsSidebar.jsx"
@@ -331,7 +332,8 @@ export function DemoCMS() {
     },
   ]
   return (
-    <div class={"flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
+    <div class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
+      <DemoShapesBackdrop />
       <div class={"relative flex shrink-0"}>
         <CmsSidebar
           collapsed={collapsed}

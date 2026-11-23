@@ -2,6 +2,7 @@ import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { dynamic } from "@solidjs/web"
 import { type Component, createMemo, createSignal, Errored, For, Loading, onSettled, Show } from "solid-js"
 import { demoList } from "#src/app/demos/demoList.js"
+import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
 import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreate.js"
 import { NavDemo } from "#src/nav/NavDemo.jsx"
@@ -37,11 +38,15 @@ const demoDisplayNames: Record<string, string> = {
   DemoRegisterCi: "Register-CI",
 }
 
+/** Frosted panel keeping link text readable above the abstract backdrop shapes. */
+const panelClass = "px-6 py-4 rounded-2xl bg-background/70 backdrop-blur-xl dark:bg-[#222326]/70"
+
 /** L0 — overview grid of every category and its components. */
 export function DemosOverview() {
   const categories: [string, Record<string, unknown>][] = objectEntries(demoList)
   return (
     <LayoutWrapperDemo title={"demos"}>
+      <DemoShapesBackdrop fixed />
       <NavDemo demoList={demoList} demoPrefix={prefix} />
       <div
         class={classArr(
@@ -50,7 +55,12 @@ export function DemosOverview() {
           "p-4", // spacing
         )}
       >
-        <div class={"flex flex-wrap justify-center items-start gap-x-8 gap-y-3"}>
+        <div
+          class={classArr(
+            "flex flex-wrap justify-center items-start gap-x-8 gap-y-3", // layout
+            panelClass,
+          )}
+        >
           <For each={categories}>
             {([category, tree]) => {
               const categoryLinks = objectKeys(tree).map((compName) => `${prefix}/${category}/${compName}`)
@@ -98,6 +108,7 @@ export function DemosCategory(props: { category: string }) {
   })
   return (
     <LayoutWrapperDemo title={props.category}>
+      <DemoShapesBackdrop fixed />
       <NavDemo demoList={demoList} category={props.category} demoPrefix={prefix} />
       <div
         class={classArr(
@@ -106,7 +117,7 @@ export function DemosCategory(props: { category: string }) {
           "p-4", // spacing
         )}
       >
-        <div>
+        <div class={panelClass}>
           <h2 class={"text-xl font-semibold"}>{capitalizeFirst(props.category)}</h2>
           <div class={"flex flex-col"}>
             <BulletLinks

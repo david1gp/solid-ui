@@ -1,0 +1,71 @@
+/* Abstract color shapes behind demo content (shared by Sidebar-Simple, CMS, NavHeader and the demo index). */
+
+.demo-shapes-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.dark .demo-shapes-backdrop {
+  opacity: 0.85;
+}
+
+.demo-shapes-backdrop > span {
+  position: absolute;
+  display: block;
+}
+
+.demo-shapes-backdrop-shape-violet {
+  left: -7rem;
+  top: 6%;
+  width: 26rem;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #c084fc, #7c3aed 55%, #4c1d95);
+}
+
+.demo-shapes-backdrop-shape-amber {
+  left: 2.5rem;
+  top: 36%;
+  width: 8.5rem;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #fde68a, #f59e0b 60%, #b45309);
+}
+
+.demo-shapes-backdrop-shape-teal {
+  left: 5rem;
+  top: 56%;
+  width: 20rem;
+  height: 15rem;
+  border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%;
+  rotate: -12deg;
+  background: linear-gradient(135deg, #2dd4bf, #0e7490);
+}
+
+.demo-shapes-backdrop-shape-magenta {
+  left: 26%;
+  top: 74%;
+  width: 34rem;
+  height: 9rem;
+  border-radius: 9999px;
+  rotate: -18deg;
+  background: linear-gradient(90deg, #e879f9, #a21caf 60%, #6d28d9);
+}
+
+.demo-shapes-backdrop-shape-cyan {
+  right: 8%;
+  top: 10%;
+  width: 16rem;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #67e8f9, #0891b2 60%, #164e63);
+}
+
+/* Viewport-pinned variant for scrolling pages such as the demo index. */
+.demo-shapes-backdrop-fixed {
+  position: fixed;
+}

@@ -19,6 +19,7 @@ import { mdiTranslate } from "@adaptive-ds/mdi/mdiTranslate.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
 import { createRoot, createSignal, For, type Element as JSXElement, Match, onSettled, Show, Switch } from "solid-js"
+import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { Input } from "#ui/input/input/Input.jsx"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
@@ -280,14 +281,7 @@ export function DemoAppSidebar() {
   })
   return (
     <div class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
-      {/* Placeholder backdrop: abstract shapes behind the content (same look as Sidebar-modern, own copy). */}
-      <div aria-hidden="true" class={"demo-app-sidebar-shapes"}>
-        <span class={"demo-app-sidebar-shape-violet"} />
-        <span class={"demo-app-sidebar-shape-amber"} />
-        <span class={"demo-app-sidebar-shape-teal"} />
-        <span class={"demo-app-sidebar-shape-magenta"} />
-        <span class={"demo-app-sidebar-shape-cyan"} />
-      </div>
+      <DemoShapesBackdrop />
       <div class={"demo-app-sidebar-dock relative flex shrink-0"}>
         <AppSidebar
           class={automaticMotion() ? "demo-app-sidebar-rail demo-app-sidebar-rail-auto" : "demo-app-sidebar-rail"}

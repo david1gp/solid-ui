@@ -1,3 +1,4 @@
+import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
 import { AppSidebarUserMenu } from "#ui/modules/app_sidebar/AppSidebarUserMenu.jsx"
 import { NavHeader } from "#ui/modules/nav_header/NavHeader.jsx"
@@ -7,7 +8,8 @@ import { demoNavHeaderStateCreate } from "./demoNavHeaderStateCreate.js"
 export function DemoNavHeader() {
   const state = demoNavHeaderStateCreate()
   return (
-    <div class={"min-h-screen bg-background text-foreground"}>
+    <div class={"relative isolate min-h-screen bg-background text-foreground"}>
+      <DemoShapesBackdrop />
       <NavHeader
         logo={
           <div ref={state.attachLogo}>
