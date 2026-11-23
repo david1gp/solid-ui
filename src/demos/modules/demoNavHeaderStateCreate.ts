@@ -10,11 +10,12 @@ import { createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export function demoNavHeaderStateCreate() {
   onSettled(themeInit)
-  const active = createSignalObject("Start")
+  const active = createSignalObject("Willkommen")
   const loggedIn = createSignalObject(true)
   const items = () =>
-    ["Start", "Produkte", "Preise", "Blog", "Kontakt"].map((label) => ({
+    ["Produkte", "Preise", "Blog", "Kontakt"].map((label) => ({
       label,
+      href: `#${label.toLowerCase()}`,
       isActive: active.get() === label,
       onClick: () => active.set(label),
     }))
@@ -42,7 +43,7 @@ export function demoNavHeaderStateCreate() {
     loggedIn: loggedIn.get,
     items,
     sections,
-    goHome: () => active.set("Start"),
+    goHome: () => active.set("Willkommen"),
     login: () => loggedIn.set(true),
     logout: () => loggedIn.set(false),
     toggleLogin: () => loggedIn.set(!loggedIn.get()),
