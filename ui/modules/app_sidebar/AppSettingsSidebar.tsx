@@ -27,13 +27,14 @@ export function AppSettingsSidebar(p: AppSettingsSidebarProps) {
   return (
     <>
       <div
+        data-app-settings-backdrop=""
         aria-hidden="true"
+        data-closed={!isOpen() ? "" : undefined}
         onClick={() => p.open.set(false)}
         class={classArr(
           "absolute top-0 left-full z-30 h-full w-screen bg-black/10 dark:bg-black/30", // layout + look
-          "transition-opacity", // animation
+          "transition-opacity opacity-100 data-closed:opacity-0 data-closed:pointer-events-none", // animation
           motion,
-          isOpen() ? "opacity-100" : "opacity-0 pointer-events-none",
         )}
       />
       <aside
@@ -43,9 +44,9 @@ export function AppSettingsSidebar(p: AppSettingsSidebarProps) {
         class={classArr(
           "absolute top-0 left-full z-40 h-full overflow-hidden", // layout
           "bg-neutral-50 dark:bg-[#202124]", // background
-          "transition-[width,opacity]", // animation
+          "transition-[width,opacity] w-80 aria-hidden:w-0 opacity-100 aria-hidden:opacity-0", // animation
+          "aria-[hidden=false]:border-r aria-[hidden=false]:border-neutral-200 dark:aria-[hidden=false]:border-white/10 aria-[hidden=false]:shadow-xl",
           motion,
-          isOpen() ? "w-80 opacity-100 border-r border-neutral-200 dark:border-white/10 shadow-xl" : "w-0 opacity-0",
           p.class,
         )}
       >

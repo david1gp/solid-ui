@@ -100,6 +100,7 @@ export function AppSidebar(p: AppSidebarProps) {
           <div class={"min-w-0 truncate whitespace-nowrap text-base font-semibold"}>{p.brand}</div>
         </div>
         <button
+          data-app-sidebar-toggle=""
           type={"button"}
           onClick={() => p.collapsed.set(!p.collapsed.get())}
           title={isOpen() ? ttt("Close sidebar") : ttt("Open sidebar")}
@@ -118,7 +119,7 @@ export function AppSidebar(p: AppSidebarProps) {
       </div>
 
       <Show when={p.searchable !== false}>
-        <div class={"px-2 pt-1"}>
+        <div data-app-sidebar-search="" class={"px-2 pt-1"}>
           <Collapsible open={isOpen()}>
             <SearchField
               ref={(el) => {
@@ -153,6 +154,12 @@ export function AppSidebar(p: AppSidebarProps) {
             const setDrawerOpen = (open: boolean) => setDrawerState((s) => ({ ...s, [group().label]: open }))
             // The rail mirrors the drawer: a closed drawer collapses to one group icon with a flyout.
             const itemsVisible = () => !group().collapsible || drawerOpen()
+            // Do not build entries and their popovers behind a drawer that has never opened.
+            // Keep them after the first reveal so the height transition can still play on close.
+            const [itemsMounted, setItemsMounted] = createSignal(untrack(itemsVisible))
+            createEffect(itemsVisible, (visible) => {
+              if (visible) setItemsMounted(true)
+            })
             const railGroupVisible = () => !isOpen() && !!group().collapsible && !drawerOpen()
             const labelClass = "px-2 pb-1 text-xs font-semibold text-muted-foreground whitespace-nowrap"
             return (
@@ -192,14 +199,16 @@ export function AppSidebar(p: AppSidebarProps) {
                     </Collapsible>
                   </Show>
                   <Collapsible open={itemsVisible()}>
-                    <div class={"flex flex-col gap-0.5"}>
-                      <GroupItems
-                        group={group()}
-                        accentColor={p.accentColor}
-                        showLabels={isOpen()}
-                        labelClass={fade()}
-                      />
-                    </div>
+                    <Show when={itemsMounted() || itemsVisible()}>
+                      <div class={"flex flex-col gap-0.5"}>
+                        <GroupItems
+                          group={group()}
+                          accentColor={p.accentColor}
+                          showLabels={isOpen()}
+                          labelClass={fade()}
+                        />
+                      </div>
+                    </Show>
                   </Collapsible>
                 </div>
               </Collapsible>
@@ -415,9 +424,8 @@ function NavItemButton(p: NavItemButtonProps) {
             }
             class={classArr(
               appSidebarNavButtonClass,
-              "w-full min-w-0",
+              "w-full min-w-0 aria-[current=page]:bg-black/5 dark:aria-[current=page]:bg-white/15",
               hasMenu() && "pr-9",
-              p.item.isActive && "bg-black/5 dark:bg-white/15",
             )}
           >
             <AppSidebarAccentBar active={!!p.item.isActive} accentColor={p.accentColor} />
@@ -601,6 +609,8 @@ function MenuItem(p: {
   )
 }
 
+const itemKey = (item: AppSidebarNavItem) => item.id ?? item.label
+
 /** Shared drawer/flyout entries; onReorder uses final destination indices. */
 function GroupItems(p: {
   group: AppSidebarNavGroup
@@ -614,11 +624,11 @@ function GroupItems(p: {
   let groupElement: HTMLDivElement | undefined
   const [dragged, setDragged] = createSignal<string>()
   const [target, setTarget] = createSignal<string>()
-  const items = () => p.group.items.map((item) => ({ ...item, key: item.id ?? item.label }))
+  const items = () => p.group.items
   const move = (from: string, to: string) => {
     const current = items()
-    const fromIndex = current.findIndex((item) => item.key === from)
-    const toIndex = current.findIndex((item) => item.key === to)
+    const fromIndex = current.findIndex((item) => itemKey(item) === from)
+    const toIndex = current.findIndex((item) => itemKey(item) === to)
     if (fromIndex >= 0 && toIndex >= 0 && fromIndex !== toIndex) p.group.onReorder?.(fromIndex, toIndex)
   }
   const clear = () => {
@@ -627,8 +637,8 @@ function GroupItems(p: {
   }
   return (
     <div ref={groupElement} class={"flex flex-col gap-0.5"} tabindex={-1}>
-      <For each={items()} keyed={(item) => item.key}>
-        {(item) => (
+      <For each={items()} keyed={itemKey}>
+        {(item, index) => (
           <NavItemButton
             item={item()}
             accentColor={p.accentColor}
@@ -638,10 +648,9 @@ function GroupItems(p: {
             onEditStart={p.onEditStart}
             onDelete={() => {
               const buttons = Array.from(groupElement?.querySelectorAll<HTMLButtonElement>("[data-nav-entry]") ?? [])
-              const index = items().findIndex((i) => i.key === item().key)
               const next =
-                buttons[index + 1] ??
-                buttons[index - 1] ??
+                buttons[index() + 1] ??
+                buttons[index() - 1] ??
                 groupElement?.querySelector<HTMLButtonElement>("[data-nav-add]")
               const nav = groupElement?.closest<HTMLElement>("nav")
               item().onDelete?.()
@@ -653,48 +662,38 @@ function GroupItems(p: {
               })
             }}
             onMove={(direction) => {
-              const current = items()
-              const index = current.findIndex((i) => i.key === item().key)
-              const next = current[index + direction]
-              if (next) move(item().key, next.key)
+              const next = items()[index() + direction]
+              if (next) move(itemKey(item()), itemKey(next))
             }}
-            canMoveUp={items().findIndex((i) => i.key === item().key) > 0}
-            canMoveDown={items().findIndex((i) => i.key === item().key) < items().length - 1}
+            canMoveUp={index() > 0}
+            canMoveDown={index() < items().length - 1}
             draggable={!!p.group.onReorder}
-            dragging={dragged() === item().key}
-            dropBefore={
-              target() === item().key &&
-              items().findIndex((i) => i.key === dragged()) > items().findIndex((i) => i.key === item().key)
-            }
-            dropAfter={
-              target() === item().key &&
-              items().findIndex((i) => i.key === dragged()) < items().findIndex((i) => i.key === item().key)
-            }
+            dragging={dragged() === itemKey(item())}
+            dropBefore={target() === itemKey(item()) && index() < items().findIndex((i) => itemKey(i) === dragged())}
+            dropAfter={target() === itemKey(item()) && index() > items().findIndex((i) => itemKey(i) === dragged())}
             onDragStart={(event) => {
               if (!p.group.onReorder) return
-              setDragged(item().key)
-              event.dataTransfer?.setData("text/plain", item().key)
+              setDragged(itemKey(item()))
+              event.dataTransfer?.setData("text/plain", itemKey(item()))
               if (event.dataTransfer) event.dataTransfer.effectAllowed = "move"
             }}
             onDragOver={(event) => {
               if (!dragged()) return
               event.preventDefault()
-              setTarget(item().key)
+              setTarget(itemKey(item()))
             }}
             onDrop={(event) => {
               if (!dragged()) return
               event.preventDefault()
-              move(dragged()!, item().key)
+              move(dragged()!, itemKey(item()))
               clear()
             }}
             onDragEnd={clear}
             onKeyDown={(event) => {
               if (!p.group.onReorder || !event.altKey || (event.key !== "ArrowUp" && event.key !== "ArrowDown")) return
               event.preventDefault()
-              const current = items()
-              const index = current.findIndex((i) => i.key === item().key)
-              const next = current[index + (event.key === "ArrowUp" ? -1 : 1)]
-              if (next) move(item().key, next.key)
+              const next = items()[index() + (event.key === "ArrowUp" ? -1 : 1)]
+              if (next) move(itemKey(item()), itemKey(next))
             }}
           />
         )}
@@ -827,9 +826,9 @@ function Collapsible(p: { open: boolean; children: JSXElement }) {
   return (
     <div
       class={classArr(
-        "grid transition-[grid-template-rows,opacity]", // layout + animation
+        "grid grid-rows-[1fr] opacity-100 aria-hidden:grid-rows-[0fr] aria-hidden:opacity-0", // layout
+        "transition-[grid-template-rows,opacity]",
         motion,
-        p.open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
       )}
       aria-hidden={p.open ? "false" : "true"}
       inert={!p.open}

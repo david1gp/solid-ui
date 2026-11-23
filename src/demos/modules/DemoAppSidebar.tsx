@@ -32,11 +32,12 @@ import { AppSidebar } from "#ui/modules/app_sidebar/AppSidebar.jsx"
 import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
 import { AppSidebarCssBanner } from "#ui/modules/app_sidebar/AppSidebarCssBanner.jsx"
 import { AppSidebarFlag } from "#ui/modules/app_sidebar/AppSidebarFlag.jsx"
-import type { AppSidebarNavGroup } from "#ui/modules/app_sidebar/AppSidebarNavGroup.js"
 import { AppSidebarUserMenu, type AppSidebarUserMenuSection } from "#ui/modules/app_sidebar/AppSidebarUserMenu.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { demoAppSidebarGroupsCreate } from "./demoAppSidebarGroupsCreate.js"
 import { demoAppSidebarMobileCollapseCreate } from "./demoAppSidebarMobileCollapseCreate.js"
+import "./DemoAppSidebar.css"
 
 const entries = [
   { icon: mdiFolderMultipleOutline, label: "Projekte" },
@@ -68,7 +69,7 @@ export function DemoAppSidebar() {
   // Fullscreen demo has no nav ThemeButton, so load the stored theme here for the tiles' selection.
   onSettled(themeInit)
   const settingsOpen = createSignalObject(false)
-  const collapsed = demoAppSidebarMobileCollapseCreate(settingsOpen)
+  const { automaticMotion, collapsed } = demoAppSidebarMobileCollapseCreate(settingsOpen)
   const accentColor = createSignalObject(accentColors[0]!.color)
   const language = createSignalObject("DE")
   const initial = {
@@ -179,7 +180,6 @@ export function DemoAppSidebar() {
   const settingsPage = createSignalObject<SettingsPageId>("profile")
   const settingsPageLabel = () => settingsPages.find((page) => page.id === settingsPage.get())?.label
   const projects = createSignalObject([1, 2, 3, 4, 5].map((n) => ({ id: `project-${n}`, label: `Projekt ${n}` })))
-  let nextProject = 6
   const newProjectId = createSignalObject<string | undefined>(undefined)
   const projectById = (id: string) => projects.get().find((project) => project.id === id)
   const renameProject = (id: string, label: string) =>
@@ -264,77 +264,25 @@ export function DemoAppSidebar() {
     const toastId = toastAdd({ title: `Projekt „${project.label}“ gelöscht`, duration: 6000, children: undoButton })
     setTimeout(disposeToast, 7000)
   }
-  const groups = (): AppSidebarNavGroup[] => [
-    {
-      label: "Navigation",
-      items: [
-        ...entries.map((e) => ({
-          ...e,
-          isActive: !settingsOpen.get() && active() === e.label,
-          onClick: () => {
-            setActive(e.label)
-            settingsOpen.set(false)
-          },
-        })),
-        {
-          icon: mdiCogOutline,
-          label: `${settingsLabel} 1-3 (Mobil)`,
-          isActive: settingsOpen.get(),
-          onClick: () => settingsOpen.set(!settingsOpen.get()),
-        },
-        {
-          icon: mdiCogOutline,
-          label: `${settingsLabel} 4+`,
-          isActive: !settingsOpen.get() && active() === settingsPageKey,
-          onClick: () => {
-            setActive(settingsPageKey)
-            settingsOpen.set(false)
-          },
-        },
-      ],
-    },
-    {
-      label: "Projekte",
-      collapsible: true,
-      onReorder: (from, to) => {
-        const reordered = [...projects.get()]
-        const [item] = reordered.splice(from, 1)
-        if (item === undefined) return
-        reordered.splice(to, 0, item)
-        projects.set(reordered)
-      },
-      addItem: {
-        label: "Neues Projekt",
-        onAdd: () => {
-          const n = nextProject++
-          const project = { id: `project-${n}`, label: `Projekt ${n}` }
-          newProjectId.set(project.id)
-          projects.set([...projects.get(), project])
-          setActive(project.id)
-          settingsOpen.set(false)
-          // autoEdit only applies on first render; reset so reopening the drawer doesn't re-enter rename mode
-          queueMicrotask(() => newProjectId.set(undefined))
-        },
-      },
-      items: projects.get().map(({ id, label }) => ({
-        id,
-        icon: mdiFolderOutline,
-        label,
-        isActive: !settingsOpen.get() && active() === id,
-        autoEdit: newProjectId.get() === id,
-        onRename: (name: string) => renameProject(id, name),
-        onDelete: () => deleteProject(id),
-        onClick: () => {
-          setActive(id)
-          settingsOpen.set(false)
-        },
-      })),
-    },
-  ]
+  const groups = demoAppSidebarGroupsCreate({
+    entries,
+    settingsIcon: mdiCogOutline,
+    projectIcon: mdiFolderOutline,
+    settingsLabel,
+    settingsPageKey,
+    settingsOpen,
+    active,
+    setActive,
+    projects,
+    newProjectId,
+    renameProject,
+    deleteProject,
+  })
   return (
     <div class={"flex h-dvh w-full shrink-0 overflow-hidden bg-background dark:bg-[#222326]"}>
-      <div class={"relative flex shrink-0"}>
+      <div class={"demo-app-sidebar-dock relative flex shrink-0"}>
         <AppSidebar
+          class={automaticMotion() ? "demo-app-sidebar-rail demo-app-sidebar-rail-auto" : "demo-app-sidebar-rail"}
           collapsed={collapsed}
           logo={
             <span
@@ -350,7 +298,7 @@ export function DemoAppSidebar() {
               Atlas<span class={"text-blue-600"}>.</span>
             </>
           }
-          groups={groups()}
+          groups={groups}
           accentColor={accentColor.get()}
           userName={fullName()}
           userInitials={initials()}
@@ -364,7 +312,7 @@ export function DemoAppSidebar() {
             />
           }
         />
-        <AppSettingsSidebar open={settingsOpen} title={settingsLabel}>
+        <AppSettingsSidebar open={settingsOpen} title={settingsLabel} class={"demo-app-sidebar-settings"}>
           <AppSettingsPanel
             name={fullName()}
             email={email.get()}

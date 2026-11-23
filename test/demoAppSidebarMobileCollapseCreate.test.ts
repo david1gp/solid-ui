@@ -7,24 +7,27 @@ test("mobile settings restores only a sidebar collapsed automatically", () => {
   const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window")
   const media = { matches: true, addEventListener: () => {}, removeEventListener: () => {} }
   Object.defineProperty(globalThis, "window", { configurable: true, value: { matchMedia: () => media } })
-  const { collapsed, settings, dispose } = createRoot((dispose) => {
+  const { automaticMotion, collapsed, settings, dispose } = createRoot((dispose) => {
     const settings = createSignalObject(false)
-    return { settings, collapsed: demoAppSidebarMobileCollapseCreate(settings), dispose }
+    return { settings, ...demoAppSidebarMobileCollapseCreate(settings), dispose }
   })
   try {
     flush()
     settings.set(true)
     flush()
     expect(collapsed.get()).toBe(true)
+    expect(automaticMotion()).toBe(true)
     settings.set(false)
     flush()
     expect(collapsed.get()).toBe(false)
+    expect(automaticMotion()).toBe(true)
     collapsed.set(true)
     settings.set(true)
     flush()
     settings.set(false)
     flush()
     expect(collapsed.get()).toBe(true)
+    expect(automaticMotion()).toBe(false)
     collapsed.set(false)
     settings.set(true)
     flush()

@@ -2,9 +2,10 @@ import { createEffect, onSettled, untrack } from "solid-js"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 
 /** Keep the mobile settings panel usable without overriding a manually collapsed sidebar. */
-export function demoAppSidebarMobileCollapseCreate(settingsOpen: SignalObject<boolean>): SignalObject<boolean> {
+export function demoAppSidebarMobileCollapseCreate(settingsOpen: SignalObject<boolean>) {
   const collapsed = createSignalObject(false)
   const mobile = createSignalObject(false)
+  const automaticMotion = createSignalObject(false)
   let automaticallyCollapsed = false
 
   onSettled(() => {
@@ -22,6 +23,7 @@ export function demoAppSidebarMobileCollapseCreate(settingsOpen: SignalObject<bo
       if (shouldCollapse) {
         if (!untrack(collapsed.get)) {
           automaticallyCollapsed = true
+          automaticMotion.set(true)
           collapsed.set(true)
         }
         return
@@ -34,10 +36,14 @@ export function demoAppSidebarMobileCollapseCreate(settingsOpen: SignalObject<bo
   )
 
   return {
-    get: collapsed.get,
-    set: (value) => {
-      automaticallyCollapsed = false
-      collapsed.set(value)
+    automaticMotion: automaticMotion.get,
+    collapsed: {
+      get: collapsed.get,
+      set: (value: boolean) => {
+        automaticallyCollapsed = false
+        automaticMotion.set(false)
+        collapsed.set(value)
+      },
     },
   }
 }
