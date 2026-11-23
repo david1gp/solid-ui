@@ -4,7 +4,7 @@ import { demoList } from "#src/app/demos/demoList.js"
 import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
 import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreate.js"
-import { NavDemo } from "#src/nav/NavDemo.jsx"
+import { SiteNavHeader } from "#src/nav/site_header/SiteNavHeader.jsx"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { BulletLinks } from "#ui/interactive/list/BulletLinks.jsx"
 import { TabsTop } from "#ui/interactive/tabs/TabsTop.jsx"
@@ -48,7 +48,7 @@ export function DemosOverview() {
   return (
     <LayoutWrapperDemo title={"demos"}>
       <DemoShapesBackdrop fixed />
-      <NavDemo demoList={demoList} demoPrefix={prefix} />
+      <SiteNavHeader />
       <div
         class={classArr(
           "flex flex-col items-center justify-center", // layout
@@ -121,7 +121,7 @@ export function DemosCategory(props: { category: string }) {
   return (
     <LayoutWrapperDemo title={props.category}>
       <DemoShapesBackdrop fixed />
-      <NavDemo demoList={demoList} category={props.category} demoPrefix={prefix} />
+      <SiteNavHeader />
       <div
         class={classArr(
           "flex flex-col items-center justify-center", // layout
@@ -161,12 +161,7 @@ export function DemoComponent(props: { category: string; compName: string }) {
   })
   return (
     <LayoutWrapperDemo title={props.compName}>
-      <Show
-        when={fullscreenDemos.has(props.compName)}
-        fallback={
-          <NavDemo demoList={demoList} category={props.category} compName={props.compName} demoPrefix={prefix} />
-        }
-      >
+      <Show when={fullscreenDemos.has(props.compName)} fallback={<SiteNavHeader />}>
         <HomeButtonFloating />
       </Show>
       <Show when={mounted()}>
@@ -213,7 +208,7 @@ function DemoLoadError(props: { error: unknown }) {
 export function DemosNotFound() {
   return (
     <LayoutWrapperDemo>
-      <NavDemo demoList={demoList} demoPrefix={prefix} />
+      <SiteNavHeader />
       <h1 class={"text-xl font-semibold"}>not found</h1>
       <LinkButtonInternal to="/">back to demos</LinkButtonInternal>
     </LayoutWrapperDemo>
