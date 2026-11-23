@@ -359,7 +359,6 @@ export function DemoCMS() {
               name={fullName()}
               email={email.get()}
               userAvatar={<AppSidebarCssAvatar />}
-              sections={sections}
               logoutLabel={"Abmelden"}
             />
           }
