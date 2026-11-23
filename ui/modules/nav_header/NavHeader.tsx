@@ -215,8 +215,8 @@ function NavLink(p: { item: NavHeaderNavItem; onSelect: () => void }) {
     classArr(
       "flex items-center gap-2 rounded-md px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2",
       p.item.isActive
-        ? "bg-muted text-[var(--nav-header-accent,var(--foreground))] font-medium"
-        : "text-muted-foreground hover:bg-muted hover:text-foreground",
+        ? "bg-black/5 dark:bg-white/10 text-[var(--nav-header-accent,var(--foreground))] font-medium"
+        : "text-muted-foreground hover:bg-black/3 dark:hover:bg-white/5 hover:text-foreground",
     )
   const select = () => {
     p.onSelect()
