@@ -28,11 +28,12 @@
     --rc-focus-border: rgba(84, 120, 160, 0.55);
     --rc-accent: #4f6f93;
     --rc-check-color: #ffffff;
-    --rc-primary-top: #3a3f46;
-    --rc-primary-bottom: #24282d;
-    --rc-primary-border: rgba(20, 22, 25, 0.2);
-    --rc-primary-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 6px 18px rgba(20, 22, 25, 0.16);
-    --rc-primary-text: #f6f7f8;
+    --rc-primary: #141619;
+    --rc-primary-hover: #2b2e33;
+    --rc-primary-shadow: 0 8px 22px rgba(20, 22, 25, 0.15);
+    --rc-primary-text: #fff;
+    --rc-spinner-track: rgba(255, 255, 255, 0.45);
+    --rc-primary-radius: 11px;
     --rc-social-hover: #f4f5f7;
     --rc-dialog-shadow: 0 24px 80px rgba(20, 22, 25, 0.22);
     --rc-backdrop: rgba(20, 22, 25, 0.35);
@@ -464,37 +465,42 @@
     gap: 8px;
     margin-top: 4px;
     padding: 0 16px;
-    border: 1px solid var(--rc-primary-border);
-    border-radius: var(--rc-radius);
-    background: linear-gradient(180deg, var(--rc-primary-top), var(--rc-primary-bottom));
+    border: 0;
+    border-radius: var(--rc-primary-radius);
+    background: var(--rc-primary);
     box-shadow: var(--rc-primary-shadow);
     color: var(--rc-primary-text);
+    cursor: pointer;
     font-size: 12.5px;
     font-weight: 500;
     transition:
-      filter var(--rc-transition),
-      transform var(--rc-transition);
+      transform var(--rc-transition),
+      background var(--rc-transition),
+      box-shadow var(--rc-transition);
   }
 
   .rc-primary:hover {
-    filter: brightness(1.1);
+    background: var(--rc-primary-hover);
+    box-shadow: 0 10px 25px rgba(20, 22, 25, 0.19);
+    transform: translateY(-1px);
   }
 
   .rc-primary:active {
-    transform: translateY(1px);
+    transform: translateY(0);
   }
 
   .rc-primary:disabled {
     cursor: wait;
     opacity: 0.75;
+    transform: none;
   }
 
   .rc-spinner {
     width: 14px;
     height: 14px;
     display: none;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: #fff;
+    border: 2px solid var(--rc-spinner-track);
+    border-top-color: var(--rc-primary-text);
     border-radius: 50%;
     animation: register-ci-spin 0.7s linear infinite;
   }
@@ -792,11 +798,10 @@
   --rc-focus-border: rgba(169, 196, 226, 0.45);
   --rc-accent: #a9c4e2;
   --rc-check-color: #1b1e21;
-  --rc-primary-top: #6e737b;
-  --rc-primary-bottom: #555a62;
-  --rc-primary-border: rgba(255, 255, 255, 0.08);
-  --rc-primary-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 6px 18px rgba(0, 0, 0, 0.25);
-  --rc-primary-text: #f4f5f7;
+  --rc-primary: var(--color-foreground);
+  --rc-primary-hover: color-mix(in oklab, var(--color-foreground), black 12%);
+  --rc-primary-text: var(--color-background);
+  --rc-spinner-track: rgba(20, 22, 25, 0.35);
   --rc-social-hover: #212428;
   --rc-dialog-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
   --rc-backdrop: rgba(0, 0, 0, 0.6);
