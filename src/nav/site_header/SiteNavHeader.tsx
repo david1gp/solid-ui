@@ -3,7 +3,7 @@ import { mdiMenu } from "@adaptive-ds/mdi/mdiMenu.js"
 import { siteNavHeaderStateCreate } from "#src/nav/site_header/siteNavHeaderStateCreate.js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
-import { ThemeButton } from "#ui/interactive/theme/ThemeButton.jsx"
+import { ThemeSwitch } from "#ui/interactive/theme/ThemeSwitch.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { LogoImageText } from "#ui/static/logo/LogoImageText.jsx"
 import { classArr } from "#ui/utils/classArr.js"
@@ -60,7 +60,7 @@ export function SiteNavHeader() {
             </a>
           </nav>
           <div class={"flex flex-wrap items-center gap-2 border-t border-border pt-3 mt-3 lg:mt-0 lg:border-0 lg:pt-0"}>
-            <ThemeButton showText={true} class="rounded-md" />
+            <ThemeSwitch class={"mr-1"} />
           </div>
         </div>
       </div>
