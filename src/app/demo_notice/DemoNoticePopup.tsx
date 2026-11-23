@@ -11,6 +11,7 @@ export function DemoNoticePopup() {
       <div
         role="status"
         aria-live="polite"
+        data-demo-notice
         class={
           "fixed inset-x-4 bottom-16 sm:bottom-4 z-[60] mx-auto flex max-w-xl flex-col sm:flex-row sm:items-center gap-3 rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground shadow-lg"
         }

@@ -87,3 +87,8 @@
     margin: 0;
   }
 }
+
+/* Keep the global notice clear of the bottom navigation in its fullscreen demo. */
+body:has([data-bottom-mobile-navbar-demo]) [data-demo-notice] {
+  bottom: calc(7rem + env(safe-area-inset-bottom));
+}
