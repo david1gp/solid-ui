@@ -15,6 +15,11 @@ import { fileURLToPath } from "node:url"
 const here = dirname(fileURLToPath(import.meta.url))
 const demosDir = join(here, "..", "demos")
 
+// Catalog keys that differ from their source filenames (see demoList.ts).
+const demoRouteNames: Record<string, string> = {
+  "modules/DemoBottomMobileNavbar": "Bottom-Mobile-Navbar",
+}
+
 function findDemoNames(dir: string): string[] {
   const names: string[] = []
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -53,7 +58,8 @@ export function getPrerenderPages(): PrerenderPage[] {
   for (const category of categories) {
     pages.push(page(`/${category}`, 0.8, "weekly"))
     for (const name of findDemoNames(join(demosDir, category)).sort()) {
-      pages.push(page(`/${category}/${name}`, 0.6, "monthly"))
+      const routeName = demoRouteNames[`${category}/${name}`] ?? name
+      pages.push(page(`/${category}/${routeName}`, 0.6, "monthly"))
     }
   }
 
