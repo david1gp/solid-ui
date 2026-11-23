@@ -279,7 +279,15 @@ export function DemoAppSidebar() {
     deleteProject,
   })
   return (
-    <div class={"flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
+    <div class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
+      {/* Placeholder backdrop: abstract shapes behind the content (same look as Sidebar-modern, own copy). */}
+      <div aria-hidden="true" class={"demo-app-sidebar-shapes"}>
+        <span class={"demo-app-sidebar-shape-violet"} />
+        <span class={"demo-app-sidebar-shape-amber"} />
+        <span class={"demo-app-sidebar-shape-teal"} />
+        <span class={"demo-app-sidebar-shape-magenta"} />
+        <span class={"demo-app-sidebar-shape-cyan"} />
+      </div>
       <div class={"demo-app-sidebar-dock relative flex shrink-0"}>
         <AppSidebar
           class={automaticMotion() ? "demo-app-sidebar-rail demo-app-sidebar-rail-auto" : "demo-app-sidebar-rail"}
@@ -634,7 +642,7 @@ function SaveBar(p: { dirty: boolean; onDiscard: () => void }) {
   return (
     <div
       class={
-        "sticky bottom-0 -mx-1 px-1 py-3 flex items-center justify-end gap-3 bg-background dark:bg-[#222326] border-t border-transparent"
+        "sticky bottom-0 -mx-1 px-1 py-3 flex items-center justify-end gap-3 bg-background/80 dark:bg-[#222326]/80 backdrop-blur-xl border-t border-transparent"
       }
     >
       <span class={"mr-auto text-xs text-neutral-500 dark:text-neutral-400"} aria-live={"polite"}>
