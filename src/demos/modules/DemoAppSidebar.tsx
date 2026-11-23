@@ -279,7 +279,7 @@ export function DemoAppSidebar() {
     deleteProject,
   })
   return (
-    <div class={"flex h-dvh w-full shrink-0 overflow-hidden bg-background dark:bg-[#222326]"}>
+    <div class={"flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
       <div class={"demo-app-sidebar-dock relative flex shrink-0"}>
         <AppSidebar
           class={automaticMotion() ? "demo-app-sidebar-rail demo-app-sidebar-rail-auto" : "demo-app-sidebar-rail"}

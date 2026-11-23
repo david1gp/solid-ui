@@ -331,7 +331,7 @@ export function DemoCMS() {
     },
   ]
   return (
-    <div class={"flex h-dvh w-full shrink-0 overflow-hidden bg-background dark:bg-[#222326]"}>
+    <div class={"flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
       <div class={"relative flex shrink-0"}>
         <AppSidebar
           collapsed={collapsed}
