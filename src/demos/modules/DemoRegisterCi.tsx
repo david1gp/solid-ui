@@ -41,11 +41,35 @@ export function DemoRegisterCi() {
             <div class="rc-body">
               <div class="rc-heading">
                 <h1 id="rcAuthTitle">
-                  {state.mode() === "register" ? state.texts().createAccount : state.texts().signIn}
+                  {state.mode() === "register" ? state.texts().createAccount : state.texts().welcome}
                 </h1>
                 <p>
                   {state.mode() === "register" ? state.texts().registerDescription : state.texts().loginDescription}
                 </p>
+              </div>
+
+              <div class="rc-tabs" data-active={state.mode()} role="tablist" aria-label={state.texts().accessType}>
+                <span class="rc-tab-indicator" aria-hidden="true" />
+                <button
+                  class="rc-tab"
+                  type="button"
+                  role="tab"
+                  aria-selected={state.mode() === "login" ? "true" : "false"}
+                  aria-controls="rcAuthForm"
+                  onClick={() => state.changeMode("login")}
+                >
+                  {state.texts().signIn}
+                </button>
+                <button
+                  class="rc-tab"
+                  type="button"
+                  role="tab"
+                  aria-selected={state.mode() === "register" ? "true" : "false"}
+                  aria-controls="rcAuthForm"
+                  onClick={() => state.changeMode("register")}
+                >
+                  {state.texts().signUp}
+                </button>
               </div>
 
               <form
