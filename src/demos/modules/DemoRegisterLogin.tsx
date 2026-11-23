@@ -13,18 +13,35 @@ export function DemoRegisterLogin() {
       <div class="page">
         <header class="site-header">
           <LogoImageText logoText="adaptive-solid-ui" logoTextClass="text-lg font-semibold" />
+          {/* biome-ignore lint/a11y/useSemanticElements: The segmented toggle is specified as an ARIA group. */}
+          <div class="language-toggle" role="group" aria-label={state.texts().language}>
+            <button
+              type="button"
+              lang="de"
+              aria-pressed={state.locale() === "de" ? "true" : "false"}
+              onClick={() => state.changeLocale("de")}
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              lang="en"
+              aria-pressed={state.locale() === "en" ? "true" : "false"}
+              onClick={() => state.changeLocale("en")}
+            >
+              EN
+            </button>
+          </div>
         </header>
         <main>
           <section class="auth-container" aria-labelledby="authTitle">
             <div class="auth-heading">
-              <h1 id="authTitle">{state.mode() === "register" ? "Konto erstellen" : "Willkommen zurück"}</h1>
-              <p>
-                {state.mode() === "register"
-                  ? "Registriere dich in weniger als einer Minute."
-                  : "Melde dich an, um auf dein Konto zuzugreifen."}
-              </p>
+              <h1 id="authTitle">
+                {state.mode() === "register" ? state.texts().createAccount : state.texts().welcome}
+              </h1>
+              <p>{state.mode() === "register" ? state.texts().registerDescription : state.texts().loginDescription}</p>
             </div>
-            <div class="tabs" data-active={state.mode()} role="tablist" aria-label="Zugangsart auswählen">
+            <div class="tabs" data-active={state.mode()} role="tablist" aria-label={state.texts().accessType}>
               <span class="tab-indicator" aria-hidden="true" />
               <button
                 class="tab"
@@ -34,7 +51,7 @@ export function DemoRegisterLogin() {
                 aria-controls="authForm"
                 onClick={() => state.changeMode("login")}
               >
-                Einloggen
+                {state.texts().signIn}
               </button>
               <button
                 class="tab"
@@ -44,7 +61,7 @@ export function DemoRegisterLogin() {
                 aria-controls="authForm"
                 onClick={() => state.changeMode("register")}
               >
-                Registrieren
+                {state.texts().signUp}
               </button>
             </div>
             <form
@@ -58,13 +75,13 @@ export function DemoRegisterLogin() {
             >
               <Show when={state.mode() === "register"}>
                 <div class="field">
-                  <label for="name">Name</label>
+                  <label for="name">{state.texts().name}</label>
                   <Input
                     id="name"
                     name="name"
                     type="text"
                     autocomplete="name"
-                    placeholder="Max Mustermann"
+                    placeholder={state.texts().namePlaceholder}
                     required
                     aria-invalid={state.errors().name ? "true" : undefined}
                     aria-describedby={state.errors().name ? "nameError" : undefined}
@@ -73,13 +90,13 @@ export function DemoRegisterLogin() {
                 </div>
               </Show>
               <div class="field">
-                <label for="email">E-Mail-Adresse</label>
+                <label for="email">{state.texts().email}</label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
                   autocomplete="email"
-                  placeholder="name@beispiel.de"
+                  placeholder={state.texts().emailPlaceholder}
                   required
                   aria-invalid={state.errors().email ? "true" : undefined}
                   aria-describedby={state.errors().email ? "emailError" : undefined}
@@ -89,10 +106,10 @@ export function DemoRegisterLogin() {
               </div>
               <div class="field">
                 <div class="field-header">
-                  <label for="password">Passwort</label>
+                  <label for="password">{state.texts().password}</label>
                   <Show when={state.mode() === "login"}>
                     <button class="forgot-button" type="button" onClick={state.openReset}>
-                      Passwort vergessen?
+                      {state.texts().forgot}
                     </button>
                   </Show>
                 </div>
@@ -102,7 +119,7 @@ export function DemoRegisterLogin() {
                     name="password"
                     type={state.visible() ? "text" : "password"}
                     autocomplete={state.mode() === "register" ? "new-password" : "current-password"}
-                    placeholder="Dein Passwort"
+                    placeholder={state.texts().passwordPlaceholder}
                     minlength={8}
                     required
                     aria-invalid={state.errors().password ? "true" : undefined}
@@ -112,7 +129,7 @@ export function DemoRegisterLogin() {
                   <button
                     class="password-toggle"
                     type="button"
-                    aria-label={state.visible() ? "Passwort ausblenden" : "Passwort anzeigen"}
+                    aria-label={state.visible() ? state.texts().hidePassword : state.texts().showPassword}
                     aria-pressed={state.visible() ? "true" : "false"}
                     onClick={state.toggleVisible}
                   >
@@ -160,8 +177,8 @@ export function DemoRegisterLogin() {
                     </div>
                     <p class="password-hint">
                       {!state.password()
-                        ? "Mindestens 8 Zeichen verwenden."
-                        : `Passwortstärke: ${state.score() <= 1 ? "schwach" : state.score() <= 3 ? "mittel" : "stark"}`}
+                        ? state.texts().passwordHint
+                        : `${state.texts().strength}: ${state.score() <= 1 ? state.texts().weak : state.score() <= 3 ? state.texts().medium : state.texts().strong}`}
                     </p>
                   </div>
                 </Show>
@@ -184,8 +201,10 @@ export function DemoRegisterLogin() {
                         </svg>
                       </span>
                       <span>
-                        Ich akzeptiere die <a href="#authTitle">Nutzungsbedingungen</a> und{" "}
-                        <a href="#authTitle">Datenschutzerklärung</a>.
+                        {state.texts().termsPrefix}
+                        <a href="#authTitle">{state.texts().terms}</a>
+                        {state.texts().termsAnd}
+                        <a href="#authTitle">{state.texts().privacyPolicy}</a>.
                       </span>
                     </label>
                     <FieldError id="termsError" message={state.errors().terms} />
@@ -200,7 +219,7 @@ export function DemoRegisterLogin() {
                         <path d="m2.2 6.2 2.3 2.2 5.2-5" stroke="currentColor" stroke-width="1.8" />
                       </svg>
                     </span>
-                    <span>Angemeldet bleiben</span>
+                    <span>{state.texts().remember}</span>
                   </label>
                 </div>
               </Show>
@@ -210,11 +229,11 @@ export function DemoRegisterLogin() {
                 disabled={state.loading()}
               >
                 <span class="spinner" aria-hidden="true" />
-                <span>{state.mode() === "register" ? "Konto erstellen" : "Einloggen"}</span>
+                <span>{state.mode() === "register" ? state.texts().createAccount : state.texts().signIn}</span>
               </Button>
             </form>
             <div class="divider">
-              <span>{state.mode() === "register" ? "oder registrieren mit" : "oder einloggen mit"}</span>
+              <span>{state.mode() === "register" ? state.texts().orSignUp : state.texts().orSignIn}</span>
             </div>
             <div class="social-buttons">
               <For each={["Google", "Apple", "Microsoft"]}>
@@ -259,29 +278,29 @@ export function DemoRegisterLogin() {
                         />
                       </svg>
                     </Show>
-                    <span>Mit {provider} fortfahren</span>
+                    <span>{state.texts().continueWith(provider)}</span>
                     <span aria-hidden="true" />
                   </button>
                 )}
               </For>
             </div>
             <p class="mobile-switch">
-              {state.mode() === "register" ? "Du hast bereits ein Konto?" : "Noch kein Konto?"}{" "}
+              {state.mode() === "register" ? state.texts().hasAccount : state.texts().noAccount}{" "}
               <button
                 class="text-button"
                 type="button"
                 onClick={() => state.changeMode(state.mode() === "login" ? "register" : "login")}
               >
-                {state.mode() === "register" ? "Einloggen" : "Registrieren"}
+                {state.mode() === "register" ? state.texts().signIn : state.texts().signUp}
               </button>
             </p>
           </section>
         </main>
         <footer class="site-footer">
           <span>© 2025 adaptive-solid-ui</span>
-          <a href="#authTitle">Datenschutz</a>
-          <a href="#authTitle">Impressum</a>
-          <a href="#authTitle">Hilfe</a>
+          <a href="#authTitle">{state.texts().privacy}</a>
+          <a href="#authTitle">{state.texts().legal}</a>
+          <a href="#authTitle">{state.texts().help}</a>
         </footer>
       </div>
       <dialog
@@ -301,24 +320,29 @@ export function DemoRegisterLogin() {
         <form class="dialog-content" novalidate onSubmit={state.submitReset} onInput={state.clearResetError}>
           <div class="dialog-head">
             <div>
-              <h2 id="resetTitle">Passwort zurücksetzen</h2>
-              <p>Wir senden dir einen sicheren Link per E-Mail.</p>
+              <h2 id="resetTitle">{state.texts().reset}</h2>
+              <p>{state.texts().resetDescription}</p>
             </div>
-            <button class="dialog-close" type="button" aria-label="Dialog schließen" onClick={state.closeReset}>
+            <button
+              class="dialog-close"
+              type="button"
+              aria-label={state.texts().closeDialog}
+              onClick={state.closeReset}
+            >
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
               </svg>
             </button>
           </div>
           <div class="field">
-            <label for="resetEmail">E-Mail-Adresse</label>
+            <label for="resetEmail">{state.texts().email}</label>
             <Input
               ref={state.setResetEmail}
               id="resetEmail"
               name="resetEmail"
               type="email"
               autocomplete="email"
-              placeholder="name@beispiel.de"
+              placeholder={state.texts().emailPlaceholder}
               required
               aria-invalid={state.resetErrors().resetEmail ? "true" : undefined}
               aria-describedby={state.resetErrors().resetEmail ? "resetEmailError" : undefined}
@@ -327,10 +351,10 @@ export function DemoRegisterLogin() {
           </div>
           <div class="dialog-actions">
             <button class="secondary-button" type="button" onClick={state.closeReset}>
-              Abbrechen
+              {state.texts().cancel}
             </button>
             <Button class="primary-button" type="submit">
-              Link senden
+              {state.texts().sendLink}
             </Button>
           </div>
         </form>

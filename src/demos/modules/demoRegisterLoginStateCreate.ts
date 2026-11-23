@@ -1,7 +1,24 @@
 import { createSignal, onCleanup } from "solid-js"
+import { demoRegisterLoginTexts } from "./demoRegisterLoginTexts.js"
+import { formErrorsEnglish } from "./formErrorsEnglish.js"
 import { formErrorsGerman } from "./formErrorsGerman.js"
 
 export function demoRegisterLoginStateCreate() {
+  const [locale, setLocale] = createSignal<"de" | "en">("de")
+  const texts = () => demoRegisterLoginTexts[locale()]
+  let previousLang: string | null = null
+  if (typeof document !== "undefined") {
+    previousLang = document.documentElement.getAttribute("lang")
+    document.documentElement.lang = "de"
+  }
+  const changeLocale = (next: "de" | "en") => {
+    if (next === locale()) return
+    setLocale(next)
+    document.documentElement.lang = next
+    setErrors({})
+    setResetErrors({})
+  }
+  const formErrors = (form: HTMLFormElement) => (locale() === "de" ? formErrorsGerman(form) : formErrorsEnglish(form))
   const [mode, setMode] = createSignal<"login" | "register">("login")
   const [visible, setVisible] = createSignal(false)
   const [password, setPassword] = createSignal("")
@@ -30,8 +47,8 @@ export function demoRegisterLoginStateCreate() {
   const submit = (event: SubmitEvent) => {
     event.preventDefault()
     if (!form) return
-    const next = formErrorsGerman(form)
-    if (next.terms) next.terms = "Bitte akzeptiere die Nutzungsbedingungen."
+    const next = formErrors(form)
+    if (next.terms) next.terms = texts().termsError
     setErrors(next)
     if (Object.keys(next).length) return
     setLoading(true)
@@ -46,7 +63,7 @@ export function demoRegisterLoginStateCreate() {
   const closeReset = () => dialog?.close()
   const submitReset = (event: SubmitEvent) => {
     event.preventDefault()
-    const next = formErrorsGerman(event.currentTarget as HTMLFormElement)
+    const next = formErrors(event.currentTarget as HTMLFormElement)
     setResetErrors(next)
     if (Object.keys(next).length) return
     closeReset()
@@ -62,10 +79,15 @@ export function demoRegisterLoginStateCreate() {
     })
   }
   onCleanup(() => {
+    if (previousLang === null) document.documentElement.removeAttribute("lang")
+    else document.documentElement.lang = previousLang
     clearTimeout(submitTimer)
     clearTimeout(focusTimer)
   })
   return {
+    locale,
+    texts,
+    changeLocale,
     mode,
     visible,
     password,

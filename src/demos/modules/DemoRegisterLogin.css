@@ -75,6 +75,36 @@
     gap: 24px;
   }
 
+  .language-toggle {
+    display: flex;
+    flex-shrink: 0;
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-soft);
+  }
+
+  .language-toggle button {
+    min-width: 44px;
+    min-height: 40px;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-weight: 650;
+  }
+
+  .language-toggle button[aria-pressed="true"] {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 1px 3px var(--focus);
+  }
+
+  .language-toggle button:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+
   .text-button {
     background: transparent;
     color: var(--text);
