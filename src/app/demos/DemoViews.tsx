@@ -19,6 +19,7 @@ const prefix = ""
 /** Full-viewport demos rendered without the demo nav; they get a floating home button instead. */
 const fullscreenDemos = new Set([
   "DemoAppSidebar",
+  "DemoSidebarModern",
   "DemoRegisterLogin",
   "DemoCMS",
   "DemoNavHeader",
@@ -28,6 +29,7 @@ const fullscreenDemos = new Set([
 /** Display labels overriding the name derived from the demo key (prefix "Demo" stripped). */
 const demoDisplayNames: Record<string, string> = {
   DemoAppSidebar: "Sidebar-Simple",
+  DemoSidebarModern: "Sidebar-modern",
   DemoCMS: "CMS",
   DemoNavHeader: "NavHeader-Simple",
   DemoRegisterLogin: "Register-Login",

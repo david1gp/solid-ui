@@ -1,0 +1,140 @@
+@media (max-width: 546px) {
+  /* Dock the fixed-width settings layer and its backdrop without moving their layout boxes. */
+  .demo-sidebar-modern-dock > :is(.demo-sidebar-modern-settings, [data-modern-settings-backdrop]) {
+    left: 0;
+    translate: calc(var(--spacing) * 56) 0;
+    transition-property: translate, opacity;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Prepare the hidden overlays, then let the transitions own the layers while visible. */
+    .demo-sidebar-modern-dock
+      > :is(.demo-sidebar-modern-settings[aria-hidden="true"], [data-modern-settings-backdrop][data-closed]) {
+      will-change: translate, opacity;
+    }
+  }
+
+  /* Read the rail state on the two moving layers rather than invalidating the dock's subtree. */
+  .demo-sidebar-modern-rail.w-12 ~ :is(.demo-sidebar-modern-settings, [data-modern-settings-backdrop]) {
+    translate: calc(var(--spacing) * 12) 0;
+  }
+
+  .demo-sidebar-modern-dock > .demo-sidebar-modern-settings {
+    width: calc(var(--spacing) * 80);
+  }
+
+  /* The search field and its rail button have the same height. Crossfade in one row instead of clipping both. */
+  .demo-sidebar-modern-dock [data-modern-sidebar-search] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .demo-sidebar-modern-dock [data-modern-sidebar-search] > div {
+    grid-area: 1 / 1;
+    grid-template-rows: 1fr;
+    transition-property: opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo-sidebar-modern-dock > :is(.demo-sidebar-modern-settings, [data-modern-settings-backdrop]),
+    .demo-sidebar-modern-dock [data-modern-sidebar-search] > div {
+      transition: none;
+    }
+  }
+}
+
+@media (max-width: 546px) and (prefers-reduced-motion: no-preference) {
+  .demo-sidebar-modern-rail {
+    clip-path: inset(0);
+  }
+
+  .demo-sidebar-modern-rail-auto {
+    transition-property: clip-path;
+  }
+
+  .demo-sidebar-modern-rail > nav {
+    contain: layout paint;
+  }
+
+  /* Clip item labels with the moving rail edge; group titles already fade inside their grid row. */
+  .demo-sidebar-modern-rail-auto :is(h3, button > span).transition-opacity {
+    opacity: 1;
+    transition: none;
+  }
+
+  /* Keep the real width until the clip reaches the rail. On expand, lay out at full width once and reveal it. */
+  .demo-sidebar-modern-rail-auto.w-12 {
+    clip-path: inset(0 calc(100% - var(--spacing) * 12) 0 0);
+    transition:
+      clip-path 500ms var(--ease-in-out),
+      width 0s 500ms;
+  }
+
+  .demo-sidebar-modern-rail [data-modern-sidebar-toggle] {
+    position: absolute;
+    left: calc(var(--spacing) * 2);
+    /* Expanded alignment includes the rail border; the narrow header still starts at its padding. */
+    translate: calc(var(--spacing) * 44 - 1px) 0;
+    transition: translate 500ms var(--ease-in-out);
+  }
+
+  .demo-sidebar-modern-rail [data-modern-sidebar-toggle][aria-expanded="false"] {
+    translate: none;
+  }
+}
+
+/* ---------- Modern look: glowing active entries ---------- */
+
+.modern-sidebar-entry[aria-current="page"],
+.modern-sidebar-entry[data-active] {
+  --modern-accent: var(--modern-sidebar-accent, #8b5cf6);
+  color: #0a0a0a;
+  border-color: color-mix(in oklab, var(--modern-accent) 65%, transparent);
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--modern-accent) 22%, transparent),
+    color-mix(in oklab, var(--modern-accent) 6%, transparent)
+  );
+  box-shadow:
+    0 0 16px -4px color-mix(in oklab, var(--modern-accent) 55%, transparent),
+    inset 0 0 12px -2px color-mix(in oklab, var(--modern-accent) 25%, transparent);
+}
+
+.dark .modern-sidebar-entry[aria-current="page"],
+.dark .modern-sidebar-entry[data-active] {
+  color: #fff;
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--modern-accent) 34%, transparent),
+    color-mix(in oklab, var(--modern-accent) 10%, transparent)
+  );
+  box-shadow:
+    0 0 20px -2px color-mix(in oklab, var(--modern-accent) 60%, transparent),
+    inset 0 0 14px -2px color-mix(in oklab, var(--modern-accent) 35%, transparent);
+}
+
+.modern-sidebar-entry:is([aria-current="page"], [data-active]) .modern-sidebar-entry-icon {
+  color: color-mix(in oklab, var(--modern-accent) 70%, #0a0a0a);
+}
+
+.dark .modern-sidebar-entry:is([aria-current="page"], [data-active]) .modern-sidebar-entry-icon {
+  color: color-mix(in oklab, var(--modern-accent) 45%, #fff);
+}
+
+/* ---------- Modern look: page backdrop with soft accent glows ---------- */
+
+.demo-sidebar-modern-page {
+  --modern-accent: var(--modern-sidebar-accent, #8b5cf6);
+  background-color: #f6f5fb;
+  background-image:
+    radial-gradient(40rem 32rem at 0% 100%, color-mix(in oklab, var(--modern-accent) 22%, transparent), transparent 70%),
+    radial-gradient(36rem 28rem at 30% 45%, color-mix(in oklab, var(--modern-accent) 12%, transparent), transparent 70%);
+}
+
+.dark .demo-sidebar-modern-page {
+  background-color: #080a14;
+  background-image:
+    radial-gradient(40rem 32rem at 0% 100%, color-mix(in oklab, var(--modern-accent) 45%, transparent), transparent 70%),
+    radial-gradient(36rem 28rem at 30% 45%, color-mix(in oklab, var(--modern-accent) 22%, transparent), transparent 70%),
+    linear-gradient(180deg, #0b0e1c, #070811);
+}
