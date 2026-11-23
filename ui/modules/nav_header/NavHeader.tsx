@@ -4,6 +4,7 @@ import Popover from "@corvu-next/popover"
 import { For, type Element as JSXElement, Show } from "solid-js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { ThemeButton } from "#ui/interactive/theme/ThemeButton.jsx"
 import { AppSidebarAvatar } from "#ui/modules/app_sidebar/AppSidebarAvatar.jsx"
 import type { NavHeaderNavItem } from "#ui/modules/nav_header/NavHeaderNavItem.js"
@@ -23,6 +24,9 @@ export interface NavHeaderProps extends MayHaveClass {
   onLogin?: () => void
   registerLabel?: string
   onRegister?: () => void
+  ctaLabel?: string
+  ctaHref?: string
+  onCta?: () => void
   userName?: string
   userInitials?: string
   userImageUrl?: string
@@ -102,7 +106,7 @@ export function NavHeader(p: NavHeaderProps) {
                   </Button>
                   <Show when={p.onRegister}>
                     <Button
-                      variant={buttonVariant.contrast}
+                      variant={p.ctaLabel && (p.ctaHref || p.onCta) ? buttonVariant.outline : buttonVariant.contrast}
                       onClick={() => {
                         state.closeMobile()
                         p.onRegister?.()
@@ -166,6 +170,37 @@ export function NavHeader(p: NavHeaderProps) {
                     </Popover.Content>
                   </Popover.Portal>
                 </Popover>
+              </Show>
+            </Show>
+            <Show when={p.ctaLabel && (p.ctaHref || p.onCta)}>
+              <Show
+                when={p.ctaHref}
+                fallback={
+                  <Button
+                    variant={buttonVariant.contrast}
+                    class={"w-full lg:w-auto"}
+                    onClick={() => {
+                      state.closeMobile()
+                      p.onCta?.()
+                    }}
+                  >
+                    {p.ctaLabel}
+                  </Button>
+                }
+              >
+                {(href) => (
+                  <LinkButtonExternal
+                    href={href()}
+                    variant={buttonVariant.contrast}
+                    class={"w-full lg:w-auto"}
+                    onClick={() => {
+                      state.closeMobile()
+                      p.onCta?.()
+                    }}
+                  >
+                    {p.ctaLabel}
+                  </LinkButtonExternal>
+                )}
               </Show>
             </Show>
           </div>
