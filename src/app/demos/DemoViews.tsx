@@ -64,6 +64,7 @@ export function DemosOverview() {
           )}
         >
           <TabsTop
+            selectedClass="bg-[#5f5fd3] text-white"
             valueSignal={state.selectedTab}
             getOptions={() => options}
             trailing={
