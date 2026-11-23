@@ -42,6 +42,7 @@ export function demoAppSidebarMobileCollapseCreate(settingsOpen: SignalObject<bo
       set: (value: boolean) => {
         automaticallyCollapsed = false
         automaticMotion.set(false)
+        if (!value && mobile.get() && settingsOpen.get()) settingsOpen.set(false)
         collapsed.set(value)
       },
     },
