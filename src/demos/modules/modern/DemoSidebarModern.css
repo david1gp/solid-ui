@@ -142,22 +142,17 @@
   inset-block: 0;
   left: 100%;
   z-index: -1;
-  width: 24rem;
+  width: 2.5rem;
   pointer-events: none;
-  /* Brightest right at the edge, strongest in the lower middle like a light source behind the panel. */
-  background:
-    radial-gradient(
-      ellipse 5rem 52% at 0% 58%,
-      var(--modern-glow),
-      color-mix(in oklab, var(--modern-glow) 70%, transparent) 40%,
-      transparent 100%
-    ),
-    radial-gradient(
-      ellipse 100% 60% at 0% 60%,
-      color-mix(in oklab, var(--modern-glow) 70%, transparent),
-      color-mix(in oklab, var(--modern-accent) 30%, transparent) 40%,
-      transparent 80%
-    );
+  /* A tight neon rim hugging the edge line: brightest on the line, gone after ~40px. */
+  background: linear-gradient(
+    90deg,
+    var(--modern-glow),
+    color-mix(in oklab, var(--modern-glow) 55%, transparent) 12%,
+    color-mix(in oklab, var(--modern-glow) 22%, transparent) 35%,
+    color-mix(in oklab, var(--modern-glow) 6%, transparent) 65%,
+    transparent
+  );
   mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0.4), #000 30%, #000 88%, rgb(0 0 0 / 0.5));
   opacity: 0.45;
 }
