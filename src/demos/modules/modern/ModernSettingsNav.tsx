@@ -36,7 +36,7 @@ export function ModernSettingsNav(p: ModernSettingsNavProps) {
     <aside
       style={p.accentColor ? { "--modern-sidebar-accent": p.accentColor } : undefined}
       class={classArr(
-        "flex flex-col shrink-0 self-stretch w-56 min-h-0 overflow-hidden", // layout: stretches to the flex row height
+        "modern-sidebar-panel relative flex flex-col shrink-0 self-stretch w-56 min-h-0 overflow-hidden", // layout: stretches to the flex row height
         "border-r", // border
         modernGlassSurfaceClass,
         "text-neutral-950 dark:text-slate-100",

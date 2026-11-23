@@ -285,9 +285,13 @@ export function DemoSidebarModern() {
   return (
     <div
       style={{ "--modern-sidebar-accent": accentColor.get() }}
-      class={"demo-sidebar-modern-page flex h-dvh w-full shrink-0 overflow-clip text-neutral-950 dark:text-slate-100"}
+      class={
+        "demo-sidebar-modern-page isolate flex h-dvh w-full shrink-0 overflow-clip text-neutral-950 dark:text-slate-100"
+      }
     >
       <div class={"demo-sidebar-modern-dock relative flex shrink-0"}>
+        {/* Neon light spilling out of the sidebar edge; follows the rail width and stays behind the content. */}
+        <div aria-hidden="true" class={"demo-sidebar-modern-edge-glow"} />
         <ModernSidebar
           class={
             automaticMotion() ? "demo-sidebar-modern-rail demo-sidebar-modern-rail-auto" : "demo-sidebar-modern-rail"

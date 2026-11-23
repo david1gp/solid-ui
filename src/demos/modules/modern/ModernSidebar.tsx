@@ -98,7 +98,7 @@ export function ModernSidebar(p: ModernSidebarProps) {
     <aside
       style={accentStyle(p.accentColor)}
       class={classArr(
-        "modern-sidebar flex flex-col shrink-0 h-full overflow-hidden", // layout
+        "modern-sidebar modern-sidebar-panel relative z-10 flex flex-col shrink-0 h-full overflow-hidden", // layout
         "text-neutral-950 dark:text-slate-100", // text
         "border-r", // border
         modernGlassSurfaceClass,
@@ -872,8 +872,8 @@ function Collapsible(p: { open: boolean; children: JSXElement }) {
       aria-hidden={p.open ? "false" : "true"}
       inert={!p.open}
     >
-      {/* -mx-2 px-2: extend the clip box into the nav padding so the active accent bar is not cut off */}
-      <div class={"min-h-0 overflow-hidden -mx-2 px-2"}>{p.children}</div>
+      {/* -mx-2 px-2 + clip margin: let the active entry's outer glow spill past the clip box instead of being cut */}
+      <div class={"min-h-0 overflow-clip [overflow-clip-margin:12px] -mx-2 px-2"}>{p.children}</div>
     </div>
   )
 }
