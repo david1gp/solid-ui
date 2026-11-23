@@ -697,13 +697,9 @@
       min-height: 0;
     }
 
+    /* stacked layout: drop the artwork panel, keep only the form */
     .rc-art {
-      height: 360px;
-      min-height: 0;
-    }
-
-    .rc-art-logo {
-      bottom: 18px;
+      display: none;
     }
 
     .rc-body {
