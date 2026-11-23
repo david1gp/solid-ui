@@ -331,7 +331,7 @@ export function DemoAppSidebar() {
     },
   ]
   return (
-    <div class={"flex flex-1 h-0 min-h-[480px] w-full overflow-hidden bg-background dark:bg-[#222326]"}>
+    <div class={"flex h-dvh w-full shrink-0 overflow-hidden bg-background dark:bg-[#222326]"}>
       <div class={"relative flex shrink-0"}>
         <AppSidebar
           collapsed={collapsed}
