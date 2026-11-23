@@ -180,7 +180,7 @@ export function ModernSidebar(p: ModernSidebarProps) {
             })
             const railGroupVisible = () => !isOpen() && !!group().collapsible && !drawerOpen()
             const labelClass =
-              "px-2 pb-1 text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-slate-500 whitespace-nowrap"
+              "px-2 pb-1 text-xs font-semibold uppercase tracking-wider text-neutral-600 dark:text-slate-300/75 whitespace-nowrap"
             return (
               <Collapsible open={isOpen() || group().items.length > 0 || !!group().addItem}>
                 <div class={"flex flex-col gap-0.5 pb-4"}>
@@ -774,7 +774,7 @@ function RailGroupButton(p: { group: ModernSidebarNavGroup; accentColor?: string
         >
           <Popover.Label
             class={
-              "px-2 pt-1 pb-1 text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-slate-500 whitespace-nowrap"
+              "px-2 pt-1 pb-1 text-xs font-semibold uppercase tracking-wider text-neutral-600 dark:text-slate-300/75 whitespace-nowrap"
             }
           >
             {p.group.label}
@@ -865,15 +865,16 @@ function Collapsible(p: { open: boolean; children: JSXElement }) {
   return (
     <div
       class={classArr(
-        "grid grid-rows-[1fr] opacity-100 aria-hidden:grid-rows-[0fr] aria-hidden:opacity-0", // layout
+        "grid grid-cols-[minmax(0,1fr)] grid-rows-[1fr] opacity-100 aria-hidden:grid-rows-[0fr] aria-hidden:opacity-0", // layout
         "transition-[grid-template-rows,opacity]",
         motion,
       )}
       aria-hidden={p.open ? "false" : "true"}
       inert={!p.open}
     >
-      {/* -mx-2 px-2 + clip margin: let the active entry's outer glow spill past the clip box instead of being cut */}
-      <div class={"min-h-0 overflow-clip [overflow-clip-margin:12px] -mx-2 px-2"}>{p.children}</div>
+      {/* -mx-2 px-2 + clip margin: let the active entry's outer glow spill past the clip box instead of being cut.
+          overflow-clip is no scroll container, so min-w-0 must be explicit or wide content (search field) stretches the column. */}
+      <div class={"min-w-0 min-h-0 overflow-clip [overflow-clip-margin:12px] -mx-2 px-2"}>{p.children}</div>
     </div>
   )
 }
