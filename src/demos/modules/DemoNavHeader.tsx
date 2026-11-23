@@ -30,7 +30,6 @@ export function DemoNavHeader() {
               name={"Max Mustermann"}
               email={"max.mustermann@example.com"}
               userAvatar={<AppSidebarCssAvatar />}
-              sections={state.sections}
               logoutLabel={"Abmelden"}
               onLogout={state.logout}
             />
