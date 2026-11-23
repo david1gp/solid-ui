@@ -7,6 +7,8 @@ import { NavbarHeaderModernLinkButtonExternal } from "#src/demos/modules/navbarH
 import { navbarHeaderModernButtonVariant } from "#src/demos/modules/navbarHeaderModern/buttons/navbarHeaderModernButtonCva.js"
 import { NavbarHeaderModernAvatar } from "#src/demos/modules/navbarHeaderModern/NavbarHeaderModernAvatar.jsx"
 import type { NavbarHeaderModernNavItem } from "#src/demos/modules/navbarHeaderModern/NavbarHeaderModernNavItem.js"
+import { navbarHeaderModernGlassSurfaceClass } from "#src/demos/modules/navbarHeaderModern/navbarHeaderModernGlassSurfaceClass.js"
+import { navbarHeaderModernPopoverSurfaceClass } from "#src/demos/modules/navbarHeaderModern/navbarHeaderModernPopoverSurfaceClass.js"
 import { navbarHeaderModernStateCreate } from "#src/demos/modules/navbarHeaderModern/navbarHeaderModernStateCreate.js"
 import { NavbarHeaderModernThemeButton } from "#src/demos/modules/navbarHeaderModern/theme/NavbarHeaderModernThemeButton.jsx"
 import { NavbarHeaderModernThemeSwitch } from "#src/demos/modules/navbarHeaderModern/theme/NavbarHeaderModernThemeSwitch.jsx"
@@ -44,7 +46,8 @@ export function NavbarHeaderModern(p: NavbarHeaderModernProps) {
   return (
     <header
       class={classArr(
-        "sticky top-0 z-40 w-full border-b border-border bg-background/90 text-foreground backdrop-blur",
+        "sticky top-0 z-40 w-full border-b text-foreground", // layout
+        navbarHeaderModernGlassSurfaceClass, // frosted glass
         p.class,
       )}
       style={p.accentColor ? { "--navbar-header-modern-accent": p.accentColor } : undefined}
@@ -84,7 +87,11 @@ export function NavbarHeaderModern(p: NavbarHeaderModernProps) {
           >
             <For each={p.items}>{(item) => <NavbarHeaderModernLink item={item} onSelect={state.closeMobile} />}</For>
           </nav>
-          <div class={"flex flex-wrap items-center gap-2 border-t border-border pt-3 mt-3 lg:mt-0 lg:border-0 lg:pt-0"}>
+          <div
+            class={
+              "flex flex-wrap items-center gap-2 border-t border-neutral-200/80 dark:border-white/[0.08] pt-3 mt-3 lg:mt-0 lg:border-0 lg:pt-0"
+            }
+          >
             {p.actions}
             <Show when={p.showThemeSwitch}>
               <NavbarHeaderModernThemeSwitch class={"mr-1"} />
@@ -172,10 +179,7 @@ export function NavbarHeaderModern(p: NavbarHeaderModernProps) {
                   </Popover.Trigger>
                   <Popover.Portal>
                     <Popover.Content
-                      class={classArr(
-                        "z-50 rounded-xl border border-border bg-background p-3 shadow-lg",
-                        state.menu().contentClass(),
-                      )}
+                      class={classArr("z-50 p-3", navbarHeaderModernPopoverSurfaceClass, state.menu().contentClass())}
                     >
                       {state.resolvedUserMenu()}
                     </Popover.Content>
@@ -227,7 +231,7 @@ function NavbarHeaderModernLink(p: { item: NavbarHeaderModernNavItem; onSelect: 
       "flex items-center gap-2 rounded-md px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2",
       p.item.isActive
         ? "bg-black/5 dark:bg-white/10 text-[var(--navbar-header-modern-accent,var(--foreground))] font-medium"
-        : "text-muted-foreground hover:bg-black/3 dark:hover:bg-white/5 hover:text-foreground",
+        : "text-foreground/80 hover:bg-black/3 dark:hover:bg-white/5 hover:text-foreground",
     )
   const select = () => {
     p.onSelect()

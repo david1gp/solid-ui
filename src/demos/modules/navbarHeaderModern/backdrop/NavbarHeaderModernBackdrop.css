@@ -20,7 +20,8 @@
 
 .navbar-header-modern-backdrop-shape-violet {
   left: -7rem;
-  top: 6%;
+  /* Reaches up behind the sticky header so the frosted glass has color to blur. */
+  top: -6rem;
   width: 26rem;
   aspect-ratio: 1;
   border-radius: 9999px;
@@ -58,7 +59,7 @@
 
 .navbar-header-modern-backdrop-shape-cyan {
   right: 8%;
-  top: 10%;
+  top: -5rem;
   width: 16rem;
   aspect-ratio: 1;
   border-radius: 9999px;

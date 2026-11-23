@@ -63,7 +63,7 @@ export function NavbarHeaderModernUserMenu(p: NavbarHeaderModernUserMenuProps) {
               <span class={"text-sm font-semibold truncate"}>{p.name}</span>
             </Show>
             <Show when={p.email}>
-              <span class={"text-sm text-neutral-500 dark:text-neutral-400 truncate"}>{p.email}</span>
+              <span class={"text-sm text-neutral-600 dark:text-neutral-300 truncate"}>{p.email}</span>
             </Show>
           </div>
         </div>
