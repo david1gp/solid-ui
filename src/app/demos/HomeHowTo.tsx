@@ -20,6 +20,15 @@ export function HomeHowTo() {
           <li>Start a new AI session and paste the link there.</li>
           <li>Tell the AI to use this template for your page.</li>
         </ol>
+        <aside
+          class={
+            "rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-foreground dark:border-amber-400/40 dark:bg-amber-400/10"
+          }
+        >
+          <strong>Note:</strong> Some parts still need to be adjusted after copying, because the template cannot know
+          how your app works. For example, in navigations: the language settings, the light/dark mode function or which
+          settings page should be opened. Tell the AI how these should work in your app.
+        </aside>
       </section>
 
       <section class={"space-y-3"}>
