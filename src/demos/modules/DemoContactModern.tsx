@@ -12,7 +12,7 @@ import "./contactModern/DemoContactModern.css"
 export function DemoContactModern() {
   const state = contactModernStateCreate()
   return (
-    <main class="contact-modern" classList={{ "contact-modern-sent": state.sent() }}>
+    <main class={state.sent() ? "contact-modern contact-modern-sent" : "contact-modern"}>
       <div class="contact-modern-glow contact-modern-glow-warm" />
       <div class="contact-modern-glow contact-modern-glow-cool" />
       <section class="contact-modern-intro">
