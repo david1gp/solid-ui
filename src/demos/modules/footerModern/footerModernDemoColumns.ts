@@ -3,27 +3,27 @@ import type { FooterModernColumn } from "./FooterModernColumn.js"
 /** Placeholder link columns for the Footer-Modern demo. */
 export const footerModernDemoColumns: FooterModernColumn[] = [
   {
-    title: "Entdecken",
+    title: "Bibliothek",
     links: [
-      { label: "Geschichten", href: "#geschichten" },
-      { label: "Inspiration", href: "#inspiration" },
-      { label: "Newsletter", href: "#newsletter" },
+      { label: "Komponenten", href: "#komponenten" },
+      { label: "Module", href: "#module" },
+      { label: "Vorlagen", href: "#vorlagen" },
     ],
   },
   {
-    title: "Über das Projekt",
+    title: "Ressourcen",
     links: [
-      { label: "Unsere Vision", href: "#vision" },
-      { label: "Journal", href: "#journal" },
+      { label: "Dokumentation", href: "#dokumentation" },
+      { label: "Changelog", href: "#changelog" },
+      { label: "Roadmap", href: "#roadmap" },
+    ],
+  },
+  {
+    title: "Community",
+    links: [
+      { label: "Mitwirken", href: "#mitwirken" },
+      { label: "Diskussionen", href: "#diskussionen" },
       { label: "Kontakt", href: "#kontakt" },
-    ],
-  },
-  {
-    title: "Support",
-    links: [
-      { label: "Hilfe", href: "#hilfe" },
-      { label: "Datenschutz", href: "#datenschutz" },
-      { label: "Impressum", href: "#impressum" },
     ],
   },
 ]
