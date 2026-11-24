@@ -434,10 +434,10 @@ export function DemoCMS() {
           />
           <main class={"flex-1 min-w-0 p-4 pb-24 sm:p-8 overflow-y-auto"}>
             <Show when={active() === settingsPageKey} fallback={viewContent()}>
-              <nav aria-label={settingsLabel()} class="mb-4 flex flex-wrap gap-2 md:hidden">
+              <div class="mb-4 flex flex-col gap-3 md:hidden">
                 <button
                   type="button"
-                  class="rounded-lg border border-neutral-200 px-3 py-2 text-sm dark:border-white/10"
+                  class="self-start rounded-lg py-1 text-sm text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white"
                   onClick={() => {
                     setActive("")
                     cmsNavigate("dashboard")
@@ -445,19 +445,28 @@ export function DemoCMS() {
                 >
                   ← Admin
                 </button>
-                <For each={settingsPages}>
-                  {(page) => (
-                    <button
-                      type="button"
-                      class="rounded-lg border border-neutral-200 px-3 py-2 text-sm dark:border-white/10"
-                      aria-current={settingsPage.get() === page.id ? "page" : undefined}
-                      onClick={() => navigateSettings(page.id)}
-                    >
-                      {page.label[cmsLocale.get()]}
-                    </button>
-                  )}
-                </For>
-              </nav>
+                <nav
+                  aria-label={settingsLabel()}
+                  class="-mx-4 flex gap-1.5 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                >
+                  <For each={settingsPages}>
+                    {(page) => (
+                      <button
+                        type="button"
+                        class={`shrink-0 whitespace-nowrap rounded-lg border px-2.5 py-2 text-sm transition-colors ${
+                          settingsPage.get() === page.id
+                            ? "border-transparent bg-neutral-900 font-medium text-white dark:bg-white dark:text-neutral-900"
+                            : "border-neutral-200 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10"
+                        }`}
+                        aria-current={settingsPage.get() === page.id ? "page" : undefined}
+                        onClick={() => navigateSettings(page.id)}
+                      >
+                        {page.label[cmsLocale.get()]}
+                      </button>
+                    )}
+                  </For>
+                </nav>
+              </div>
               <h1 class={"text-2xl font-semibold mb-6"}>{settingsPageLabel()}</h1>
               <Switch>
                 <Match when={settingsPage.get() === "profile"}>
@@ -469,11 +478,15 @@ export function DemoCMS() {
                     }}
                   >
                     <SettingsCard>
-                      <div class={"flex items-center gap-4 pb-4 mb-4 border-b border-neutral-200 dark:border-white/10"}>
+                      <div
+                        class={
+                          "flex flex-wrap items-center gap-4 pb-4 mb-4 border-b border-neutral-200 dark:border-white/10"
+                        }
+                      >
                         <div class={"size-16 shrink-0 rounded-full overflow-hidden"}>
                           <CmsSidebarCssAvatar />
                         </div>
-                        <div class={"flex flex-col gap-1 min-w-0"}>
+                        <div class={"flex flex-1 flex-col gap-1 min-w-0"}>
                           <span class={"text-sm font-medium"}>{t("Profilbild", "Profile picture")}</span>
                           <span class={"text-xs text-neutral-500 dark:text-neutral-400"}>
                             {t("JPG oder PNG, max. 2 MB", "JPG or PNG, max. 2 MB")}
@@ -481,7 +494,7 @@ export function DemoCMS() {
                         </div>
                         <Button
                           variant={"outline"}
-                          class={"ml-auto gap-2 text-sm"}
+                          class={"w-full sm:w-auto sm:ml-auto gap-2 text-sm whitespace-nowrap"}
                           onClick={() =>
                             toastAdd({
                               title: t(
