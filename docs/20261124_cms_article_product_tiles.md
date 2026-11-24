@@ -19,6 +19,9 @@ Reference screenshot (`/home/tim/.t3code-tim/userdata/attachments/ac98a220-1bb6-
 
 - Shop position (added later): product data gets `position` (1..n, defines Kacheln order) and `featured` (boolean, a few true). Kacheln sorted by `position`; featured tiles show a small "Top" badge top-left (translucent pill, same style family as the Bearbeiten pill). Edit page "Produktdetails" card gets a select "Position im Shop" (options "1 von N" … "N von N") with hint "Bestimmt die Reihenfolge in der Produktübersicht." and a toggle/checkbox "Hervorgehoben (Top-Produkt)"; the image preview shows live a "#<pos>" pill and the "Top" badge. Local state only, nothing persisted, Kacheln order not changed by edits. No drag & drop.
 
+- Field settings panel removed (acc16fb).
+- Tabs on the article page become **Liste | Kacheln | Felder**. "Liste" shows the same products as Kacheln (same order by `position`) as rows inside a `cmsCardClass` card: small headphone illustration thumbnail (rounded, own gradient bg), title (shortTitle) + muted full title/description line, price (formatted), Menge, "#position", "Top" pill if featured, "Bearbeiten" button → same editor route. Responsive (on mobile stack meta under title). "Felder" tab holds the former field list card unchanged. Back/Abbrechen from the editor returns to the tab it came from if easily possible (`article:tiles`, `article:list` default, `article:fields`), otherwise Kacheln. Event type keeps only its field editor (no tabs).
+
 ## Tasks
 
 1. **Tiles**: product data, headphone illustration component, price formatter, Liste/Kacheln tabs on article page, tile grid with "Bearbeiten" navigating to the edit route (route may render a temporary placeholder until task 2).
@@ -30,4 +33,5 @@ Reference screenshot (`/home/tim/.t3code-tim/userdata/attachments/ac98a220-1bb6-
 - Task 1: done (9afb593, 014e66e). Files in `src/demos/modules/cms/views/content-types/products/`. Route `id=article:<productId>` currently renders a placeholder; back returns to Liste.
 - Task 2: done (8b89fc6, dc91268, bcf53ff, 2daa5c4). Routes: `id=article:<productId>` editor, `id=article:tiles` Kacheln tab.
 - Task 3: done (016ad55, deployed 382d092)
-- Task 4 (shop position + featured): implemented; demo changes are local only.
+- Task 4 (shop position + featured): done (a943c91)
+- Task 5 (product Liste + Felder tab): in progress

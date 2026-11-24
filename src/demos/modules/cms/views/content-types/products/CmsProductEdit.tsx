@@ -9,8 +9,8 @@ import { cmsProductEditStateCreate } from "./cmsProductEditStateCreate.js"
 import { cmsProductPriceFormat } from "./cmsProductPriceFormat.js"
 import { cmsProducts } from "./cmsProducts.js"
 
-export function CmsProductEdit(props: { product: (typeof cmsProducts)[number] }) {
-  const state = untrack(() => cmsProductEditStateCreate(props.product))
+export function CmsProductEdit(props: { product: (typeof cmsProducts)[number]; backToList?: boolean }) {
+  const state = untrack(() => cmsProductEditStateCreate(props.product, props.backToList))
   return (
     <div>
       <button

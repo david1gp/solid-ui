@@ -11,6 +11,7 @@ import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
 import { PageHeader } from "../../ui/PageHeader.js"
 import { cmsContentTypesStateCreate } from "./cmsContentTypesStateCreate.js"
 import { CmsProductEdit } from "./products/CmsProductEdit.js"
+import { CmsProductList } from "./products/CmsProductList.js"
 import { CmsProductTiles } from "./products/CmsProductTiles.js"
 import { cmsProducts } from "./products/cmsProducts.js"
 
@@ -61,14 +62,15 @@ const input = `w-full ${cmsInputClass}`
 export function CmsContentTypesView(props: { id?: string }) {
   const state = cmsContentTypesStateCreate(() => props.id)
   const t = () => text[cmsLocale.get()]
-  const product = () => cmsProducts.find((item) => props.id === `article:${item.id}`)
+  const product = () =>
+    cmsProducts.find((item) => props.id === `article:${item.id}` || props.id === `article:${item.id}:list`)
   return (
     <div>
       <Show
         when={!product()}
         fallback={
           <Show when={product()} keyed>
-            {(item) => <CmsProductEdit product={item} />}
+            {(item) => <CmsProductEdit product={item} backToList={props.id?.endsWith(":list")} />}
           </Show>
         }
       >
@@ -122,6 +124,7 @@ export function CmsContentTypesView(props: { id?: string }) {
                       [
                         ["list", "Liste"],
                         ["tiles", "Kacheln"],
+                        ["fields", "Felder"],
                       ] as const
                     }
                   >
@@ -139,70 +142,75 @@ export function CmsContentTypesView(props: { id?: string }) {
                   </For>
                 </div>
               </Show>
+              <Show when={item().id === "article" && state.tab() === "list"}>
+                <CmsProductList />
+              </Show>
               <Show
                 when={item().id === "article" && state.tab() === "tiles"}
                 fallback={
-                  <section class={cmsCardClass}>
-                    <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
-                      <h2 class="font-semibold">{t().fields}</h2>
-                      <div class="flex flex-wrap items-end gap-2">
-                        <label class="text-sm">
-                          {t().type}
-                          <select
-                            class={`${input} mt-1`}
-                            value={state.picker()}
-                            onChange={(event) =>
-                              state.pickerSet(event.currentTarget.value as ReturnType<typeof state.picker>)
-                            }
-                          >
-                            <For each={Object.entries(t().types)}>
-                              {([key, label]) => <option value={key}>{label}</option>}
-                            </For>
-                          </select>
-                        </label>
-                        <button class={cmsPrimaryButtonClass} type="button" onClick={state.add}>
-                          + {t().add}
-                        </button>
+                  <Show when={item().id !== "article" || state.tab() === "fields"}>
+                    <section class={cmsCardClass}>
+                      <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
+                        <h2 class="font-semibold">{t().fields}</h2>
+                        <div class="flex flex-wrap items-end gap-2">
+                          <label class="text-sm">
+                            {t().type}
+                            <select
+                              class={`${input} mt-1`}
+                              value={state.picker()}
+                              onChange={(event) =>
+                                state.pickerSet(event.currentTarget.value as ReturnType<typeof state.picker>)
+                              }
+                            >
+                              <For each={Object.entries(t().types)}>
+                                {([key, label]) => <option value={key}>{label}</option>}
+                              </For>
+                            </select>
+                          </label>
+                          <button class={cmsPrimaryButtonClass} type="button" onClick={state.add}>
+                            + {t().add}
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div class="divide-y divide-gray-200 dark:divide-neutral-800">
-                      <For each={item().fields}>
-                        {(field, index) => (
-                          <div class="flex flex-wrap items-center gap-3 py-3">
-                            <span class={cmsIconCircleClass}>
-                              <svg viewBox="0 0 24 24" class="size-5" fill="currentColor" aria-hidden="true">
-                                <path d={mdiClipboardTextOutline} />
-                              </svg>
-                            </span>
-                            <div class="min-w-0 flex-1">
-                              <span class="block text-sm font-medium">{field.label}</span>
-                              <span class="mt-0.5 block text-xs text-gray-500 dark:text-neutral-400">
-                                {field.key} · {t().types[field.type]}
+                      <div class="divide-y divide-gray-200 dark:divide-neutral-800">
+                        <For each={item().fields}>
+                          {(field, index) => (
+                            <div class="flex flex-wrap items-center gap-3 py-3">
+                              <span class={cmsIconCircleClass}>
+                                <svg viewBox="0 0 24 24" class="size-5" fill="currentColor" aria-hidden="true">
+                                  <path d={mdiClipboardTextOutline} />
+                                </svg>
                               </span>
+                              <div class="min-w-0 flex-1">
+                                <span class="block text-sm font-medium">{field.label}</span>
+                                <span class="mt-0.5 block text-xs text-gray-500 dark:text-neutral-400">
+                                  {field.key} · {t().types[field.type]}
+                                </span>
+                              </div>
+                              <button
+                                class={button}
+                                type="button"
+                                aria-label={`${t().up}: ${field.label}`}
+                                disabled={index() === 0}
+                                onClick={() => state.move(field.id, -1)}
+                              >
+                                ↑
+                              </button>
+                              <button
+                                class={button}
+                                type="button"
+                                aria-label={`${t().down}: ${field.label}`}
+                                disabled={index() === item().fields.length - 1}
+                                onClick={() => state.move(field.id, 1)}
+                              >
+                                ↓
+                              </button>
                             </div>
-                            <button
-                              class={button}
-                              type="button"
-                              aria-label={`${t().up}: ${field.label}`}
-                              disabled={index() === 0}
-                              onClick={() => state.move(field.id, -1)}
-                            >
-                              ↑
-                            </button>
-                            <button
-                              class={button}
-                              type="button"
-                              aria-label={`${t().down}: ${field.label}`}
-                              disabled={index() === item().fields.length - 1}
-                              onClick={() => state.move(field.id, 1)}
-                            >
-                              ↓
-                            </button>
-                          </div>
-                        )}
-                      </For>
-                    </div>
-                  </section>
+                          )}
+                        </For>
+                      </div>
+                    </section>
+                  </Show>
                 }
               >
                 <CmsProductTiles />

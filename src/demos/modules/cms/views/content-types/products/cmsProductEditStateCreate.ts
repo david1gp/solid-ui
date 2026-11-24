@@ -2,7 +2,7 @@ import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { cmsNavigate } from "../../../shell/cmsNavigate.js"
 import type { cmsProducts } from "./cmsProducts.js"
 
-export function cmsProductEditStateCreate(product: (typeof cmsProducts)[number]) {
+export function cmsProductEditStateCreate(product: (typeof cmsProducts)[number], backToList = false) {
   const position = createSignalObject(product.position)
   const featured = createSignalObject(product.featured)
   const price = createSignalObject(String(product.price))
@@ -42,6 +42,6 @@ export function cmsProductEditStateCreate(product: (typeof cmsProducts)[number])
     imageNotice: () => imageNotice.get(),
     imageUnavailable: () => imageNotice.set("Demo – nicht verfügbar"),
     save: () => notice.set("Demo – Änderungen werden nicht gespeichert"),
-    back: () => cmsNavigate("content-types", "article:tiles"),
+    back: () => cmsNavigate("content-types", backToList ? "article" : "article:tiles"),
   }
 }
