@@ -14,7 +14,34 @@ export type CmsMediaItem = {
   cropHeight: number
 }
 
-const [items, setItems] = createSignal<CmsMediaItem[]>([])
+const [items, setItems] = createSignal<CmsMediaItem[]>([
+  {
+    id: "demo-og-image",
+    name: "Beispielbild.jpg",
+    url: "/og-image.jpg",
+    folder: "",
+    alt: "Vorschaubild der Solid-UI-Demo",
+    focusX: 50,
+    focusY: 50,
+    cropX: 10,
+    cropY: 10,
+    cropWidth: 80,
+    cropHeight: 80,
+  },
+  {
+    id: "demo-logo",
+    name: "Beispiel-Logo.svg",
+    url: "/logo.svg",
+    folder: "",
+    alt: "Solid-UI-Logo",
+    focusX: 50,
+    focusY: 50,
+    cropX: 10,
+    cropY: 10,
+    cropWidth: 80,
+    cropHeight: 80,
+  },
+])
 const [folders, setFolders] = createSignal<string[]>([])
 
 /** Shared, in-memory demo library. Uploaded object URLs live until the item is removed or the page closes. */
@@ -48,7 +75,7 @@ export const cmsMediaStore = {
   },
   remove(id: string) {
     const item = items().find((entry) => entry.id === id)
-    if (item) URL.revokeObjectURL(item.url)
+    if (item?.url.startsWith("blob:")) URL.revokeObjectURL(item.url)
     setItems((current) => current.filter((entry) => entry.id !== id))
   },
 }
