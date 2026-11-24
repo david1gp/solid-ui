@@ -144,7 +144,14 @@ export function AppSidebar(p: AppSidebarProps) {
         </div>
       </Show>
 
-      <nav tabindex={-1} class={"flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2"}>
+      <nav
+        tabindex={-1}
+        class={classArr(
+          "flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-2 py-2",
+          // A classic scrollbar would eat into the 48px icon rail and cover the icons; the rail still scrolls.
+          !isOpen() && "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        )}
+      >
         <Show when={isSearching() && groups().length === 0}>
           <p class={"px-2 py-1 text-sm text-muted-foreground whitespace-nowrap"}>{ttt("No results")}</p>
         </Show>
