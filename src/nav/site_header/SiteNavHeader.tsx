@@ -1,5 +1,6 @@
 import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { mdiMenu } from "@adaptive-ds/mdi/mdiMenu.js"
+import { siteNavHeaderGlassSurfaceClass } from "#src/nav/site_header/siteNavHeaderGlassSurfaceClass.js"
 import { siteNavHeaderStateCreate } from "#src/nav/site_header/siteNavHeaderStateCreate.js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
@@ -11,7 +12,12 @@ import { classArr } from "#ui/utils/classArr.js"
 export function SiteNavHeader() {
   const state = siteNavHeaderStateCreate()
   return (
-    <header class={"sticky top-0 z-40 w-full border-b border-border bg-background/90 text-foreground backdrop-blur"}>
+    <header
+      class={classArr(
+        "sticky top-0 z-40 w-full border-b text-foreground", // layout
+        siteNavHeaderGlassSurfaceClass, // frosted glass
+      )}
+    >
       <div
         class={
           "mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-x-4 px-4 lg:grid-cols-[auto_1fr_auto] lg:px-6"
