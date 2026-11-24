@@ -8,7 +8,7 @@ import { cmsProductsSorted } from "./cmsProductsSorted.js"
 export function CmsProductTiles() {
   return (
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-      <For each={cmsProductsSorted}>
+      <For each={cmsProductsSorted()}>
         {(product) => (
           <article class="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-sm dark:border dark:border-neutral-800">
             <CmsHeadphonesIllustration colorway={product.colorway} />

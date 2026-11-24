@@ -1,4 +1,6 @@
-export const cmsProducts = [
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
+
+export const cmsProducts = createSignalObject([
   {
     id: "product-1",
     position: 1,
@@ -95,4 +97,4 @@ export const cmsProducts = [
     faq: [],
     colorway: { background: "#473f52", band: "#a799b3", cup: "#d0c2d8", cushion: "#5a4c63" },
   },
-]
+])

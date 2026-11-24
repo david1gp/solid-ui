@@ -25,8 +25,8 @@ const text = {
     type: "Feldtyp",
     up: "Nach oben",
     down: "Nach unten",
-    count: "Felder",
-    countOne: "Feld",
+    count: "Einträge",
+    countOne: "Eintrag",
     types: {
       text: "Text",
       number: "Zahl",
@@ -45,8 +45,8 @@ const text = {
     type: "Field type",
     up: "Move up",
     down: "Move down",
-    count: "fields",
-    countOne: "field",
+    count: "entries",
+    countOne: "entry",
     types: {
       text: "Text",
       number: "Number",
@@ -63,7 +63,7 @@ export function CmsContentTypesView(props: { id?: string }) {
   const state = cmsContentTypesStateCreate(() => props.id)
   const t = () => text[cmsLocale.get()]
   const product = () =>
-    cmsProducts.find((item) => props.id === `article:${item.id}` || props.id === `article:${item.id}:list`)
+    cmsProducts.get().find((item) => props.id === `article:${item.id}` || props.id === `article:${item.id}:list`)
   return (
     <div>
       <Show
@@ -94,7 +94,7 @@ export function CmsContentTypesView(props: { id?: string }) {
                       </span>
                       <span class="text-base font-semibold">{item.name}</span>
                       <span class={cmsPillClass}>
-                        {`${item.fields.length} ${item.fields.length === 1 ? t().countOne : t().count} →`}
+                        {`${state.entryCount(item.id)} ${state.entryCount(item.id) === 1 ? t().countOne : t().count} →`}
                       </span>
                     </button>
                   )}

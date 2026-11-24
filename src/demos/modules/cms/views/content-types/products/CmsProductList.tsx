@@ -11,7 +11,7 @@ export function CmsProductList() {
   return (
     <section class={cmsCardClass} aria-label="Produkte">
       <div class="divide-y divide-gray-200 dark:divide-neutral-800">
-        <For each={cmsProductsSorted}>
+        <For each={cmsProductsSorted()}>
           {(product) => (
             <article class="flex flex-wrap items-center gap-3 py-3">
               <div class="size-16 shrink-0 overflow-hidden rounded-lg">

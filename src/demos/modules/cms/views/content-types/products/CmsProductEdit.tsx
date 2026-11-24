@@ -9,7 +9,7 @@ import { cmsProductEditStateCreate } from "./cmsProductEditStateCreate.js"
 import { cmsProductPriceFormat } from "./cmsProductPriceFormat.js"
 import { cmsProducts } from "./cmsProducts.js"
 
-export function CmsProductEdit(props: { product: (typeof cmsProducts)[number]; backToList?: boolean }) {
+export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.get>[number]; backToList?: boolean }) {
   const state = untrack(() => cmsProductEditStateCreate(props.product, props.backToList))
   return (
     <div>
@@ -89,10 +89,10 @@ export function CmsProductEdit(props: { product: (typeof cmsProducts)[number]; b
                   value={state.position()}
                   onChange={(e) => state.positionSet(Number(e.currentTarget.value))}
                 >
-                  <For each={cmsProducts}>
+                  <For each={cmsProducts.get()}>
                     {(_, index) => (
                       <option value={index() + 1}>
-                        {index() + 1} von {cmsProducts.length}
+                        {index() + 1} von {cmsProducts.get().length}
                       </option>
                     )}
                   </For>

@@ -1,5 +1,6 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { cmsNavigate } from "../../shell/cmsNavigate.js"
+import { cmsProducts } from "./products/cmsProducts.js"
 
 type FieldType = "text" | "number" | "date" | "relation" | "media" | "repeater"
 type Field = { id: string; type: FieldType; label: string; key: string }
@@ -31,6 +32,7 @@ export function cmsContentTypesStateCreate(id: () => string | undefined) {
     tabSet: (value: "list" | "tiles" | "fields") =>
       cmsNavigate("content-types", value === "list" ? "article" : `article:${value}`),
     types: () => types.get(),
+    entryCount: (typeId: string) => (typeId === "article" ? cmsProducts.get().length : 0),
     current,
     picker: () => picker.get(),
     pickerSet: (value: FieldType) => picker.set(value),
