@@ -18,8 +18,8 @@ export function FooterSimpleSocialLinks(p: { links: FooterSimpleSocialLink[] }) 
               title={link.label}
               class={classArr(
                 "flex items-center justify-center size-9 rounded-md", // layout
-                "text-neutral-500 dark:text-neutral-400", // text
-                "hover:text-neutral-950 hover:bg-black/5 dark:hover:text-neutral-50 dark:hover:bg-white/10", // hover
+                "text-muted-foreground", // text
+                "hover:text-foreground hover:bg-foreground/8", // hover
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--footer-simple-accent)", // focus
                 "transition-colors",
               )}
