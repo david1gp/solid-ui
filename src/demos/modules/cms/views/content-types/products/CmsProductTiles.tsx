@@ -1,5 +1,5 @@
 import { mdiPencilOutline } from "@adaptive-ds/mdi/mdiPencilOutline.js"
-import { For } from "solid-js"
+import { For, Show } from "solid-js"
 import { cmsNavigate } from "../../../shell/cmsNavigate.js"
 import { CmsHeadphonesIllustration } from "./CmsHeadphonesIllustration.js"
 import { cmsProductPriceFormat } from "./cmsProductPriceFormat.js"
@@ -8,11 +8,16 @@ import { cmsProducts } from "./cmsProducts.js"
 export function CmsProductTiles() {
   return (
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-      <For each={cmsProducts}>
+      <For each={[...cmsProducts].sort((a, b) => a.position - b.position)}>
         {(product) => (
           <article class="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-sm dark:border dark:border-neutral-800">
             <CmsHeadphonesIllustration colorway={product.colorway} />
             <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+            <Show when={product.featured}>
+              <span class="absolute left-4 top-4 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
+                Top
+              </span>
+            </Show>
             <div class="absolute inset-x-0 bottom-0 p-4">
               <h2 class="font-semibold text-white" title={product.title}>
                 {product.shortTitle ?? product.title}

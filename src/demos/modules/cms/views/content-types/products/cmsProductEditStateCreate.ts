@@ -3,6 +3,8 @@ import { cmsNavigate } from "../../../shell/cmsNavigate.js"
 import type { cmsProducts } from "./cmsProducts.js"
 
 export function cmsProductEditStateCreate(product: (typeof cmsProducts)[number]) {
+  const position = createSignalObject(product.position)
+  const featured = createSignalObject(product.featured)
   const price = createSignalObject(String(product.price))
   const quantity = createSignalObject(String(product.quantity))
   const description = createSignalObject(product.description)
@@ -17,6 +19,10 @@ export function cmsProductEditStateCreate(product: (typeof cmsProducts)[number])
   const imageNotice = createSignalObject("")
   let nextId = faq.get().length
   return {
+    position: () => position.get(),
+    positionSet: (value: number) => position.set(value),
+    featured: () => featured.get(),
+    featuredSet: (value: boolean) => featured.set(value),
     price: () => price.get(),
     priceSet: (value: string) => price.set(value),
     quantity: () => quantity.get(),

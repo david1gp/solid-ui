@@ -17,6 +17,8 @@ Reference screenshot (`/home/tim/.t3code-tim/userdata/attachments/ac98a220-1bb6-
 - Edit page (dashboard card style using `src/demos/modules/cms/ui/` constants `cmsCardClass`, `cmsInputClass`, `cmsButtonClass`, `cmsPrimaryButtonClass`, `cmsPillClass`, `cmsIconCircleClass`): PageHeader with product title; left: image card (large illustration preview, buttons "Aus Mediathek wählen" and "Neues Bild hochladen" – placeholders, non-functional: no-op or show a small "Demo – nicht verfügbar" hint); right/below: fields Preis (€ number input), Menge (number input), Beschreibung (textarea); FAQ section card: list of question/answer input pairs, button "+ Frage hinzufügen" appends an empty pair, each pair removable; footer "Speichern" (primary) and "Abbrechen" (secondary). Edits live in local component state only; "Speichern" shows a brief demo notice and/or navigates back; reload resets everything. Nothing written to stores/localStorage.
 - All UI text German. Use only existing deps. Code style: one export per file, small files in `src/demos/modules/cms/views/content-types/` (e.g. `products/` subfolder).
 
+- Shop position (added later): product data gets `position` (1..n, defines Kacheln order) and `featured` (boolean, a few true). Kacheln sorted by `position`; featured tiles show a small "Top" badge top-left (translucent pill, same style family as the Bearbeiten pill). Edit page "Produktdetails" card gets a select "Position im Shop" (options "1 von N" … "N von N") with hint "Bestimmt die Reihenfolge in der Produktübersicht." and a toggle/checkbox "Hervorgehoben (Top-Produkt)"; the image preview shows live a "#<pos>" pill and the "Top" badge. Local state only, nothing persisted, Kacheln order not changed by edits. No drag & drop.
+
 ## Tasks
 
 1. **Tiles**: product data, headphone illustration component, price formatter, Liste/Kacheln tabs on article page, tile grid with "Bearbeiten" navigating to the edit route (route may render a temporary placeholder until task 2).
@@ -27,4 +29,5 @@ Reference screenshot (`/home/tim/.t3code-tim/userdata/attachments/ac98a220-1bb6-
 
 - Task 1: done (9afb593, 014e66e). Files in `src/demos/modules/cms/views/content-types/products/`. Route `id=article:<productId>` currently renders a placeholder; back returns to Liste.
 - Task 2: done (8b89fc6, dc91268, bcf53ff, 2daa5c4). Routes: `id=article:<productId>` editor, `id=article:tiles` Kacheln tab.
-- Task 3: in progress (open: titles truncated on 4-col grid at ~1280px, e.g. "Blue Hori…")
+- Task 3: done (016ad55, deployed 382d092)
+- Task 4 (shop position + featured): implemented; demo changes are local only.

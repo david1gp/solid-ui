@@ -1,6 +1,8 @@
 export const cmsProducts = [
   {
     id: "product-1",
+    position: 1,
+    featured: true,
     title: "Studio One – Kabellose Over-Ear-Kopfhörer",
     shortTitle: "Studio One",
     price: 249,
@@ -11,6 +13,8 @@ export const cmsProducts = [
   },
   {
     id: "product-2",
+    position: 2,
+    featured: false,
     title: "Sandstone – Over-Ear-Kopfhörer",
     shortTitle: "Sandstone",
     price: 199.9,
@@ -21,6 +25,8 @@ export const cmsProducts = [
   },
   {
     id: "product-3",
+    position: 3,
+    featured: true,
     title: "Blue Horizon – Bluetooth-Kopfhörer",
     shortTitle: "Blue Horizon",
     price: 179,
@@ -31,6 +37,8 @@ export const cmsProducts = [
   },
   {
     id: "product-4",
+    position: 4,
+    featured: false,
     title: "Forest Air – Noise-Cancelling-Kopfhörer",
     shortTitle: "Forest Air",
     price: 299,
@@ -41,6 +49,8 @@ export const cmsProducts = [
   },
   {
     id: "product-5",
+    position: 5,
+    featured: false,
     title: "Coral Sound – Over-Ear-Kopfhörer",
     shortTitle: "Coral Sound",
     price: 159,
@@ -51,6 +61,8 @@ export const cmsProducts = [
   },
   {
     id: "product-6",
+    position: 6,
+    featured: true,
     title: "Silver Wave – Premium-Kopfhörer",
     shortTitle: "Silver Wave",
     price: 329,
@@ -61,6 +73,8 @@ export const cmsProducts = [
   },
   {
     id: "product-7",
+    position: 7,
+    featured: false,
     title: "Midnight Pro – Studio-Kopfhörer",
     shortTitle: "Midnight Pro",
     price: 279,
@@ -71,6 +85,8 @@ export const cmsProducts = [
   },
   {
     id: "product-8",
+    position: 8,
+    featured: false,
     title: "Lavender Dream – Bluetooth-Kopfhörer",
     shortTitle: "Lavender Dream",
     price: 189.5,

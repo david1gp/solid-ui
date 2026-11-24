@@ -7,7 +7,7 @@ import { PageHeader } from "../../../ui/PageHeader.js"
 import { CmsHeadphonesIllustration } from "./CmsHeadphonesIllustration.js"
 import { cmsProductEditStateCreate } from "./cmsProductEditStateCreate.js"
 import { cmsProductPriceFormat } from "./cmsProductPriceFormat.js"
-import type { cmsProducts } from "./cmsProducts.js"
+import { cmsProducts } from "./cmsProducts.js"
 
 export function CmsProductEdit(props: { product: (typeof cmsProducts)[number] }) {
   const state = untrack(() => cmsProductEditStateCreate(props.product))
@@ -26,6 +26,16 @@ export function CmsProductEdit(props: { product: (typeof cmsProducts)[number] })
           <h2 class="mb-4 font-semibold">Produktbild</h2>
           <div class="relative mx-auto aspect-[3/4] max-w-sm overflow-hidden rounded-2xl">
             <CmsHeadphonesIllustration colorway={props.product.colorway} />
+            <div class="absolute left-4 top-4 flex gap-2">
+              <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
+                #{state.position()}
+              </span>
+              <Show when={state.featured()}>
+                <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
+                  Top
+                </span>
+              </Show>
+            </div>
             <p class="absolute bottom-4 left-4 rounded-full bg-black/50 px-3 py-1 text-sm font-semibold text-emerald-300">
               {cmsProductPriceFormat(Number(state.price()) || 0)}
             </p>
@@ -71,6 +81,36 @@ export function CmsProductEdit(props: { product: (typeof cmsProducts)[number] })
                 />
               </label>
             </div>
+            <div>
+              <label class="block text-sm">
+                Position im Shop
+                <select
+                  class={`mt-1 w-full ${cmsInputClass}`}
+                  value={state.position()}
+                  onChange={(e) => state.positionSet(Number(e.currentTarget.value))}
+                >
+                  <For each={cmsProducts}>
+                    {(_, index) => (
+                      <option value={index() + 1}>
+                        {index() + 1} von {cmsProducts.length}
+                      </option>
+                    )}
+                  </For>
+                </select>
+              </label>
+              <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
+                Bestimmt die Reihenfolge in der Produktübersicht.
+              </p>
+            </div>
+            <label class="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                class="size-4 accent-[var(--dashboard-accent)]"
+                checked={state.featured()}
+                onChange={(e) => state.featuredSet(e.currentTarget.checked)}
+              />
+              Hervorgehoben (Top-Produkt)
+            </label>
             <label class="block text-sm">
               Beschreibung
               <textarea
