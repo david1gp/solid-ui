@@ -425,7 +425,10 @@ export function DemoCMS() {
             logoutLabel={t("Abmelden", "Sign out")}
           />
         </Show>
-        <div class="flex min-w-0 flex-1 flex-col bg-white dark:bg-[#222326]">
+        <div
+          class="flex min-w-0 flex-1 flex-col bg-white dark:bg-[#222326]"
+          style={{ "--app-sidebar-accent": accentColor.get() }}
+        >
           <CmsShellHeader
             group={cmsShellText[cmsLocale.get()][view().group]}
             title={active() === settingsPageKey ? settingsLabel() : view().label[cmsLocale.get()]}
