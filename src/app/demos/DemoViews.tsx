@@ -1,5 +1,6 @@
 import { dynamic } from "@solidjs/web"
 import { type Component, createMemo, createSignal, Errored, For, Loading, onSettled, Show } from "solid-js"
+import { demoGroupsCreate } from "#src/app/demos/demoGroupsCreate.js"
 import { demoList } from "#src/app/demos/demoList.js"
 import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { demosOverviewStateCreate } from "#src/app/demos/demosOverviewStateCreate.js"
@@ -161,6 +162,7 @@ export function DemosOverview() {
               if (value === "howto") return <HomeHowTo />
               const tree: Record<string, unknown> | undefined = demoList[value as keyof typeof demoList]
               const names = objectKeys(tree ?? {})
+              if (value === "modules") return <DemoModuleGroups names={names} />
               return (
                 <div class={"grid gap-x-6 gap-y-2 py-6 sm:grid-cols-2 lg:grid-cols-3"}>
                   <Show when={names.length > 0} fallback={<span class={"text-muted-foreground"}>No entries yet</span>}>
@@ -200,19 +202,47 @@ export function DemosCategory(props: { category: string }) {
       >
         <div class={panelClass}>
           <h2 class={"text-xl font-semibold"}>{capitalizeFirst(props.category)}</h2>
-          <div class={"flex flex-col"}>
-            <BulletLinks
-              internal
-              urls={links()}
-              display={links().map((link) => {
-                const name = link.split("/").pop() ?? ""
-                return demoDisplayNames[name] ?? name
-              })}
-            />
-          </div>
+          <Show
+            when={props.category === "modules"}
+            fallback={
+              <div class={"flex flex-col"}>
+                <BulletLinks
+                  internal
+                  urls={links()}
+                  display={links().map((link) => {
+                    const name = link.split("/").pop() ?? ""
+                    return demoDisplayNames[name] ?? name
+                  })}
+                />
+              </div>
+            }
+          >
+            <DemoModuleGroups names={links().map((link) => link.split("/").pop() ?? "")} />
+          </Show>
         </div>
       </div>
     </LayoutWrapperDemo>
+  )
+}
+
+function DemoModuleGroups(props: { names: string[] }) {
+  return (
+    <div class="py-6 space-y-6">
+      <For each={demoGroupsCreate("modules", props.names)}>
+        {(group) => (
+          <section>
+            <h3 class="text-lg font-semibold">{group.heading}</h3>
+            <div class="grid gap-x-6 gap-y-2 py-6 sm:grid-cols-2 lg:grid-cols-3">
+              <BulletLinks
+                internal
+                urls={group.names.map((name) => `${prefix}/modules/${name}`)}
+                display={group.names.map((name) => demoDisplayNames[name] ?? name.replace(/^Demo/, ""))}
+              />
+            </div>
+          </section>
+        )}
+      </For>
+    </div>
   )
 }
 
