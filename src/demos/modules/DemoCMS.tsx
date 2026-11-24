@@ -81,7 +81,7 @@ export function DemoCMS() {
   })
   onCleanup(() => tttLanguage.set(previousLanguage))
   const settingsOpen = createSignalObject(false)
-  const { collapsed } = demoCmsMobileCollapseCreate(settingsOpen)
+  const { collapsed, motionReady } = demoCmsMobileCollapseCreate(settingsOpen)
   const accentColor = createSignalObject(accentColors[0]!.color)
   const initial = {
     firstName: "Max",
@@ -335,7 +335,7 @@ export function DemoCMS() {
       <div class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
         <DemoShapesBackdrop />
         <Show when={!(active() === settingsPageKey && mobile())}>
-          <div class="relative flex shrink-0">
+          <div class={`relative flex shrink-0 ${motionReady() ? "" : "[&_*]:!transition-none"}`}>
             <CmsSidebar
               collapsed={collapsed}
               logo={

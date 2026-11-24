@@ -5,12 +5,16 @@ import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObj
 export function demoCmsMobileCollapseCreate(settingsOpen: SignalObject<boolean>) {
   const collapsed = createSignalObject(false)
   const mobile = createSignalObject(false)
+  const motionReady = createSignalObject(false)
   let automaticallyCollapsed = false
   let desktopCollapsed = false
   let initialized = false
 
   onSettled(() => {
-    if (typeof window.matchMedia !== "function") return
+    if (typeof window.matchMedia !== "function") {
+      motionReady.set(true)
+      return
+    }
     const query = window.matchMedia("(max-width: 768px)")
     const update = () => {
       if (initialized && query.matches === untrack(mobile.get)) return
@@ -30,7 +34,18 @@ export function demoCmsMobileCollapseCreate(settingsOpen: SignalObject<boolean>)
     }
     update()
     query.addEventListener("change", update)
-    return () => query.removeEventListener("change", update)
+    // Let the initial viewport state paint before enabling sidebar transitions. Otherwise
+    // hydration animates the prerendered desktop sidebar into the mobile rail.
+    let frame = 0
+    if (typeof requestAnimationFrame === "function") {
+      frame = requestAnimationFrame(() => {
+        frame = requestAnimationFrame(() => motionReady.set(true))
+      })
+    } else motionReady.set(true)
+    return () => {
+      query.removeEventListener("change", update)
+      if (frame && typeof cancelAnimationFrame === "function") cancelAnimationFrame(frame)
+    }
   })
 
   createEffect(
@@ -51,6 +66,7 @@ export function demoCmsMobileCollapseCreate(settingsOpen: SignalObject<boolean>)
   )
 
   return {
+    motionReady: motionReady.get,
     collapsed: {
       get: collapsed.get,
       set: (value: boolean) => {

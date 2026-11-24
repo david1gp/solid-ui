@@ -45,6 +45,43 @@ test("mobile starts collapsed and settings restores only a sidebar collapsed aut
   }
 })
 
+test("initial mobile collapse paints before sidebar motion is enabled", () => {
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window")
+  const originalFrame = Object.getOwnPropertyDescriptor(globalThis, "requestAnimationFrame")
+  let nextFrame: FrameRequestCallback = () => {}
+  Object.defineProperty(globalThis, "window", {
+    configurable: true,
+    value: { matchMedia: () => ({ matches: true, addEventListener: () => {}, removeEventListener: () => {} }) },
+  })
+  Object.defineProperty(globalThis, "requestAnimationFrame", {
+    configurable: true,
+    value: (callback: FrameRequestCallback) => {
+      nextFrame = callback
+      return 1
+    },
+  })
+  const { collapsed, motionReady, dispose } = createRoot((dispose) => {
+    const settings = createSignalObject(false)
+    return { ...demoCmsMobileCollapseCreate(settings), dispose }
+  })
+  try {
+    flush()
+    expect(collapsed.get()).toBe(true)
+    expect(motionReady()).toBe(false)
+    nextFrame(0)
+    expect(motionReady()).toBe(false)
+    nextFrame(0)
+    flush()
+    expect(motionReady()).toBe(true)
+  } finally {
+    dispose()
+    if (originalWindow) Object.defineProperty(globalThis, "window", originalWindow)
+    else Reflect.deleteProperty(globalThis, "window")
+    if (originalFrame) Object.defineProperty(globalThis, "requestAnimationFrame", originalFrame)
+    else Reflect.deleteProperty(globalThis, "requestAnimationFrame")
+  }
+})
+
 test("expanding the sidebar on desktop leaves settings open", () => {
   const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window")
   const media = { matches: false, addEventListener: () => {}, removeEventListener: () => {} }
