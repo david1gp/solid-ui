@@ -8,7 +8,7 @@ import { footerSimpleDemoSocialLinks } from "#src/demos/modules/footerSimple/foo
 /** Footer template demo; its components live in ./footerSimple and evolve independently of the other modules. */
 export function DemoFooterSimple() {
   return (
-    <div class={"relative isolate flex min-h-dvh w-full flex-col bg-background text-foreground"}>
+    <div class={"relative isolate flex min-h-dvh w-full flex-col bg-background text-foreground dark:bg-[#222326]"}>
       <FooterSimpleBackdrop />
       <main class={"flex-1 min-h-[60dvh] p-8"}>
         <h1 class={"text-2xl font-semibold mb-6"}>Footer-Simple</h1>
@@ -17,14 +17,16 @@ export function DemoFooterSimple() {
       <FooterSimple
         logo={
           <span
-            class={"flex items-center justify-center size-6 rounded-md bg-foreground text-background text-sm font-bold"}
+            class={
+              "flex items-center justify-center size-6 rounded-md bg-black text-white text-sm font-bold dark:bg-white dark:text-black"
+            }
           >
             C
           </span>
         }
         brand={
           <>
-            Atlas<span class={"text-muted-foreground"}>.</span>
+            Atlas<span class={"text-blue-600"}>.</span>
           </>
         }
         description={"Projekte, Abläufe und Protokolle an einem Ort – einfach und sicher organisiert."}

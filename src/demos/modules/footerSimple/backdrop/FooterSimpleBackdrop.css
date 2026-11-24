@@ -1,5 +1,4 @@
-/* Footer-Simple page background: a dot grid plus a soft muted glow, both derived from the theme tokens
-   (--foreground, --muted, --background), so light and dark mode follow the site palette. */
+/* Abstract color shapes behind the Footer-Simple demo; independent copy of DemoShapesBackdrop. */
 
 .footer-simple-backdrop {
   position: absolute;
@@ -7,32 +6,66 @@
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background-color: var(--background);
-  background-image:
-    radial-gradient(circle, color-mix(in oklab, var(--foreground) 18%, transparent) 1px, transparent 1.5px),
-    radial-gradient(ellipse 70% 55% at 85% 0%, var(--muted), transparent 70%),
-    linear-gradient(to bottom, var(--background), var(--muted));
-  background-size:
-    22px 22px,
-    100% 100%,
-    100% 100%;
-  background-position:
-    11px 11px,
-    0 0,
-    0 0;
-}
-
-/* Fade the dot grid out towards the footer so the content area carries the texture. */
-.footer-simple-backdrop::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 35%, var(--muted));
+  opacity: 0.55;
 }
 
 .dark .footer-simple-backdrop {
-  background-image:
-    radial-gradient(circle, color-mix(in oklab, var(--foreground) 12%, transparent) 1px, transparent 1.5px),
-    radial-gradient(ellipse 70% 55% at 85% 0%, var(--muted), transparent 70%),
-    linear-gradient(to bottom, var(--background), var(--muted));
+  opacity: 0.85;
+}
+
+.footer-simple-backdrop > span {
+  position: absolute;
+  display: block;
+}
+
+.footer-simple-backdrop-shape-violet {
+  left: -7rem;
+  top: 6%;
+  width: 26rem;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #c084fc, #7c3aed 55%, #4c1d95);
+}
+
+.footer-simple-backdrop-shape-amber {
+  left: 2.5rem;
+  top: 36%;
+  width: 8.5rem;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #fde68a, #f59e0b 60%, #b45309);
+}
+
+.footer-simple-backdrop-shape-teal {
+  left: 5rem;
+  top: 56%;
+  width: 20rem;
+  height: 15rem;
+  border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%;
+  rotate: -12deg;
+  background: linear-gradient(135deg, #2dd4bf, #0e7490);
+}
+
+.footer-simple-backdrop-shape-magenta {
+  left: 26%;
+  top: 74%;
+  width: 34rem;
+  height: 9rem;
+  border-radius: 9999px;
+  rotate: -18deg;
+  background: linear-gradient(90deg, #e879f9, #a21caf 60%, #6d28d9);
+}
+
+.footer-simple-backdrop-shape-cyan {
+  right: 8%;
+  top: 10%;
+  width: 16rem;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #67e8f9, #0891b2 60%, #164e63);
+}
+
+/* Viewport-pinned variant for scrolling pages such as the demo index. */
+.footer-simple-backdrop-fixed {
+  position: fixed;
 }

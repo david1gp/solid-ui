@@ -10,8 +10,8 @@ export function FooterSimpleNewsletter(p: { title: string; description: string }
   const state = footerSimpleNewsletterStateCreate()
   return (
     <form class={"flex flex-col gap-2"} novalidate onSubmit={state.submit}>
-      <h2 class={"text-sm font-semibold text-foreground"}>{p.title}</h2>
-      <p class={"text-sm text-muted-foreground"}>{p.description}</p>
+      <h2 class={"text-sm font-semibold text-neutral-950 dark:text-neutral-50"}>{p.title}</h2>
+      <p class={"text-sm text-neutral-600 dark:text-neutral-400"}>{p.description}</p>
       <div class={"flex gap-2"}>
         <label for={"footer-simple-newsletter-email"} class={"sr-only"}>
           E-Mail-Adresse
@@ -33,7 +33,7 @@ export function FooterSimpleNewsletter(p: { title: string; description: string }
           title={"Abonnieren"}
           class={classArr(
             "flex items-center justify-center gap-2 shrink-0 h-10 px-3 rounded-md cursor-pointer", // layout
-            "text-sm font-medium text-(--footer-simple-accent-foreground) bg-(--footer-simple-accent) hover:opacity-90", // color
+            "text-sm font-medium text-white bg-(--footer-simple-accent) hover:opacity-90", // color
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--footer-simple-accent)", // focus
           )}
         >
@@ -44,14 +44,14 @@ export function FooterSimpleNewsletter(p: { title: string; description: string }
       <Show
         when={state.error()}
         fallback={
-          <span id={"footer-simple-newsletter-hint"} class={"text-xs text-muted-foreground"}>
+          <span id={"footer-simple-newsletter-hint"} class={"text-xs text-neutral-500 dark:text-neutral-400"}>
             {state.subscribed()
               ? `Fast geschafft – bitte bestätige die E-Mail an ${state.subscribed()}.`
               : "Kein Spam, jederzeit abbestellbar."}
           </span>
         }
       >
-        <span id={"footer-simple-newsletter-hint"} role={"alert"} class={"text-xs text-red-600 dark:text-red-300"}>
+        <span id={"footer-simple-newsletter-hint"} role={"alert"} class={"text-xs text-red-600 dark:text-red-400"}>
           {state.error()}
         </span>
       </Show>
