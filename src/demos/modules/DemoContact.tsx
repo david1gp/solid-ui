@@ -160,8 +160,10 @@ export function DemoContact() {
                       <input id="contactWebsite" name="website" type="text" tabindex={-1} autocomplete="off" />
                     </div>
                     <div class="field">
-                      <label class="checkbox-label">
+                      <div class="checkbox-row">
                         <input
+                          id="contactConsent"
+                          aria-labelledby="contactConsentText"
                           type="checkbox"
                           name="consent"
                           required
@@ -173,11 +175,11 @@ export function DemoContact() {
                             <path d="m2.2 6.2 2.3 2.2 5.2-5" stroke="currentColor" stroke-width="1.8" />
                           </svg>
                         </span>
-                        <span>
+                        <span id="contactConsentText">
                           {state.texts().consentPrefix}
                           <a href="#contactTitle">{state.texts().privacyPolicy}</a>.
                         </span>
-                      </label>
+                      </div>
                       <FieldError id="contactConsentError" message={state.errors().consent} />
                     </div>
                     <Button
