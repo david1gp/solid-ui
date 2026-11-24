@@ -3,13 +3,21 @@ import { demoRegisterLoginTexts } from "./demoRegisterLoginTexts.js"
 import { formErrorsEnglish } from "./formErrorsEnglish.js"
 import { formErrorsGerman } from "./formErrorsGerman.js"
 
-export function demoRegisterLoginStateCreate() {
-  const [locale, setLocale] = createSignal<"de" | "en">("de")
+export function demoRegisterLoginStateCreate(options?: {
+  locale?: () => "de" | "en"
+  initialMode?: "login" | "register"
+  onModeChange?: (mode: "login" | "register") => void
+  onForgot?: () => void
+  onSuccess?: () => void
+  onResetSuccess?: () => void
+}) {
+  const [localLocale, setLocale] = createSignal<"de" | "en">("de")
+  const locale = () => options?.locale?.() ?? localLocale()
   const texts = () => demoRegisterLoginTexts[locale()]
   let previousLang: string | null = null
   if (typeof document !== "undefined") {
     previousLang = document.documentElement.getAttribute("lang")
-    document.documentElement.lang = "de"
+    if (!options?.locale) document.documentElement.lang = "de"
   }
   const changeLocale = (next: "de" | "en") => {
     if (next === locale()) return
@@ -19,7 +27,7 @@ export function demoRegisterLoginStateCreate() {
     setResetErrors({})
   }
   const formErrors = (form: HTMLFormElement) => (locale() === "de" ? formErrorsGerman(form) : formErrorsEnglish(form))
-  const [mode, setMode] = createSignal<"login" | "register">("login")
+  const [mode, setMode] = createSignal<"login" | "register">(options?.initialMode ?? "login")
   const [visible, setVisible] = createSignal(false)
   const [password, setPassword] = createSignal("")
   const [email, setEmail] = createSignal("")
@@ -32,6 +40,7 @@ export function demoRegisterLoginStateCreate() {
   let submitTimer: ReturnType<typeof setTimeout> | undefined
   let focusTimer: ReturnType<typeof setTimeout> | undefined
   const changeMode = (next: "login" | "register") => {
+    if (options?.onModeChange) return options.onModeChange(next)
     setMode(next)
     form?.reset()
     setErrors({})
@@ -52,9 +61,13 @@ export function demoRegisterLoginStateCreate() {
     setErrors(next)
     if (Object.keys(next).length) return
     setLoading(true)
-    submitTimer = setTimeout(() => setLoading(false), 900)
+    submitTimer = setTimeout(() => {
+      setLoading(false)
+      options?.onSuccess?.()
+    }, 900)
   }
   const openReset = () => {
+    if (options?.onForgot) return options.onForgot()
     if (resetEmail) resetEmail.value = email()
     setResetErrors({})
     dialog?.showModal()
@@ -66,7 +79,8 @@ export function demoRegisterLoginStateCreate() {
     const next = formErrors(event.currentTarget as HTMLFormElement)
     setResetErrors(next)
     if (Object.keys(next).length) return
-    closeReset()
+    if (options?.onResetSuccess) options.onResetSuccess()
+    else closeReset()
   }
   /** Removes the error of the edited field once the user changes it. */
   const clearError = (set: typeof setErrors) => (event: Event) => {
@@ -79,8 +93,10 @@ export function demoRegisterLoginStateCreate() {
     })
   }
   onCleanup(() => {
-    if (previousLang === null) document.documentElement.removeAttribute("lang")
-    else document.documentElement.lang = previousLang
+    if (!options?.locale) {
+      if (previousLang === null) document.documentElement.removeAttribute("lang")
+      else document.documentElement.lang = previousLang
+    }
     clearTimeout(submitTimer)
     clearTimeout(focusTimer)
   })
