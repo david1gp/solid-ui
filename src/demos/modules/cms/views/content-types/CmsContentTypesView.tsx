@@ -11,7 +11,9 @@ import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
 import { Drawer } from "../../ui/Drawer.js"
 import { PageHeader } from "../../ui/PageHeader.js"
 import { cmsContentTypesStateCreate } from "./cmsContentTypesStateCreate.js"
+import { CmsProductEdit } from "./products/CmsProductEdit.js"
 import { CmsProductTiles } from "./products/CmsProductTiles.js"
+import { cmsProducts } from "./products/cmsProducts.js"
 
 const text = {
   de: {
@@ -72,24 +74,15 @@ const input = `w-full ${cmsInputClass}`
 export function CmsContentTypesView(props: { id?: string }) {
   const state = cmsContentTypesStateCreate(() => props.id)
   const t = () => text[cmsLocale.get()]
+  const product = () => cmsProducts.find((item) => props.id === `article:${item.id}`)
   return (
     <div>
       <Show
-        when={!props.id?.startsWith("article:")}
+        when={!product()}
         fallback={
-          <>
-            <button
-              type="button"
-              class="mb-5 text-sm font-medium text-[var(--dashboard-accent)] hover:underline"
-              onClick={() => {
-                state.tabSet("tiles")
-                cmsNavigate("content-types", "article")
-              }}
-            >
-              ← Artikel / Article
-            </button>
-            <section class={cmsCardClass}>Produkt bearbeiten – folgt</section>
-          </>
+          <Show when={product()} keyed>
+            {(item) => <CmsProductEdit product={item} />}
+          </Show>
         }
       >
         <Show

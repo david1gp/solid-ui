@@ -1,4 +1,5 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { cmsNavigate } from "../../shell/cmsNavigate.js"
 
 type FieldType = "text" | "number" | "date" | "relation" | "media" | "repeater"
 type Field = { id: string; type: FieldType; label: string; key: string; help: string; required: boolean }
@@ -20,16 +21,16 @@ const types = createSignalObject<ContentType[]>([
 ])
 let nextId = 0
 export function cmsContentTypesStateCreate(id: () => string | undefined) {
-  const tab = createSignalObject<"list" | "tiles">("list")
   const selected = createSignalObject<string | undefined>(undefined)
   const picker = createSignalObject<FieldType>("text")
-  const current = () => types.get().find((item) => item.id === id())
+  const currentId = () => (id()?.startsWith("article:") ? "article" : id())
+  const current = () => types.get().find((item) => item.id === currentId())
   const field = () => current()?.fields.find((item) => item.id === selected.get())
   const updateFields = (update: (fields: Field[]) => Field[]) =>
-    types.set(types.get().map((item) => (item.id === id() ? { ...item, fields: update(item.fields) } : item)))
+    types.set(types.get().map((item) => (item.id === currentId() ? { ...item, fields: update(item.fields) } : item)))
   return {
-    tab: () => tab.get(),
-    tabSet: (value: "list" | "tiles") => tab.set(value),
+    tab: () => (id() === "article:tiles" ? "tiles" : "list"),
+    tabSet: (value: "list" | "tiles") => cmsNavigate("content-types", value === "tiles" ? "article:tiles" : "article"),
     types: () => types.get(),
     current,
     field,
