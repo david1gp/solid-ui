@@ -10,7 +10,7 @@ import { cmsProductPriceFormat } from "./cmsProductPriceFormat.js"
 import type { cmsProducts } from "./cmsProducts.js"
 
 export function CmsProductEdit(props: { product: (typeof cmsProducts)[number] }) {
-  const state = cmsProductEditStateCreate(untrack(() => props.product))
+  const state = untrack(() => cmsProductEditStateCreate(props.product))
   return (
     <div>
       <button
