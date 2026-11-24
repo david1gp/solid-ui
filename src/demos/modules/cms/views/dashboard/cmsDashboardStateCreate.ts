@@ -30,7 +30,6 @@ const text = {
     pageviews: "Seitenaufrufe",
     month: "Monat",
     week: "Woche",
-    day: "Tag",
     activity: "Letzte Aktivitäten",
     actions: "Schnellaktionen",
   },
@@ -54,7 +53,6 @@ const text = {
     pageviews: "Pageviews",
     month: "Month",
     week: "Week",
-    day: "Day",
     activity: "Recent activity",
     actions: "Quick actions",
   },
@@ -67,7 +65,7 @@ export function cmsDashboardStateCreate() {
       : "drafts"
   const activeTab = createSignalObject<"drafts" | "activity">(tabFromUrl())
   const draftSort = createSignalObject<"date" | "name">("date")
-  const chartRange = createSignalObject<"month" | "week" | "day">("month")
+  const chartRange = createSignalObject<"month" | "week">("month")
   const chartMetric = createSignalObject<"visitors" | "pageviews">("visitors")
   const sortedDrafts = createMemo(() =>
     [...cmsDashboardDrafts].sort((a, b) =>
@@ -111,7 +109,7 @@ export function cmsDashboardStateCreate() {
     selectDraftSort: (sort: "date" | "name") => draftSort.set(sort),
     sortedDrafts,
     chartRange: chartRange.get,
-    selectChartRange: (range: "month" | "week" | "day") => chartRange.set(range),
+    selectChartRange: (range: "month" | "week") => chartRange.set(range),
     chartMetric: chartMetric.get,
     selectChartMetric: (metric: "visitors" | "pageviews") => chartMetric.set(metric),
     chartSeries,

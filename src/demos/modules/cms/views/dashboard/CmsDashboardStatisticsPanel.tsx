@@ -17,25 +17,7 @@ export function CmsDashboardStatisticsPanel(props: {
 
       <div class="relative mx-auto my-7 flex h-48 w-48 items-center justify-center sm:h-52 sm:w-52">
         <svg viewBox="0 0 200 200" class="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
-          <circle
-            cx="100"
-            cy="100"
-            r="83"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="14"
-            class="text-gray-200 dark:text-neutral-800"
-          />
-          <circle
-            cx="100"
-            cy="100"
-            r="83"
-            fill="none"
-            stroke="var(--dashboard-accent)"
-            stroke-width="14"
-            stroke-linecap="round"
-            stroke-dasharray="390 522"
-          />
+          <circle cx="100" cy="100" r="83" fill="none" stroke="var(--dashboard-accent)" stroke-width="14" />
         </svg>
         <div class="text-center">
           <p class="text-xs text-gray-500 dark:text-neutral-400">
@@ -64,7 +46,7 @@ export function CmsDashboardStatisticsPanel(props: {
             class="flex rounded-lg bg-gray-200/70 p-1 dark:bg-neutral-800"
             aria-label={props.state.text().statistics}
           >
-            <For each={["month", "week", "day"] as const}>
+            <For each={["month", "week"] as const}>
               {(range) => (
                 <button
                   type="button"
@@ -96,7 +78,7 @@ export function CmsDashboardStatisticsPanel(props: {
                     {props.state.number(point.value)}
                   </span>
                   <div
-                    class={`w-2 max-w-full rounded-full transition-all ${["dark:hue-rotate-0", "dark:hue-rotate-30", "dark:hue-rotate-60", "dark:hue-rotate-90", "dark:-hue-rotate-30", "dark:-hue-rotate-60", ""][index()]}`}
+                    class="w-2 max-w-full rounded-full transition-all"
                     style={{
                       height: `${(point.value / Math.max(...props.state.chartSeries().map((item) => item.value), 1)) * 100}%`,
                       background: `linear-gradient(to bottom, color-mix(in oklab, var(--dashboard-accent) ${index() === props.state.chartSeries().length - 1 ? 100 : 55 + (index() % 3) * 12}%, white), color-mix(in oklab, var(--dashboard-accent) 12%, transparent))`,

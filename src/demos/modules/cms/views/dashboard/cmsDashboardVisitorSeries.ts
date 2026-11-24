@@ -9,9 +9,4 @@ export const cmsDashboardVisitorSeries = {
     pageviews: [820, 970, 910, 1150, 1080, 1350, 1220],
     labels: { de: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"], en: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] },
   },
-  day: {
-    visitors: [24, 38, 95, 160, 120, 82, 63],
-    pageviews: [50, 85, 210, 350, 270, 180, 135],
-    labels: { de: ["00", "03", "06", "09", "12", "15", "18"], en: ["00", "03", "06", "09", "12", "15", "18"] },
-  },
 } as const
