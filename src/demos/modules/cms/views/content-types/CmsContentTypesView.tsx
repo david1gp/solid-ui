@@ -8,7 +8,6 @@ import { cmsIconCircleClass } from "../../ui/cmsIconCircleClass.js"
 import { cmsInputClass } from "../../ui/cmsInputClass.js"
 import { cmsPillClass } from "../../ui/cmsPillClass.js"
 import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
-import { Drawer } from "../../ui/Drawer.js"
 import { PageHeader } from "../../ui/PageHeader.js"
 import { cmsContentTypesStateCreate } from "./cmsContentTypesStateCreate.js"
 import { CmsProductEdit } from "./products/CmsProductEdit.js"
@@ -23,14 +22,8 @@ const text = {
     fields: "Felder",
     add: "Feld hinzufügen",
     type: "Feldtyp",
-    settings: "Feldeinstellungen",
-    label: "Bezeichnung",
-    key: "Schlüssel",
-    help: "Hilfetext",
-    required: "Pflichtfeld",
     up: "Nach oben",
     down: "Nach unten",
-    remove: "Feld entfernen",
     count: "Felder",
     countOne: "Feld",
     types: {
@@ -49,14 +42,8 @@ const text = {
     fields: "Fields",
     add: "Add field",
     type: "Field type",
-    settings: "Field settings",
-    label: "Label",
-    key: "Key",
-    help: "Help text",
-    required: "Required",
     up: "Move up",
     down: "Move down",
-    remove: "Remove field",
     count: "fields",
     countOne: "field",
     types: {
@@ -187,16 +174,12 @@ export function CmsContentTypesView(props: { id?: string }) {
                                 <path d={mdiClipboardTextOutline} />
                               </svg>
                             </span>
-                            <button
-                              type="button"
-                              class="min-w-0 flex-1 text-left"
-                              onClick={() => state.select(field.id)}
-                            >
+                            <div class="min-w-0 flex-1">
                               <span class="block text-sm font-medium">{field.label}</span>
                               <span class="mt-0.5 block text-xs text-gray-500 dark:text-neutral-400">
                                 {field.key} · {t().types[field.type]}
                               </span>
-                            </button>
+                            </div>
                             <button
                               class={button}
                               type="button"
@@ -215,9 +198,6 @@ export function CmsContentTypesView(props: { id?: string }) {
                             >
                               ↓
                             </button>
-                            <button class={button} type="button" onClick={() => state.select(field.id)}>
-                              {t().settings}
-                            </button>
                           </div>
                         )}
                       </For>
@@ -231,59 +211,6 @@ export function CmsContentTypesView(props: { id?: string }) {
           )}
         </Show>
       </Show>
-      <Drawer
-        title={t().settings}
-        open={!!state.field()}
-        onOpenChange={(open) => {
-          if (!open) state.select()
-        }}
-      >
-        <Show when={state.field()}>
-          {(field) => (
-            <div class="space-y-4 pt-4">
-              <label class="block text-sm">
-                {t().label}
-                <input
-                  class={`${input} mt-1`}
-                  value={field().label}
-                  onInput={(e) => state.change({ label: e.currentTarget.value })}
-                />
-              </label>
-              <label class="block text-sm">
-                {t().key}
-                <input
-                  class={`${input} mt-1`}
-                  value={field().key}
-                  onInput={(e) => state.change({ key: e.currentTarget.value })}
-                />
-              </label>
-              <label class="block text-sm">
-                {t().help}
-                <textarea
-                  class={`${input} mt-1`}
-                  value={field().help}
-                  onInput={(e) => state.change({ help: e.currentTarget.value })}
-                />
-              </label>
-              <label class="flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={field().required}
-                  onChange={(e) => state.change({ required: e.currentTarget.checked })}
-                />
-                {t().required}
-              </label>
-              <button
-                class={`${button} text-red-700 dark:text-red-400`}
-                type="button"
-                onClick={() => state.remove(field().id)}
-              >
-                {t().remove}
-              </button>
-            </div>
-          )}
-        </Show>
-      </Drawer>
     </div>
   )
 }
