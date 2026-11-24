@@ -40,7 +40,7 @@ const demoDisplayNames: Record<string, string> = {
   DemoNavHeader: "NavHeader-Simple",
   DemoRegisterLogin: "Register-Login",
   DemoRegisterCi: "Register-CI",
-  DemoContact: "Contact",
+  DemoContact: "Contact-Simple",
 }
 
 /** Frosted panel keeping link text readable above the abstract backdrop shapes. */
