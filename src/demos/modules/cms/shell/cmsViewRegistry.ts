@@ -8,14 +8,12 @@ import { mdiLockReset } from "@adaptive-ds/mdi/mdiLockReset.js"
 import { mdiShieldAccountOutline } from "@adaptive-ds/mdi/mdiShieldAccountOutline.js"
 import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
 import { mdiViewDashboardOutline } from "@adaptive-ds/mdi/mdiViewDashboardOutline.js"
-import { mdiWeb } from "@adaptive-ds/mdi/mdiWeb.js"
 import { CmsDashboardView } from "../views/dashboard/CmsDashboardView.js"
 import { CmsPagesView } from "../views/pages/CmsPagesView.js"
 import { CmsPostsView } from "../views/posts/CmsPostsView.js"
 import { CmsMediaView } from "../views/media/CmsMediaView.js"
 import { CmsMenusView } from "../views/menus/CmsMenusView.js"
 import { CmsContentTypesView } from "../views/content-types/CmsContentTypesView.js"
-import { CmsTranslationsView } from "../views/translations/CmsTranslationsView.js"
 import { CmsUsersView } from "../views/users/CmsUsersView.js"
 import { CmsRolesView } from "../views/roles/CmsRolesView.js"
 import { CmsTeamsView } from "../views/teams/CmsTeamsView.js"
@@ -77,13 +75,6 @@ export const cmsViewRegistry = {
     icon: mdiTextBoxOutline,
     label: { de: "Inhaltstypen", en: "Content types" },
     component: CmsContentTypesView,
-    layout: "app",
-  },
-  translations: {
-    group: "content",
-    icon: mdiWeb,
-    label: { de: "Übersetzungen", en: "Translations" },
-    component: CmsTranslationsView,
     layout: "app",
   },
   users: {

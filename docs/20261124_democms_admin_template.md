@@ -34,7 +34,7 @@ Buttons may change local state (add row, toggle, open dialog), but auth/login/re
 
 ## Navigation structure (sidebar groups → view keys)
 - **Übersicht:** `dashboard`
-- **Inhalte:** `pages` (page tree + block editor), `posts` (generic CRUD showcase), `media`, `menus`, `content-types`, `translations`
+- **Inhalte:** `pages` (page tree + block editor), `posts` (generic CRUD showcase), `media`, `menus`, `content-types`
 - **Verwaltung:** `users`, `roles`, `teams`
 - **System:** `api-keys`, `audit-log`, `notifications`, `backups`, `system-status`, `trash` (Papierkorb)
 - **Vorlagen (Auth):** `auth-login`, `auth-register`, `auth-forgot`, `auth-reset`, `auth-2fa`, `auth-verify-email`, `auth-invite`, `auth-session-expired`. Rendered in the auth layout (centred card, no sidebar) with a small "← Zurück zum Admin" link.
@@ -64,9 +64,8 @@ Status: `todo` / `wip` / `done`
    - Page tree + fullscreen block editor: add/reorder blocks by DnD, block settings panel, rich text block, desktop/tablet/mobile preview
    - Media library: upload dropzone using local object URLs, folders, search, grid/list, detail panel with alt text, focus point and simple crop frame, reusable media picker dialog
    - Menu editor: tree with DnD
-5. **[done] Content-type builder + translations (`views/content-types`, `views/translations`):**
+5. **[done] Content-type builder (`views/content-types`):**
    - Field builder: text, number, date, relation, media, repeater group; field settings
-   - Translations: language switch + side-by-side source/target editing
 6. **[done] Dashboard (`views/dashboard`):** KPI cards with mini charts, recent activity, quick actions, tasks list (checkable).
 7. **[done] Users & roles (`views/users`, `views/roles`, `views/teams` + profile extensions):**
    - Users list/detail/invite drawer
