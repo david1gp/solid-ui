@@ -1,5 +1,5 @@
-import { CmsAuthTemplate } from "../auth-login/CmsAuthTemplate.js"
+import { CmsExtraAuthView } from "../auth-login/CmsExtraAuthView.js"
 
 export function CmsAuthSessionExpiredView(_props: { id?: string }) {
-  return <CmsAuthTemplate mode="session-expired" />
+  return <CmsExtraAuthView mode="session-expired" />
 }

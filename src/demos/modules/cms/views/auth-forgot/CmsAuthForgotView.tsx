@@ -1,5 +1,5 @@
-import { CmsAuthTemplate } from "../auth-login/CmsAuthTemplate.js"
+import { CmsSimpleAuthView } from "../auth-login/CmsSimpleAuthView.js"
 
 export function CmsAuthForgotView(_props: { id?: string }) {
-  return <CmsAuthTemplate mode="forgot" />
+  return <CmsSimpleAuthView mode="forgot" />
 }

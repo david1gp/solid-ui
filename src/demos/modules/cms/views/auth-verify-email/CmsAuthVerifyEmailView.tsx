@@ -1,5 +1,5 @@
-import { CmsAuthTemplate } from "../auth-login/CmsAuthTemplate.js"
+import { CmsExtraAuthView } from "../auth-login/CmsExtraAuthView.js"
 
 export function CmsAuthVerifyEmailView(_props: { id?: string }) {
-  return <CmsAuthTemplate mode="verify-email" />
+  return <CmsExtraAuthView mode="verify-email" />
 }

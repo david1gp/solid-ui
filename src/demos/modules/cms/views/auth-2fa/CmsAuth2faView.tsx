@@ -1,5 +1,5 @@
-import { CmsAuthTemplate } from "../auth-login/CmsAuthTemplate.js"
+import { CmsExtraAuthView } from "../auth-login/CmsExtraAuthView.js"
 
 export function CmsAuth2faView(_props: { id?: string }) {
-  return <CmsAuthTemplate mode="2fa" />
+  return <CmsExtraAuthView mode="2fa" />
 }

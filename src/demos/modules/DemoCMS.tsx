@@ -46,14 +46,13 @@ import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { demoCmsMobileCollapseCreate } from "./cms/demoCmsMobileCollapseCreate.js"
 import { cmsLocale } from "./cms/i18n/cmsLocale.js"
 import { cmsShellText } from "./cms/i18n/cmsShellText.js"
-import { cmsViewRegistry } from "./cms/shell/cmsViewRegistry.js"
-import { CmsShellHeader } from "./cms/shell/CmsShellHeader.jsx"
-import { CmsAuthLayout } from "./cms/shell/CmsAuthLayout.jsx"
 import { CmsFullscreenLayout } from "./cms/shell/CmsFullscreenLayout.jsx"
-import { cmsNavigation } from "./cms/shell/cmsNavigation.js"
-import { cmsNavigate } from "./cms/shell/cmsNavigate.js"
-import { cmsNavigationSync } from "./cms/shell/cmsNavigationSync.js"
+import { CmsShellHeader } from "./cms/shell/CmsShellHeader.jsx"
 import type { CmsViewKey } from "./cms/shell/CmsViewKey.js"
+import { cmsNavigate } from "./cms/shell/cmsNavigate.js"
+import { cmsNavigation } from "./cms/shell/cmsNavigation.js"
+import { cmsNavigationSync } from "./cms/shell/cmsNavigationSync.js"
+import { cmsViewRegistry } from "./cms/shell/cmsViewRegistry.js"
 
 const t = (de: string, en: string) => (cmsLocale.get() === "de" ? de : en)
 const settingsLabel = () => t("Einstellungen", "Settings")
@@ -347,9 +346,7 @@ export function DemoCMS() {
       when={active() === settingsPageKey || view().layout === "app"}
       fallback={
         <Show when={view().layout === "auth"} fallback={<CmsFullscreenLayout>{viewContent()}</CmsFullscreenLayout>}>
-          <CmsAuthLayout backLabel={cmsShellText[cmsLocale.get()].backToAdmin} onBack={() => cmsNavigate("dashboard")}>
-            {viewContent()}
-          </CmsAuthLayout>
+          {viewContent()}
         </Show>
       }
     >
