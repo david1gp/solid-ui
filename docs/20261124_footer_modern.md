@@ -47,6 +47,6 @@ A modern, viewport-filling closing section inspired by a reference design:
 
 ## Tasks
 
-1. Implement module + registration + tests (worktree branch `feat/footer-modern`). — pending
-2. Visual verification via browser subagent; fix findings. — pending
-3. Commits (conventional), merge into main, push, cleanup worktree/branch. — pending
+1. Implement module + registration + tests (worktree branch `feat/footer-modern`). — done
+2. Visual verification via browser subagent; fix findings. — done
+3. Commits (conventional), merge into main, push, cleanup worktree/branch. — done
