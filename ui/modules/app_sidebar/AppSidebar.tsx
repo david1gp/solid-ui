@@ -25,8 +25,6 @@ import { appSidebarFilterGroups } from "#ui/modules/app_sidebar/appSidebarFilter
 import { appSidebarNavButtonClass } from "#ui/modules/app_sidebar/appSidebarNavButtonClass.js"
 import { createFlyoutState } from "#ui/modules/app_sidebar/createFlyoutState.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { classesInputFocus } from "#ui/input/input/classesInputFocus.js"
-import { classesInputSurface } from "#ui/input/input/classesInputSurface.js"
 import { classArr } from "#ui/utils/classArr.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
@@ -578,9 +576,8 @@ function NavItemButton(p: NavItemButtonProps) {
           }}
           onBlur={(event) => finish(event.currentTarget.value)}
           class={classArr(
-            "min-w-0 flex-1 -mx-1 px-1 h-6 rounded bg-white border border-transparent text-sm font-medium", // layout
-            classesInputSurface,
-            classesInputFocus,
+            "min-w-0 flex-1 -mx-1 px-1 h-6 rounded bg-white dark:bg-black", // layout
+            "outline-none ring-1 ring-[var(--app-sidebar-accent,var(--color-blue-500))] text-sm font-medium", // look
           )}
         />
       </div>
@@ -785,7 +782,7 @@ function SearchField(p: {
     <div
       class={classArr(
         "flex items-center gap-2 h-8 px-2 rounded-md", // layout
-        "bg-black/5 dark:bg-(--input-bg) dark:border dark:border-input focus-within:ring-1 focus-within:ring-blue-500", // look
+        "bg-black/5 dark:bg-white/10 focus-within:ring-1 focus-within:ring-[var(--app-sidebar-accent,var(--color-blue-500))]", // look
       )}
     >
       <Icon path={mdiMagnify} class={"size-4 shrink-0 text-muted-foreground"} />
@@ -803,8 +800,8 @@ function SearchField(p: {
         placeholder={p.placeholder}
         aria-label={p.placeholder}
         class={classArr(
-          "input-surface min-w-0 flex-1 bg-transparent outline-none text-sm", // layout
-          "placeholder:text-muted-foreground dark:placeholder:text-white/40 [&::-webkit-search-cancel-button]:hidden", // look
+          "min-w-0 flex-1 bg-transparent outline-none text-sm", // layout
+          "placeholder:text-muted-foreground [&::-webkit-search-cancel-button]:hidden", // look
         )}
       />
       <Show when={p.value}>

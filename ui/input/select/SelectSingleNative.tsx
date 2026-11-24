@@ -1,8 +1,6 @@
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { For } from "solid-js"
 import { classesDisabledDirectly } from "#ui/classes/classesDisabledDirectly.js"
-import { classesInputFocus } from "#ui/input/input/classesInputFocus.js"
-import { classesInputSurface } from "#ui/input/input/classesInputSurface.js"
 import type { SelectSingleNativeTexts } from "#ui/input/select/SelectSingleNativeTexts.js"
 import { selectSingleNativeTextDefault } from "#ui/input/select/SelectSingleNativeTexts.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
@@ -40,10 +38,9 @@ export function SelectSingleNative(p: SelectSingleNativeProps) {
           "block w-full appearance-none py-2.5 pl-2.5 pr-10",
           "text-gray-900 dark:text-white", // text
           "placeholder:text-muted-foreground", // text placeholder
-          "bg-gray-50", // bg
-          "rounded-lg border border-gray-300", // border
-          classesInputSurface,
-          classesInputFocus,
+          "bg-gray-50 dark:bg-[#202124]", // bg
+          "rounded-lg border border-gray-300 dark:border-white/10", // border
+          "focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500",
           p.disabled && classesDisabledDirectly,
           p.class,
         )}

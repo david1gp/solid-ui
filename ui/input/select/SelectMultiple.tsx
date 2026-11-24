@@ -3,7 +3,6 @@ import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { cn } from "cn"
 import { For } from "solid-js"
-import { classesInputSurface } from "#ui/input/input/classesInputSurface.js"
 import type { SelectMultipleTexts } from "#ui/input/select/SelectMultipleTexts.js"
 import { selectMultipleTextDefault } from "#ui/input/select/SelectMultipleTexts.js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
@@ -51,11 +50,10 @@ export function SelectMultiple(p: SelectMultipleProps) {
       id={p.id}
       class={classArr(
         "group border border-input",
-        classesInputSurface,
         "px-2 py-2 text-sm",
         "ring-offset-background ",
         "rounded-md",
-        "focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 dark:focus-within:ring-offset-0",
+        "focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2",
         "flex flex-col items-center justify-center gap-1", // layout
         p.class,
       )}
@@ -236,7 +234,7 @@ function NoItems(p: NoItemsProps) {
         "py-2 px-3",
         // button
         "rounded-md ring-offset-background", // rounded, rings
-        "border border-slate-200 dark:border-input", // border
+        "border border-slate-200 dark:border-neutral-700 dark:hover:bg-neutral-900", // border
         p.class,
       )}
     >
