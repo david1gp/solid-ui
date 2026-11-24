@@ -182,6 +182,9 @@
   background: transparent;
   cursor: pointer;
 }
+.contact-modern-again {
+  margin-top: 1.5rem;
+}
 .contact-modern-actions button:hover,
 .contact-modern-again:hover {
   background: rgb(128 128 128 / 20%);
@@ -244,5 +247,10 @@
     align-items: flex-start;
     padding: 6rem 2rem 4rem;
     border-left: 0;
+  }
+  .contact-modern-sent .contact-modern-panel {
+    min-height: 100vh;
+    min-height: 100dvh;
+    align-items: center;
   }
 }

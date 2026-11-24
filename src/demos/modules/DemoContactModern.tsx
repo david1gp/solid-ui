@@ -12,7 +12,7 @@ import "./contactModern/DemoContactModern.css"
 export function DemoContactModern() {
   const state = contactModernStateCreate()
   return (
-    <main class="contact-modern">
+    <main class="contact-modern" classList={{ "contact-modern-sent": state.sent() }}>
       <div class="contact-modern-glow contact-modern-glow-warm" />
       <div class="contact-modern-glow contact-modern-glow-cool" />
       <section class="contact-modern-intro">
@@ -148,7 +148,19 @@ export function DemoContactModern() {
             }
           >
             <div role="status">
-              <h2 id="modern-contact-title">{state.texts().success}</h2>
+              <h2
+                id="modern-contact-title"
+                tabindex={-1}
+                ref={(element) => {
+                  queueMicrotask(() => {
+                    if (!element.isConnected) return
+                    if (window.matchMedia("(max-width: 767px)").matches) window.scrollTo(0, 0)
+                    element.focus({ preventScroll: true })
+                  })
+                }}
+              >
+                {state.texts().success}
+              </h2>
               <p>{state.texts().successText}</p>
               <button class="contact-modern-again" type="button" onClick={state.sendAnother}>
                 {state.texts().another} →
