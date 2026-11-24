@@ -1,7 +1,14 @@
-import { Button } from "#ui/interactive/button/Button.jsx"
+import { mdiClipboardTextOutline } from "@adaptive-ds/mdi/mdiClipboardTextOutline.js"
 import { For, Show } from "solid-js"
+import { Button } from "#ui/interactive/button/Button.jsx"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
 import { cmsNavigate } from "../../shell/cmsNavigate.js"
+import { cmsButtonClass } from "../../ui/cmsButtonClass.js"
+import { cmsCardClass } from "../../ui/cmsCardClass.js"
+import { cmsIconCircleClass } from "../../ui/cmsIconCircleClass.js"
+import { cmsInputClass } from "../../ui/cmsInputClass.js"
+import { cmsPillClass } from "../../ui/cmsPillClass.js"
+import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
 import { Drawer } from "../../ui/Drawer.js"
 import { PageHeader } from "../../ui/PageHeader.js"
 import { cmsContentTypesStateCreate } from "./cmsContentTypesStateCreate.js"
@@ -60,9 +67,8 @@ const text = {
     },
   },
 }
-const button =
-  "rounded-xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
-const input = "w-full rounded-xl border border-neutral-300 bg-transparent px-3 py-2 text-sm dark:border-neutral-700"
+const button = cmsButtonClass
+const input = `w-full ${cmsInputClass}`
 export function CmsContentTypesView(props: { id?: string }) {
   const state = cmsContentTypesStateCreate(() => props.id)
   const t = () => text[cmsLocale.get()]
@@ -73,18 +79,23 @@ export function CmsContentTypesView(props: { id?: string }) {
         fallback={
           <>
             <PageHeader title={t().title} description={t().description} />
-            <div class="grid gap-3 sm:grid-cols-2">
+            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               <For each={state.types()}>
                 {(item) => (
                   <button
                     type="button"
-                    class="rounded-2xl border border-neutral-200 p-4 text-left hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-900"
+                    class={`${cmsCardClass} flex min-h-40 flex-col items-start gap-4 text-left hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)] dark:hover:bg-neutral-800/60`}
                     onClick={() => cmsNavigate("content-types", item.id)}
                   >
-                    <div class="font-semibold">{item.name}</div>
-                    <div class="mt-1 text-sm text-neutral-500">
+                    <span class={cmsIconCircleClass}>
+                      <svg viewBox="0 0 24 24" class="size-5" fill="currentColor" aria-hidden="true">
+                        <path d={mdiClipboardTextOutline} />
+                      </svg>
+                    </span>
+                    <span class="text-base font-semibold">{item.name}</span>
+                    <span class={cmsPillClass}>
                       {`${item.fields.length} ${item.fields.length === 1 ? t().countOne : t().count} →`}
-                    </div>
+                    </span>
                   </button>
                 )}
               </For>
@@ -94,11 +105,15 @@ export function CmsContentTypesView(props: { id?: string }) {
       >
         {(item) => (
           <>
-            <button class={`${button} mb-5`} type="button" onClick={() => cmsNavigate("content-types")}>
+            <button
+              class="mb-5 text-sm font-medium text-[var(--dashboard-accent)] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)]"
+              type="button"
+              onClick={() => cmsNavigate("content-types")}
+            >
               {t().back}
             </button>
             <PageHeader title={item().name} description={t().description} />
-            <section class="rounded-2xl border border-neutral-200 p-4 dark:border-neutral-800">
+            <section class={cmsCardClass}>
               <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <h2 class="font-semibold">{t().fields}</h2>
                 <div class="flex flex-wrap items-end gap-2">
@@ -116,18 +131,23 @@ export function CmsContentTypesView(props: { id?: string }) {
                       </For>
                     </select>
                   </label>
-                  <Button class={button} type="button" onClick={state.add}>
+                  <Button class={cmsPrimaryButtonClass} type="button" onClick={state.add}>
                     + {t().add}
                   </Button>
                 </div>
               </div>
-              <div class="space-y-2">
+              <div class="divide-y divide-gray-200 dark:divide-neutral-800">
                 <For each={item().fields}>
                   {(field, index) => (
-                    <div class="flex flex-wrap items-center gap-2 rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
+                    <div class="flex flex-wrap items-center gap-3 py-3">
+                      <span class={cmsIconCircleClass}>
+                        <svg viewBox="0 0 24 24" class="size-5" fill="currentColor" aria-hidden="true">
+                          <path d={mdiClipboardTextOutline} />
+                        </svg>
+                      </span>
                       <button type="button" class="min-w-0 flex-1 text-left" onClick={() => state.select(field.id)}>
                         <span class="block text-sm font-medium">{field.label}</span>
-                        <span class="text-xs text-neutral-500">
+                        <span class="mt-0.5 block text-xs text-gray-500 dark:text-neutral-400">
                           {field.key} · {t().types[field.type]}
                         </span>
                       </button>
@@ -202,7 +222,11 @@ export function CmsContentTypesView(props: { id?: string }) {
                 />
                 {t().required}
               </label>
-              <button class={button} type="button" onClick={() => state.remove(field().id)}>
+              <button
+                class={`${button} text-red-700 dark:text-red-400`}
+                type="button"
+                onClick={() => state.remove(field().id)}
+              >
                 {t().remove}
               </button>
             </div>
