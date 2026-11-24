@@ -1,4 +1,5 @@
 import { onSettled } from "solid-js"
+import { tttLanguage } from "#ui/i18n/tttLanguage.js"
 import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
 import { themeVariant } from "#ui/interactive/theme/themeVariant.js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
@@ -18,7 +19,14 @@ export function floatingThemeStateCreate() {
   const target = () => (isDark() ? themeVariant.light : themeVariant.dark)
   return {
     isDark,
-    label: () => (isDark() ? "Zu hellem Modus wechseln" : "Zu dunklem Modus wechseln"),
+    label: () =>
+      tttLanguage.get() === "en"
+        ? isDark()
+          ? "Switch to light mode"
+          : "Switch to dark mode"
+        : isDark()
+          ? "Zu hellem Modus wechseln"
+          : "Zu dunklem Modus wechseln",
     toggle: () => themeSet(target(), true),
   }
 }

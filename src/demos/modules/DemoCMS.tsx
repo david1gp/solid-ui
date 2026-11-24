@@ -27,7 +27,6 @@ import {
 import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { CmsSettingsNav } from "#src/demos/modules/cms/CmsSettingsNav.jsx"
 import { CmsSettingsPanel } from "#src/demos/modules/cms/CmsSettingsPanel.jsx"
-import { CmsSettingsSidebar } from "#src/demos/modules/cms/CmsSettingsSidebar.jsx"
 import { CmsSidebar } from "#src/demos/modules/cms/CmsSidebar.jsx"
 import { CmsSidebarCssAvatar } from "#src/demos/modules/cms/CmsSidebarCssAvatar.jsx"
 import { CmsSidebarCssBanner } from "#src/demos/modules/cms/CmsSidebarCssBanner.jsx"
@@ -40,6 +39,8 @@ import { Button } from "#ui/interactive/button/Button.jsx"
 import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
 import { themeVariant } from "#ui/interactive/theme/themeVariant.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { AppSettingsPanel } from "#ui/modules/app_sidebar/AppSettingsPanel.jsx"
+import { AppSettingsSidebar } from "#ui/modules/app_sidebar/AppSettingsSidebar.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { demoCmsMobileCollapseCreate } from "./cms/demoCmsMobileCollapseCreate.js"
@@ -82,6 +83,13 @@ export function DemoCMS() {
   })
   onCleanup(() => tttLanguage.set(previousLanguage))
   const settingsOpen = createSignalObject(false)
+  onSettled(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && settingsOpen.get()) settingsOpen.set(false)
+    }
+    window.addEventListener("keydown", closeOnEscape)
+    return () => window.removeEventListener("keydown", closeOnEscape)
+  })
   const { collapsed, motionReady } = demoCmsMobileCollapseCreate(settingsOpen)
   const accentColor = createSignalObject(accentColors[0]!.color)
   const initial = {
@@ -322,8 +330,8 @@ export function DemoCMS() {
                   {
                     icon: mdiCogOutline,
                     label: settingsLabel(),
-                    isActive: active() === settingsPageKey,
-                    onClick: openSettings,
+                    isActive: settingsOpen.get(),
+                    onClick: () => settingsOpen.set(!settingsOpen.get()),
                   },
                 ]
               : [],
@@ -389,8 +397,8 @@ export function DemoCMS() {
                 </div>
               }
             />
-            <CmsSettingsSidebar open={settingsOpen} title={settingsLabel()}>
-              <CmsSettingsPanel
+            <AppSettingsSidebar open={settingsOpen} title={settingsLabel()}>
+              <AppSettingsPanel
                 name={fullName()}
                 email={email.get()}
                 userAvatar={<CmsSidebarCssAvatar />}
@@ -399,7 +407,7 @@ export function DemoCMS() {
                 logoutLabel={t("Abmelden", "Sign out")}
                 logoutPlacement={"bottom"}
               />
-            </CmsSettingsSidebar>
+            </AppSettingsSidebar>
           </div>
         </Show>
         <Show when={active() === settingsPageKey}>
