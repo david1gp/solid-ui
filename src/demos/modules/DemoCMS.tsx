@@ -433,7 +433,6 @@ export function DemoCMS() {
             group={cmsShellText[cmsLocale.get()][view().group]}
             title={active() === settingsPageKey ? settingsLabel() : view().label[cmsLocale.get()]}
             locale={cmsLocale.get()}
-            onSettings={openSettings}
           />
           <main class={"flex-1 min-w-0 p-4 pb-24 sm:p-8 overflow-y-auto"}>
             <Show when={active() === settingsPageKey} fallback={viewContent()}>
