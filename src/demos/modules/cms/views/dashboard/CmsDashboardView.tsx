@@ -8,7 +8,7 @@ import { cmsDashboardStateCreate } from "./cmsDashboardStateCreate.js"
 export function CmsDashboardView(_props: { id?: string }) {
   const state = cmsDashboardStateCreate()
   return (
-    <div class="min-w-0" style={{ "--dashboard-accent": "var(--app-sidebar-accent, var(--color-blue-600))" }}>
+    <div class="min-w-0">
       <div class="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(280px,0.4fr)]">
         <div class="min-w-0 space-y-8">
           <header>

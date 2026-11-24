@@ -427,7 +427,10 @@ export function DemoCMS() {
         </Show>
         <div
           class="flex min-w-0 flex-1 flex-col bg-white dark:bg-[#222326]"
-          style={{ "--app-sidebar-accent": accentColor.get() }}
+          style={{
+            "--app-sidebar-accent": accentColor.get(),
+            "--dashboard-accent": "var(--app-sidebar-accent, var(--color-blue-600))",
+          }}
         >
           <CmsShellHeader
             group={cmsShellText[cmsLocale.get()][view().group]}

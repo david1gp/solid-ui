@@ -1,4 +1,6 @@
 import { createMemo, createSignal, For, type Element as JSXElement } from "solid-js"
+import { cmsButtonClass } from "./cmsButtonClass.js"
+import { cmsCardClass } from "./cmsCardClass.js"
 
 type Props<T> = {
   events: readonly T[]
@@ -26,7 +28,7 @@ export function CmsCalendar<T>(props: Props<T>) {
     a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
   const changeMonth = (offset: number) => setMonth((date) => new Date(date.getFullYear(), date.getMonth() + offset, 1))
   return (
-    <section class="rounded-2xl border border-neutral-200 p-4 dark:border-neutral-700">
+    <section class={cmsCardClass}>
       <header class="mb-4 flex items-center justify-between gap-2">
         <h3 class="text-sm font-semibold">
           {new Intl.DateTimeFormat(locale(), { month: "long", year: "numeric" }).format(month())}
@@ -34,7 +36,7 @@ export function CmsCalendar<T>(props: Props<T>) {
         <div class="flex gap-1">
           <button
             type="button"
-            class="rounded-lg border border-neutral-200 px-2 py-1 text-sm dark:border-neutral-700"
+            class={cmsButtonClass}
             aria-label={props.labels?.previousMonth ?? "Vorheriger Monat"}
             onClick={() => changeMonth(-1)}
           >
@@ -42,7 +44,7 @@ export function CmsCalendar<T>(props: Props<T>) {
           </button>
           <button
             type="button"
-            class="rounded-lg border border-neutral-200 px-2 py-1 text-sm dark:border-neutral-700"
+            class={cmsButtonClass}
             aria-label={props.labels?.nextMonth ?? "Nächster Monat"}
             onClick={() => changeMonth(1)}
           >
@@ -62,7 +64,7 @@ export function CmsCalendar<T>(props: Props<T>) {
           <For each={days()}>
             {(day) => (
               <div
-                class={`min-h-24 border-t border-neutral-200 p-2 text-xs dark:border-neutral-700 ${day.getMonth() === month().getMonth() ? "" : "text-neutral-400"}`}
+                class={`min-h-24 border-t border-gray-100 p-2 text-xs dark:border-neutral-800 ${day.getMonth() === month().getMonth() ? "" : "text-neutral-400"}`}
               >
                 <time
                   datetime={`${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, "0")}-${String(day.getDate()).padStart(2, "0")}`}
@@ -72,7 +74,7 @@ export function CmsCalendar<T>(props: Props<T>) {
                 <div class="mt-1 space-y-1">
                   <For each={props.events.filter((event) => sameDay(props.eventDate(event), day))}>
                     {(event) => (
-                      <div class="rounded-md bg-neutral-100 px-1 py-0.5 dark:bg-neutral-800">
+                      <div class="rounded-md bg-[color-mix(in_oklab,var(--dashboard-accent)_12%,transparent)] px-1 py-0.5 text-[var(--dashboard-accent)]">
                         {props.renderEvent(event)}
                       </div>
                     )}
