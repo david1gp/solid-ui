@@ -2,6 +2,7 @@ import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutl
 import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsButtonClass } from "../../ui/cmsButtonClass.js"
+import { ConfirmDialog } from "../../ui/ConfirmDialog.js"
 import { cmsCardClass } from "../../ui/cmsCardClass.js"
 import { cmsIconCircleClass } from "../../ui/cmsIconCircleClass.js"
 import { cmsInputClass } from "../../ui/cmsInputClass.js"
@@ -44,7 +45,6 @@ export function CmsMediaLibrary() {
             each={[
               { value: "*", label: state.text().all },
               { value: "", label: state.text().root },
-              ...cmsMediaStore.folders().map((name) => ({ value: name, label: name })),
             ]}
           >
             {(folder) => (
@@ -55,6 +55,28 @@ export function CmsMediaLibrary() {
               >
                 {folder.label}
               </button>
+            )}
+          </For>
+          <For each={cmsMediaStore.folders()}>
+            {(name) => (
+              <div class="group flex items-center">
+                <button
+                  type="button"
+                  class={`min-w-0 flex-1 truncate rounded-lg px-3 py-2 text-left text-sm ${state.folder() === name ? "bg-[color-mix(in_oklab,var(--dashboard-accent)_12%,transparent)] font-medium text-[var(--dashboard-accent)]" : "hover:bg-neutral-100 dark:hover:bg-neutral-800"}`}
+                  onClick={() => state.changeFolder(name)}
+                >
+                  {name}
+                </button>
+                <button
+                  type="button"
+                  aria-label={`${state.text().deleteFolder}: ${name}`}
+                  title={state.text().deleteFolder}
+                  class="rounded-lg px-2 py-1 text-neutral-500 opacity-0 hover:bg-neutral-100 focus-visible:opacity-100 group-hover:opacity-100 group-focus-within:opacity-100 dark:hover:bg-neutral-800 [@media(hover:none)]:opacity-100"
+                  onClick={() => state.requestFolderRemove(name)}
+                >
+                  ×
+                </button>
+              </div>
             )}
           </For>
           <form
@@ -220,6 +242,18 @@ export function CmsMediaLibrary() {
           )}
         </Show>
       </div>
+      <ConfirmDialog
+        title={state.text().deleteFolder}
+        description={state.text().deleteFolderDescription(state.folderToRemove() ?? "", state.folderRemoveCount())}
+        open={state.folderToRemove() !== undefined}
+        onOpenChange={(open) => {
+          if (!open) state.closeFolderRemove()
+        }}
+        onConfirm={state.confirmFolderRemove}
+        confirmLabel={state.text().delete}
+        cancelLabel={state.text().cancel}
+        destructive
+      />
     </div>
   )
 }

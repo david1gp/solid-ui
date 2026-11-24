@@ -8,6 +8,7 @@ export function cmsMediaLibraryStateCreate() {
   const [search, setSearch] = createSignal("")
   const [selectedId, setSelectedId] = createSignal<string>()
   const [folderName, setFolderName] = createSignal("")
+  const [folderToRemove, setFolderToRemove] = createSignal<string>()
   const selected = createMemo(() => cmsMediaStore.items().find((item) => item.id === selectedId()))
   const filtered = createMemo(() =>
     cmsMediaStore
@@ -25,6 +26,16 @@ export function cmsMediaLibraryStateCreate() {
     selected,
     filtered,
     folderName,
+    folderToRemove,
+    folderRemoveCount: () => cmsMediaStore.items().filter((item) => item.folder === folderToRemove()).length,
+    requestFolderRemove: setFolderToRemove,
+    closeFolderRemove: () => setFolderToRemove(undefined),
+    confirmFolderRemove() {
+      const name = folderToRemove()
+      if (!name) return
+      cmsMediaStore.folderRemove(name)
+      if (folder() === name) setFolder("*")
+    },
     changeFolder: setFolder,
     changeSearch: setSearch,
     select: setSelectedId,

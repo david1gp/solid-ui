@@ -50,7 +50,12 @@ export const cmsMediaStore = {
   folders,
   folderAdd(name: string) {
     const trimmed = name.trim()
-    if (trimmed && !folders().includes(trimmed)) setFolders((current) => [...current, trimmed])
+    if (trimmed && trimmed !== "*" && !folders().includes(trimmed)) setFolders((current) => [...current, trimmed])
+  },
+  folderRemove(name: string) {
+    if (!folders().includes(name)) return
+    setItems((current) => current.map((item) => (item.folder === name ? { ...item, folder: "" } : item)))
+    setFolders((current) => current.filter((folder) => folder !== name))
   },
   upload(files: FileList | File[], folder: string) {
     const additions = Array.from(files)

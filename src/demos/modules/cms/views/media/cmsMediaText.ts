@@ -8,6 +8,10 @@ export const cmsMediaText = {
     all: "Alle Dateien",
     root: "Ohne Ordner",
     addFolder: "Ordner hinzufügen",
+    deleteFolder: "Ordner löschen",
+    deleteFolderDescription: (name: string, count: number) =>
+      `Ordner „${name}“ löschen? ${count} Dateien werden nach „Ohne Ordner“ verschoben.`,
+    cancel: "Abbrechen",
     folderName: "Ordnername",
     search: "Medien suchen",
     empty: "Keine Bilder gefunden.",
@@ -34,6 +38,10 @@ export const cmsMediaText = {
     all: "All files",
     root: "Unfiled",
     addFolder: "Add folder",
+    deleteFolder: "Delete folder",
+    deleteFolderDescription: (name: string, count: number) =>
+      `Delete folder “${name}”? ${count} files will be moved to “Unfiled”.`,
+    cancel: "Cancel",
     folderName: "Folder name",
     search: "Search media",
     empty: "No images found.",
