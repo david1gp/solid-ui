@@ -19,6 +19,7 @@ const demosDir = join(here, "..", "demos")
 const demoRouteNames: Record<string, string> = {
   "modules/DemoBottomMobileNavbar": "Bottom-Mobile-Navbar",
   "modules/DemoNavbarHeaderModern": "NavbarHeader-Modern",
+  "modules/DemoContactModern": "ContactModern",
 }
 
 function findDemoNames(dir: string): string[] {
