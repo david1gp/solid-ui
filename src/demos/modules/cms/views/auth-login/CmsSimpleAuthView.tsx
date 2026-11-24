@@ -15,9 +15,6 @@ export function CmsSimpleAuthView(props: { mode: "login" | "register" | "forgot"
   const state = cmsSimpleAuthStateCreate(props.mode)
   return (
     <RegisterLoginShell
-      locale={cmsLocale.get()}
-      onLocaleChange={(locale) => cmsLocale.set(locale)}
-      languageLabel={state.texts().language}
       privacy={state.texts().privacy}
       legal={state.texts().legal}
       help={state.texts().help}

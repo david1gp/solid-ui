@@ -5,7 +5,6 @@ import { RegisterLoginHeading } from "../../../registerLogin/RegisterLoginHeadin
 import { RegisterLoginPasswordInput } from "../../../registerLogin/RegisterLoginPasswordInput.jsx"
 import { RegisterLoginShell } from "../../../registerLogin/RegisterLoginShell.jsx"
 import { RegisterLoginSubmit } from "../../../registerLogin/RegisterLoginSubmit.jsx"
-import { cmsLocale } from "../../i18n/cmsLocale.js"
 import { cmsNavigate } from "../../shell/cmsNavigate.js"
 import { cmsExtraAuthStateCreate } from "./cmsExtraAuthStateCreate.js"
 
@@ -13,9 +12,6 @@ export function CmsExtraAuthView(props: { mode: "reset" | "2fa" | "verify-email"
   const state = cmsExtraAuthStateCreate(props.mode)
   return (
     <RegisterLoginShell
-      locale={cmsLocale.get()}
-      onLocaleChange={(locale) => cmsLocale.set(locale)}
-      languageLabel={state.texts().language}
       privacy={state.texts().privacy}
       legal={state.texts().legal}
       help={state.texts().help}

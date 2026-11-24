@@ -1,13 +1,14 @@
 import type { JSX } from "@solidjs/web"
+import { Show } from "solid-js"
 import { LogoImageText } from "#ui/static/logo/LogoImageText.jsx"
 import "../DemoRegisterLogin.css"
 
 export function RegisterLoginShell(props: {
   children: JSX.Element
   overlay?: JSX.Element
-  locale: "de" | "en"
-  onLocaleChange: (locale: "de" | "en") => void
-  languageLabel: string
+  locale?: "de" | "en"
+  onLocaleChange?: (locale: "de" | "en") => void
+  languageLabel?: string
   privacy: string
   legal: string
   help: string
@@ -18,25 +19,27 @@ export function RegisterLoginShell(props: {
       <div class="page">
         <header class={props.headerAction ? "site-header flex-wrap" : "site-header"}>
           <LogoImageText logoText="adaptive-solid-ui" logoTextClass="text-lg font-semibold" />
-          {/* biome-ignore lint/a11y/useSemanticElements: The segmented toggle is specified as an ARIA group. */}
-          <div class="language-toggle" role="group" aria-label={props.languageLabel}>
-            <button
-              type="button"
-              lang="de"
-              aria-pressed={props.locale === "de" ? "true" : "false"}
-              onClick={() => props.onLocaleChange("de")}
-            >
-              DE
-            </button>
-            <button
-              type="button"
-              lang="en"
-              aria-pressed={props.locale === "en" ? "true" : "false"}
-              onClick={() => props.onLocaleChange("en")}
-            >
-              EN
-            </button>
-          </div>
+          <Show when={props.onLocaleChange}>
+            {/* biome-ignore lint/a11y/useSemanticElements: The segmented toggle is specified as an ARIA group. */}
+            <div class="language-toggle" role="group" aria-label={props.languageLabel}>
+              <button
+                type="button"
+                lang="de"
+                aria-pressed={props.locale === "de" ? "true" : "false"}
+                onClick={() => props.onLocaleChange?.("de")}
+              >
+                DE
+              </button>
+              <button
+                type="button"
+                lang="en"
+                aria-pressed={props.locale === "en" ? "true" : "false"}
+                onClick={() => props.onLocaleChange?.("en")}
+              >
+                EN
+              </button>
+            </div>
+          </Show>
           {props.headerAction}
         </header>
         <main>
