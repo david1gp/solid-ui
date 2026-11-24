@@ -1,16 +1,8 @@
 import { mdiAccountGroup } from "@adaptive-ds/mdi/mdiAccountGroup.js"
-import { mdiFileDocumentOutline } from "@adaptive-ds/mdi/mdiFileDocumentOutline.js"
-import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutline.js"
 import { mdiClipboardTextOutline } from "@adaptive-ds/mdi/mdiClipboardTextOutline.js"
+import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutline.js"
 
 export const cmsDashboardQuickActions = [
-  {
-    view: "pages",
-    icon: mdiFileDocumentOutline,
-    count: 24,
-    label: { de: "Neue Seite", en: "New page" },
-    countLabel: { de: "Seiten", en: "pages" },
-  },
   {
     view: "posts",
     icon: mdiClipboardTextOutline,

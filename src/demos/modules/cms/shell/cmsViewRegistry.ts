@@ -1,36 +1,32 @@
 import { mdiAccountGroup } from "@adaptive-ds/mdi/mdiAccountGroup.js"
 import { mdiClipboardTextOutline } from "@adaptive-ds/mdi/mdiClipboardTextOutline.js"
 import { mdiCogOutline } from "@adaptive-ds/mdi/mdiCogOutline.js"
-import { mdiFileDocumentOutline } from "@adaptive-ds/mdi/mdiFileDocumentOutline.js"
 import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutline.js"
 import { mdiFolderOutline } from "@adaptive-ds/mdi/mdiFolderOutline.js"
 import { mdiLockReset } from "@adaptive-ds/mdi/mdiLockReset.js"
 import { mdiShieldAccountOutline } from "@adaptive-ds/mdi/mdiShieldAccountOutline.js"
 import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
 import { mdiViewDashboardOutline } from "@adaptive-ds/mdi/mdiViewDashboardOutline.js"
-import { CmsDashboardView } from "../views/dashboard/CmsDashboardView.js"
-import { CmsPagesView } from "../views/pages/CmsPagesView.js"
-import { CmsPostsView } from "../views/posts/CmsPostsView.js"
-import { CmsMediaView } from "../views/media/CmsMediaView.js"
-import { CmsMenusView } from "../views/menus/CmsMenusView.js"
-import { CmsContentTypesView } from "../views/content-types/CmsContentTypesView.js"
-import { CmsUsersView } from "../views/users/CmsUsersView.js"
-import { CmsRolesView } from "../views/roles/CmsRolesView.js"
-import { CmsTeamsView } from "../views/teams/CmsTeamsView.js"
 import { CmsApiKeysView } from "../views/api-keys/CmsApiKeysView.js"
 import { CmsAuditLogView } from "../views/audit-log/CmsAuditLogView.js"
-import { CmsNotificationsView } from "../views/notifications/CmsNotificationsView.js"
-import { CmsBackupsView } from "../views/backups/CmsBackupsView.js"
-import { CmsSystemStatusView } from "../views/system-status/CmsSystemStatusView.js"
-import { CmsTrashView } from "../views/trash/CmsTrashView.js"
+import { CmsAuth2faView } from "../views/auth-2fa/CmsAuth2faView.js"
+import { CmsAuthForgotView } from "../views/auth-forgot/CmsAuthForgotView.js"
+import { CmsAuthInviteView } from "../views/auth-invite/CmsAuthInviteView.js"
 import { CmsAuthLoginView } from "../views/auth-login/CmsAuthLoginView.js"
 import { CmsAuthRegisterView } from "../views/auth-register/CmsAuthRegisterView.js"
-import { CmsAuthForgotView } from "../views/auth-forgot/CmsAuthForgotView.js"
 import { CmsAuthResetView } from "../views/auth-reset/CmsAuthResetView.js"
-import { CmsAuth2faView } from "../views/auth-2fa/CmsAuth2faView.js"
-import { CmsAuthVerifyEmailView } from "../views/auth-verify-email/CmsAuthVerifyEmailView.js"
-import { CmsAuthInviteView } from "../views/auth-invite/CmsAuthInviteView.js"
 import { CmsAuthSessionExpiredView } from "../views/auth-session-expired/CmsAuthSessionExpiredView.js"
+import { CmsAuthVerifyEmailView } from "../views/auth-verify-email/CmsAuthVerifyEmailView.js"
+import { CmsBackupsView } from "../views/backups/CmsBackupsView.js"
+import { CmsContentTypesView } from "../views/content-types/CmsContentTypesView.js"
+import { CmsDashboardView } from "../views/dashboard/CmsDashboardView.js"
+import { CmsMediaView } from "../views/media/CmsMediaView.js"
+import { CmsNotificationsView } from "../views/notifications/CmsNotificationsView.js"
+import { CmsPostsView } from "../views/posts/CmsPostsView.js"
+import { CmsRolesView } from "../views/roles/CmsRolesView.js"
+import { CmsSystemStatusView } from "../views/system-status/CmsSystemStatusView.js"
+import { CmsTrashView } from "../views/trash/CmsTrashView.js"
+import { CmsUsersView } from "../views/users/CmsUsersView.js"
 
 // Registry contract: each view receives optional `id`, navigates with cmsNavigate(view, id?),
 // reads cmsLocale.get(), and owns its local { de, en } texts. Layout is app, auth or fullscreen.
@@ -40,13 +36,6 @@ export const cmsViewRegistry = {
     icon: mdiViewDashboardOutline,
     label: { de: "Dashboard", en: "Dashboard" },
     component: CmsDashboardView,
-    layout: "app",
-  },
-  pages: {
-    group: "content",
-    icon: mdiFileDocumentOutline,
-    label: { de: "Seiten", en: "Pages" },
-    component: CmsPagesView,
     layout: "app",
   },
   posts: {
@@ -61,13 +50,6 @@ export const cmsViewRegistry = {
     icon: mdiFolderOutline,
     label: { de: "Medien", en: "Media" },
     component: CmsMediaView,
-    layout: "app",
-  },
-  menus: {
-    group: "content",
-    icon: mdiFolderMultipleOutline,
-    label: { de: "Menüs", en: "Menus" },
-    component: CmsMenusView,
     layout: "app",
   },
   "content-types": {
@@ -89,13 +71,6 @@ export const cmsViewRegistry = {
     icon: mdiShieldAccountOutline,
     label: { de: "Rollen", en: "Roles" },
     component: CmsRolesView,
-    layout: "app",
-  },
-  teams: {
-    group: "management",
-    icon: mdiAccountGroup,
-    label: { de: "Teams", en: "Teams" },
-    component: CmsTeamsView,
     layout: "app",
   },
   "api-keys": {

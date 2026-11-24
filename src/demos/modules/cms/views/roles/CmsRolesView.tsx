@@ -40,7 +40,7 @@ export function CmsRolesView(_props: { id?: string }) {
                   </tr>
                 </thead>
                 <tbody>
-                  <For each={["pages", "posts", "media", "users"] as const}>
+                  <For each={["posts", "media", "users"] as const}>
                     {(resource) => (
                       <tr class="border-t dark:border-gray-700">
                         <th class="p-2 font-normal">{state.text()[resource]}</th>

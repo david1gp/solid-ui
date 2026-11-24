@@ -1,5 +1,5 @@
-import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { createMemo, onCleanup } from "solid-js"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
 import { cmsNavigate } from "../../shell/cmsNavigate.js"
 import { cmsDashboardActivities } from "./cmsDashboardActivities.js"
@@ -119,6 +119,6 @@ export function cmsDashboardStateCreate() {
     number: (value: number) => new Intl.NumberFormat(cmsLocale.get()).format(value),
     relative: (value: number, unit: Intl.RelativeTimeFormatUnit) =>
       new Intl.RelativeTimeFormat(cmsLocale.get(), { numeric: "auto" }).format(value, unit),
-    navigate: (view: "posts" | "pages" | "media" | "users" | "notifications") => cmsNavigate(view),
+    navigate: (view: "posts" | "media" | "users" | "notifications") => cmsNavigate(view),
   }
 }

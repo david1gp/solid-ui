@@ -91,11 +91,7 @@ export function CmsDashboardDraftsCard(props: {
             <For each={props.state.sortedDrafts()}>
               {(draft) => (
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => props.state.navigate("pages")}
-                    class="flex w-full items-center gap-3 rounded-lg py-3 text-left hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent,var(--color-blue-500))] dark:hover:bg-neutral-800/60"
-                  >
+                  <div class="flex w-full items-center gap-3 py-3 text-left">
                     <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-[var(--dashboard-accent,var(--color-blue-600))] dark:bg-neutral-800">
                       <Icon path={mdiFileDocumentOutline} class="size-5" />
                     </span>
@@ -111,7 +107,7 @@ export function CmsDashboardDraftsCard(props: {
                     <span class="shrink-0 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 dark:bg-neutral-800 dark:text-neutral-300">
                       {props.state.text().draft}
                     </span>
-                  </button>
+                  </div>
                 </li>
               )}
             </For>

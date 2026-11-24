@@ -5,7 +5,7 @@ export function CmsDashboardQuickActionTiles(props: { state: ReturnType<typeof c
   return (
     <section class="flex min-w-0 flex-col">
       <h2 class="mb-4 font-semibold">{props.state.text().actions}</h2>
-      <div class="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-4">
+      <div class="grid flex-1 grid-cols-1 gap-3 min-[400px]:grid-cols-3">
         <For each={props.state.quickActions}>
           {(action) => (
             <button
