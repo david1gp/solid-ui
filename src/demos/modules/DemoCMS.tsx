@@ -260,7 +260,6 @@ export function DemoCMS() {
     },
   ]
   const [active, setActive] = createSignal("")
-  const [search, setSearch] = createSignal("")
   const [mobile, setMobile] = createSignal(false)
   onSettled(() => {
     const query = window.matchMedia("(max-width: 767px)")
@@ -308,10 +307,7 @@ export function DemoCMS() {
       .map((group) => ({
         label: cmsShellText[cmsLocale.get()][group],
         items: (Object.entries(cmsViewRegistry) as [CmsViewKey, (typeof cmsViewRegistry)[CmsViewKey]][])
-          .filter(
-            ([, item]) =>
-              item.group === group && item.label[cmsLocale.get()].toLowerCase().includes(search().toLowerCase()),
-          )
+          .filter(([, item]) => item.group === group)
           .map<CmsSidebarNavGroup["items"][number]>(([key, item]) => ({
             icon: item.icon,
             label: item.label[cmsLocale.get()],
@@ -324,7 +320,7 @@ export function DemoCMS() {
             },
           }))
           .concat(
-            group === "system" && settingsLabel().toLowerCase().includes(search().toLowerCase())
+            group === "system"
               ? [
                   {
                     icon: mdiCogOutline,
@@ -434,8 +430,6 @@ export function DemoCMS() {
             group={cmsShellText[cmsLocale.get()][view().group]}
             title={active() === settingsPageKey ? settingsLabel() : view().label[cmsLocale.get()]}
             locale={cmsLocale.get()}
-            onLocale={(locale) => cmsLocale.set(locale)}
-            onSearch={setSearch}
             onSettings={openSettings}
           />
           <main class={"flex-1 min-w-0 p-4 pb-24 sm:p-8 overflow-y-auto"}>
