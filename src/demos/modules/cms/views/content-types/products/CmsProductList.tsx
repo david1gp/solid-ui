@@ -31,14 +31,16 @@ export function CmsProductList() {
                   </Show>
                 </div>
               </div>
-              <button
-                type="button"
-                class={cmsButtonClass}
-                aria-label={`Bearbeiten: ${product.title}`}
-                onClick={() => cmsNavigate("content-types", `article:${product.id}:list`)}
-              >
-                Bearbeiten
-              </button>
+              <div class="flex w-full justify-end sm:w-auto">
+                <button
+                  type="button"
+                  class={cmsButtonClass}
+                  aria-label={`Bearbeiten: ${product.title}`}
+                  onClick={() => cmsNavigate("content-types", `article:${product.id}:list`)}
+                >
+                  Bearbeiten
+                </button>
+              </div>
             </article>
           )}
         </For>
