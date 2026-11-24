@@ -20,6 +20,7 @@ const types = createSignalObject<ContentType[]>([
 ])
 let nextId = 0
 export function cmsContentTypesStateCreate(id: () => string | undefined) {
+  const tab = createSignalObject<"list" | "tiles">("list")
   const selected = createSignalObject<string | undefined>(undefined)
   const picker = createSignalObject<FieldType>("text")
   const current = () => types.get().find((item) => item.id === id())
@@ -27,6 +28,8 @@ export function cmsContentTypesStateCreate(id: () => string | undefined) {
   const updateFields = (update: (fields: Field[]) => Field[]) =>
     types.set(types.get().map((item) => (item.id === id() ? { ...item, fields: update(item.fields) } : item)))
   return {
+    tab: () => tab.get(),
+    tabSet: (value: "list" | "tiles") => tab.set(value),
     types: () => types.get(),
     current,
     field,
