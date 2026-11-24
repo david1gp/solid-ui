@@ -19,7 +19,8 @@ export function FooterModern() {
           <FooterModernNewsletterPill />
         </div>
       </div>
-      <div class={"px-4 pb-4 sm:px-8 sm:pb-8"}>
+      {/* Pulled up over the wave bands so the panel's frost has something to blur. */}
+      <div class={"relative -mt-20 px-4 pb-4 sm:-mt-24 sm:px-8 sm:pb-8"}>
         <div class={"mx-auto w-full max-w-6xl"}>
           <FooterModernPanel />
         </div>

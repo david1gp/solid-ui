@@ -1,15 +1,22 @@
 import { For } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
+import { classArr } from "#ui/utils/classArr.js"
 import { footerModernDemoColumns } from "./footerModernDemoColumns.js"
 import { footerModernDemoSocialLinks } from "./footerModernDemoSocialLinks.js"
 
 const linkClass =
   "text-sm text-muted-foreground hover:text-foreground hover:underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
 
-/** Solid footer card on the footer ground: brand, link columns, copyright and social links in theme colors. */
+/** Lightly frosted footer card overlapping the waves: brand, link columns, copyright and social links in theme colors. */
 export function FooterModernPanel() {
   return (
-    <div class={"rounded-2xl border border-border bg-background p-6 shadow-sm sm:p-10"}>
+    <div
+      class={classArr(
+        "rounded-2xl border border-border p-6 sm:p-10", // layout
+        "bg-background/65 backdrop-blur-md backdrop-saturate-150", // light frost over the wave illustration
+        "shadow-[inset_0_1px_0_rgb(255_255_255/0.45),0_1px_3px_rgb(0_0_0/0.06)] dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_1px_3px_rgb(0_0_0/0.2)]", // top highlight
+      )}
+    >
       <div class={"grid gap-10 lg:grid-cols-[1fr_1.3fr]"}>
         <div>
           <a
