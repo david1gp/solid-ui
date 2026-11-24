@@ -1,4 +1,4 @@
-import { For, Show } from "solid-js"
+import { For, Show, untrack } from "solid-js"
 import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
 import { cmsCardClass } from "../../../ui/cmsCardClass.js"
 import { cmsInputClass } from "../../../ui/cmsInputClass.js"
@@ -10,7 +10,7 @@ import { cmsProductPriceFormat } from "./cmsProductPriceFormat.js"
 import type { cmsProducts } from "./cmsProducts.js"
 
 export function CmsProductEdit(props: { product: (typeof cmsProducts)[number] }) {
-  const state = cmsProductEditStateCreate(props.product)
+  const state = cmsProductEditStateCreate(untrack(() => props.product))
   return (
     <div>
       <button
