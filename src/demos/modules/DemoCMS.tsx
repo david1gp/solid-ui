@@ -3,6 +3,7 @@ import { mdiBrightnessAuto } from "@adaptive-ds/mdi/mdiBrightnessAuto.js"
 import { mdiCameraOutline } from "@adaptive-ds/mdi/mdiCameraOutline.js"
 import { mdiCardAccountDetailsOutline } from "@adaptive-ds/mdi/mdiCardAccountDetailsOutline.js"
 import { mdiCellphone } from "@adaptive-ds/mdi/mdiCellphone.js"
+import { mdiCogOutline } from "@adaptive-ds/mdi/mdiCogOutline.js"
 import { mdiLaptop } from "@adaptive-ds/mdi/mdiLaptop.js"
 import { mdiLockReset } from "@adaptive-ds/mdi/mdiLockReset.js"
 import { mdiPaletteOutline } from "@adaptive-ds/mdi/mdiPaletteOutline.js"
@@ -304,7 +305,7 @@ export function DemoCMS() {
             ([, item]) =>
               item.group === group && item.label[cmsLocale.get()].toLowerCase().includes(search().toLowerCase()),
           )
-          .map(([key, item]) => ({
+          .map<CmsSidebarNavGroup["items"][number]>(([key, item]) => ({
             icon: item.icon,
             label: item.label[cmsLocale.get()],
             isActive: active() !== settingsPageKey && cmsNavigation.get().view === key,
@@ -314,7 +315,19 @@ export function DemoCMS() {
               if (typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches) collapsed.set(true)
               cmsNavigate(key)
             },
-          })),
+          }))
+          .concat(
+            group === "system" && settingsLabel().toLowerCase().includes(search().toLowerCase())
+              ? [
+                  {
+                    icon: mdiCogOutline,
+                    label: settingsLabel(),
+                    isActive: active() === settingsPageKey,
+                    onClick: openSettings,
+                  },
+                ]
+              : [],
+          ),
       }))
       .filter((group) => group.items.length > 0)
   const viewContent = () => {
