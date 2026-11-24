@@ -1,4 +1,5 @@
 import { Show } from "solid-js"
+import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { Input } from "#ui/input/input/Input.jsx"
 import { Textarea } from "#ui/input/textarea/Textarea.jsx"
 import { Button } from "#ui/interactive/button/Button.jsx"
@@ -14,6 +15,7 @@ export function DemoContact() {
   const describedBy = (...ids: (string | false | undefined)[]) => ids.filter(Boolean).join(" ") || undefined
   return (
     <div class="contact-demo">
+      <DemoShapesBackdrop fixed />
       <div class="page">
         <header class="site-header">
           <LogoImageText logoText="adaptive-solid-ui" logoTextClass="text-lg font-semibold" />

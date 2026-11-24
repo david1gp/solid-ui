@@ -11,7 +11,6 @@
     --primary-hover: #2b2e33;
     --success: #17824b;
     --focus: rgba(20, 22, 25, 0.12);
-    --gradient: rgba(241, 243, 246, 0.85);
     --card: rgba(255, 255, 255, 0.96);
     --indicator-border: rgba(20, 22, 25, 0.05);
     --placeholder: #a1a5ac;
@@ -32,9 +31,12 @@
     padding: 0;
   }
 
+  /* Isolated stacking context so the shared shapes backdrop (z-index -1) sits above this background. */
   & {
+    position: relative;
+    isolation: isolate;
     min-height: 100vh;
-    background: radial-gradient(circle at 50% 0%, var(--gradient), transparent 30rem), var(--background);
+    background: var(--background);
     color: var(--text);
     font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     line-height: 1.5;
@@ -678,7 +680,6 @@
   --primary-text: var(--color-background);
   --success: #66d49a;
   --focus: rgba(255, 255, 255, 0.16);
-  --gradient: rgb(255 255 255 / 4%);
   --card: var(--color-muted);
   --indicator-border: var(--color-border);
   --placeholder: color-mix(in oklab, var(--color-muted-foreground) 65%, transparent);
