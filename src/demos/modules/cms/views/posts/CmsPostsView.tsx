@@ -6,10 +6,16 @@ import { CmsDataTable } from "../../ui/CmsDataTable.js"
 import { CmsKanban } from "../../ui/CmsKanban.js"
 import { CmsRichText } from "../../ui/CmsRichText.js"
 import { ConfirmDialog } from "../../ui/ConfirmDialog.js"
+import { cmsButtonClass } from "../../ui/cmsButtonClass.js"
+import { cmsCardClass } from "../../ui/cmsCardClass.js"
+import { cmsIconCircleClass } from "../../ui/cmsIconCircleClass.js"
+import { cmsInputClass } from "../../ui/cmsInputClass.js"
+import { cmsPillClass } from "../../ui/cmsPillClass.js"
+import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
 import { Drawer } from "../../ui/Drawer.js"
 import { Dropdown } from "../../ui/Dropdown.js"
 import { PageHeader } from "../../ui/PageHeader.js"
-import { postsStore, type Post } from "./postsStore.js"
+import { type Post, postsStore } from "./postsStore.js"
 
 const texts = {
   de: {
@@ -141,10 +147,15 @@ const texts = {
     nextMonth: "Next month",
   },
 }
-const button =
-  "rounded-xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
-const input = "w-full rounded-xl border border-neutral-300 bg-transparent px-3 py-2 text-sm dark:border-neutral-700"
-const card = "rounded-2xl border border-neutral-200 p-4 dark:border-neutral-700"
+const button = cmsButtonClass
+const input = `w-full ${cmsInputClass}`
+const card = cmsCardClass
+const tabClass = (active: boolean) =>
+  `border-b-2 pb-3 text-sm ${active ? "border-[var(--dashboard-accent)] font-semibold text-[var(--dashboard-accent)]" : "border-transparent font-medium text-gray-500 hover:text-[var(--dashboard-accent)] dark:text-neutral-400"}`
+const statusClass = (post: Post) =>
+  post.status === "published"
+    ? "rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
+    : cmsPillClass
 const blank = (): Post => ({
   id: globalThis.crypto?.randomUUID?.() ?? String(Date.now()),
   title: "",
@@ -207,19 +218,24 @@ function PostForm(p: { post?: Post; create: boolean }) {
         title={p.create ? t().create : t().edit}
         actions={
           <>
-            <button class={button} onClick={back}>
+            <button type="button" class={button} onClick={back}>
               {t().cancel}
             </button>
-            <button class={button} onClick={save}>
+            <button type="button" class={cmsPrimaryButtonClass} onClick={save}>
               {t().save}
             </button>
           </>
         }
       />
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-6 border-b border-gray-200 dark:border-neutral-800">
         <For each={[t().details, t().content]}>
           {(label, i) => (
-            <button class={button} aria-current={step() === i() ? "step" : undefined} onClick={() => setStep(i())}>
+            <button
+              type="button"
+              class={tabClass(step() === i())}
+              aria-current={step() === i() ? "step" : undefined}
+              onClick={() => setStep(i())}
+            >
               {i() + 1}. {label}
             </button>
           )}
@@ -230,7 +246,7 @@ function PostForm(p: { post?: Post; create: boolean }) {
         when={step() === 0}
         fallback={
           <div class={card}>
-            <label class="mb-2 block text-sm font-medium">{t().content}</label>
+            <p class="mb-2 block text-sm font-medium">{t().content}</p>
             <CmsRichText value={post().content} onChange={(content) => update({ content })} labels={t()} />
           </div>
         }
@@ -267,12 +283,12 @@ function PostForm(p: { post?: Post; create: boolean }) {
       </Show>
       <div class="flex gap-2">
         <Show when={step() > 0}>
-          <button class={button} onClick={() => setStep(0)}>
+          <button type="button" class={button} onClick={() => setStep(0)}>
             {t().previous}
           </button>
         </Show>
         <Show when={step() === 0}>
-          <button class={button} onClick={() => setStep(1)}>
+          <button type="button" class={button} onClick={() => setStep(1)}>
             {t().next}
           </button>
         </Show>
@@ -306,7 +322,7 @@ export function CmsPostsView(p: { id?: string }) {
   const status = (post: Post) => t()[post.status]
   const open = (post: Post) => cmsNavigate("posts", post.id)
   const cardPost = (post: Post) => (
-    <button class="w-full text-left" onClick={() => open(post)}>
+    <button type="button" class="w-full text-left" onClick={() => open(post)}>
       <strong class="block">{post.title}</strong>
       <span class="mt-1 block text-xs text-neutral-500">
         {status(post)} · {new Intl.DateTimeFormat(cmsLocale.get()).format(new Date(`${post.date}T12:00:00`))}
@@ -340,16 +356,16 @@ export function CmsPostsView(p: { id?: string }) {
                 description={t().description}
                 actions={
                   <>
-                    <button class={button} onClick={() => setDrawer(true)}>
+                    <button type="button" class={button} onClick={() => setDrawer(true)}>
                       {t().quick}
                     </button>
-                    <button class={button} onClick={() => cmsNavigate("posts", "new")}>
+                    <button type="button" class={cmsPrimaryButtonClass} onClick={() => cmsNavigate("posts", "new")}>
                       {t().create}
                     </button>
                   </>
                 }
               />
-              <div class="mb-4 flex flex-wrap gap-2">
+              <div class="mb-6 flex flex-wrap gap-6 border-b border-gray-200 dark:border-neutral-800">
                 <For
                   each={
                     [
@@ -362,7 +378,8 @@ export function CmsPostsView(p: { id?: string }) {
                 >
                   {(v) => (
                     <button
-                      class={button}
+                      type="button"
+                      class={tabClass(view() === v[0])}
                       aria-pressed={view() === v[0] ? "true" : "false"}
                       onClick={() => setView(v[0])}
                     >
@@ -384,12 +401,23 @@ export function CmsPostsView(p: { id?: string }) {
                       sortable: true,
                       searchable: true,
                       render: (post) => (
-                        <button class="font-medium underline" onClick={() => open(post)}>
+                        <button
+                          type="button"
+                          class="font-medium hover:text-[var(--dashboard-accent)]"
+                          onClick={() => open(post)}
+                        >
                           {post.title}
                         </button>
                       ),
                     },
-                    { id: "status", label: t().status, value: status, sortable: true, filterable: true },
+                    {
+                      id: "status",
+                      label: t().status,
+                      value: status,
+                      sortable: true,
+                      filterable: true,
+                      render: (post) => <span class={statusClass(post)}>{status(post)}</span>,
+                    },
                     { id: "date", label: t().date, value: (post) => post.date, sortable: true },
                   ]}
                   bulkActions={[
@@ -397,14 +425,18 @@ export function CmsPostsView(p: { id?: string }) {
                       label: t().archive,
                       run: (rows) => {
                         if (window.confirm(t().confirm))
-                          rows.forEach((post) => postsStore.update(post.id, { status: "archived" }))
+                          rows.forEach((post) => {
+                            postsStore.update(post.id, { status: "archived" })
+                          })
                       },
                     },
                     {
                       label: t().delete,
                       run: (rows) => {
                         if (window.confirm(t().confirm))
-                          rows.forEach((post) => postsStore.update(post.id, { deleted: true }))
+                          rows.forEach((post) => {
+                            postsStore.update(post.id, { deleted: true })
+                          })
                       },
                     },
                   ]}
@@ -413,7 +445,40 @@ export function CmsPostsView(p: { id?: string }) {
               </Show>
               <Show when={view() === "grid"}>
                 <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                  <For each={active()}>{(post) => <div class={card}>{cardPost(post)}</div>}</For>
+                  <For each={active()}>
+                    {(post) => (
+                      <button
+                        type="button"
+                        class={`${card} w-full text-left hover:border-[var(--dashboard-accent)]`}
+                        onClick={() => open(post)}
+                      >
+                        <div class="flex items-start gap-3">
+                          <span class={cmsIconCircleClass} aria-hidden="true">
+                            <svg
+                              aria-hidden="true"
+                              class="size-5"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                            >
+                              <path d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6" />
+                            </svg>
+                          </span>
+                          <span class="min-w-0 flex-1">
+                            <span class="block text-base font-semibold">{post.title}</span>
+                            <span class="mt-0.5 block text-xs text-gray-500 dark:text-neutral-400">
+                              {new Intl.DateTimeFormat(cmsLocale.get()).format(new Date(`${post.date}T12:00:00`))}
+                            </span>
+                            <span class="mt-3 block text-sm text-gray-500 dark:text-neutral-400">{post.excerpt}</span>
+                            <span class="mt-4 inline-block">
+                              <span class={statusClass(post)}>{status(post)}</span>
+                            </span>
+                          </span>
+                        </div>
+                      </button>
+                    )}
+                  </For>
                 </div>
               </Show>
               <Show when={view() === "kanban"}>
@@ -441,7 +506,7 @@ export function CmsPostsView(p: { id?: string }) {
                 />
               </Show>
               <Drawer title={t().quick} open={drawer()} onOpenChange={setDrawer}>
-                <div class="mt-4 space-y-4">
+                <div class={`${card} mt-4 space-y-4`}>
                   <label class="block text-sm">
                     {t().title}
                     <input
@@ -451,7 +516,8 @@ export function CmsPostsView(p: { id?: string }) {
                     />
                   </label>
                   <button
-                    class={button}
+                    type="button"
+                    class={cmsPrimaryButtonClass}
                     disabled={!quickTitle().trim()}
                     onClick={() => {
                       const post = { ...blank(), title: quickTitle().trim() }
@@ -475,14 +541,15 @@ export function CmsPostsView(p: { id?: string }) {
                 description={status(post())}
                 actions={
                   <>
-                    <button class={button} onClick={() => cmsNavigate("posts")}>
+                    <button type="button" class={button} onClick={() => cmsNavigate("posts")}>
                       {t().back}
                     </button>
-                    <button class={button} onClick={() => cmsNavigate("posts", `${post().id}:edit`)}>
+                    <button type="button" class={button} onClick={() => cmsNavigate("posts", `${post().id}:edit`)}>
                       {t().edit}
                     </button>
                     <Dropdown trigger={t().actions} open={menuOpen()} onOpenChange={setMenuOpen}>
                       <button
+                        type="button"
                         class={button}
                         onClick={() =>
                           confirmAction({ id: post().id, kind: post().status === "archived" ? "restore" : "archive" })
@@ -490,14 +557,18 @@ export function CmsPostsView(p: { id?: string }) {
                       >
                         {post().status === "archived" ? t().restore : t().archive}
                       </button>
-                      <button class={button} onClick={() => confirmAction({ id: post().id, kind: "delete" })}>
+                      <button
+                        type="button"
+                        class={button}
+                        onClick={() => confirmAction({ id: post().id, kind: "delete" })}
+                      >
                         {t().delete}
                       </button>
                     </Dropdown>
                   </>
                 }
               />
-              <div class="mb-4 flex flex-wrap gap-2">
+              <div class="mb-6 flex flex-wrap gap-6 border-b border-gray-200 dark:border-neutral-800">
                 <For
                   each={
                     [
@@ -509,7 +580,8 @@ export function CmsPostsView(p: { id?: string }) {
                 >
                   {(v) => (
                     <button
-                      class={button}
+                      type="button"
+                      class={tabClass(tab() === v[0])}
                       aria-pressed={tab() === v[0] ? "true" : "false"}
                       onClick={() => setTab(v[0])}
                     >
@@ -536,7 +608,7 @@ export function CmsPostsView(p: { id?: string }) {
                 <aside class={`${card} space-y-3 text-sm`}>
                   <h2 class="font-semibold">{t().details}</h2>
                   <p>
-                    {t().status}: {status(post())}
+                    {t().status}: <span class={statusClass(post())}>{status(post())}</span>
                   </p>
                   <p>
                     {t().date}: {new Intl.DateTimeFormat(cmsLocale.get()).format(new Date(`${post().date}T12:00:00`))}
