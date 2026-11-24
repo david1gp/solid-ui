@@ -26,6 +26,7 @@ const fullscreenDemos = new Set([
   "DemoRegisterLogin",
   "DemoRegisterCi",
   "DemoContact",
+  "ContactModern",
   "DemoCMS",
   "DemoNavHeader",
   "NavbarHeader-Modern",
@@ -41,6 +42,7 @@ const demoDisplayNames: Record<string, string> = {
   DemoRegisterLogin: "Register-Simple",
   DemoRegisterCi: "Register-Modern",
   DemoContact: "Contact-Simple",
+  ContactModern: "Contact-modern",
 }
 
 /** Frosted panel keeping link text readable above the abstract backdrop shapes. */

@@ -51,6 +51,10 @@ const DemoRegisterLogin = lazy(async () => {
   return { default: c.DemoRegisterLogin }
 })
 
+const ContactModern = lazy(async () => {
+  const c = await import("#src/demos/modules/DemoContactModern.jsx")
+  return { default: c.DemoContactModern }
+})
 const DemoContact = lazy(async () => {
   const c = await import("#src/demos/modules/DemoContact.jsx")
   return { default: c.DemoContact }
@@ -273,6 +277,7 @@ export const demoList = {
     DemoRegisterLogin: DemoRegisterLogin,
     DemoRegisterCi: DemoRegisterCi,
     DemoContact: DemoContact,
+    ContactModern: ContactModern,
     DemoAppSidebar: DemoAppSidebar,
     DemoSidebarModern: DemoSidebarModern,
     DemoCMS: DemoCMS,
