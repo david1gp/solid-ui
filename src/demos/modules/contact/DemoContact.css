@@ -262,6 +262,20 @@
     box-shadow: 0 0 0 4px var(--focus);
   }
 
+  .dark & :is(input, textarea).input-surface {
+    background: var(--input-bg);
+    border-color: var(--input);
+  }
+
+  .dark & :is(input, textarea).input-surface::placeholder {
+    color: rgb(255 255 255 / 0.4);
+  }
+
+  .dark & :is(input, textarea).input-surface:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 1px var(--color-blue-500);
+  }
+
   input[aria-invalid="true"],
   input[aria-invalid="true"]:hover,
   textarea[aria-invalid="true"],
