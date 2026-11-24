@@ -30,10 +30,10 @@ export function cmsMediaLibraryStateCreate() {
     folderRemoveCount: () => cmsMediaStore.items().filter((item) => item.folder === folderToRemove()).length,
     requestFolderRemove: setFolderToRemove,
     closeFolderRemove: () => setFolderToRemove(undefined),
-    confirmFolderRemove() {
+    confirmFolderRemove(deleteItems = false) {
       const name = folderToRemove()
       if (!name) return
-      cmsMediaStore.folderRemove(name)
+      cmsMediaStore.folderRemove(name, { deleteItems })
       if (folder() === name) setFolder("*")
     },
     changeFolder: setFolder,

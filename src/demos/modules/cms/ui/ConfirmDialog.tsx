@@ -10,6 +10,7 @@ export function ConfirmDialog(p: {
   confirmLabel: string
   cancelLabel: string
   destructive?: boolean
+  extraAction?: { label: string; onClick: () => void }
 }) {
   return (
     <CorvuDialog
@@ -20,7 +21,7 @@ export function ConfirmDialog(p: {
       class="hidden"
       innerClass="w-[calc(100%-2rem)] max-w-md rounded-2xl"
     >
-      <div class="mt-6 flex justify-end gap-2">
+      <div class={p.extraAction ? "mt-6 flex flex-wrap justify-end gap-2" : "mt-6 flex justify-end gap-2"}>
         <button
           type="button"
           class="rounded-xl border border-neutral-300 px-4 py-2 text-sm dark:border-neutral-700"
@@ -42,6 +43,18 @@ export function ConfirmDialog(p: {
         >
           {p.confirmLabel}
         </button>
+        {p.extraAction && (
+          <button
+            type="button"
+            class="rounded-xl bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+            onClick={() => {
+              p.extraAction?.onClick()
+              p.onOpenChange(false)
+            }}
+          >
+            {p.extraAction.label}
+          </button>
+        )}
       </div>
     </CorvuDialog>
   )

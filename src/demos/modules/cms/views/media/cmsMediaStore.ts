@@ -52,9 +52,13 @@ export const cmsMediaStore = {
     const trimmed = name.trim()
     if (trimmed && trimmed !== "*" && !folders().includes(trimmed)) setFolders((current) => [...current, trimmed])
   },
-  folderRemove(name: string) {
+  folderRemove(name: string, options?: { deleteItems?: boolean }) {
     if (!folders().includes(name)) return
-    setItems((current) => current.map((item) => (item.folder === name ? { ...item, folder: "" } : item)))
+    if (options?.deleteItems) {
+      for (const item of items().filter((entry) => entry.folder === name)) cmsMediaStore.remove(item.id)
+    } else {
+      setItems((current) => current.map((item) => (item.folder === name ? { ...item, folder: "" } : item)))
+    }
     setFolders((current) => current.filter((folder) => folder !== name))
   },
   upload(files: FileList | File[], folder: string) {

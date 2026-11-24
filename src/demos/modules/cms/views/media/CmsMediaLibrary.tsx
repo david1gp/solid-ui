@@ -249,10 +249,10 @@ export function CmsMediaLibrary() {
         onOpenChange={(open) => {
           if (!open) state.closeFolderRemove()
         }}
-        onConfirm={state.confirmFolderRemove}
-        confirmLabel={state.text().delete}
+        onConfirm={() => state.confirmFolderRemove()}
+        confirmLabel={state.text().deleteFolderOnly}
         cancelLabel={state.text().cancel}
-        destructive
+        extraAction={{ label: state.text().deleteAll, onClick: () => state.confirmFolderRemove(true) }}
       />
     </div>
   )
