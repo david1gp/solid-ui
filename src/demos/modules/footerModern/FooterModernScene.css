@@ -4,79 +4,110 @@
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background: linear-gradient(180deg, #667c8a 0%, #9aabb0 52%, #bac0b7 73%, #596e61 100%);
+  background: linear-gradient(180deg, #263e4d 0%, #476471 42%, #9caeaa 70%, #465a4f 100%);
 }
 .footer-modern-moon {
   position: absolute;
-  top: 16%;
+  top: 6%;
   left: 50%;
-  width: min(57vw, 680px);
+  width: min(58vw, 700px);
   min-width: 340px;
   aspect-ratio: 1;
   transform: translateX(-50%);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 35%, #ffffff22 0 2%, transparent 3%),
-    radial-gradient(circle at 65% 45%, #697a7d22 0 3%, transparent 4%),
-    radial-gradient(circle at 38% 28%, #d6d9cf, #a8b3b1 56%, #647c83 100%);
+    radial-gradient(ellipse at 31% 24%, #9caeaa26 0 4%, transparent 13%),
+    radial-gradient(ellipse at 61% 35%, #bac6b91c 0 5%, transparent 16%),
+    radial-gradient(ellipse at 34% 60%, #172e382e 0 8%, transparent 22%),
+    radial-gradient(ellipse at 72% 66%, #a5b2a71a 0 6%, transparent 18%),
+    radial-gradient(circle at 35% 24%, #728b8b, #405e67 42%, #273f4b 77%, #1c3440 100%);
   box-shadow:
-    inset -45px -30px 70px #4b626c66,
-    0 0 100px #e3e6d933;
-  opacity: 0.8;
+    inset 8px 8px 20px #b6c9c240,
+    inset -40px -35px 75px #192e39a8,
+    0 0 60px #c7d6c52b;
 }
 .footer-modern-cloud {
   position: absolute;
-  top: 51%;
-  width: 70%;
-  height: 21%;
-  border-radius: 50%;
-  background: #e2e3d7;
-  filter: blur(35px);
-  opacity: 0.75;
+  top: 39%;
+  width: 78%;
+  height: 28%;
+  filter: blur(4px);
+  background:
+    radial-gradient(ellipse 16% 30% at 8% 44%, #e4e6d9 0 65%, transparent 70%),
+    radial-gradient(ellipse 17% 35% at 24% 51%, #d9dfd3 0 65%, transparent 70%),
+    radial-gradient(ellipse 16% 32% at 39% 58%, #e8e9dc 0 65%, transparent 70%),
+    radial-gradient(ellipse 18% 31% at 55% 68%, #d4dbd0 0 65%, transparent 70%),
+    radial-gradient(ellipse 17% 28% at 72% 75%, #e1e5d9 0 65%, transparent 70%),
+    radial-gradient(ellipse 65% 32% at 35% 83%, #a5b3ab 0 65%, transparent 72%);
 }
 .footer-modern-cloud-left {
-  left: -30%;
-  transform: rotate(8deg);
+  left: -12%;
 }
 .footer-modern-cloud-right {
-  right: -30%;
-  top: 55%;
-  transform: rotate(-8deg);
+  right: -12%;
+  transform: scaleX(-1);
+  top: 42%;
 }
 .footer-modern-hill {
   position: absolute;
-  left: -15%;
-  bottom: -8%;
-  width: 130%;
-  height: 36%;
-  border-radius: 50% 50% 0 0;
-  background: linear-gradient(170deg, #819289, #526b5c 42%, #283e38);
+  left: -20%;
+  bottom: 0;
+  width: 140%;
+  height: 42%;
+  border-radius: 50% 50% 0 0 / 16% 16% 0 0;
+  background:
+    repeating-linear-gradient(95deg, #ffffff05 0 1px, transparent 1px 4px),
+    linear-gradient(170deg, #5a7061, #344d40 38%, #1d332c);
 }
 .footer-modern-figure {
   position: absolute;
-  bottom: 32%;
+  bottom: 42%;
   left: 50%;
-  width: 10px;
-  height: 31px;
-  border-radius: 45% 45% 20% 20%;
-  background: #263a39;
+  width: 36px;
+  height: 78px;
+  transform: translateX(-50%);
+  border-radius: 35% 35% 12% 12%;
+  background: linear-gradient(90deg, #313b37, #687067 48%, #303b37);
+  box-shadow: 0 2px 4px #17292370;
 }
 .footer-modern-figure::before {
   content: "";
   position: absolute;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #263a39;
-  top: -10px;
-  left: 1px;
+  width: 21px;
+  height: 24px;
+  border-radius: 48%;
+  background: #606a61;
+  top: -23px;
+  left: 8px;
 }
 .footer-modern-figure span {
   position: absolute;
-  top: 24px;
-  left: 1px;
-  width: 4px;
-  height: 12px;
-  background: #263a39;
-  box-shadow: 5px 0 #263a39;
+  top: 70px;
+  left: 5px;
+  width: 11px;
+  height: 32px;
+  border-radius: 0 0 3px 3px;
+  background: #35413b;
+  box-shadow: 15px 0 #35413b;
+}
+@media (max-width: 639px) {
+  .footer-modern-moon {
+    top: 8%;
+  }
+  .footer-modern-cloud {
+    top: 28%;
+    height: 18%;
+    width: 95%;
+  }
+  .footer-modern-cloud-right {
+    top: 30%;
+  }
+  .footer-modern-hill {
+    height: 61%;
+  }
+  .footer-modern-figure {
+    bottom: 60%;
+    transform: translateX(-50%) scale(0.65);
+    transform-origin: bottom;
+  }
 }

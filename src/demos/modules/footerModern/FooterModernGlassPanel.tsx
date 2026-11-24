@@ -7,7 +7,7 @@ export function FooterModernGlassPanel() {
   return (
     <div
       class={
-        "rounded-2xl border border-white/20 bg-[#152a34]/85 p-6 shadow-[inset_0_1px_0_rgb(255_255_255/0.15),0_20px_60px_rgb(0_0_0/0.15)] backdrop-blur-2xl sm:p-10"
+        "rounded-2xl border border-white/15 bg-[#182826]/45 p-6 shadow-[inset_0_1px_0_rgb(255_255_255/0.15),0_20px_60px_rgb(0_0_0/0.15)] backdrop-blur-xl backdrop-saturate-150 sm:p-10"
       }
     >
       <div class={"grid gap-10 lg:grid-cols-[1fr_1.3fr]"}>
