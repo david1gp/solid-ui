@@ -55,8 +55,7 @@
     min-height: 100vh;
     background: var(--rc-page-bg);
     color: var(--rc-text);
-    font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 13px;
+    font-size: var(--text-sm);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
@@ -157,8 +156,8 @@
     padding: 3px 8px;
     border-radius: 999px;
     color: var(--rc-text-dim);
-    font-size: 11px;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
     letter-spacing: 0.04em;
     transition:
       color var(--rc-transition),
@@ -186,16 +185,16 @@
   }
 
   .rc-heading h1 {
-    font-size: 26px;
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-size: var(--text-title-light);
+    font-weight: var(--font-weight-normal);
+    letter-spacing: var(--tracking-heading);
     line-height: 1.2;
   }
 
   .rc-heading p {
     margin-top: 6px;
     color: var(--rc-text-dim);
-    font-size: 12px;
+    font-size: var(--text-xs);
   }
 
   /* ---------- login / register tabs ---------- */
@@ -234,8 +233,8 @@
     padding: 0 10px;
     border-radius: 6px;
     color: var(--rc-text-dim);
-    font-size: 12.5px;
-    font-weight: 600;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
     transition: color var(--rc-transition);
   }
 
@@ -261,7 +260,7 @@
   .rc-field label,
   .rc-field-head label {
     color: var(--rc-text-muted);
-    font-size: 11.5px;
+    font-size: var(--text-label);
   }
 
   .rc-field-head {
@@ -273,7 +272,7 @@
 
   .rc-link {
     color: var(--rc-text-muted);
-    font-size: 11.5px;
+    font-size: var(--text-label);
     transition: color var(--rc-transition);
   }
 
@@ -290,7 +289,7 @@
     background: var(--rc-input-bg);
     box-shadow: var(--rc-input-shadow);
     color: var(--rc-text);
-    font-size: 12.5px;
+    font-size: var(--text-base);
     outline: none;
     transition:
       border-color var(--rc-transition),
@@ -358,7 +357,7 @@
 
   .rc-field-error {
     color: var(--rc-error);
-    font-size: 11.5px;
+    font-size: var(--text-label);
     animation: register-ci-reveal 160ms ease both;
   }
 
@@ -390,7 +389,7 @@
 
   .rc-hint {
     color: var(--rc-text-dim);
-    font-size: 11px;
+    font-size: var(--text-xs);
   }
 
   .rc-check {
@@ -399,7 +398,7 @@
     gap: 9px;
     color: var(--rc-text-muted);
     cursor: pointer;
-    font-size: 11.5px;
+    font-size: var(--text-label);
     user-select: none;
   }
 
@@ -471,8 +470,8 @@
     box-shadow: var(--rc-primary-shadow);
     color: var(--rc-primary-text);
     cursor: pointer;
-    font-size: 12.5px;
-    font-weight: 500;
+    font-size: var(--text-body);
+    font-weight: var(--font-weight-medium);
     transition:
       transform var(--rc-transition),
       background var(--rc-transition),
@@ -515,7 +514,7 @@
     gap: 12px;
     margin: 22px 0 14px;
     color: var(--rc-text-dim);
-    font-size: 11px;
+    font-size: var(--text-xs);
   }
 
   .rc-divider::before,
@@ -557,13 +556,13 @@
 
   .rc-switch {
     color: var(--rc-text-dim);
-    font-size: 11.5px;
+    font-size: var(--text-label);
     text-align: center;
   }
 
   .rc-switch-button {
     color: var(--rc-text);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   .rc-switch-button:hover {
@@ -617,9 +616,9 @@
     align-items: center;
     gap: 8px;
     color: #f1f3f5;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--tracking-heading);
     transform: translateX(-50%);
   }
 
@@ -637,7 +636,7 @@
     justify-content: center;
     gap: 6px 18px;
     color: var(--rc-text-dim);
-    font-size: 11px;
+    font-size: var(--text-xs);
   }
 
   .rc-footer a {
@@ -681,15 +680,15 @@
   }
 
   .rc-dialog-head h2 {
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: -0.02em;
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--tracking-heading);
   }
 
   .rc-dialog-head p {
     margin-top: 4px;
     color: var(--rc-text-muted);
-    font-size: 12px;
+    font-size: var(--text-xs);
   }
 
   .rc-dialog-close {
@@ -729,7 +728,7 @@
     border: 1px solid var(--rc-input-border);
     border-radius: var(--rc-radius);
     color: var(--rc-text-muted);
-    font-size: 12.5px;
+    font-size: var(--text-sm);
   }
 
   .rc-secondary:hover {
