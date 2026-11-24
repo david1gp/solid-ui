@@ -12,7 +12,7 @@ export function CmsDashboardAlertsCard(props: {
 }) {
   return (
     <section
-      class="min-w-0 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900/60"
+      class="min-w-0 rounded-2xl border border-gray-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900/60"
       style={props.accentColor ? { "--dashboard-accent": props.accentColor } : undefined}
     >
       <div class="flex items-center justify-between gap-3">
@@ -25,22 +25,22 @@ export function CmsDashboardAlertsCard(props: {
           {props.state.text().all}
         </button>
       </div>
-      <ul class="mt-3 divide-y divide-gray-100 dark:divide-gray-800">
+      <ul class="mt-3 divide-y divide-gray-100 dark:divide-neutral-800">
         <For each={props.state.alerts}>
           {(alert) => (
             <li>
               <button
                 type="button"
                 onClick={() => props.state.navigate("notifications")}
-                class="flex w-full items-center gap-3 rounded-lg py-3 text-left hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent,var(--color-blue-500))] dark:hover:bg-gray-800/60"
+                class="flex w-full items-center gap-3 rounded-lg py-3 text-left hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent,var(--color-blue-500))] dark:hover:bg-neutral-800/60"
               >
                 <span
                   class={
                     alert.type === "payment"
-                      ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400"
+                      ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-neutral-800 dark:text-emerald-400"
                       : alert.type === "error"
-                        ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400"
-                        : "flex size-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-[var(--dashboard-accent,var(--color-blue-600))] dark:bg-gray-800"
+                        ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600 dark:bg-neutral-800 dark:text-red-400"
+                        : "flex size-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-[var(--dashboard-accent,var(--color-blue-600))] dark:bg-neutral-800"
                   }
                 >
                   <Icon
@@ -56,7 +56,7 @@ export function CmsDashboardAlertsCard(props: {
                 </span>
                 <span class="min-w-0 flex-1">
                   <span class="block text-sm font-medium">{alert.title[cmsLocale.get()]}</span>
-                  <span class="mt-0.5 block text-xs text-gray-500 dark:text-gray-400">
+                  <span class="mt-0.5 block text-xs text-gray-500 dark:text-neutral-400">
                     {alert.subtitle[cmsLocale.get()]}
                   </span>
                 </span>

@@ -11,15 +11,15 @@ export function CmsDashboardQuickActionTiles(props: { state: ReturnType<typeof c
             <button
               type="button"
               onClick={() => props.state.navigate(action.view)}
-              class="flex min-h-48 min-w-0 flex-col items-center justify-center rounded-2xl border border-gray-200 px-2 py-4 text-center transition-colors hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)] dark:border-gray-700 dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 dark:hover:from-gray-700"
+              class="flex min-h-48 min-w-0 flex-col items-center justify-center rounded-2xl border border-gray-200 px-2 py-4 text-center transition-colors hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:bg-neutral-700"
             >
-              <span class="mb-4 grid h-11 w-11 place-items-center rounded-full bg-[color-mix(in_oklab,var(--dashboard-accent)_12%,transparent)] text-[var(--dashboard-accent)]">
+              <span class="mb-4 grid h-11 w-11 place-items-center rounded-full bg-[color-mix(in_oklab,var(--dashboard-accent)_12%,transparent)] text-[var(--dashboard-accent)] dark:bg-neutral-700">
                 <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-current">
                   <path d={action.icon} />
                 </svg>
               </span>
               <span class="text-sm font-medium">{action.label[props.state.locale()]}</span>
-              <span class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              <span class="mt-1 text-xs text-gray-500 dark:text-neutral-400">
                 {props.state.number(action.count)} {action.countLabel[props.state.locale()]}
               </span>
             </button>

@@ -7,11 +7,11 @@ export function CmsDashboardStatisticsPanel(props: {
 }) {
   return (
     <section
-      class="rounded-2xl border border-gray-200 bg-gray-50/70 p-5 pb-20 dark:border-gray-800 dark:bg-gray-900/70 sm:p-6"
+      class="rounded-2xl border border-gray-200 bg-gray-50/70 p-5 pb-20 dark:border-neutral-800 dark:bg-neutral-900/70 sm:p-6"
       style={props.accentColor ? { "--dashboard-accent": props.accentColor } : undefined}
       aria-labelledby="dashboard-statistics-title"
     >
-      <h2 id="dashboard-statistics-title" class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+      <h2 id="dashboard-statistics-title" class="text-lg font-semibold text-gray-900 dark:text-neutral-100">
         {props.state.text().statistics}
       </h2>
 
@@ -24,7 +24,7 @@ export function CmsDashboardStatisticsPanel(props: {
             fill="none"
             stroke="currentColor"
             stroke-width="14"
-            class="text-gray-200 dark:text-gray-800"
+            class="text-gray-200 dark:text-neutral-800"
           />
           <circle
             cx="100"
@@ -38,7 +38,7 @@ export function CmsDashboardStatisticsPanel(props: {
           />
         </svg>
         <div class="text-center">
-          <p class="text-xs text-gray-500 dark:text-gray-400">
+          <p class="text-xs text-gray-500 dark:text-neutral-400">
             {props.state.chartMetric() === "visitors"
               ? props.state.text().totalVisitors
               : props.state.text().totalPageviews}
@@ -52,10 +52,10 @@ export function CmsDashboardStatisticsPanel(props: {
       <div class="grid grid-cols-2 gap-2">
         <For each={props.state.metrics}>
           {(metric, index) => (
-            <div class="rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
-              <p class="text-xs text-gray-500 dark:text-gray-400">{props.state.text().metrics[index()]}</p>
+            <div class="rounded-xl border border-gray-200 bg-white p-3 dark:border-neutral-800 dark:bg-neutral-900">
+              <p class="text-xs text-gray-500 dark:text-neutral-400">{props.state.text().metrics[index()]}</p>
               <div class="mt-1 flex flex-wrap items-baseline gap-x-2">
-                <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <span class="text-lg font-semibold text-gray-900 dark:text-neutral-100">
                   {props.state.number(metric.value)}
                 </span>
                 <span
@@ -70,19 +70,19 @@ export function CmsDashboardStatisticsPanel(props: {
         </For>
       </div>
 
-      <div class="mt-7 border-t border-gray-200 pt-5 dark:border-gray-800">
+      <div class="mt-7 border-t border-gray-200 pt-5 dark:border-neutral-800">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <select
             aria-label={props.state.text().statistics}
             value={props.state.chartMetric()}
             onChange={(event) => props.state.selectChartMetric(event.currentTarget.value as "visitors" | "pageviews")}
-            class="max-w-full rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-900 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+            class="max-w-full rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
           >
             <option value="visitors">{props.state.text().visitors}</option>
             <option value="pageviews">{props.state.text().pageviews}</option>
           </select>
           <fieldset
-            class="flex rounded-lg bg-gray-200/70 p-1 dark:bg-gray-800"
+            class="flex rounded-lg bg-gray-200/70 p-1 dark:bg-neutral-800"
             aria-label={props.state.text().statistics}
           >
             <For each={["month", "week", "day"] as const}>
@@ -91,7 +91,7 @@ export function CmsDashboardStatisticsPanel(props: {
                   type="button"
                   aria-pressed={props.state.chartRange() === range ? "true" : "false"}
                   onClick={() => props.state.selectChartRange(range)}
-                  class={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${props.state.chartRange() === range ? "bg-white text-gray-900 dark:bg-gray-700 dark:text-white" : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"}`}
+                  class={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${props.state.chartRange() === range ? "bg-white text-gray-900 dark:bg-neutral-700 dark:text-white" : "text-gray-500 hover:text-gray-900 dark:text-neutral-400 dark:hover:text-white"}`}
                 >
                   {props.state.text()[range]}
                 </button>
@@ -112,7 +112,7 @@ export function CmsDashboardStatisticsPanel(props: {
               <div class="group/bar flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-2">
                 <div class="relative flex w-full flex-1 items-end justify-center pt-6">
                   <span
-                    class={`absolute top-0 whitespace-nowrap rounded-md bg-gray-900 px-1.5 py-1 text-xs text-white dark:bg-gray-100 dark:text-gray-900 ${index() === props.state.chartSeries().length - 1 ? "opacity-100 group-hover/chart:opacity-0 group-hover/bar:opacity-100" : "opacity-0 group-hover/bar:opacity-100"}`}
+                    class={`absolute top-0 whitespace-nowrap rounded-md bg-gray-900 px-1.5 py-1 text-xs text-white dark:bg-neutral-100 dark:text-neutral-900 ${index() === props.state.chartSeries().length - 1 ? "opacity-100 group-hover/chart:opacity-0 group-hover/bar:opacity-100" : "opacity-0 group-hover/bar:opacity-100"}`}
                   >
                     {props.state.number(point.value)}
                   </span>
@@ -125,7 +125,7 @@ export function CmsDashboardStatisticsPanel(props: {
                   />
                 </div>
                 <span
-                  class={`text-xs group-hover/bar:font-bold ${index() === props.state.chartSeries().length - 1 ? "font-bold group-hover/chart:font-normal group-hover/bar:font-bold text-gray-900 dark:text-gray-100" : "text-gray-500 dark:text-gray-400"}`}
+                  class={`text-xs group-hover/bar:font-bold ${index() === props.state.chartSeries().length - 1 ? "font-bold group-hover/chart:font-normal group-hover/bar:font-bold text-gray-900 dark:text-neutral-100" : "text-gray-500 dark:text-neutral-400"}`}
                 >
                   {point.label}
                 </span>

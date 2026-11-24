@@ -13,7 +13,7 @@ export function CmsDashboardView(_props: { id?: string }) {
         <div class="min-w-0 space-y-8">
           <header>
             <h1 class="text-2xl font-semibold tracking-tight">{state.text().welcome}</h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{state.text().description}</p>
+            <p class="mt-1 text-sm text-gray-500 dark:text-neutral-400">{state.text().description}</p>
           </header>
           <div class="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.4fr)]">
             <div class="min-w-0 space-y-8">
