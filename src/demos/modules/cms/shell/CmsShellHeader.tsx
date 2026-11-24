@@ -4,7 +4,7 @@ import { cmsShellText } from "../i18n/cmsShellText.js"
 
 export function CmsShellHeader(p: { group: string; title: string; locale: "de" | "en" }) {
   return (
-    <header class="flex flex-wrap items-center gap-3 border-b border-neutral-200 px-4 py-3 text-sm dark:border-white/10">
+    <header class="flex flex-wrap items-center gap-3 border-b border-neutral-200 px-4 py-3 pr-2.5 text-sm sm:pr-6.5 dark:border-white/10">
       <nav aria-label="Breadcrumb" class="min-w-0 flex-1 truncate text-neutral-500">
         <span class="hidden sm:inline">
           {p.group} <span aria-hidden="true">/</span>{" "}
@@ -18,7 +18,7 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
         >
           <Icon path={mdiBellOutline} class="size-5" />
         </summary>
-        <div class="absolute right-0 z-30 mt-2 w-56 rounded-xl border border-neutral-200 bg-white p-4 shadow-lg dark:border-white/10 dark:bg-neutral-800">
+        <div class="absolute right-1.5 z-30 mt-2 w-56 rounded-xl border border-neutral-200 bg-white p-4 shadow-lg dark:border-white/10 dark:bg-neutral-800">
           {cmsShellText[p.locale].noNotifications}
         </div>
       </details>
