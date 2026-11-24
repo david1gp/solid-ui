@@ -13,13 +13,21 @@ test("modules retain registry order within groups and unassigned modules default
       "DemoCMS",
       "DemoNavHeader",
       "NavbarHeader-Modern",
+      "Footer-Simple",
       "NewModule",
     ]),
   ).toEqual([
     { heading: "Seiten", names: ["DemoRegisterLogin", "DemoRegisterCi", "DemoContact", "DemoCMS", "NewModule"] },
     {
       heading: "Navigation UI",
-      names: ["Bottom-Mobile-Navbar", "DemoAppSidebar", "DemoSidebarModern", "DemoNavHeader", "NavbarHeader-Modern"],
+      names: [
+        "Bottom-Mobile-Navbar",
+        "DemoAppSidebar",
+        "DemoSidebarModern",
+        "DemoNavHeader",
+        "NavbarHeader-Modern",
+        "Footer-Simple",
+      ],
     },
   ])
 })

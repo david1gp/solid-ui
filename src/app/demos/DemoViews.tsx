@@ -31,6 +31,7 @@ const fullscreenDemos = new Set([
   "DemoNavHeader",
   "NavbarHeader-Modern",
   "Bottom-Mobile-Navbar",
+  "Footer-Simple",
 ])
 
 /** Display labels overriding the name derived from the demo key (prefix "Demo" stripped). */

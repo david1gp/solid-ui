@@ -13,3 +13,11 @@ test("prerender pages use the catalog route for NavbarHeader-Modern", () => {
   expect(paths).toContain("/modules/NavbarHeader-Modern")
   expect(paths).not.toContain("/modules/DemoNavbarHeaderModern")
 })
+
+test("prerender pages use the catalog routes for ContactModern and Footer-Simple", () => {
+  const paths = getPrerenderPages().map((page) => page.path)
+  expect(paths).toContain("/modules/ContactModern")
+  expect(paths).toContain("/modules/Footer-Simple")
+  expect(paths).not.toContain("/modules/DemoContactModern")
+  expect(paths).not.toContain("/modules/DemoFooterSimple")
+})

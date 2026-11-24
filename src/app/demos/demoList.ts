@@ -70,6 +70,11 @@ const DemoBottomMobileNavbar = lazy(async () => {
   return { default: c.DemoBottomMobileNavbar }
 })
 
+const DemoFooterSimple = lazy(async () => {
+  const c = await import("#src/demos/modules/DemoFooterSimple.jsx")
+  return { default: c.DemoFooterSimple }
+})
+
 const DemoRegisterCi = lazy(async () => {
   const c = await import("#src/demos/modules/DemoRegisterCi.jsx")
   return { default: c.DemoRegisterCi }
@@ -283,6 +288,7 @@ export const demoList = {
     DemoCMS: DemoCMS,
     DemoNavHeader: DemoNavHeader,
     "NavbarHeader-Modern": DemoNavbarHeaderModern,
+    "Footer-Simple": DemoFooterSimple,
   },
   static: {
     DemoTimeline: DemoTimeline,
