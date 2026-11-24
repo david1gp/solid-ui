@@ -12,17 +12,17 @@ export function FooterModernPanel() {
     <div class={"rounded-2xl border border-border bg-background p-6 shadow-sm sm:p-10"}>
       <div class={"grid gap-10 lg:grid-cols-[1fr_1.3fr]"}>
         <div>
-          <div class={"flex items-center gap-3 text-xl font-semibold tracking-tight text-foreground"}>
-            <span
-              aria-hidden={"true"}
-              class={"flex size-9 items-center justify-center rounded-full bg-foreground text-lg text-background"}
-            >
-              ✦
-            </span>
-            Astria
-          </div>
+          <a
+            href={"/"}
+            class={
+              "inline-flex items-center gap-2.5 rounded-md text-xl font-semibold tracking-tight text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+            }
+          >
+            <img src={"/logo.svg"} alt={""} class={"size-8"} />
+            adaptive-solid-ui
+          </a>
           <p class={"mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground"}>
-            Für alle, die neugierig bleiben und die Welt mit anderen Augen sehen möchten.
+            Komponenten und Vorlagen für Solid.js und Tailwind CSS – für moderne Web-Apps in hell und dunkel.
           </p>
         </div>
         <div class={"grid grid-cols-2 gap-8 sm:grid-cols-3"}>
@@ -49,7 +49,9 @@ export function FooterModernPanel() {
       <div
         class={"mt-10 flex flex-col gap-4 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between"}
       >
-        <p class={"text-xs text-muted-foreground"}>© {new Date().getFullYear()} Astria. Alle Rechte vorbehalten.</p>
+        <p class={"text-xs text-muted-foreground"}>
+          © {new Date().getFullYear()} adaptive-solid-ui. Alle Rechte vorbehalten.
+        </p>
         <div class={"flex items-center gap-3 text-xs text-muted-foreground"}>
           <span>Folge uns:</span>
           <ul class={"flex gap-1"} aria-label={"Social Media"}>
