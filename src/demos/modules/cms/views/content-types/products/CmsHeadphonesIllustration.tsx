@@ -5,7 +5,7 @@ export function CmsHeadphonesIllustration(props: {
 }) {
   const id = createUniqueId()
   return (
-    <svg viewBox="0 0 320 370" class="h-full w-full" aria-hidden="true">
+    <svg viewBox="0 0 320 370" preserveAspectRatio="xMidYMid slice" class="h-full w-full" aria-hidden="true">
       <defs>
         <radialGradient id={`${id}-bg`} cx="50%" cy="30%" r="80%">
           <stop stop-color={props.colorway.band} stop-opacity=".48" />
