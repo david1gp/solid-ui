@@ -19,12 +19,9 @@ import { CmsTranslationsView } from "../views/translations/CmsTranslationsView.j
 import { CmsUsersView } from "../views/users/CmsUsersView.js"
 import { CmsRolesView } from "../views/roles/CmsRolesView.js"
 import { CmsTeamsView } from "../views/teams/CmsTeamsView.js"
-import { CmsSettingsGeneralView } from "../views/settings-general/CmsSettingsGeneralView.js"
-import { CmsIntegrationsView } from "../views/integrations/CmsIntegrationsView.js"
 import { CmsApiKeysView } from "../views/api-keys/CmsApiKeysView.js"
 import { CmsAuditLogView } from "../views/audit-log/CmsAuditLogView.js"
 import { CmsNotificationsView } from "../views/notifications/CmsNotificationsView.js"
-import { CmsImportExportView } from "../views/import-export/CmsImportExportView.js"
 import { CmsBackupsView } from "../views/backups/CmsBackupsView.js"
 import { CmsSystemStatusView } from "../views/system-status/CmsSystemStatusView.js"
 import { CmsTrashView } from "../views/trash/CmsTrashView.js"
@@ -110,20 +107,6 @@ export const cmsViewRegistry = {
     component: CmsTeamsView,
     layout: "app",
   },
-  "settings-general": {
-    group: "system",
-    icon: mdiCogOutline,
-    label: { de: "Allgemein", en: "General" },
-    component: CmsSettingsGeneralView,
-    layout: "app",
-  },
-  integrations: {
-    group: "system",
-    icon: mdiWeb,
-    label: { de: "Integrationen", en: "Integrations" },
-    component: CmsIntegrationsView,
-    layout: "app",
-  },
   "api-keys": {
     group: "system",
     icon: mdiLockReset,
@@ -143,13 +126,6 @@ export const cmsViewRegistry = {
     icon: mdiTextBoxOutline,
     label: { de: "Benachrichtigungen", en: "Notifications" },
     component: CmsNotificationsView,
-    layout: "app",
-  },
-  "import-export": {
-    group: "system",
-    icon: mdiFolderOutline,
-    label: { de: "Import / Export", en: "Import / Export" },
-    component: CmsImportExportView,
     layout: "app",
   },
   backups: {

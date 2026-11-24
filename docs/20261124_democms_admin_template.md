@@ -36,7 +36,7 @@ Buttons may change local state (add row, toggle, open dialog), but auth/login/re
 - **Übersicht:** `dashboard`
 - **Inhalte:** `pages` (page tree + block editor), `posts` (generic CRUD showcase), `media`, `menus`, `content-types`, `translations`
 - **Verwaltung:** `users`, `roles`, `teams`
-- **System:** `settings-general` (Allgemein, Branding, E-Mail, Sprachen), `integrations` (integrations + webhooks), `api-keys`, `audit-log`, `notifications`, `import-export`, `backups`, `system-status`, `trash` (Papierkorb)
+- **System:** `api-keys`, `audit-log`, `notifications`, `backups`, `system-status`, `trash` (Papierkorb)
 - **Vorlagen (Auth):** `auth-login`, `auth-register`, `auth-forgot`, `auth-reset`, `auth-2fa`, `auth-verify-email`, `auth-invite`, `auth-session-expired`. Rendered in the auth layout (centred card, no sidebar) with a small "← Zurück zum Admin" link.
 - The existing user menu/settings entry opens the existing settings (profile, account, appearance) and the new profile sections.
 
@@ -73,11 +73,10 @@ Status: `todo` / `wip` / `done`
    - Role × resource × action permission matrix
    - Teams
    - Profile additions in settings: password change, 2FA setup (QR placeholder), active sessions, personal API tokens
-8. **[done] System (`views/settings-general`, `integrations`, `api-keys`, `audit-log`, `notifications`, `import-export`, `backups`, `system-status`):**
-   - Settings page with left sub-nav and grouped forms; integrations as cards with connect toggles; webhooks list + create dialog
+8. **[done] System (`views/api-keys`, `audit-log`, `notifications`, `backups`, `system-status`):**
    - API keys create/revoke (masked)
    - Audit log in CmsDataTable; notification centre (read/unread)
-   - Import (file drop + mapping preview) / export; backups list (create/restore demo); system status (service health list)
+   - Backups list (create/restore demo); system status (service health list)
 9. **[done] Auth templates (`views/auth`):** login (email/password + SSO/OAuth buttons), register, forgot password, reset password, 2FA code, verify e-mail, accept invite, session expired. Visual only, no real logic.
 10. **[done] Final integration:** consistent look across all views, DE/EN completeness, mobile check, `tsc` + biome clean, full browser walkthrough. Must cover:
    - full flows of dashboard, auth (all 8 screens + linking), users/roles/teams
