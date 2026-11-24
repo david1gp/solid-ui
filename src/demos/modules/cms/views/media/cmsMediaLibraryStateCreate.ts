@@ -6,7 +6,6 @@ import { cmsMediaText } from "./cmsMediaText.js"
 export function cmsMediaLibraryStateCreate() {
   const [folder, setFolder] = createSignal("*")
   const [search, setSearch] = createSignal("")
-  const [layout, setLayout] = createSignal<"grid" | "list">("grid")
   const [selectedId, setSelectedId] = createSignal<string>()
   const [folderName, setFolderName] = createSignal("")
   const selected = createMemo(() => cmsMediaStore.items().find((item) => item.id === selectedId()))
@@ -23,13 +22,11 @@ export function cmsMediaLibraryStateCreate() {
     text: () => cmsMediaText[cmsLocale.get()],
     folder,
     search,
-    layout,
     selected,
     filtered,
     folderName,
     changeFolder: setFolder,
     changeSearch: setSearch,
-    changeLayout: setLayout,
     select: setSelectedId,
     changeFolderName: setFolderName,
     addFolder() {

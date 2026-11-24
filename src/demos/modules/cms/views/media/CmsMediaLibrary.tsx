@@ -1,6 +1,4 @@
 import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutline.js"
-import { mdiViewGridOutline } from "@adaptive-ds/mdi/mdiViewGridOutline.js"
-import { mdiViewListOutline } from "@adaptive-ds/mdi/mdiViewListOutline.js"
 import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsButtonClass } from "../../ui/cmsButtonClass.js"
@@ -93,26 +91,6 @@ export function CmsMediaLibrary() {
               onInput={(event) => state.changeSearch(event.currentTarget.value)}
               class={`${cmsInputClass} min-w-40 flex-1`}
             />
-            <button
-              type="button"
-              aria-pressed={state.layout() === "grid" ? "true" : "false"}
-              aria-label={state.text().grid}
-              class={`px-3 pb-3 text-sm ${state.layout() === "grid" ? "border-b-2 border-[var(--dashboard-accent)] font-semibold text-[var(--dashboard-accent)]" : "text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-neutral-200"}`}
-              onClick={() => state.changeLayout("grid")}
-            >
-              <Icon path={mdiViewGridOutline} class="size-5 sm:hidden" />
-              <span class="hidden sm:inline">{state.text().grid}</span>
-            </button>
-            <button
-              type="button"
-              aria-pressed={state.layout() === "list" ? "true" : "false"}
-              aria-label={state.text().list}
-              class={`px-3 pb-3 text-sm ${state.layout() === "list" ? "border-b-2 border-[var(--dashboard-accent)] font-semibold text-[var(--dashboard-accent)]" : "text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-neutral-200"}`}
-              onClick={() => state.changeLayout("list")}
-            >
-              <Icon path={mdiViewListOutline} class="size-5 sm:hidden" />
-              <span class="hidden sm:inline">{state.text().list}</span>
-            </button>
           </div>
           <Show
             when={state.filtered().length}
@@ -125,22 +103,16 @@ export function CmsMediaLibrary() {
               </div>
             }
           >
-            <div
-              class={`${cmsCardClass} ${state.layout() === "grid" ? "grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4" : "space-y-2"}`}
-            >
+            <div class={`${cmsCardClass} grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4`}>
               <For each={state.filtered()}>
                 {(item) => (
                   <button
                     type="button"
                     onClick={() => state.select(item.id)}
                     aria-pressed={state.selected()?.id === item.id ? "true" : "false"}
-                    class={`${cmsCardClass} overflow-hidden p-0 text-left text-sm hover:bg-gray-50 dark:hover:bg-neutral-800 ${state.selected()?.id === item.id ? "ring-2 ring-[var(--dashboard-accent)]" : ""} ${state.layout() === "list" ? "flex items-center gap-3" : ""}`}
+                    class={`${cmsCardClass} overflow-hidden p-0 text-left text-sm hover:bg-gray-50 dark:hover:bg-neutral-800 ${state.selected()?.id === item.id ? "ring-2 ring-[var(--dashboard-accent)]" : ""}`}
                   >
-                    <img
-                      src={item.url}
-                      alt={item.alt}
-                      class={state.layout() === "grid" ? "aspect-square w-full object-cover" : "h-14 w-14 object-cover"}
-                    />
+                    <img src={item.url} alt={item.alt} class="aspect-square w-full object-cover" />
                     <span class="block min-w-0 truncate p-2">{item.name}</span>
                   </button>
                 )}
