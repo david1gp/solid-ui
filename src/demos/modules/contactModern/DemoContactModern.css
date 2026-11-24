@@ -105,6 +105,28 @@
 .contact-modern-input textarea {
   overflow: hidden;
 }
+.contact-modern-message-input {
+  align-items: flex-start;
+}
+.contact-modern-message-input textarea {
+  min-height: 120px;
+}
+.contact-modern-message-input svg {
+  margin-top: 0.9rem;
+}
+.contact-modern-input.contact-modern-message-input:focus-within {
+  outline: none;
+  box-shadow: 0 1px 0 0 currentColor;
+}
+.contact-modern .contact-modern-message-input textarea:focus-visible {
+  outline: none;
+}
+.contact-modern-counter {
+  margin-top: 0.5rem;
+  text-align: right;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
 .contact-modern-input input::placeholder,
 .contact-modern-input textarea::placeholder {
   color: inherit;

@@ -8,6 +8,8 @@ export function contactModernStateCreate() {
   const [errors, setErrors] = createSignal<Record<string, string>>({})
   const [loading, setLoading] = createSignal(false)
   const [sent, setSent] = createSignal(false)
+  const [messageLength, setMessageLength] = createSignal(0)
+  const [messageFocused, setMessageFocused] = createSignal(false)
   let form: HTMLFormElement | undefined
   let timer: ReturnType<typeof setTimeout> | undefined
   const previousLang = typeof document === "undefined" ? null : document.documentElement.getAttribute("lang")
@@ -40,6 +42,7 @@ export function contactModernStateCreate() {
   }
   const resizeMessage = (event: InputEvent) => {
     const input = event.currentTarget as HTMLTextAreaElement
+    setMessageLength(input.value.length)
     input.style.height = "auto"
     input.style.height = `${input.scrollHeight}px`
   }
@@ -52,6 +55,10 @@ export function contactModernStateCreate() {
     submit,
     clearError,
     resizeMessage,
+    messageLength,
+    messageFocused,
+    focusMessage: () => setMessageFocused(true),
+    blurMessage: () => setMessageFocused(false),
     setForm: (element: HTMLFormElement) => {
       form = element
     },
@@ -62,6 +69,8 @@ export function contactModernStateCreate() {
     },
     sendAnother: () => {
       setSent(false)
+      setMessageLength(0)
+      setMessageFocused(false)
       setErrors({})
     },
   }

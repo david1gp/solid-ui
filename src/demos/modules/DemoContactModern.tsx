@@ -103,22 +103,29 @@ export function DemoContactModern() {
                     <label class="contact-modern-sr" for="modern-message">
                       {state.texts().message}
                     </label>
-                    <div class="contact-modern-input">
+                    <div class="contact-modern-input contact-modern-message-input">
                       <textarea
                         id="modern-message"
                         name="message"
-                        rows={2}
+                        rows={4}
                         minlength={contactMessageLimits.min}
                         maxlength={contactMessageLimits.max}
                         required
                         placeholder={state.texts().message}
                         onInput={state.resizeMessage}
+                        onFocus={state.focusMessage}
+                        onBlur={state.blurMessage}
                         aria-invalid={state.errors().message ? "true" : undefined}
                         aria-describedby={state.errors().message ? "modern-message-error" : undefined}
                       />
                       <Icon path={mdiMessage} />
                     </div>
                     <FieldError id="modern-message-error" message={state.errors().message} />
+                    <Show when={state.messageFocused() || state.messageLength() > 0}>
+                      <div class="contact-modern-counter">
+                        {state.messageLength()} / {contactMessageLimits.max}
+                      </div>
+                    </Show>
                   </div>
                   <div class="contact-modern-consent">
                     <label>
