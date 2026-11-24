@@ -5,7 +5,6 @@ import { cmsNavigate } from "../../shell/cmsNavigate.js"
 import { cmsDashboardActivities } from "./cmsDashboardActivities.js"
 import { cmsDashboardAlerts } from "./cmsDashboardAlerts.js"
 import { cmsDashboardDrafts } from "./cmsDashboardDrafts.js"
-import { cmsDashboardMetrics } from "./cmsDashboardMetrics.js"
 import { cmsDashboardQuickActions } from "./cmsDashboardQuickActions.js"
 import { cmsDashboardSiteInfo } from "./cmsDashboardSiteInfo.js"
 import { cmsDashboardVisitorSeries } from "./cmsDashboardVisitorSeries.js"
@@ -32,9 +31,6 @@ const text = {
     month: "Monat",
     week: "Woche",
     day: "Tag",
-    description: "Ein Überblick über Ihre Inhalte und Ihre Website.",
-    metrics: ["Beiträge", "Seiten", "Medien", "Benutzer"],
-    trend: "zum Vormonat",
     activity: "Letzte Aktivitäten",
     actions: "Schnellaktionen",
   },
@@ -59,9 +55,6 @@ const text = {
     month: "Month",
     week: "Week",
     day: "Day",
-    description: "An overview of your content and website.",
-    metrics: ["Posts", "Pages", "Media", "Users"],
-    trend: "vs. last month",
     activity: "Recent activity",
     actions: "Quick actions",
   },
@@ -105,7 +98,6 @@ export function cmsDashboardStateCreate() {
     quickActions: cmsDashboardQuickActions,
     alerts: cmsDashboardAlerts,
     activities: cmsDashboardActivities,
-    metrics: cmsDashboardMetrics,
     activeTab: activeTab.get,
     selectTab: (tab: "drafts" | "activity") => {
       activeTab.set(tab)

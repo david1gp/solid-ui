@@ -49,27 +49,6 @@ export function CmsDashboardStatisticsPanel(props: {
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-2">
-        <For each={props.state.metrics}>
-          {(metric, index) => (
-            <div class="rounded-xl border border-gray-200 bg-white p-3 dark:border-neutral-800 dark:bg-neutral-900">
-              <p class="text-xs text-gray-500 dark:text-neutral-400">{props.state.text().metrics[index()]}</p>
-              <div class="mt-1 flex flex-wrap items-baseline gap-x-2">
-                <span class="text-lg font-semibold text-gray-900 dark:text-neutral-100">
-                  {props.state.number(metric.value)}
-                </span>
-                <span
-                  class="text-xs font-medium text-emerald-600 dark:text-emerald-400"
-                  title={props.state.text().trend}
-                >
-                  {metric.trend}
-                </span>
-              </div>
-            </div>
-          )}
-        </For>
-      </div>
-
       <div class="mt-7 border-t border-gray-200 pt-5 dark:border-neutral-800">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <select
