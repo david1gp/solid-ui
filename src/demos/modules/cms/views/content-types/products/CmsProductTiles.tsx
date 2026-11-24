@@ -23,6 +23,7 @@ export function CmsProductTiles(props: { products: typeof cmsProductsSorted }) {
           {(product, index) => (
             <article
               class={`relative aspect-[3/4] overflow-hidden rounded-2xl shadow-sm dark:border dark:border-neutral-800 ${state.dragged() === product.id ? "opacity-50 ring-2 ring-inset ring-[var(--dashboard-accent)]" : ""}`}
+              style={{ order: state.position(product.id, index() + 1) }}
               onDragOver={(event) => state.over(event, product.id)}
               onDrop={state.drop}
             >
@@ -47,7 +48,7 @@ export function CmsProductTiles(props: { products: typeof cmsProductsSorted }) {
                 </span>
               </Show>
               <div class="absolute inset-x-0 bottom-0 p-4">
-                <span class="text-xs text-white">#{index() + 1}</span>
+                <span class="text-xs text-white">#{state.position(product.id, index() + 1)}</span>
                 <h2 class="font-semibold text-white" title={product.title}>
                   {product.shortTitle ?? product.title}
                 </h2>

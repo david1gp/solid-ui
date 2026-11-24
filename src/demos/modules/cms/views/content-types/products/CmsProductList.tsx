@@ -16,11 +16,12 @@ export function CmsProductList(props: { products: typeof cmsProductsSorted }) {
       <div class="sr-only" aria-live="polite">
         {state.announcement()}
       </div>
-      <div class="divide-y divide-gray-200 dark:divide-neutral-800">
+      <div class="flex flex-col divide-y divide-gray-200 dark:divide-neutral-800">
         <For each={props.products()}>
           {(product, index) => (
             <article
               class={`flex flex-wrap items-center gap-3 py-3 ${state.dragged() === product.id ? "opacity-50 ring-2 ring-inset ring-[var(--dashboard-accent)]" : ""}`}
+              style={{ order: state.position(product.id, index() + 1) }}
               onDragOver={(event) => state.over(event, product.id)}
               onDrop={state.drop}
             >
@@ -48,7 +49,7 @@ export function CmsProductList(props: { products: typeof cmsProductsSorted }) {
                 <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-neutral-400">
                   <span>{cmsProductPriceFormat(product.price)}</span>
                   <span>Menge: {product.quantity}</span>
-                  <span>#{index() + 1}</span>
+                  <span>#{state.position(product.id, index() + 1)}</span>
                   <Show when={product.featured}>
                     <span class={cmsPillClass}>Top</span>
                   </Show>
