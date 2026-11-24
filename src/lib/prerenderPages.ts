@@ -21,6 +21,7 @@ const demoRouteNames: Record<string, string> = {
   "modules/DemoNavbarHeaderModern": "NavbarHeader-Modern",
   "modules/DemoContactModern": "ContactModern",
   "modules/DemoFooterSimple": "Footer-Simple",
+  "modules/DemoFooterModern": "Footer-Modern",
 }
 
 function findDemoNames(dir: string): string[] {

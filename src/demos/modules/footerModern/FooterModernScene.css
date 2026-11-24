@@ -1,0 +1,82 @@
+.footer-modern-scene {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, #667c8a 0%, #9aabb0 52%, #bac0b7 73%, #596e61 100%);
+}
+.footer-modern-moon {
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  width: min(57vw, 680px);
+  min-width: 340px;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, #ffffff22 0 2%, transparent 3%),
+    radial-gradient(circle at 65% 45%, #697a7d22 0 3%, transparent 4%),
+    radial-gradient(circle at 38% 28%, #d6d9cf, #a8b3b1 56%, #647c83 100%);
+  box-shadow:
+    inset -45px -30px 70px #4b626c66,
+    0 0 100px #e3e6d933;
+  opacity: 0.8;
+}
+.footer-modern-cloud {
+  position: absolute;
+  top: 51%;
+  width: 70%;
+  height: 21%;
+  border-radius: 50%;
+  background: #e2e3d7;
+  filter: blur(35px);
+  opacity: 0.75;
+}
+.footer-modern-cloud-left {
+  left: -30%;
+  transform: rotate(8deg);
+}
+.footer-modern-cloud-right {
+  right: -30%;
+  top: 55%;
+  transform: rotate(-8deg);
+}
+.footer-modern-hill {
+  position: absolute;
+  left: -15%;
+  bottom: -8%;
+  width: 130%;
+  height: 36%;
+  border-radius: 50% 50% 0 0;
+  background: linear-gradient(170deg, #819289, #526b5c 42%, #283e38);
+}
+.footer-modern-figure {
+  position: absolute;
+  bottom: 32%;
+  left: 50%;
+  width: 10px;
+  height: 31px;
+  border-radius: 45% 45% 20% 20%;
+  background: #263a39;
+}
+.footer-modern-figure::before {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #263a39;
+  top: -10px;
+  left: 1px;
+}
+.footer-modern-figure span {
+  position: absolute;
+  top: 24px;
+  left: 1px;
+  width: 4px;
+  height: 12px;
+  background: #263a39;
+  box-shadow: 5px 0 #263a39;
+}

@@ -8,6 +8,7 @@ export const demoSubcategories: Record<string, Record<string, readonly string[]>
       "DemoNavHeader",
       "NavbarHeader-Modern",
       "Footer-Simple",
+      "Footer-Modern",
     ],
   },
 }

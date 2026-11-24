@@ -14,6 +14,7 @@ test("modules retain registry order within groups and unassigned modules default
       "DemoNavHeader",
       "NavbarHeader-Modern",
       "Footer-Simple",
+      "Footer-Modern",
       "NewModule",
     ]),
   ).toEqual([
@@ -27,6 +28,7 @@ test("modules retain registry order within groups and unassigned modules default
         "DemoNavHeader",
         "NavbarHeader-Modern",
         "Footer-Simple",
+        "Footer-Modern",
       ],
     },
   ])

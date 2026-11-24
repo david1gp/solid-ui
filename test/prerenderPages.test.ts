@@ -18,6 +18,8 @@ test("prerender pages use the catalog routes for ContactModern and Footer-Simple
   const paths = getPrerenderPages().map((page) => page.path)
   expect(paths).toContain("/modules/ContactModern")
   expect(paths).toContain("/modules/Footer-Simple")
+  expect(paths).toContain("/modules/Footer-Modern")
   expect(paths).not.toContain("/modules/DemoContactModern")
   expect(paths).not.toContain("/modules/DemoFooterSimple")
+  expect(paths).not.toContain("/modules/DemoFooterModern")
 })
