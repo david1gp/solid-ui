@@ -9,10 +9,9 @@ import { cmsIconCircleClass } from "../../ui/cmsIconCircleClass.js"
 import { cmsInputClass } from "../../ui/cmsInputClass.js"
 import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
 import { cmsMediaLibraryStateCreate } from "./cmsMediaLibraryStateCreate.js"
-import { type CmsMediaItem, cmsMediaStore } from "./cmsMediaStore.js"
+import { cmsMediaStore } from "./cmsMediaStore.js"
 
-/** Shared library UI; onSelect enables picker mode. */
-export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) {
+export function CmsMediaLibrary() {
   const state = cmsMediaLibraryStateCreate()
   return (
     <div class="space-y-4">
@@ -241,11 +240,6 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
                 </For>
               </fieldset>
               <div class="flex flex-wrap gap-2">
-                <Show when={p.onSelect}>
-                  <button type="button" class={cmsPrimaryButtonClass} onClick={() => p.onSelect?.(item())}>
-                    {state.text().select}
-                  </button>
-                </Show>
                 <button type="button" class={`${cmsButtonClass} text-red-700 dark:text-red-400`} onClick={state.remove}>
                   {state.text().delete}
                 </button>
