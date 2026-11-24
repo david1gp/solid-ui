@@ -1,6 +1,26 @@
-/* Footer-Modern background, CSS only: concentric "horizon" rings rising from the bottom edge over soft
-   color glows. All colors derive from the theme tokens (--background, --muted, --foreground), so light
-   and dark mode follow the site palette; the teal/indigo tints are mixed in at low strength. */
+/* Footer-Modern illustration, CSS only (no image file): a striped retro sun rising behind three
+   scalloped wave bands. All colors are mixed from the theme tokens (--background, --muted) with
+   teal/amber/pink tints, so light and dark mode follow the site palette. The last wave uses the
+   footer ground color, so the illustration flows seamlessly into the area below. */
+
+.footer-modern {
+  --footer-modern-ground: color-mix(in oklab, #14b8a6 10%, var(--muted));
+  --footer-modern-wave-1: color-mix(in oklab, #14b8a6 30%, var(--muted));
+  --footer-modern-wave-2: color-mix(in oklab, #14b8a6 20%, var(--muted));
+  --footer-modern-sun-top: color-mix(in oklab, #f59e0b 45%, var(--background));
+  --footer-modern-sun-bottom: color-mix(in oklab, #ec4899 30%, var(--background));
+  --footer-modern-sky: color-mix(in oklab, #f59e0b 6%, var(--background));
+  background-color: var(--footer-modern-ground);
+}
+
+.dark .footer-modern {
+  --footer-modern-ground: color-mix(in oklab, #2dd4bf 7%, var(--muted));
+  --footer-modern-wave-1: color-mix(in oklab, #2dd4bf 22%, var(--muted));
+  --footer-modern-wave-2: color-mix(in oklab, #2dd4bf 14%, var(--muted));
+  --footer-modern-sun-top: color-mix(in oklab, #f59e0b 38%, var(--background));
+  --footer-modern-sun-bottom: color-mix(in oklab, #ec4899 26%, var(--background));
+  --footer-modern-sky: color-mix(in oklab, #f59e0b 4%, var(--background));
+}
 
 .footer-modern-backdrop {
   position: absolute;
@@ -8,39 +28,93 @@
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background-color: var(--background);
-  background-image:
-    radial-gradient(ellipse 70% 55% at 50% 100%, color-mix(in oklab, #14b8a6 16%, transparent), transparent 70%),
-    radial-gradient(ellipse 45% 40% at 12% 35%, color-mix(in oklab, #6366f1 10%, transparent), transparent 70%),
-    radial-gradient(ellipse 40% 35% at 90% 40%, color-mix(in oklab, #f59e0b 8%, transparent), transparent 70%),
-    linear-gradient(to bottom, var(--background), var(--muted));
+  background: linear-gradient(to bottom, var(--background), var(--footer-modern-sky));
 }
 
-/* Concentric rings centered below the footer, faded out towards the top. */
-.footer-modern-backdrop::before {
-  content: "";
+.footer-modern-backdrop > span {
   position: absolute;
-  inset: 0;
-  background-image: repeating-radial-gradient(
-    circle at 50% 120%,
-    transparent 0 46px,
-    color-mix(in oklab, var(--foreground) 10%, transparent) 46px 47px
-  );
-  mask-image: linear-gradient(to top, black 15%, transparent 85%);
+  display: block;
 }
 
-.dark .footer-modern-backdrop {
-  background-image:
-    radial-gradient(ellipse 70% 55% at 50% 100%, color-mix(in oklab, #2dd4bf 12%, transparent), transparent 70%),
-    radial-gradient(ellipse 45% 40% at 12% 35%, color-mix(in oklab, #818cf8 9%, transparent), transparent 70%),
-    radial-gradient(ellipse 40% 35% at 90% 40%, color-mix(in oklab, #fbbf24 5%, transparent), transparent 70%),
-    linear-gradient(to bottom, var(--background), var(--muted));
+/* Sun: gradient disc cut into horizontal stripes that get thicker gaps towards the horizon. */
+.footer-modern-sun {
+  left: 50%;
+  bottom: 60px;
+  width: min(62vw, 540px);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, var(--footer-modern-sun-top), var(--footer-modern-sun-bottom));
+  mask-image: linear-gradient(
+    to bottom,
+    black 0 54%,
+    transparent 54% 56%,
+    black 56% 64%,
+    transparent 64% 67%,
+    black 67% 74%,
+    transparent 74% 78%,
+    black 78% 84%,
+    transparent 84% 89%,
+    black 89%
+  );
 }
 
-.dark .footer-modern-backdrop::before {
-  background-image: repeating-radial-gradient(
-    circle at 50% 120%,
-    transparent 0 46px,
-    color-mix(in oklab, var(--foreground) 7%, transparent) 46px 47px
-  );
+/* Wave band: a solid block whose top edge is cut into semicircles by the mask (one bump per tile). */
+.footer-modern-wave {
+  --footer-modern-wave-width: 240px;
+  --footer-modern-wave-height: calc(var(--footer-modern-wave-width) / 2);
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  mask-image: radial-gradient(circle at 50% 100%, black 70%, transparent 71%), linear-gradient(black, black);
+  mask-size:
+    var(--footer-modern-wave-width) var(--footer-modern-wave-height),
+    100% 100%;
+  mask-position:
+    var(--footer-modern-wave-offset, 0) 0,
+    0 calc(var(--footer-modern-wave-height) - 1px);
+  mask-repeat: repeat-x, no-repeat;
+}
+
+.footer-modern-wave-1 {
+  --footer-modern-wave-width: 260px;
+  --footer-modern-wave-offset: 40px;
+  height: 180px;
+  background: var(--footer-modern-wave-1);
+}
+
+.footer-modern-wave-2 {
+  --footer-modern-wave-width: 340px;
+  --footer-modern-wave-offset: -90px;
+  height: 130px;
+  background: var(--footer-modern-wave-2);
+}
+
+.footer-modern-wave-3 {
+  --footer-modern-wave-width: 420px;
+  --footer-modern-wave-offset: 120px;
+  height: 85px;
+  background: var(--footer-modern-ground);
+}
+
+@media (max-width: 639px) {
+  .footer-modern-sun {
+    bottom: 40px;
+    width: 92vw;
+  }
+
+  .footer-modern-wave-1 {
+    --footer-modern-wave-width: 150px;
+    height: 120px;
+  }
+
+  .footer-modern-wave-2 {
+    --footer-modern-wave-width: 200px;
+    height: 90px;
+  }
+
+  .footer-modern-wave-3 {
+    --footer-modern-wave-width: 260px;
+    height: 60px;
+  }
 }

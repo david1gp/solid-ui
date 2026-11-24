@@ -2,13 +2,13 @@ import { FooterModernBackdrop } from "./FooterModernBackdrop.jsx"
 import { FooterModernNewsletterPill } from "./FooterModernNewsletterPill.jsx"
 import { FooterModernPanel } from "./FooterModernPanel.jsx"
 
-/** Large footer: newsletter call-to-action above a solid link panel, on a CSS backdrop in theme colors. */
+/** Large footer: newsletter call-to-action over a CSS illustration, then a link panel on the footer ground. */
 export function FooterModern() {
   return (
-    <footer class={"relative isolate overflow-hidden px-4 pt-24 pb-4 text-foreground sm:px-8 sm:pt-28 sm:pb-8"}>
-      <FooterModernBackdrop />
-      <div class={"mx-auto flex w-full max-w-6xl flex-col gap-20 sm:gap-24"}>
-        <div class={"flex flex-col items-center text-center"}>
+    <footer class={"footer-modern relative isolate overflow-hidden text-foreground"}>
+      <div class={"relative isolate px-4 pt-24 pb-40 sm:px-8 sm:pt-28 sm:pb-52"}>
+        <FooterModernBackdrop />
+        <div class={"mx-auto flex w-full max-w-6xl flex-col items-center text-center"}>
           <p class={"mb-5 text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground"}>
             Ein bisschen mehr Weitblick
           </p>
@@ -20,7 +20,11 @@ export function FooterModern() {
           </p>
           <FooterModernNewsletterPill />
         </div>
-        <FooterModernPanel />
+      </div>
+      <div class={"px-4 pb-4 sm:px-8 sm:pb-8"}>
+        <div class={"mx-auto w-full max-w-6xl"}>
+          <FooterModernPanel />
+        </div>
       </div>
     </footer>
   )

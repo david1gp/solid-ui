@@ -6,10 +6,10 @@ import { footerModernDemoSocialLinks } from "./footerModernDemoSocialLinks.js"
 const linkClass =
   "text-sm text-muted-foreground hover:text-foreground hover:underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
 
-/** Solid footer card: brand, link columns, copyright and social links in theme colors. */
+/** Solid footer card on the footer ground: brand, link columns, copyright and social links in theme colors. */
 export function FooterModernPanel() {
   return (
-    <div class={"rounded-2xl border border-border bg-muted p-6 shadow-sm sm:p-10"}>
+    <div class={"rounded-2xl border border-border bg-background p-6 shadow-sm sm:p-10"}>
       <div class={"grid gap-10 lg:grid-cols-[1fr_1.3fr]"}>
         <div>
           <div class={"flex items-center gap-3 text-xl font-semibold tracking-tight text-foreground"}>
