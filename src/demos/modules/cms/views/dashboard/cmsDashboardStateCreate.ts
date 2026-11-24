@@ -1,46 +1,134 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { createMemo, onCleanup } from "solid-js"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
 import { cmsNavigate } from "../../shell/cmsNavigate.js"
+import { cmsDashboardActivities } from "./cmsDashboardActivities.js"
+import { cmsDashboardAlerts } from "./cmsDashboardAlerts.js"
+import { cmsDashboardDrafts } from "./cmsDashboardDrafts.js"
+import { cmsDashboardMetrics } from "./cmsDashboardMetrics.js"
+import { cmsDashboardQuickActions } from "./cmsDashboardQuickActions.js"
+import { cmsDashboardSiteInfo } from "./cmsDashboardSiteInfo.js"
+import { cmsDashboardVisitorSeries } from "./cmsDashboardVisitorSeries.js"
 
 const text = {
   de: {
     title: "Dashboard",
-    description: "Ein Überblick über Ihre Inhalte und Aufgaben.",
+    welcome: "Willkommen, Max",
+    siteInfo: "Seiten-Info",
+    online: "Online",
+    alerts: "Benachrichtigungen",
+    all: "Alle",
+    drafts: "Entwürfe",
+    draft: "Entwurf",
+    lastEdited: "Zuletzt bearbeitet",
+    sort: "Sortieren",
+    date: "Datum",
+    name: "Name",
+    statistics: "Statistik",
+    totalVisitors: "Besucher gesamt",
+    totalPageviews: "Seitenaufrufe gesamt",
+    visitors: "Besucher",
+    pageviews: "Seitenaufrufe",
+    month: "Monat",
+    week: "Woche",
+    day: "Tag",
+    description: "Ein Überblick über Ihre Inhalte und Ihre Website.",
     metrics: ["Beiträge", "Seiten", "Medien", "Benutzer"],
     trend: "zum Vormonat",
     activity: "Letzte Aktivitäten",
-    activities: ["Beitrag veröffentlicht", "Startseite aktualisiert", "Neue Medien hinzugefügt", "Benutzer eingeladen"],
     actions: "Schnellaktionen",
-    actionLabels: ["Beiträge verwalten", "Seiten bearbeiten", "Medien öffnen", "Benutzer verwalten"],
-    tasks: "Aufgaben",
-    taskLabels: ["Entwurf prüfen", "Startseite aktualisieren", "Medienbibliothek aufräumen", "Team einladen"],
   },
   en: {
     title: "Dashboard",
-    description: "An overview of your content and tasks.",
+    welcome: "Welcome, Max",
+    siteInfo: "Site info",
+    online: "Online",
+    alerts: "Alerts",
+    all: "All",
+    drafts: "Drafts",
+    draft: "Draft",
+    lastEdited: "Last edited",
+    sort: "Sort",
+    date: "Date",
+    name: "Name",
+    statistics: "Statistics",
+    totalVisitors: "Total visitors",
+    totalPageviews: "Total pageviews",
+    visitors: "Visitors",
+    pageviews: "Pageviews",
+    month: "Month",
+    week: "Week",
+    day: "Day",
+    description: "An overview of your content and website.",
     metrics: ["Posts", "Pages", "Media", "Users"],
     trend: "vs. last month",
     activity: "Recent activity",
-    activities: ["Post published", "Homepage updated", "New media added", "User invited"],
     actions: "Quick actions",
-    actionLabels: ["Manage posts", "Edit pages", "Open media", "Manage users"],
-    tasks: "Tasks",
-    taskLabels: ["Review draft", "Update homepage", "Organize media library", "Invite the team"],
   },
 }
 
 export function cmsDashboardStateCreate() {
-  const checked = createSignalObject<number[]>([2])
+  const tabFromUrl = (): "drafts" | "activity" =>
+    typeof window !== "undefined" && new URL(window.location.href).searchParams.get("dashboardTab") === "activity"
+      ? "activity"
+      : "drafts"
+  const activeTab = createSignalObject<"drafts" | "activity">(tabFromUrl())
+  const draftSort = createSignalObject<"date" | "name">("date")
+  const chartRange = createSignalObject<"month" | "week" | "day">("month")
+  const chartMetric = createSignalObject<"visitors" | "pageviews">("visitors")
+  const sortedDrafts = createMemo(() =>
+    [...cmsDashboardDrafts].sort((a, b) =>
+      draftSort.get() === "name"
+        ? a.name[cmsLocale.get()].localeCompare(b.name[cmsLocale.get()], cmsLocale.get())
+        : b.lastEdited.localeCompare(a.lastEdited),
+    ),
+  )
+  const chartSeries = createMemo(() => {
+    const series = cmsDashboardVisitorSeries[chartRange.get()]
+    return series[chartMetric.get()].map((value, index) => ({
+      label:
+        chartRange.get() === "month"
+          ? new Intl.DateTimeFormat(cmsLocale.get(), { month: "short" })
+              .format(new Date(new Date().getFullYear(), new Date().getMonth() - 6 + index, 1))
+              .replace(/\.$/, "")
+          : series.labels[cmsLocale.get()][index],
+      value,
+    }))
+  })
+  if (typeof window !== "undefined") {
+    const syncTab = () => activeTab.set(tabFromUrl())
+    window.addEventListener("popstate", syncTab)
+    onCleanup(() => window.removeEventListener("popstate", syncTab))
+  }
   return {
+    siteInfo: cmsDashboardSiteInfo,
+    quickActions: cmsDashboardQuickActions,
+    alerts: cmsDashboardAlerts,
+    activities: cmsDashboardActivities,
+    metrics: cmsDashboardMetrics,
+    activeTab: activeTab.get,
+    selectTab: (tab: "drafts" | "activity") => {
+      activeTab.set(tab)
+      if (typeof window !== "undefined") {
+        const url = new URL(window.location.href)
+        url.searchParams.set("dashboardTab", tab)
+        window.history.replaceState(window.history.state, "", url)
+      }
+    },
+    draftSort: draftSort.get,
+    selectDraftSort: (sort: "date" | "name") => draftSort.set(sort),
+    sortedDrafts,
+    chartRange: chartRange.get,
+    selectChartRange: (range: "month" | "week" | "day") => chartRange.set(range),
+    chartMetric: chartMetric.get,
+    selectChartMetric: (metric: "visitors" | "pageviews") => chartMetric.set(metric),
+    chartSeries,
+    chartTotal: () => chartSeries().reduce((sum, point) => sum + point.value, 0),
+    locale: cmsLocale.get,
     text: () => text[cmsLocale.get()],
     number: (value: number) => new Intl.NumberFormat(cmsLocale.get()).format(value),
     relative: (value: number, unit: Intl.RelativeTimeFormatUnit) =>
       new Intl.RelativeTimeFormat(cmsLocale.get(), { numeric: "auto" }).format(value, unit),
-    checked: (index: number) => checked.get().includes(index),
-    toggle: (index: number) =>
-      checked.set(
-        checked.get().includes(index) ? checked.get().filter((item) => item !== index) : [...checked.get(), index],
-      ),
-    navigate: (view: "posts" | "pages" | "media" | "users") => cmsNavigate(view),
+    navigate: (view: "posts" | "pages" | "media" | "users" | "notifications") => cmsNavigate(view),
   }
 }
