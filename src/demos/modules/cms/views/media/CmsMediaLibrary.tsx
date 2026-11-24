@@ -41,7 +41,7 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
         />
       </label>
       <div class="flex flex-col gap-4 lg:flex-row">
-        <aside class={`${cmsCardClass} w-full shrink-0 space-y-2 lg:w-56`}>
+        <aside class={`${cmsCardClass} w-full shrink-0 space-y-2 lg:w-56 lg:self-start`}>
           <h2 class="mb-4 text-base font-semibold">{state.text().folders}</h2>
           <For
             each={[
@@ -127,7 +127,7 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
             }
           >
             <div
-              class={state.layout() === "grid" ? "grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4" : "space-y-2"}
+              class={`${cmsCardClass} ${state.layout() === "grid" ? "grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4" : "space-y-2"}`}
             >
               <For each={state.filtered()}>
                 {(item) => (
