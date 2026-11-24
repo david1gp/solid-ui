@@ -860,12 +860,12 @@ function SettingsCard(p: { children: JSXElement }) {
   )
 }
 
-/** Save/discard actions for a settings form; sticky so they stay reachable on long forms. */
+/** Save/discard actions for a settings form; sticky from md so they stay reachable, static on mobile so they never cover fields. */
 function SaveBar(p: { dirty: boolean; onDiscard: () => void }) {
   return (
     <div
       class={
-        "sticky bottom-0 -mx-1 px-1 py-3 flex items-center justify-end gap-3 bg-background dark:bg-[#222326] border-t border-transparent"
+        "md:sticky md:bottom-0 -mx-1 px-1 py-3 flex items-center justify-end gap-3 bg-background dark:bg-[#222326] border-t border-transparent"
       }
     >
       <span class={"mr-auto text-xs text-neutral-500 dark:text-neutral-400"} aria-live={"polite"}>
