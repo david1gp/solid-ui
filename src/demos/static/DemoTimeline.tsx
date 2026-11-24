@@ -41,12 +41,12 @@ export function DemoTimeline() {
   ]
 
   return (
-    <div class="space-y-8">
+    <div class="mx-auto w-full max-w-2xl space-y-8 px-4 py-8">
       <div>
         <h1 class="text-2xl font-bold">Timeline Demo</h1>
         <p class="text-muted-foreground">A vertical timeline component with active states.</p>
       </div>
-      <Timeline items={items} activeItem={2} bulletSize={20} lineSize={3} />
+      <Timeline items={items} activeItem={2} bulletSize={32} lineSize={3} />
     </div>
   )
 }
