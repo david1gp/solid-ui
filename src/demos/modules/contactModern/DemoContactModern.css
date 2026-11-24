@@ -44,15 +44,15 @@
 .contact-modern-intro h1 {
   max-width: 12ch;
   margin: 0;
-  font-size: clamp(3rem, 5.8vw, 6rem);
+  font-size: var(--text-display);
   line-height: 1.04;
-  font-weight: 300;
-  letter-spacing: -0.04em;
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--tracking-display);
 }
 .contact-modern-intro p {
   max-width: 30rem;
   margin: 2rem 0 0;
-  font-size: 1.1rem;
+  font-size: var(--text-intro);
   line-height: 1.8;
   opacity: 0.8;
 }
@@ -75,10 +75,10 @@
 }
 .contact-modern-content h2 {
   margin: 0 0 2.5rem;
-  font-size: clamp(2.8rem, 4vw, 4.5rem);
+  font-size: var(--text-display-sub);
   line-height: 1.1;
-  font-weight: 300;
-  letter-spacing: -0.03em;
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--tracking-heading);
 }
 .contact-modern-content form {
   display: grid;
@@ -100,6 +100,7 @@
   background: transparent;
   color: inherit;
   font: inherit;
+  font-size: var(--text-base);
   resize: none;
 }
 .contact-modern-input textarea {
@@ -124,7 +125,7 @@
 .contact-modern-counter {
   margin-top: 0.5rem;
   text-align: right;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   opacity: 0.7;
 }
 .contact-modern-input input::placeholder,
@@ -146,7 +147,7 @@
 .contact-modern-consent [role="alert"] {
   margin-top: 0.35rem;
   color: #b42318;
-  font-size: 0.85rem;
+  font-size: var(--text-label);
 }
 .dark .contact-modern-field [role="alert"],
 .dark .contact-modern-consent [role="alert"] {
@@ -154,7 +155,7 @@
 }
 .contact-modern-consent {
   margin-top: 0.8rem;
-  font-size: 0.95rem;
+  font-size: var(--text-consent);
 }
 .contact-modern-consent-row {
   display: flex;
