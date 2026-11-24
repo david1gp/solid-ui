@@ -154,7 +154,12 @@ export function DemoContactModern() {
                 ref={(element) => {
                   queueMicrotask(() => {
                     if (!element.isConnected) return
-                    if (window.matchMedia("(max-width: 767px)").matches) window.scrollTo(0, 0)
+                    if (window.matchMedia("(max-width: 767px)").matches) {
+                      for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+                        ancestor.scrollTop = 0
+                      }
+                      window.scrollTo(0, 0)
+                    }
                     element.focus({ preventScroll: true })
                   })
                 }}

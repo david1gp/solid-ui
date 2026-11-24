@@ -248,6 +248,12 @@
     padding: 6rem 2rem 4rem;
     border-left: 0;
   }
+  .contact-modern-sent .contact-modern-glow {
+    max-height: 100%;
+  }
+  .contact-modern-sent .contact-modern-glow-warm {
+    bottom: 0;
+  }
   .contact-modern-sent .contact-modern-panel {
     min-height: 100vh;
     min-height: 100dvh;
