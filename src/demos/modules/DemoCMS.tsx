@@ -1,24 +1,28 @@
 import { mdiAccountCogOutline } from "@adaptive-ds/mdi/mdiAccountCogOutline.js"
-import { mdiAccountGroup } from "@adaptive-ds/mdi/mdiAccountGroup.js"
 import { mdiBrightnessAuto } from "@adaptive-ds/mdi/mdiBrightnessAuto.js"
 import { mdiCameraOutline } from "@adaptive-ds/mdi/mdiCameraOutline.js"
 import { mdiCardAccountDetailsOutline } from "@adaptive-ds/mdi/mdiCardAccountDetailsOutline.js"
 import { mdiCellphone } from "@adaptive-ds/mdi/mdiCellphone.js"
-import { mdiClipboardTextOutline } from "@adaptive-ds/mdi/mdiClipboardTextOutline.js"
-import { mdiCogOutline } from "@adaptive-ds/mdi/mdiCogOutline.js"
-import { mdiFileDocumentOutline } from "@adaptive-ds/mdi/mdiFileDocumentOutline.js"
-import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutline.js"
-import { mdiFolderOutline } from "@adaptive-ds/mdi/mdiFolderOutline.js"
 import { mdiLaptop } from "@adaptive-ds/mdi/mdiLaptop.js"
 import { mdiLockReset } from "@adaptive-ds/mdi/mdiLockReset.js"
 import { mdiPaletteOutline } from "@adaptive-ds/mdi/mdiPaletteOutline.js"
 import { mdiPaletteSwatchOutline } from "@adaptive-ds/mdi/mdiPaletteSwatchOutline.js"
 import { mdiShieldAccountOutline } from "@adaptive-ds/mdi/mdiShieldAccountOutline.js"
-import { mdiTextBoxOutline } from "@adaptive-ds/mdi/mdiTextBoxOutline.js"
 import { mdiWeatherNight } from "@adaptive-ds/mdi/mdiWeatherNight.js"
 import { mdiWeb } from "@adaptive-ds/mdi/mdiWeb.js"
 import { mdiWhiteBalanceSunny } from "@adaptive-ds/mdi/mdiWhiteBalanceSunny.js"
-import { createRoot, createSignal, For, type Element as JSXElement, Match, onSettled, Show, Switch } from "solid-js"
+import {
+  createEffect,
+  createSignal,
+  For,
+  type Element as JSXElement,
+  Match,
+  onCleanup,
+  onSettled,
+  Show,
+  Switch,
+  untrack,
+} from "solid-js"
 import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { CmsSettingsNav } from "#src/demos/modules/cms/CmsSettingsNav.jsx"
 import { CmsSettingsPanel } from "#src/demos/modules/cms/CmsSettingsPanel.jsx"
@@ -29,49 +33,56 @@ import { CmsSidebarCssBanner } from "#src/demos/modules/cms/CmsSidebarCssBanner.
 import { CmsSidebarFlag } from "#src/demos/modules/cms/CmsSidebarFlag.jsx"
 import type { CmsSidebarNavGroup } from "#src/demos/modules/cms/CmsSidebarNavGroup.js"
 import { CmsSidebarUserMenu, type CmsSidebarUserMenuSection } from "#src/demos/modules/cms/CmsSidebarUserMenu.jsx"
+import { tttLanguage } from "#ui/i18n/tttLanguage.js"
 import { Input } from "#ui/input/input/Input.jsx"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { themeInit, themeSet, themeSignal } from "#ui/interactive/theme/themeSignal.js"
 import { themeVariant } from "#ui/interactive/theme/themeVariant.js"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
-import { toastDismiss } from "#ui/interactive/toast/toastDismiss.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { demoCmsMobileCollapseCreate } from "./cms/demoCmsMobileCollapseCreate.js"
+import { cmsLocale } from "./cms/i18n/cmsLocale.js"
+import { cmsShellText } from "./cms/i18n/cmsShellText.js"
+import { cmsViewRegistry } from "./cms/shell/cmsViewRegistry.js"
+import { CmsShellHeader } from "./cms/shell/CmsShellHeader.jsx"
+import { CmsAuthLayout } from "./cms/shell/CmsAuthLayout.jsx"
+import { CmsFullscreenLayout } from "./cms/shell/CmsFullscreenLayout.jsx"
+import { cmsNavigation } from "./cms/shell/cmsNavigation.js"
+import { cmsNavigate } from "./cms/shell/cmsNavigate.js"
+import { cmsNavigationSync } from "./cms/shell/cmsNavigationSync.js"
+import type { CmsViewKey } from "./cms/shell/CmsViewKey.js"
 
-const entries = [
-  { icon: mdiFolderMultipleOutline, label: "Projekte" },
-  { icon: mdiFileDocumentOutline, label: "ISO 27001" },
-  { icon: mdiClipboardTextOutline, label: "Ablauf" },
-  { icon: mdiTextBoxOutline, label: "Protokolle" },
-  { icon: mdiAccountGroup, label: "Kunden" },
-]
-
-const settingsLabel = "Einstellungen"
+const t = (de: string, en: string) => (cmsLocale.get() === "de" ? de : en)
+const settingsLabel = () => t("Einstellungen", "Settings")
 const settingsPageKey = "settings-page"
 
 const settingsPages = [
-  { id: "profile", icon: mdiCardAccountDetailsOutline, label: "Profil" },
-  { id: "account", icon: mdiAccountCogOutline, label: "Konto & Sicherheit" },
-  { id: "appearance", icon: mdiPaletteOutline, label: "Erscheinungsbild" },
+  { id: "profile", icon: mdiCardAccountDetailsOutline, label: { de: "Profil", en: "Profile" } },
+  { id: "account", icon: mdiAccountCogOutline, label: { de: "Konto & Sicherheit", en: "Account & security" } },
+  { id: "appearance", icon: mdiPaletteOutline, label: { de: "Erscheinungsbild", en: "Appearance" } },
 ] as const
 type SettingsPageId = (typeof settingsPages)[number]["id"]
 
 const accentColors = [
-  { label: "Blau", color: "#2563eb" },
-  { label: "Pink", color: "#ec4899" },
-  { label: "Gelb", color: "#eab308" },
-  { label: "Grün", color: "#22c55e" },
-  { label: "Lila", color: "#8b5cf6" },
+  { label: { de: "Blau", en: "Blue" }, color: "#2563eb" },
+  { label: { de: "Pink", en: "Pink" }, color: "#ec4899" },
+  { label: { de: "Gelb", en: "Yellow" }, color: "#eab308" },
+  { label: { de: "Grün", en: "Green" }, color: "#22c55e" },
+  { label: { de: "Lila", en: "Purple" }, color: "#8b5cf6" },
 ]
 
 export function DemoCMS() {
   // Fullscreen demo has no nav ThemeButton, so load the stored theme here for the tiles' selection.
   onSettled(themeInit)
+  const previousLanguage = untrack(tttLanguage.get)
+  createEffect(cmsLocale.get, (locale) => {
+    tttLanguage.set(locale)
+  })
+  onCleanup(() => tttLanguage.set(previousLanguage))
   const settingsOpen = createSignalObject(false)
   const { collapsed } = demoCmsMobileCollapseCreate(settingsOpen)
   const accentColor = createSignalObject(accentColors[0]!.color)
-  const language = createSignalObject("DE")
   const initial = {
     firstName: "Max",
     lastName: "Mustermann",
@@ -84,7 +95,7 @@ export function DemoCMS() {
   const username = createSignalObject(initial.username)
   const phone = createSignalObject(initial.phone)
   const email = createSignalObject(initial.email)
-  // Settings forms edit drafts; nothing is applied until "Speichern".
+  // Settings forms edit drafts; nothing is applied until saved.
   const firstNameDraft = createSignalObject(initial.firstName)
   const lastNameDraft = createSignalObject(initial.lastName)
   const phoneDraft = createSignalObject(initial.phone)
@@ -108,7 +119,7 @@ export function DemoCMS() {
     firstNameDraft.set(nextFirstName)
     lastNameDraft.set(nextLastName)
     phoneDraft.set(nextPhone)
-    toastAdd({ title: "Profil gespeichert", duration: 3000 })
+    toastAdd({ title: t("Profil gespeichert", "Profile saved"), duration: 3000 })
   }
   const usernameDraft = createSignalObject(initial.username)
   const emailDraft = createSignalObject(initial.email)
@@ -122,7 +133,10 @@ export function DemoCMS() {
     if (!accountDirty()) return
     const nextEmail = emailDraft.get().trim()
     if (nextEmail !== email.get() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nextEmail)) {
-      toastAdd({ title: "Bitte eine gültige E-Mail-Adresse eingeben", duration: 4000 })
+      toastAdd({
+        title: t("Bitte eine gültige E-Mail-Adresse eingeben", "Please enter a valid email address"),
+        duration: 4000,
+      })
       return
     }
     const nextUsername = usernameDraft.get().trim()
@@ -131,9 +145,12 @@ export function DemoCMS() {
     // A new e-mail only takes effect once confirmed via the link sent to it.
     if (nextEmail !== email.get()) {
       pendingEmail.set(nextEmail)
-      toastAdd({ title: `Bestätigungslink an ${nextEmail} gesendet`, duration: 4000 })
+      toastAdd({
+        title: t(`Bestätigungslink an ${nextEmail} gesendet`, `Confirmation link sent to ${nextEmail}`),
+        duration: 4000,
+      })
     } else {
-      toastAdd({ title: "Konto gespeichert", duration: 3000 })
+      toastAdd({ title: t("Konto gespeichert", "Account saved"), duration: 3000 })
     }
     emailDraft.set(email.get())
   }
@@ -143,7 +160,7 @@ export function DemoCMS() {
     email.set(pending)
     emailDraft.set(pending)
     pendingEmail.set(undefined)
-    toastAdd({ title: "E-Mail-Adresse bestätigt", duration: 3000 })
+    toastAdd({ title: t("E-Mail-Adresse bestätigt", "Email address confirmed"), duration: 3000 })
   }
   const passwordFormOpen = createSignalObject(false)
   const passwordCurrent = createSignalObject("")
@@ -159,40 +176,44 @@ export function DemoCMS() {
     passwordError.set(undefined)
   }
   const changePassword = () => {
-    if (!passwordCurrent.get()) return passwordError.set("Bitte das aktuelle Passwort eingeben.")
-    if (passwordNew.get().length < 8) return passwordError.set("Das neue Passwort muss mindestens 8 Zeichen haben.")
-    if (passwordNew.get() !== passwordConfirm.get()) return passwordError.set("Die Passwörter stimmen nicht überein.")
+    if (!passwordCurrent.get())
+      return passwordError.set(t("Bitte das aktuelle Passwort eingeben.", "Enter your current password."))
+    if (passwordNew.get().length < 8)
+      return passwordError.set(
+        t("Das neue Passwort muss mindestens 8 Zeichen haben.", "The new password must have at least 8 characters."),
+      )
+    if (passwordNew.get() !== passwordConfirm.get())
+      return passwordError.set(t("Die Passwörter stimmen nicht überein.", "Passwords do not match."))
     closePasswordForm()
     passwordChangedAt.set("gerade eben")
-    toastAdd({ title: "Passwort geändert", duration: 3000 })
+    toastAdd({ title: t("Passwort geändert", "Password changed"), duration: 3000 })
   }
   const twoFactor = createSignalObject(false)
+  const twoFactorSetup = createSignalObject(false)
+  const twoFactorCode = createSignalObject("")
+  const tokens = createSignalObject<string[]>(["Demo token"])
+  const tokenName = createSignalObject("")
   const sessions = createSignalObject([
     { id: "s1", icon: mdiLaptop, device: "Chrome auf Linux", location: "Berlin · Jetzt aktiv", current: true },
     { id: "s2", icon: mdiCellphone, device: "Safari auf iPhone", location: "Hamburg · vor 2 Tagen", current: false },
   ])
   const endSession = (id: string) => {
     sessions.set(sessions.get().filter((session) => session.id !== id))
-    toastAdd({ title: "Sitzung abgemeldet", duration: 3000 })
+    toastAdd({ title: t("Sitzung abgemeldet", "Session revoked"), duration: 3000 })
   }
   const fullName = () => [firstName.get(), lastName.get()].filter(Boolean).join(" ")
   const initials = () => `${firstName.get().charAt(0)}${lastName.get().charAt(0)}`.toUpperCase()
   const settingsPage = createSignalObject<SettingsPageId>("profile")
-  const settingsPageLabel = () => settingsPages.find((page) => page.id === settingsPage.get())?.label
-  const projects = createSignalObject([1, 2, 3, 4, 5].map((n) => ({ id: `project-${n}`, label: `Projekt ${n}` })))
-  let nextProject = 6
-  const newProjectId = createSignalObject<string | undefined>(undefined)
-  const renameProject = (id: string, label: string) =>
-    projects.set(projects.get().map((project) => (project.id === id ? { ...project, label } : project)))
-  const sections: CmsSidebarUserMenuSection[] = [
+  const settingsPageLabel = () => settingsPages.find((page) => page.id === settingsPage.get())?.label[cmsLocale.get()]
+  const sections = (): CmsSidebarUserMenuSection[] => [
     {
-      label: "Darstellung",
+      label: t("Darstellung", "Display"),
       icon: mdiPaletteOutline,
       options: (
         [
-          { icon: mdiWhiteBalanceSunny, label: "Hell", preview: "light", theme: themeVariant.light },
-          { icon: mdiWeatherNight, label: "Dunkel", preview: "dark", theme: themeVariant.dark },
-          { icon: mdiBrightnessAuto, label: "System", preview: "system", theme: themeVariant.os },
+          { icon: mdiWhiteBalanceSunny, label: t("Hell", "Light"), preview: "light", theme: themeVariant.light },
+          { icon: mdiWeatherNight, label: t("Dunkel", "Dark"), preview: "dark", theme: themeVariant.dark },
+          { icon: mdiBrightnessAuto, label: t("System", "System"), preview: "system", theme: themeVariant.os },
         ] as const
       ).map(({ theme, ...option }) => ({
         ...option,
@@ -203,10 +224,11 @@ export function DemoCMS() {
       })),
     },
     {
-      label: "Akzentfarbe",
+      label: t("Akzentfarbe", "Accent color"),
       icon: mdiPaletteSwatchOutline,
       options: accentColors.map((c) => ({
         ...c,
+        label: c.label[cmsLocale.get()],
         get selected() {
           return accentColor.get() === c.color
         },
@@ -214,451 +236,591 @@ export function DemoCMS() {
       })),
     },
     {
-      label: "Sprache",
+      label: t("Sprache", "Language"),
       icon: mdiWeb,
-      hint: "Muss manuell aktiviert werden",
+      hint: t("Muss manuell aktiviert werden", "Must be activated manually"),
       options: (["DE", "EN"] as const).map((label) => ({
         label,
         get leading() {
           return <CmsSidebarFlag language={label.toLowerCase() as "de" | "en"} />
         },
         get selected() {
-          return language.get() === label
+          return cmsLocale.get() === label.toLowerCase()
         },
-        onClick: () => language.set(label),
+        onClick: () => cmsLocale.set(label.toLowerCase() as "de" | "en"),
       })),
     },
   ]
-  const [active, setActive] = createSignal("Projekte")
-  const deleteProject = (id: string) => {
-    const current = projects.get()
-    const index = current.findIndex((project) => project.id === id)
-    const project = current[index]
-    if (!project) return
-    const wasActive = !settingsOpen.get() && active() === id
-    projects.set(current.filter((item) => item.id !== id))
-    if (wasActive) setActive((current[index + 1] ?? current[index - 1])?.id ?? entries[0]!.label)
-    // The toast content is created in an event handler, so give it an owner and dispose it with the toast.
-    let disposeToast = () => {}
-    const undoButton = createRoot((dispose) => {
-      disposeToast = dispose
-      return (
-        <button
-          type={"button"}
-          class={"underline font-medium cursor-pointer"}
-          onClick={() => {
-            const restored = [...projects.get()]
-            restored.splice(Math.min(index, restored.length), 0, project)
-            projects.set(restored)
-            if (wasActive) {
-              setActive(id)
-              settingsOpen.set(false)
-            }
-            toastDismiss(toastId)
-          }}
-        >
-          Rückgängig
-        </button>
-      )
-    })
-    const toastId = toastAdd({ title: `Projekt „${project.label}“ gelöscht`, duration: 6000, children: undoButton })
-    setTimeout(disposeToast, 7000)
+  const [active, setActive] = createSignal("")
+  const [search, setSearch] = createSignal("")
+  const [mobile, setMobile] = createSignal(false)
+  onSettled(() => {
+    const query = window.matchMedia("(max-width: 767px)")
+    const update = () => setMobile(query.matches)
+    update()
+    query.addEventListener("change", update)
+    return () => query.removeEventListener("change", update)
+  })
+  onSettled(() => {
+    const cleanup = cmsNavigationSync()
+    const syncSettings = () => {
+      const params = new URLSearchParams(window.location.search)
+      const id = params.get("id")
+      if (params.get("view") === "settings") {
+        settingsPage.set(settingsPages.some((page) => page.id === id) ? (id as SettingsPageId) : "profile")
+        setActive(settingsPageKey)
+      } else setActive("")
+    }
+    syncSettings()
+    window.addEventListener("popstate", syncSettings)
+    return () => {
+      cleanup()
+      window.removeEventListener("popstate", syncSettings)
+    }
+  })
+  const view = () => cmsViewRegistry[cmsNavigation.get().view]
+  const groupKeys = ["overview", "content", "management", "system", "auth"] as const
+  const navigateSettings = (id: SettingsPageId) => {
+    settingsPage.set(id)
+    setActive(settingsPageKey)
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href)
+      url.searchParams.set("view", "settings")
+      url.searchParams.set("id", id)
+      window.history.pushState(window.history.state, "", url)
+    }
   }
-  const groups = (): CmsSidebarNavGroup[] => [
-    {
-      label: "Navigation",
-      items: [
-        ...entries.map((e) => ({
-          ...e,
-          isActive: !settingsOpen.get() && active() === e.label,
-          onClick: () => {
-            setActive(e.label)
-            settingsOpen.set(false)
-          },
-        })),
-        {
-          icon: mdiCogOutline,
-          label: `${settingsLabel} 1-3 (Mobil)`,
-          isActive: settingsOpen.get(),
-          onClick: () => settingsOpen.set(!settingsOpen.get()),
-        },
-        {
-          icon: mdiCogOutline,
-          label: `${settingsLabel} 4+`,
-          isActive: !settingsOpen.get() && active() === settingsPageKey,
-          onClick: () => {
-            setActive(settingsPageKey)
-            settingsOpen.set(false)
-          },
-        },
-      ],
-    },
-    {
-      label: "Projekte",
-      collapsible: true,
-      onReorder: (from, to) => {
-        const reordered = [...projects.get()]
-        const [item] = reordered.splice(from, 1)
-        if (item === undefined) return
-        reordered.splice(to, 0, item)
-        projects.set(reordered)
-      },
-      addItem: {
-        label: "Neues Projekt",
-        onAdd: () => {
-          const n = nextProject++
-          const project = { id: `project-${n}`, label: `Projekt ${n}` }
-          newProjectId.set(project.id)
-          projects.set([...projects.get(), project])
-          setActive(project.id)
-          settingsOpen.set(false)
-          // autoEdit only applies on first render; reset so reopening the drawer doesn't re-enter rename mode
-          queueMicrotask(() => newProjectId.set(undefined))
-        },
-      },
-      items: projects.get().map(({ id, label }) => ({
-        id,
-        icon: mdiFolderOutline,
-        label,
-        isActive: !settingsOpen.get() && active() === id,
-        autoEdit: newProjectId.get() === id,
-        onRename: (name: string) => renameProject(id, name),
-        onDelete: () => deleteProject(id),
-        onClick: () => {
-          setActive(id)
-          settingsOpen.set(false)
-        },
-      })),
-    },
-  ]
+  const openSettings = () => {
+    navigateSettings("profile")
+    settingsOpen.set(false)
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches) collapsed.set(true)
+  }
+  const groups = (): CmsSidebarNavGroup[] =>
+    groupKeys
+      .map((group) => ({
+        label: cmsShellText[cmsLocale.get()][group],
+        items: (Object.entries(cmsViewRegistry) as [CmsViewKey, (typeof cmsViewRegistry)[CmsViewKey]][])
+          .filter(
+            ([, item]) =>
+              item.group === group && item.label[cmsLocale.get()].toLowerCase().includes(search().toLowerCase()),
+          )
+          .map(([key, item]) => ({
+            icon: item.icon,
+            label: item.label[cmsLocale.get()],
+            isActive: active() !== settingsPageKey && cmsNavigation.get().view === key,
+            onClick: () => {
+              setActive("")
+              settingsOpen.set(false)
+              if (typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches) collapsed.set(true)
+              cmsNavigate(key)
+            },
+          })),
+      }))
+      .filter((group) => group.items.length > 0)
+  const viewContent = () => {
+    const Component = view().component
+    return <Component id={cmsNavigation.get().id} />
+  }
   return (
-    <div class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
-      <DemoShapesBackdrop />
-      <div class={"relative flex shrink-0"}>
-        <CmsSidebar
-          collapsed={collapsed}
-          logo={
-            <span
-              class={
-                "flex items-center justify-center size-6 rounded-md bg-black text-white text-sm font-bold dark:bg-white dark:text-black"
+    <Show
+      when={active() === settingsPageKey || view().layout === "app"}
+      fallback={
+        <Show when={view().layout === "auth"} fallback={<CmsFullscreenLayout>{viewContent()}</CmsFullscreenLayout>}>
+          <CmsAuthLayout backLabel={cmsShellText[cmsLocale.get()].backToAdmin} onBack={() => cmsNavigate("dashboard")}>
+            {viewContent()}
+          </CmsAuthLayout>
+        </Show>
+      }
+    >
+      <div class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
+        <DemoShapesBackdrop />
+        <Show when={!(active() === settingsPageKey && mobile())}>
+          <div class="relative flex shrink-0">
+            <CmsSidebar
+              collapsed={collapsed}
+              logo={
+                <span
+                  class={
+                    "flex items-center justify-center size-6 rounded-md bg-black text-white text-sm font-bold dark:bg-white dark:text-black"
+                  }
+                >
+                  C
+                </span>
               }
-            >
-              C
-            </span>
-          }
-          brand={
-            <>
-              Atlas<span class={"text-blue-600"}>.</span>
-            </>
-          }
-          groups={groups()}
-          accentColor={accentColor.get()}
-          userName={fullName()}
-          userInitials={initials()}
-          userAvatar={<CmsSidebarCssAvatar />}
-          userMenu={
-            <CmsSidebarUserMenu
-              name={fullName()}
-              email={email.get()}
+              brand={
+                <>
+                  Atlas<span class={"text-blue-600"}>.</span>
+                </>
+              }
+              groups={groups()}
+              searchPlaceholder={cmsShellText[cmsLocale.get()].search}
+              accentColor={accentColor.get()}
+              userName={fullName()}
+              userInitials={initials()}
               userAvatar={<CmsSidebarCssAvatar />}
-              logoutLabel={"Abmelden"}
+              userMenu={
+                <div>
+                  <CmsSidebarUserMenu
+                    name={fullName()}
+                    email={email.get()}
+                    userAvatar={<CmsSidebarCssAvatar />}
+                    logoutLabel={t("Abmelden", "Sign out")}
+                  />
+                  <button
+                    type="button"
+                    class="mt-2 w-full rounded-md px-2 py-2 text-left text-sm hover:bg-black/5 dark:hover:bg-white/10"
+                    onClick={openSettings}
+                  >
+                    {cmsShellText[cmsLocale.get()].settings}
+                  </button>
+                </div>
+              }
             />
-          }
-        />
-        <CmsSettingsSidebar open={settingsOpen} title={settingsLabel}>
-          <CmsSettingsPanel
+            <CmsSettingsSidebar open={settingsOpen} title={settingsLabel()}>
+              <CmsSettingsPanel
+                name={fullName()}
+                email={email.get()}
+                userAvatar={<CmsSidebarCssAvatar />}
+                banner={<CmsSidebarCssBanner accentColor={accentColor.get()} />}
+                sections={sections()}
+                logoutLabel={t("Abmelden", "Sign out")}
+                logoutPlacement={"bottom"}
+              />
+            </CmsSettingsSidebar>
+          </div>
+        </Show>
+        <Show when={active() === settingsPageKey}>
+          <CmsSettingsNav
+            class="hidden md:flex"
+            title={settingsLabel()}
             name={fullName()}
             email={email.get()}
             userAvatar={<CmsSidebarCssAvatar />}
-            banner={<CmsSidebarCssBanner accentColor={accentColor.get()} />}
-            sections={sections}
-            logoutLabel={"Abmelden"}
-            logoutPlacement={"bottom"}
+            accentColor={accentColor.get()}
+            items={settingsPages.map((page) => ({
+              icon: page.icon,
+              label: page.label[cmsLocale.get()],
+              get isActive() {
+                return settingsPage.get() === page.id
+              },
+              onClick: () => navigateSettings(page.id),
+            }))}
+            logoutLabel={t("Abmelden", "Sign out")}
           />
-        </CmsSettingsSidebar>
-      </div>
-      <Show when={active() === settingsPageKey}>
-        <CmsSettingsNav
-          title={settingsLabel}
-          name={fullName()}
-          email={email.get()}
-          userAvatar={<CmsSidebarCssAvatar />}
-          accentColor={accentColor.get()}
-          items={settingsPages.map((page) => ({
-            icon: page.icon,
-            label: page.label,
-            get isActive() {
-              return settingsPage.get() === page.id
-            },
-            onClick: () => settingsPage.set(page.id),
-          }))}
-          logoutLabel={"Abmelden"}
-        />
-      </Show>
-      <main class={"flex-1 min-w-0 p-8 overflow-y-auto"}>
-        <Show when={active() === settingsPageKey} fallback={<h1 class={"text-2xl font-semibold mb-6"}>CMS</h1>}>
-          <h1 class={"text-2xl font-semibold mb-6"}>{settingsPageLabel()}</h1>
-          <Switch>
-            <Match when={settingsPage.get() === "profile"}>
-              <form
-                class={"flex flex-col gap-3 max-w-2xl"}
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  saveProfile()
-                }}
-              >
-                <SettingsCard>
-                  <div class={"flex items-center gap-4 pb-4 mb-4 border-b border-neutral-200 dark:border-white/10"}>
-                    <div class={"size-16 shrink-0 rounded-full overflow-hidden"}>
-                      <CmsSidebarCssAvatar />
-                    </div>
-                    <div class={"flex flex-col gap-1 min-w-0"}>
-                      <span class={"text-sm font-medium"}>Profilbild</span>
-                      <span class={"text-xs text-neutral-500 dark:text-neutral-400"}>JPG oder PNG, max. 2 MB</span>
-                    </div>
-                    <Button
-                      variant={"outline"}
-                      class={"ml-auto gap-2 text-sm"}
-                      onClick={() => toastAdd({ title: "Bild-Upload ist in der Demo nicht verfügbar", duration: 3000 })}
-                    >
-                      <Icon path={mdiCameraOutline} class={"size-4"} />
-                      Bild ändern
-                    </Button>
-                  </div>
-                  <div class={"grid gap-4 sm:grid-cols-2"}>
-                    <Field label={"Vorname"} for={"settings-first-name"}>
-                      <Input
-                        id={"settings-first-name"}
-                        autocomplete={"given-name"}
-                        value={firstNameDraft.get()}
-                        onInput={(e) => firstNameDraft.set(e.currentTarget.value)}
-                      />
-                    </Field>
-                    <Field label={"Nachname"} for={"settings-last-name"}>
-                      <Input
-                        id={"settings-last-name"}
-                        autocomplete={"family-name"}
-                        value={lastNameDraft.get()}
-                        onInput={(e) => lastNameDraft.set(e.currentTarget.value)}
-                      />
-                    </Field>
-                    <Field label={"Telefonnummer"} for={"settings-phone"} class={"sm:col-span-2"}>
-                      <Input
-                        id={"settings-phone"}
-                        type={"tel"}
-                        autocomplete={"tel"}
-                        value={phoneDraft.get()}
-                        onInput={(e) => phoneDraft.set(e.currentTarget.value)}
-                      />
-                    </Field>
-                  </div>
-                </SettingsCard>
-                <SaveBar dirty={profileDirty()} onDiscard={discardProfile} />
-              </form>
-            </Match>
-            <Match when={settingsPage.get() === "account"}>
-              <div class={"flex flex-col gap-6 max-w-2xl"}>
-                <form
-                  class={"flex flex-col gap-3"}
-                  // Own German validation message instead of the browser's (English) native popup.
-                  novalidate
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    saveAccount()
+        </Show>
+        <div class="flex min-w-0 flex-1 flex-col bg-white dark:bg-[#222326]">
+          <CmsShellHeader
+            group={cmsShellText[cmsLocale.get()][view().group]}
+            title={active() === settingsPageKey ? settingsLabel() : view().label[cmsLocale.get()]}
+            locale={cmsLocale.get()}
+            onLocale={(locale) => cmsLocale.set(locale)}
+            onSearch={setSearch}
+            onSettings={openSettings}
+          />
+          <main class={"flex-1 min-w-0 p-4 pb-24 sm:p-8 overflow-y-auto"}>
+            <Show when={active() === settingsPageKey} fallback={viewContent()}>
+              <nav aria-label={settingsLabel()} class="mb-4 flex flex-wrap gap-2 md:hidden">
+                <button
+                  type="button"
+                  class="rounded-lg border border-neutral-200 px-3 py-2 text-sm dark:border-white/10"
+                  onClick={() => {
+                    setActive("")
+                    cmsNavigate("dashboard")
                   }}
                 >
-                  <SectionTitle>Konto</SectionTitle>
-                  <SettingsCard>
-                    <div class={"grid gap-4"}>
-                      <Field label={"Benutzername"} for={"settings-username"}>
-                        <Input
-                          id={"settings-username"}
-                          autocomplete={"username"}
-                          value={usernameDraft.get()}
-                          onInput={(e) => usernameDraft.set(e.currentTarget.value)}
-                        />
-                      </Field>
-                      <Field label={"E-Mail-Adresse"} for={"settings-email"}>
-                        <Input
-                          id={"settings-email"}
-                          type={"email"}
-                          autocomplete={"email"}
-                          value={emailDraft.get()}
-                          onInput={(e) => emailDraft.set(e.currentTarget.value)}
-                        />
-                        <Show
-                          when={pendingEmail.get()}
-                          fallback={
-                            <span class={"text-xs font-normal text-neutral-500 dark:text-neutral-400"}>
-                              Änderungen werden erst nach Bestätigung per E-Mail wirksam.
-                            </span>
-                          }
-                        >
-                          {(pending) => (
-                            <div
-                              class={
-                                "flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-normal text-amber-700 dark:text-amber-400"
-                              }
-                            >
-                              <span>
-                                Bestätigung ausstehend: Wir haben einen Link an <strong>{pending()}</strong> gesendet.
-                              </span>
-                              <button
-                                type={"button"}
-                                class={"underline cursor-pointer"}
-                                onClick={() =>
-                                  toastAdd({ title: `Link erneut an ${pending()} gesendet`, duration: 3000 })
-                                }
-                              >
-                                Erneut senden
-                              </button>
-                              <button type={"button"} class={"underline cursor-pointer"} onClick={confirmEmail}>
-                                Bestätigen (Demo)
-                              </button>
-                              <button
-                                type={"button"}
-                                class={"underline cursor-pointer"}
-                                onClick={() => pendingEmail.set(undefined)}
-                              >
-                                Abbrechen
-                              </button>
-                            </div>
-                          )}
-                        </Show>
-                      </Field>
-                    </div>
-                  </SettingsCard>
-                  <SaveBar dirty={accountDirty()} onDiscard={discardAccount} />
-                </form>
-                <div class={"flex flex-col gap-3"}>
-                  <SectionTitle>Sicherheit</SectionTitle>
-                  <SettingsCard>
-                    <SettingsRow
-                      icon={mdiLockReset}
-                      title={"Passwort"}
-                      description={`Zuletzt geändert: ${passwordChangedAt.get()}`}
-                      action={
-                        <Show when={!passwordFormOpen.get()}>
-                          <Button variant={"outline"} class={"text-sm"} onClick={() => passwordFormOpen.set(true)}>
-                            Passwort ändern
-                          </Button>
-                        </Show>
-                      }
-                    />
-                    <Show when={passwordFormOpen.get()}>
-                      <form
-                        class={"grid gap-4 pt-2 pb-4 border-b border-neutral-200 dark:border-white/10"}
-                        onSubmit={(e) => {
-                          e.preventDefault()
-                          changePassword()
-                        }}
-                      >
-                        <Field label={"Aktuelles Passwort"} for={"settings-password-current"}>
-                          <Input
-                            id={"settings-password-current"}
-                            type={"password"}
-                            autocomplete={"current-password"}
-                            value={passwordCurrent.get()}
-                            onInput={(e) => passwordCurrent.set(e.currentTarget.value)}
-                          />
-                        </Field>
-                        <div class={"grid gap-4 sm:grid-cols-2"}>
-                          <Field label={"Neues Passwort"} for={"settings-password-new"}>
-                            <Input
-                              id={"settings-password-new"}
-                              type={"password"}
-                              autocomplete={"new-password"}
-                              value={passwordNew.get()}
-                              onInput={(e) => passwordNew.set(e.currentTarget.value)}
-                            />
-                          </Field>
-                          <Field label={"Neues Passwort bestätigen"} for={"settings-password-confirm"}>
-                            <Input
-                              id={"settings-password-confirm"}
-                              type={"password"}
-                              autocomplete={"new-password"}
-                              value={passwordConfirm.get()}
-                              onInput={(e) => passwordConfirm.set(e.currentTarget.value)}
-                            />
-                          </Field>
+                  ← Admin
+                </button>
+                <For each={settingsPages}>
+                  {(page) => (
+                    <button
+                      type="button"
+                      class="rounded-lg border border-neutral-200 px-3 py-2 text-sm dark:border-white/10"
+                      aria-current={settingsPage.get() === page.id ? "page" : undefined}
+                      onClick={() => navigateSettings(page.id)}
+                    >
+                      {page.label[cmsLocale.get()]}
+                    </button>
+                  )}
+                </For>
+              </nav>
+              <h1 class={"text-2xl font-semibold mb-6"}>{settingsPageLabel()}</h1>
+              <Switch>
+                <Match when={settingsPage.get() === "profile"}>
+                  <form
+                    class={"flex flex-col gap-3 max-w-2xl"}
+                    onSubmit={(e) => {
+                      e.preventDefault()
+                      saveProfile()
+                    }}
+                  >
+                    <SettingsCard>
+                      <div class={"flex items-center gap-4 pb-4 mb-4 border-b border-neutral-200 dark:border-white/10"}>
+                        <div class={"size-16 shrink-0 rounded-full overflow-hidden"}>
+                          <CmsSidebarCssAvatar />
                         </div>
-                        <Show
-                          when={passwordError.get()}
-                          fallback={
-                            <span class={"text-xs text-neutral-500 dark:text-neutral-400"}>Mindestens 8 Zeichen.</span>
-                          }
-                        >
-                          <span role={"alert"} class={"text-xs text-red-600 dark:text-red-400"}>
-                            {passwordError.get()}
+                        <div class={"flex flex-col gap-1 min-w-0"}>
+                          <span class={"text-sm font-medium"}>{t("Profilbild", "Profile picture")}</span>
+                          <span class={"text-xs text-neutral-500 dark:text-neutral-400"}>
+                            {t("JPG oder PNG, max. 2 MB", "JPG or PNG, max. 2 MB")}
                           </span>
-                        </Show>
-                        <div class={"flex justify-end gap-2"}>
-                          <Button variant={"ghost"} class={"text-sm"} onClick={closePasswordForm}>
-                            Abbrechen
-                          </Button>
-                          <Button type={"submit"} variant={"contrast"} class={"text-sm"}>
-                            Passwort aktualisieren
-                          </Button>
                         </div>
-                      </form>
-                    </Show>
-                    <SettingsRow
-                      icon={mdiShieldAccountOutline}
-                      title={"Zwei-Faktor-Authentifizierung"}
-                      description={
-                        twoFactor.get()
-                          ? "Aktiv – Code per Authenticator-App"
-                          : "Nicht aktiv – empfohlen für mehr Sicherheit"
-                      }
-                      action={
                         <Button
                           variant={"outline"}
-                          class={"text-sm"}
-                          onClick={() => {
-                            twoFactor.set(!twoFactor.get())
+                          class={"ml-auto gap-2 text-sm"}
+                          onClick={() =>
                             toastAdd({
-                              title: twoFactor.get() ? "2FA aktiviert" : "2FA deaktiviert",
+                              title: t(
+                                "Bild-Upload ist in der Demo nicht verfügbar",
+                                "Image upload is not available in the demo",
+                              ),
                               duration: 3000,
                             })
-                          }}
+                          }
                         >
-                          {twoFactor.get() ? "Deaktivieren" : "Aktivieren"}
+                          <Icon path={mdiCameraOutline} class={"size-4"} />
+                          {t("Bild ändern", "Change image")}
                         </Button>
-                      }
-                    />
-                  </SettingsCard>
-                </div>
-                <div class={"flex flex-col gap-3"}>
-                  <SectionTitle>Aktive Sitzungen</SectionTitle>
-                  <SettingsCard>
-                    <For each={sessions.get()}>
-                      {(session) => (
+                      </div>
+                      <div class={"grid gap-4 sm:grid-cols-2"}>
+                        <Field label={t("Vorname", "First name")} for={"settings-first-name"}>
+                          <Input
+                            id={"settings-first-name"}
+                            autocomplete={"given-name"}
+                            value={firstNameDraft.get()}
+                            onInput={(e) => firstNameDraft.set(e.currentTarget.value)}
+                          />
+                        </Field>
+                        <Field label={t("Nachname", "Last name")} for={"settings-last-name"}>
+                          <Input
+                            id={"settings-last-name"}
+                            autocomplete={"family-name"}
+                            value={lastNameDraft.get()}
+                            onInput={(e) => lastNameDraft.set(e.currentTarget.value)}
+                          />
+                        </Field>
+                        <Field
+                          label={t("Telefonnummer", "Phone number")}
+                          for={"settings-phone"}
+                          class={"sm:col-span-2"}
+                        >
+                          <Input
+                            id={"settings-phone"}
+                            type={"tel"}
+                            autocomplete={"tel"}
+                            value={phoneDraft.get()}
+                            onInput={(e) => phoneDraft.set(e.currentTarget.value)}
+                          />
+                        </Field>
+                      </div>
+                    </SettingsCard>
+                    <SaveBar dirty={profileDirty()} onDiscard={discardProfile} />
+                  </form>
+                </Match>
+                <Match when={settingsPage.get() === "account"}>
+                  <div class={"flex flex-col gap-6 max-w-2xl"}>
+                    <form
+                      class={"flex flex-col gap-3"}
+                      // Own German validation message instead of the browser's (English) native popup.
+                      novalidate
+                      onSubmit={(e) => {
+                        e.preventDefault()
+                        saveAccount()
+                      }}
+                    >
+                      <SectionTitle>{t("Konto", "Account")}</SectionTitle>
+                      <SettingsCard>
+                        <div class={"grid gap-4"}>
+                          <Field label={t("Benutzername", "Username")} for={"settings-username"}>
+                            <Input
+                              id={"settings-username"}
+                              autocomplete={"username"}
+                              value={usernameDraft.get()}
+                              onInput={(e) => usernameDraft.set(e.currentTarget.value)}
+                            />
+                          </Field>
+                          <Field label={t("E-Mail-Adresse", "Email address")} for={"settings-email"}>
+                            <Input
+                              id={"settings-email"}
+                              type={"email"}
+                              autocomplete={"email"}
+                              value={emailDraft.get()}
+                              onInput={(e) => emailDraft.set(e.currentTarget.value)}
+                            />
+                            <Show
+                              when={pendingEmail.get()}
+                              fallback={
+                                <span class={"text-xs font-normal text-neutral-500 dark:text-neutral-400"}>
+                                  {t(
+                                    "Änderungen werden erst nach Bestätigung per E-Mail wirksam.",
+                                    "Changes take effect after email confirmation.",
+                                  )}
+                                </span>
+                              }
+                            >
+                              {(pending) => (
+                                <div
+                                  class={
+                                    "flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-normal text-amber-700 dark:text-amber-400"
+                                  }
+                                >
+                                  <span>
+                                    {t(
+                                      "Bestätigung ausstehend: Wir haben einen Link an",
+                                      "Confirmation pending: We sent a link to",
+                                    )}{" "}
+                                    <strong>{pending()}</strong>.
+                                  </span>
+                                  <button
+                                    type={"button"}
+                                    class={"underline cursor-pointer"}
+                                    onClick={() =>
+                                      toastAdd({
+                                        title: t(`Link erneut an ${pending()} gesendet`, `Link resent to ${pending()}`),
+                                        duration: 3000,
+                                      })
+                                    }
+                                  >
+                                    {t("Erneut senden", "Resend")}
+                                  </button>
+                                  <button type={"button"} class={"underline cursor-pointer"} onClick={confirmEmail}>
+                                    {t("Bestätigen (Demo)", "Confirm (demo)")}
+                                  </button>
+                                  <button
+                                    type={"button"}
+                                    class={"underline cursor-pointer"}
+                                    onClick={() => pendingEmail.set(undefined)}
+                                  >
+                                    {t("Abbrechen", "Cancel")}
+                                  </button>
+                                </div>
+                              )}
+                            </Show>
+                          </Field>
+                        </div>
+                      </SettingsCard>
+                      <SaveBar dirty={accountDirty()} onDiscard={discardAccount} />
+                    </form>
+                    <div class={"flex flex-col gap-3"}>
+                      <SectionTitle>{t("Sicherheit", "Security")}</SectionTitle>
+                      <SettingsCard>
                         <SettingsRow
-                          icon={session.icon}
-                          title={session.device}
-                          description={session.current ? `${session.location} · Dieses Gerät` : session.location}
+                          icon={mdiLockReset}
+                          title={t("Passwort", "Password")}
+                          description={`${t("Zuletzt geändert", "Last changed")}: ${passwordChangedAt.get() === "vor 3 Monaten" ? t("vor 3 Monaten", "3 months ago") : t("gerade eben", "just now")}`}
                           action={
-                            <Show when={!session.current}>
-                              <Button variant={"outlineRed"} class={"text-sm"} onClick={() => endSession(session.id)}>
-                                Abmelden
+                            <Show when={!passwordFormOpen.get()}>
+                              <Button variant={"outline"} class={"text-sm"} onClick={() => passwordFormOpen.set(true)}>
+                                {t("Passwort ändern", "Change password")}
                               </Button>
                             </Show>
                           }
                         />
-                      )}
-                    </For>
-                  </SettingsCard>
-                  <p class={"text-xs text-neutral-500 dark:text-neutral-400"}>Mitglied seit März 2024</p>
-                </div>
-              </div>
-            </Match>
-            <Match when={settingsPage.get() === "appearance"}>
-              <CmsSettingsPanel class={"max-w-2xl"} sections={sections} />
-            </Match>
-          </Switch>
-        </Show>
-      </main>
-    </div>
+                        <Show when={passwordFormOpen.get()}>
+                          <form
+                            class={"grid gap-4 pt-2 pb-4 border-b border-neutral-200 dark:border-white/10"}
+                            onSubmit={(e) => {
+                              e.preventDefault()
+                              changePassword()
+                            }}
+                          >
+                            <Field
+                              label={t("Aktuelles Passwort", "Current password")}
+                              for={"settings-password-current"}
+                            >
+                              <Input
+                                id={"settings-password-current"}
+                                type={"password"}
+                                autocomplete={"current-password"}
+                                value={passwordCurrent.get()}
+                                onInput={(e) => passwordCurrent.set(e.currentTarget.value)}
+                              />
+                            </Field>
+                            <div class={"grid gap-4 sm:grid-cols-2"}>
+                              <Field label={t("Neues Passwort", "New password")} for={"settings-password-new"}>
+                                <Input
+                                  id={"settings-password-new"}
+                                  type={"password"}
+                                  autocomplete={"new-password"}
+                                  value={passwordNew.get()}
+                                  onInput={(e) => passwordNew.set(e.currentTarget.value)}
+                                />
+                              </Field>
+                              <Field
+                                label={t("Neues Passwort bestätigen", "Confirm new password")}
+                                for={"settings-password-confirm"}
+                              >
+                                <Input
+                                  id={"settings-password-confirm"}
+                                  type={"password"}
+                                  autocomplete={"new-password"}
+                                  value={passwordConfirm.get()}
+                                  onInput={(e) => passwordConfirm.set(e.currentTarget.value)}
+                                />
+                              </Field>
+                            </div>
+                            <Show
+                              when={passwordError.get()}
+                              fallback={
+                                <span class={"text-xs text-neutral-500 dark:text-neutral-400"}>
+                                  {t("Mindestens 8 Zeichen.", "At least 8 characters.")}
+                                </span>
+                              }
+                            >
+                              <span role={"alert"} class={"text-xs text-red-600 dark:text-red-400"}>
+                                {passwordError.get()}
+                              </span>
+                            </Show>
+                            <div class={"flex justify-end gap-2"}>
+                              <Button variant={"ghost"} class={"text-sm"} onClick={closePasswordForm}>
+                                {t("Abbrechen", "Cancel")}
+                              </Button>
+                              <Button type={"submit"} variant={"contrast"} class={"text-sm"}>
+                                {t("Passwort aktualisieren", "Update password")}
+                              </Button>
+                            </div>
+                          </form>
+                        </Show>
+                        <SettingsRow
+                          icon={mdiShieldAccountOutline}
+                          title={t("Zwei-Faktor-Authentifizierung", "Two-factor authentication")}
+                          description={
+                            twoFactor.get()
+                              ? t("Aktiv – Code per Authenticator-App", "Active – code via authenticator app")
+                              : t(
+                                  "Nicht aktiv – empfohlen für mehr Sicherheit",
+                                  "Inactive – recommended for added security",
+                                )
+                          }
+                          action={
+                            <Button
+                              variant={"outline"}
+                              class={"text-sm"}
+                              onClick={() => {
+                                if (twoFactor.get()) twoFactor.set(false)
+                                else twoFactorSetup.set(!twoFactorSetup.get())
+                              }}
+                            >
+                              {twoFactor.get() ? t("Deaktivieren", "Disable") : t("Aktivieren", "Enable")}
+                            </Button>
+                          }
+                        />
+                        <Show when={twoFactorSetup.get()}>
+                          <div class="grid gap-3 border-t border-neutral-200 py-4 dark:border-white/10">
+                            <div class="flex size-28 items-center justify-center border border-dashed border-neutral-400 text-center text-xs">
+                              QR
+                              <br />
+                              {t("Platzhalter", "placeholder")}
+                            </div>
+                            <Field label={t("Bestätigungscode", "Verification code")} for="settings-2fa-code">
+                              <Input
+                                id="settings-2fa-code"
+                                inputmode="numeric"
+                                value={twoFactorCode.get()}
+                                onInput={(e) => twoFactorCode.set(e.currentTarget.value)}
+                              />
+                            </Field>
+                            <Button
+                              variant="outline"
+                              disabled={!twoFactorCode.get().trim()}
+                              onClick={() => {
+                                twoFactor.set(true)
+                                twoFactorSetup.set(false)
+                                twoFactorCode.set("")
+                              }}
+                            >
+                              {t("Einrichtung bestätigen", "Confirm setup")}
+                            </Button>
+                          </div>
+                        </Show>
+                      </SettingsCard>
+                    </div>
+                    <div class={"flex flex-col gap-3"}>
+                      <SectionTitle>{t("Aktive Sitzungen", "Active sessions")}</SectionTitle>
+                      <SettingsCard>
+                        <For each={sessions.get()}>
+                          {(session) => (
+                            <SettingsRow
+                              icon={session.icon}
+                              title={
+                                session.current
+                                  ? t("Chrome auf Linux", "Chrome on Linux")
+                                  : t("Safari auf iPhone", "Safari on iPhone")
+                              }
+                              description={
+                                session.current
+                                  ? `${t("Berlin · Jetzt aktiv", "Berlin · Active now")} · ${t("Dieses Gerät", "This device")}`
+                                  : t("Hamburg · vor 2 Tagen", "Hamburg · 2 days ago")
+                              }
+                              action={
+                                <Show when={!session.current}>
+                                  <Button
+                                    variant={"outlineRed"}
+                                    class={"text-sm"}
+                                    onClick={() => endSession(session.id)}
+                                  >
+                                    {t("Abmelden", "Sign out")}
+                                  </Button>
+                                </Show>
+                              }
+                            />
+                          )}
+                        </For>
+                      </SettingsCard>
+                      <p class={"text-xs text-neutral-500 dark:text-neutral-400"}>
+                        {t("Mitglied seit März 2024", "Member since March 2024")}
+                      </p>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                      <SectionTitle>{t("Persönliche API-Tokens", "Personal API tokens")}</SectionTitle>
+                      <SettingsCard>
+                        <For each={tokens.get()}>
+                          {(token) => (
+                            <div class="flex flex-wrap items-center gap-3 border-b border-neutral-200 py-3 dark:border-white/10">
+                              <span class="text-sm">{token} · ••••••••</span>
+                              <Button
+                                class="ml-auto text-sm"
+                                variant="outlineRed"
+                                onClick={() => tokens.set(tokens.get().filter((item) => item !== token))}
+                              >
+                                {t("Widerrufen", "Revoke")}
+                              </Button>
+                            </div>
+                          )}
+                        </For>
+                        <form
+                          class="flex flex-wrap gap-2 pt-4"
+                          onSubmit={(e) => {
+                            e.preventDefault()
+                            const name = tokenName.get().trim()
+                            if (name && !tokens.get().includes(name)) {
+                              tokens.set([...tokens.get(), name])
+                              tokenName.set("")
+                            }
+                          }}
+                        >
+                          <Input
+                            aria-label={t("Token-Name", "Token name")}
+                            placeholder={t("Token-Name", "Token name")}
+                            value={tokenName.get()}
+                            onInput={(e) => tokenName.set(e.currentTarget.value)}
+                          />
+                          <Button type="submit" variant="outline">
+                            {t("Token erstellen", "Create token")}
+                          </Button>
+                        </form>
+                      </SettingsCard>
+                    </div>
+                  </div>
+                </Match>
+                <Match when={settingsPage.get() === "appearance"}>
+                  <CmsSettingsPanel class={"max-w-2xl"} sections={sections()} />
+                </Match>
+              </Switch>
+            </Show>
+          </main>
+        </div>
+      </div>
+    </Show>
   )
 }
 
@@ -679,13 +841,15 @@ function SaveBar(p: { dirty: boolean; onDiscard: () => void }) {
       }
     >
       <span class={"mr-auto text-xs text-neutral-500 dark:text-neutral-400"} aria-live={"polite"}>
-        {p.dirty ? "Ungespeicherte Änderungen" : "Alle Änderungen gespeichert"}
+        {p.dirty
+          ? t("Ungespeicherte Änderungen", "Unsaved changes")
+          : t("Alle Änderungen gespeichert", "All changes saved")}
       </span>
       <Button variant={"ghost"} class={"text-sm"} disabled={!p.dirty} onClick={() => p.onDiscard()}>
-        Verwerfen
+        {t("Verwerfen", "Discard")}
       </Button>
       <Button type={"submit"} variant={"contrast"} class={"text-sm"} disabled={!p.dirty}>
-        Speichern
+        {t("Speichern", "Save")}
       </Button>
     </div>
   )

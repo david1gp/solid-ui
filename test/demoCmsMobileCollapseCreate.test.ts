@@ -3,7 +3,7 @@ import { createRoot, flush } from "solid-js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { demoCmsMobileCollapseCreate } from "../src/demos/modules/cms/demoCmsMobileCollapseCreate.js"
 
-test("mobile settings restores only a sidebar collapsed automatically", () => {
+test("mobile starts collapsed and settings restores only a sidebar collapsed automatically", () => {
   const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window")
   const media = { matches: true, addEventListener: () => {}, removeEventListener: () => {} }
   Object.defineProperty(globalThis, "window", { configurable: true, value: { matchMedia: () => media } })
@@ -13,6 +13,8 @@ test("mobile settings restores only a sidebar collapsed automatically", () => {
   })
   try {
     flush()
+    expect(collapsed.get()).toBe(true)
+    collapsed.set(false)
     settings.set(true)
     flush()
     expect(collapsed.get()).toBe(true)
@@ -60,6 +62,48 @@ test("expanding the sidebar on desktop leaves settings open", () => {
     flush()
     expect(collapsed.get()).toBe(false)
     expect(settings.get()).toBe(true)
+  } finally {
+    dispose()
+    if (originalWindow) Object.defineProperty(globalThis, "window", originalWindow)
+    else Reflect.deleteProperty(globalThis, "window")
+  }
+})
+
+test("breakpoint crossings collapse mobile and restore the desktop preference without leaving settings open", () => {
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window")
+  let change = () => {}
+  const media = {
+    matches: false,
+    addEventListener: (_event: string, listener: () => void) => {
+      change = listener
+    },
+    removeEventListener: () => {},
+  }
+  Object.defineProperty(globalThis, "window", { configurable: true, value: { matchMedia: () => media } })
+  const { collapsed, settings, dispose } = createRoot((dispose) => {
+    const settings = createSignalObject(false)
+    return { settings, ...demoCmsMobileCollapseCreate(settings), dispose }
+  })
+  const resize = (mobile: boolean) => {
+    media.matches = mobile
+    change()
+    flush()
+  }
+  try {
+    flush()
+    settings.set(true)
+    resize(true)
+    expect(collapsed.get()).toBe(true)
+    expect(settings.get()).toBe(false)
+    collapsed.set(false)
+    resize(false)
+    expect(collapsed.get()).toBe(false)
+    collapsed.set(true)
+    flush()
+    resize(true)
+    collapsed.set(false)
+    resize(false)
+    expect(collapsed.get()).toBe(true)
   } finally {
     dispose()
     if (originalWindow) Object.defineProperty(globalThis, "window", originalWindow)
