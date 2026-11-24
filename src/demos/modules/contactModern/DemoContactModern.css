@@ -238,11 +238,11 @@
     grid-template-columns: 1fr;
   }
   .contact-modern-intro {
-    padding: 7rem 2rem 4rem;
+    display: none;
   }
   .contact-modern-panel {
+    align-items: flex-start;
     padding: 6rem 2rem 4rem;
     border-left: 0;
-    border-top: 1px solid rgb(255 255 255 / 25%);
   }
 }
