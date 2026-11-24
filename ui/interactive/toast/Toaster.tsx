@@ -22,7 +22,7 @@ export function Toaster(p: MayHaveClass): JSXElement {
   return (
     <ul
       class={classArr(
-        "fixed z-100 bottom-0 top-auto sm:right-0",
+        "fixed z-100 bottom-0 top-auto sm:right-0 pointer-events-none [&>li]:pointer-events-auto",
         "print:hidden",
         "p-4",
         "flex flex-col gap-4",
