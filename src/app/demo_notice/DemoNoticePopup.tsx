@@ -1,5 +1,6 @@
 import { Show } from "solid-js"
 import { demoNoticeStateCreate } from "#src/app/demo_notice/demoNoticeStateCreate.js"
+import { cmsLocale } from "#src/demos/modules/cms/i18n/cmsLocale.js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 
@@ -17,15 +18,31 @@ export function DemoNoticePopup() {
         }
       >
         <p class={"flex-1"}>
-          <span class={"font-semibold"}>Beachte</span> – manche Funktionen sind auf dieser Template | Demo Seite nicht
-          verfügbar und dienen nur als Platzhalter.
+          <Show
+            when={
+              typeof window !== "undefined" &&
+              window.location.pathname === "/modules/DemoCMS" &&
+              cmsLocale.get() === "en"
+            }
+            fallback={
+              <>
+                <span class={"font-semibold"}>Beachte</span> – manche Funktionen sind auf dieser Template | Demo Seite
+                nicht verfügbar und dienen nur als Platzhalter.
+              </>
+            }
+          >
+            <span class={"font-semibold"}>Note</span> – some features on this template / demo page are unavailable and
+            serve only as placeholders.
+          </Show>
         </p>
         <Button
           variant={buttonVariant.contrast}
           class={"shrink-0 text-sm self-end sm:self-auto"}
           onClick={state.dismiss}
         >
-          Verstanden
+          {typeof window !== "undefined" && window.location.pathname === "/modules/DemoCMS" && cmsLocale.get() === "en"
+            ? "Got it"
+            : "Verstanden"}
         </Button>
       </div>
     </Show>
