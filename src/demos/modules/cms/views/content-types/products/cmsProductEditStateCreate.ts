@@ -1,9 +1,10 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { cmsNavigate } from "../../../shell/cmsNavigate.js"
+import { cmsProductOrder } from "./cmsProductOrder.js"
 import type { cmsProducts } from "./cmsProducts.js"
 
 export function cmsProductEditStateCreate(product: ReturnType<typeof cmsProducts.get>[number], backToList = false) {
-  const position = createSignalObject(product.position)
+  const position = createSignalObject(cmsProductOrder.get().indexOf(product.id) + 1 || product.position)
   const featured = createSignalObject(product.featured)
   const price = createSignalObject(String(product.price))
   const quantity = createSignalObject(String(product.quantity))

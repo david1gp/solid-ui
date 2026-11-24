@@ -144,7 +144,7 @@ export function CmsContentTypesView(props: { id?: string }) {
                 </div>
               </Show>
               <Show when={item().id === "article" && state.tab() === "list"}>
-                <CmsProductList />
+                <CmsProductList products={state.products} />
               </Show>
               <Show
                 when={item().id === "article" && state.tab() === "tiles"}
@@ -214,7 +214,7 @@ export function CmsContentTypesView(props: { id?: string }) {
                   </Show>
                 }
               >
-                <CmsProductTiles />
+                <CmsProductTiles products={state.products} />
               </Show>
             </>
           )}
