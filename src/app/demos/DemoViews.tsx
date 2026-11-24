@@ -38,8 +38,8 @@ const demoDisplayNames: Record<string, string> = {
   DemoSidebarModern: "Sidebar-modern",
   DemoCMS: "CMS",
   DemoNavHeader: "NavHeader-Simple",
-  DemoRegisterLogin: "Register-Login",
-  DemoRegisterCi: "Register-CI",
+  DemoRegisterLogin: "Register-Simple",
+  DemoRegisterCi: "Register-Modern",
   DemoContact: "Contact-Simple",
 }
 
