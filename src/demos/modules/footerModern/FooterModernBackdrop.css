@@ -1,0 +1,46 @@
+/* Footer-Modern background, CSS only: concentric "horizon" rings rising from the bottom edge over soft
+   color glows. All colors derive from the theme tokens (--background, --muted, --foreground), so light
+   and dark mode follow the site palette; the teal/indigo tints are mixed in at low strength. */
+
+.footer-modern-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(ellipse 70% 55% at 50% 100%, color-mix(in oklab, #14b8a6 16%, transparent), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 12% 35%, color-mix(in oklab, #6366f1 10%, transparent), transparent 70%),
+    radial-gradient(ellipse 40% 35% at 90% 40%, color-mix(in oklab, #f59e0b 8%, transparent), transparent 70%),
+    linear-gradient(to bottom, var(--background), var(--muted));
+}
+
+/* Concentric rings centered below the footer, faded out towards the top. */
+.footer-modern-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-radial-gradient(
+    circle at 50% 120%,
+    transparent 0 46px,
+    color-mix(in oklab, var(--foreground) 10%, transparent) 46px 47px
+  );
+  mask-image: linear-gradient(to top, black 15%, transparent 85%);
+}
+
+.dark .footer-modern-backdrop {
+  background-image:
+    radial-gradient(ellipse 70% 55% at 50% 100%, color-mix(in oklab, #2dd4bf 12%, transparent), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 12% 35%, color-mix(in oklab, #818cf8 9%, transparent), transparent 70%),
+    radial-gradient(ellipse 40% 35% at 90% 40%, color-mix(in oklab, #fbbf24 5%, transparent), transparent 70%),
+    linear-gradient(to bottom, var(--background), var(--muted));
+}
+
+.dark .footer-modern-backdrop::before {
+  background-image: repeating-radial-gradient(
+    circle at 50% 120%,
+    transparent 0 46px,
+    color-mix(in oklab, var(--foreground) 7%, transparent) 46px 47px
+  );
+}

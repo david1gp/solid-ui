@@ -1,11 +1,19 @@
 import { Show } from "solid-js"
-import { footerSimpleNewsletterStateCreate } from "#src/demos/modules/footerSimple/footerSimpleNewsletterStateCreate.js"
+import { classArr } from "#ui/utils/classArr.js"
+import { footerModernNewsletterStateCreate } from "./footerModernNewsletterStateCreate.js"
 
+/** Rounded newsletter field with an embedded subscribe button, solid surface in theme colors. */
 export function FooterModernNewsletterPill() {
-  const state = footerSimpleNewsletterStateCreate()
+  const state = footerModernNewsletterStateCreate()
   return (
     <form class={"mt-8 w-full max-w-md"} novalidate onSubmit={state.submit}>
-      <div class={"flex rounded-full border border-white/35 bg-[#253a46]/70 p-1.5 shadow-lg backdrop-blur-xl"}>
+      <div
+        class={classArr(
+          "flex rounded-full border bg-background p-1.5 shadow-sm", // layout
+          "focus-within:ring-2 focus-within:ring-foreground/30", // focus
+          state.error() ? "border-red-500 dark:border-red-400" : "border-border",
+        )}
+      >
         <label for={"footer-modern-email"} class={"sr-only"}>
           E-Mail-Adresse
         </label>
@@ -19,19 +27,23 @@ export function FooterModernNewsletterPill() {
           aria-invalid={state.error() ? "true" : "false"}
           aria-describedby={"footer-modern-hint"}
           class={
-            "min-w-0 flex-1 rounded-full bg-transparent px-4 text-sm text-white outline-none placeholder:text-white/75 focus-visible:ring-2 focus-visible:ring-white"
+            "min-w-0 flex-1 rounded-full bg-transparent px-4 text-sm text-foreground outline-none placeholder:text-muted-foreground"
           }
         />
         <button
           type={"submit"}
           class={
-            "shrink-0 cursor-pointer rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#263c47] hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            "shrink-0 cursor-pointer rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-background hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
           }
         >
           Abonnieren
         </button>
       </div>
-      <p id={"footer-modern-hint"} class={"mt-3 text-xs text-white"} aria-live={"polite"}>
+      <p
+        id={"footer-modern-hint"}
+        class={classArr("mt-3 text-xs", state.error() ? "text-red-600 dark:text-red-300" : "text-muted-foreground")}
+        aria-live={"polite"}
+      >
         <Show
           when={state.error()}
           fallback={

@@ -1,6 +1,7 @@
-import type { FooterSimpleColumn } from "#src/demos/modules/footerSimple/FooterSimpleColumn.js"
+import type { FooterModernColumn } from "./FooterModernColumn.js"
 
-export const footerModernDemoColumns: FooterSimpleColumn[] = [
+/** Placeholder link columns for the Footer-Modern demo. */
+export const footerModernDemoColumns: FooterModernColumn[] = [
   {
     title: "Entdecken",
     links: [
