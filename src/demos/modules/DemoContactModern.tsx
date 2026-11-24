@@ -128,20 +128,22 @@ export function DemoContactModern() {
                     </Show>
                   </div>
                   <div class="contact-modern-consent">
-                    <label>
+                    <div class="contact-modern-consent-row">
                       <input
+                        id="modern-consent"
+                        aria-labelledby="modern-consent-text"
                         name="consent"
                         type="checkbox"
                         required
                         aria-invalid={state.errors().consent ? "true" : undefined}
                         aria-describedby={state.errors().consent ? "modern-consent-error" : undefined}
                       />
-                      <span>
+                      <span id="modern-consent-text">
                         {state.texts().consent}
                         <strong>{state.texts().privacy}</strong>
                         {state.texts().consentSuffix}
                       </span>
-                    </label>
+                    </div>
                     <FieldError id="modern-consent-error" message={state.errors().consent} />
                   </div>
                   <div class="contact-modern-actions">
