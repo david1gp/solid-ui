@@ -33,7 +33,7 @@ export function FooterSimple(p: FooterSimpleProps) {
       style={{ "--footer-simple-accent": p.accentColor ?? "#2563eb" }}
       class={classArr(
         "w-full text-neutral-950 dark:text-neutral-50", // layout
-        "bg-neutral-50/90 dark:bg-[#202124]/90 backdrop-blur-xl", // background
+        "bg-neutral-50 dark:bg-[#202124]", // background
         "border-t border-neutral-200 dark:border-white/10", // border
         p.class,
       )}
