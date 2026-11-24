@@ -28,8 +28,8 @@ export function cmsContentTypesStateCreate(id: () => string | undefined) {
   const updateFields = (update: (fields: Field[]) => Field[]) =>
     types.set(types.get().map((item) => (item.id === currentId() ? { ...item, fields: update(item.fields) } : item)))
   return {
-    tab: () => (id() === "article:tiles" ? "tiles" : id() === "article:fields" ? "fields" : "list"),
-    tabSet: (value: "list" | "tiles" | "fields") =>
+    tab: () => (id() === "article:tiles" ? "tiles" : "list"),
+    tabSet: (value: "list" | "tiles") =>
       cmsNavigate("content-types", value === "list" ? "article" : `article:${value}`),
     types: () => types.get(),
     entryCount: (typeId: string) => (typeId === "article" ? cmsProducts.get().length : 0),

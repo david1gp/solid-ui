@@ -63,7 +63,9 @@ export function CmsContentTypesView(props: { id?: string }) {
   const state = cmsContentTypesStateCreate(() => props.id)
   const t = () => text[cmsLocale.get()]
   const product = () =>
-    cmsProducts.get().find((item) => props.id === `article:${item.id}` || props.id === `article:${item.id}:list`)
+    props.id === "article:fields"
+      ? undefined
+      : cmsProducts.get().find((item) => props.id === `article:${item.id}` || props.id === `article:${item.id}:list`)
   return (
     <div>
       <Show
@@ -124,7 +126,6 @@ export function CmsContentTypesView(props: { id?: string }) {
                       [
                         ["list", "Liste"],
                         ["tiles", "Kacheln"],
-                        ["fields", "Felder"],
                       ] as const
                     }
                   >
@@ -148,7 +149,7 @@ export function CmsContentTypesView(props: { id?: string }) {
               <Show
                 when={item().id === "article" && state.tab() === "tiles"}
                 fallback={
-                  <Show when={item().id !== "article" || state.tab() === "fields"}>
+                  <Show when={item().id !== "article"}>
                     <section class={cmsCardClass}>
                       <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
                         <h2 class="font-semibold">{t().fields}</h2>
