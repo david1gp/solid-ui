@@ -36,13 +36,13 @@ const fullscreenDemos = new Set([
 /** Display labels overriding the name derived from the demo key (prefix "Demo" stripped). */
 const demoDisplayNames: Record<string, string> = {
   DemoAppSidebar: "Sidebar-Simple",
-  DemoSidebarModern: "Sidebar-modern",
+  DemoSidebarModern: "Sidebar-Modern",
   DemoCMS: "CMS-Simple",
   DemoNavHeader: "NavHeader-Simple",
   DemoRegisterLogin: "Register-Simple",
   DemoRegisterCi: "Register-Modern",
   DemoContact: "Contact-Simple",
-  ContactModern: "Contact-modern",
+  ContactModern: "Contact-Modern",
 }
 
 /** Frosted panel keeping link text readable above the abstract backdrop shapes. */
