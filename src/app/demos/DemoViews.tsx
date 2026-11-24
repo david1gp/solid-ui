@@ -37,7 +37,7 @@ const fullscreenDemos = new Set([
 const demoDisplayNames: Record<string, string> = {
   DemoAppSidebar: "Sidebar-Simple",
   DemoSidebarModern: "Sidebar-modern",
-  DemoCMS: "CMS",
+  DemoCMS: "CMS-Simple",
   DemoNavHeader: "NavHeader-Simple",
   DemoRegisterLogin: "Register-Simple",
   DemoRegisterCi: "Register-Modern",
