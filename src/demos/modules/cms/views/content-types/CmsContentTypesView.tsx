@@ -1,6 +1,5 @@
 import { mdiClipboardTextOutline } from "@adaptive-ds/mdi/mdiClipboardTextOutline.js"
 import { For, Show } from "solid-js"
-import { Button } from "#ui/interactive/button/Button.jsx"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
 import { cmsNavigate } from "../../shell/cmsNavigate.js"
 import { cmsButtonClass } from "../../ui/cmsButtonClass.js"
@@ -131,9 +130,9 @@ export function CmsContentTypesView(props: { id?: string }) {
                       </For>
                     </select>
                   </label>
-                  <Button class={cmsPrimaryButtonClass} type="button" onClick={state.add}>
+                  <button class={cmsPrimaryButtonClass} type="button" onClick={state.add}>
                     + {t().add}
-                  </Button>
+                  </button>
                 </div>
               </div>
               <div class="divide-y divide-gray-200 dark:divide-neutral-800">
