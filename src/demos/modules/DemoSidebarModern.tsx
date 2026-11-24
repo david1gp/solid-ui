@@ -288,6 +288,7 @@ export function DemoSidebarModern() {
       class={
         "demo-sidebar-modern-page relative isolate flex h-dvh w-full shrink-0 overflow-clip text-neutral-950 dark:text-slate-100"
       }
+      data-viewport-shell
     >
       {/* Placeholder backdrop: abstract shapes with crisp edges so the sidebar glass visibly blurs them. */}
       <div aria-hidden="true" class={"demo-sidebar-modern-shapes"}>

@@ -280,7 +280,10 @@ export function DemoAppSidebar() {
     deleteProject,
   })
   return (
-    <div class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
+    <div
+      class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}
+      data-viewport-shell
+    >
       <DemoShapesBackdrop />
       <div class={"demo-app-sidebar-dock relative flex shrink-0"}>
         <AppSidebar

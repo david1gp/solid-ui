@@ -350,7 +350,10 @@ export function DemoCMS() {
         </Show>
       }
     >
-      <div class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}>
+      <div
+        class={"relative isolate flex h-dvh w-full shrink-0 overflow-clip bg-background dark:bg-[#222326]"}
+        data-viewport-shell
+      >
         <DemoShapesBackdrop />
         <Show when={!(active() === settingsPageKey && mobile())}>
           <div class={`relative flex shrink-0 ${motionReady() ? "" : "[&_*]:!transition-none"}`}>

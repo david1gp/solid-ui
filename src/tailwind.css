@@ -41,6 +41,11 @@
     color-scheme: dark;
   }
 
+  /* Full-viewport app shells (h-dvh) scroll inside their own <main>; a forced page track would be a second, empty scrollbar. */
+  html:has([data-viewport-shell]) {
+    overflow-y: auto;
+  }
+
   /*
   [Tutorial] How to make use of Tailwind Colors directly in CSS Variables
   https://github.com/shadcn-ui/ui/issues/669
