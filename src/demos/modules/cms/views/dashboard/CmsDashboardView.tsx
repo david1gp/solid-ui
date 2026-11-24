@@ -15,14 +15,10 @@ export function CmsDashboardView(_props: { id?: string }) {
             <h1 class="text-2xl font-semibold tracking-tight">{state.text().welcome}</h1>
           </header>
           <div class="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.4fr)]">
-            <div class="min-w-0 space-y-8">
-              <CmsDashboardSiteInfoCard state={state} />
-              <CmsDashboardAlertsCard state={state} />
-            </div>
-            <div class="min-w-0 space-y-8">
-              <CmsDashboardQuickActionTiles state={state} />
-              <CmsDashboardDraftsCard state={state} />
-            </div>
+            <CmsDashboardSiteInfoCard state={state} />
+            <CmsDashboardQuickActionTiles state={state} />
+            <CmsDashboardAlertsCard state={state} />
+            <CmsDashboardDraftsCard state={state} />
           </div>
         </div>
         <CmsDashboardStatisticsPanel state={state} />

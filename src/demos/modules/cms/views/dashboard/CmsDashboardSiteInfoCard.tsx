@@ -2,11 +2,11 @@ import type { cmsDashboardStateCreate } from "./cmsDashboardStateCreate.js"
 
 export function CmsDashboardSiteInfoCard(props: { state: ReturnType<typeof cmsDashboardStateCreate> }) {
   return (
-    <section class="min-w-0">
+    <section class="flex min-w-0 flex-col">
       <h2 class="mb-4 font-semibold">{props.state.text().siteInfo}</h2>
-      <div class="relative mt-9 flex min-h-40 flex-col justify-between rounded-2xl border border-blue-100 bg-[color-mix(in_oklab,var(--dashboard-accent)_8%,white)] p-5 dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-xl">
+      <div class="relative flex min-h-40 flex-1 flex-col justify-between rounded-2xl border border-blue-100 bg-[color-mix(in_oklab,var(--dashboard-accent)_8%,white)] p-5 dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-xl">
         <div
-          class="absolute -top-8 left-5 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-[color-mix(in_oklab,var(--dashboard-accent)_55%,white)] to-[var(--dashboard-accent)] text-3xl font-bold text-white shadow-[0_8px_24px_color-mix(in_oklab,var(--dashboard-accent)_45%,transparent)] dark:border-neutral-800"
+          class="absolute -top-3 left-5 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-[color-mix(in_oklab,var(--dashboard-accent)_55%,white)] to-[var(--dashboard-accent)] text-3xl font-bold text-white shadow-[0_8px_24px_color-mix(in_oklab,var(--dashboard-accent)_45%,transparent)] dark:border-neutral-800"
           aria-hidden="true"
         >
           A<span class="text-lg">.</span>
