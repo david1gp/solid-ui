@@ -1,0 +1,48 @@
+import { createMemo, createSignal } from "solid-js"
+import { cmsLocale } from "../../i18n/cmsLocale.js"
+import { cmsMediaStore } from "./cmsMediaStore.js"
+import { cmsMediaText } from "./cmsMediaText.js"
+
+export function cmsMediaLibraryStateCreate() {
+  const [folder, setFolder] = createSignal("*")
+  const [search, setSearch] = createSignal("")
+  const [layout, setLayout] = createSignal<"grid" | "list">("grid")
+  const [selectedId, setSelectedId] = createSignal<string>()
+  const [folderName, setFolderName] = createSignal("")
+  const selected = createMemo(() => cmsMediaStore.items().find((item) => item.id === selectedId()))
+  const filtered = createMemo(() =>
+    cmsMediaStore
+      .items()
+      .filter(
+        (item) =>
+          (folder() === "*" || item.folder === folder()) &&
+          item.name.toLocaleLowerCase().includes(search().trim().toLocaleLowerCase()),
+      ),
+  )
+  return {
+    text: () => cmsMediaText[cmsLocale.get()],
+    folder,
+    search,
+    layout,
+    selected,
+    filtered,
+    folderName,
+    changeFolder: setFolder,
+    changeSearch: setSearch,
+    changeLayout: setLayout,
+    select: setSelectedId,
+    changeFolderName: setFolderName,
+    addFolder() {
+      cmsMediaStore.folderAdd(folderName())
+      setFolderName("")
+    },
+    upload(files: FileList | File[]) {
+      cmsMediaStore.upload(files, folder() === "*" ? "" : folder())
+    },
+    remove() {
+      const item = selected()
+      if (item) cmsMediaStore.remove(item.id)
+      setSelectedId(undefined)
+    },
+  }
+}
