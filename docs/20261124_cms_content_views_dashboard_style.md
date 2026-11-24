@@ -45,4 +45,4 @@ Files: `src/demos/modules/cms/views/dashboard/*`.
 - Task 2: done (7ab9175)
 - Task 3: done (8b08c5e). Open: folder card stretches to full height when details panel is open (should be `self-start`); results area has no card surface when images exist; picker dialog close after "Auswählen" unverified.
 - Task 4: done (50d1b08, dark primary button fix f7f90f7)
-- Task 5: in progress
+- Task 5: done (32f7f27, deployed 78d04c2)
