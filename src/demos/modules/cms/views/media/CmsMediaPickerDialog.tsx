@@ -16,7 +16,7 @@ export function CmsMediaPickerDialog(p: {
       open={p.open}
       onOpenChange={p.onOpenChange}
       class="hidden"
-      innerClass="w-[calc(100%-2rem)] max-w-6xl max-h-[90vh] overflow-y-auto rounded-2xl"
+      innerClass="w-[calc(100%-2rem)] max-w-6xl max-h-[90vh] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900"
     >
       <div class="mt-4">
         <CmsMediaLibrary

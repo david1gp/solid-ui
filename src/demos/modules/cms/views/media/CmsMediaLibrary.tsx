@@ -1,9 +1,15 @@
+import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutline.js"
 import { mdiViewGridOutline } from "@adaptive-ds/mdi/mdiViewGridOutline.js"
 import { mdiViewListOutline } from "@adaptive-ds/mdi/mdiViewListOutline.js"
 import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
+import { cmsButtonClass } from "../../ui/cmsButtonClass.js"
+import { cmsCardClass } from "../../ui/cmsCardClass.js"
+import { cmsIconCircleClass } from "../../ui/cmsIconCircleClass.js"
+import { cmsInputClass } from "../../ui/cmsInputClass.js"
+import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
 import { cmsMediaLibraryStateCreate } from "./cmsMediaLibraryStateCreate.js"
-import { cmsMediaStore, type CmsMediaItem } from "./cmsMediaStore.js"
+import { type CmsMediaItem, cmsMediaStore } from "./cmsMediaStore.js"
 
 /** Shared library UI; onSelect enables picker mode. */
 export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) {
@@ -11,17 +17,18 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
   return (
     <div class="space-y-4">
       <label
-        class="flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-dashed border-neutral-400 p-6 text-center text-sm dark:border-neutral-600"
+        class="flex cursor-pointer flex-col items-center gap-3 rounded-2xl border border-dashed border-gray-300 p-6 text-center text-sm dark:border-neutral-700"
         onDragOver={(event) => event.preventDefault()}
         onDrop={(event) => {
           event.preventDefault()
           if (event.dataTransfer) state.upload(event.dataTransfer.files)
         }}
       >
-        <span>{state.text().drop}</span>
-        <span class="rounded-xl bg-neutral-900 px-4 py-2 text-white dark:bg-neutral-100 dark:text-neutral-900">
-          {state.text().upload}
+        <span class={cmsIconCircleClass}>
+          <Icon path={mdiFolderMultipleOutline} class="size-5" />
         </span>
+        <span>{state.text().drop}</span>
+        <span class={cmsPrimaryButtonClass}>{state.text().upload}</span>
         <input
           class="sr-only"
           type="file"
@@ -34,8 +41,8 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
         />
       </label>
       <div class="flex flex-col gap-4 lg:flex-row">
-        <aside class="w-full shrink-0 space-y-2 lg:w-48">
-          <h2 class="text-sm font-semibold">{state.text().folders}</h2>
+        <aside class={`${cmsCardClass} w-full shrink-0 space-y-2 lg:w-56`}>
+          <h2 class="mb-4 text-base font-semibold">{state.text().folders}</h2>
           <For
             each={[
               { value: "*", label: state.text().all },
@@ -46,7 +53,7 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
             {(folder) => (
               <button
                 type="button"
-                class={`block w-full rounded-lg px-3 py-2 text-left text-sm ${state.folder() === folder.value ? "bg-neutral-200 dark:bg-neutral-800" : "hover:bg-neutral-100 dark:hover:bg-neutral-800"}`}
+                class={`block w-full rounded-lg px-3 py-2 text-left text-sm ${state.folder() === folder.value ? "bg-[color-mix(in_oklab,var(--dashboard-accent)_12%,transparent)] font-medium text-[var(--dashboard-accent)]" : "hover:bg-neutral-100 dark:hover:bg-neutral-800"}`}
                 onClick={() => state.changeFolder(folder.value)}
               >
                 {folder.label}
@@ -63,7 +70,7 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
             <input
               aria-label={state.text().folderName}
               placeholder={state.text().folderName}
-              class="min-w-0 w-full rounded-lg border border-neutral-300 bg-transparent px-2 py-1 text-sm dark:border-neutral-700"
+              class={`${cmsInputClass} min-w-0 w-full`}
               value={state.folderName()}
               onInput={(event) => state.changeFolderName(event.currentTarget.value)}
             />
@@ -71,7 +78,7 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
               type="submit"
               aria-label={state.text().addFolder}
               title={state.text().addFolder}
-              class="rounded-lg border px-2 dark:border-neutral-700"
+              class={cmsButtonClass}
             >
               +
             </button>
@@ -85,13 +92,13 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
               placeholder={state.text().search}
               value={state.search()}
               onInput={(event) => state.changeSearch(event.currentTarget.value)}
-              class="min-w-40 flex-1 rounded-xl border border-neutral-300 bg-transparent px-3 py-2 text-sm dark:border-neutral-700"
+              class={`${cmsInputClass} min-w-40 flex-1`}
             />
             <button
               type="button"
               aria-pressed={state.layout() === "grid" ? "true" : "false"}
               aria-label={state.text().grid}
-              class="rounded-xl border px-3 py-2 text-sm dark:border-neutral-700"
+              class={`px-3 pb-3 text-sm ${state.layout() === "grid" ? "border-b-2 border-[var(--dashboard-accent)] font-semibold text-[var(--dashboard-accent)]" : "text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-neutral-200"}`}
               onClick={() => state.changeLayout("grid")}
             >
               <Icon path={mdiViewGridOutline} class="size-5 sm:hidden" />
@@ -101,14 +108,24 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
               type="button"
               aria-pressed={state.layout() === "list" ? "true" : "false"}
               aria-label={state.text().list}
-              class="rounded-xl border px-3 py-2 text-sm dark:border-neutral-700"
+              class={`px-3 pb-3 text-sm ${state.layout() === "list" ? "border-b-2 border-[var(--dashboard-accent)] font-semibold text-[var(--dashboard-accent)]" : "text-gray-500 hover:text-gray-700 dark:text-neutral-400 dark:hover:text-neutral-200"}`}
               onClick={() => state.changeLayout("list")}
             >
               <Icon path={mdiViewListOutline} class="size-5 sm:hidden" />
               <span class="hidden sm:inline">{state.text().list}</span>
             </button>
           </div>
-          <Show when={state.filtered().length} fallback={<p class="text-sm text-neutral-500">{state.text().empty}</p>}>
+          <Show
+            when={state.filtered().length}
+            fallback={
+              <div class={`${cmsCardClass} flex flex-col items-center gap-3 py-12 text-center`}>
+                <span class={cmsIconCircleClass}>
+                  <Icon path={mdiFolderMultipleOutline} class="size-5" />
+                </span>
+                <p class="text-sm text-gray-500 dark:text-neutral-400">{state.text().empty}</p>
+              </div>
+            }
+          >
             <div
               class={state.layout() === "grid" ? "grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4" : "space-y-2"}
             >
@@ -118,7 +135,7 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
                     type="button"
                     onClick={() => state.select(item.id)}
                     aria-pressed={state.selected()?.id === item.id ? "true" : "false"}
-                    class={`overflow-hidden rounded-xl border text-left text-sm dark:border-neutral-700 ${state.selected()?.id === item.id ? "ring-2 ring-neutral-500" : ""} ${state.layout() === "list" ? "flex items-center gap-3" : ""}`}
+                    class={`${cmsCardClass} overflow-hidden p-0 text-left text-sm hover:bg-gray-50 dark:hover:bg-neutral-800 ${state.selected()?.id === item.id ? "ring-2 ring-[var(--dashboard-accent)]" : ""} ${state.layout() === "list" ? "flex items-center gap-3" : ""}`}
                   >
                     <img
                       src={item.url}
@@ -134,7 +151,7 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
         </section>
         <Show when={state.selected()}>
           {(item) => (
-            <aside class="w-full space-y-4 rounded-2xl border p-4 dark:border-neutral-700 lg:w-72">
+            <aside class={`${cmsCardClass} w-full space-y-4 lg:w-72`}>
               <div class="flex items-center justify-between">
                 <h2 class="font-semibold">{state.text().details}</h2>
                 <button type="button" aria-label={state.text().close} onClick={() => state.select(undefined)}>
@@ -175,7 +192,7 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
               <label class="block text-sm">
                 {state.text().alt}
                 <input
-                  class="mt-1 w-full rounded-lg border bg-transparent px-2 py-1 dark:border-neutral-700"
+                  class={`${cmsInputClass} mt-1 w-full`}
                   value={item().alt}
                   onInput={(event) => cmsMediaStore.update(item().id, { alt: event.currentTarget.value })}
                 />
@@ -183,7 +200,7 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
               <label class="block text-sm">
                 {state.text().folder}
                 <select
-                  class="mt-1 w-full rounded-lg border bg-transparent px-2 py-1 dark:border-neutral-700"
+                  class={`${cmsInputClass} mt-1 w-full`}
                   value={item().folder}
                   onChange={(event) => cmsMediaStore.update(item().id, { folder: event.currentTarget.value })}
                 >
@@ -225,19 +242,11 @@ export function CmsMediaLibrary(p: { onSelect?: (item: CmsMediaItem) => void }) 
               </fieldset>
               <div class="flex flex-wrap gap-2">
                 <Show when={p.onSelect}>
-                  <button
-                    type="button"
-                    class="rounded-xl bg-neutral-900 px-3 py-2 text-sm text-white dark:bg-neutral-100 dark:text-neutral-900"
-                    onClick={() => p.onSelect?.(item())}
-                  >
+                  <button type="button" class={cmsPrimaryButtonClass} onClick={() => p.onSelect?.(item())}>
                     {state.text().select}
                   </button>
                 </Show>
-                <button
-                  type="button"
-                  class="rounded-xl border border-red-300 px-3 py-2 text-sm text-red-700 dark:text-red-400"
-                  onClick={state.remove}
-                >
+                <button type="button" class={`${cmsButtonClass} text-red-700 dark:text-red-400`} onClick={state.remove}>
                   {state.text().delete}
                 </button>
               </div>

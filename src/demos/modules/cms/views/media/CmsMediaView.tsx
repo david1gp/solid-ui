@@ -1,9 +1,10 @@
-import { PageHeader } from "../../ui/PageHeader.js"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
+import { cmsButtonClass } from "../../ui/cmsButtonClass.js"
+import { PageHeader } from "../../ui/PageHeader.js"
 import { CmsMediaLibrary } from "./CmsMediaLibrary.js"
 import { CmsMediaPickerDialog } from "./CmsMediaPickerDialog.js"
-import { cmsMediaViewStateCreate } from "./cmsMediaViewStateCreate.js"
 import { cmsMediaText } from "./cmsMediaText.js"
+import { cmsMediaViewStateCreate } from "./cmsMediaViewStateCreate.js"
 
 export function CmsMediaView(_props: { id?: string }) {
   const state = cmsMediaViewStateCreate()
@@ -13,11 +14,7 @@ export function CmsMediaView(_props: { id?: string }) {
         title={cmsMediaText[cmsLocale.get()].title}
         description={cmsMediaText[cmsLocale.get()].description}
         actions={
-          <button
-            type="button"
-            class="rounded-xl border border-neutral-200 px-3 py-2 text-sm dark:border-neutral-700"
-            onClick={state.openPicker}
-          >
+          <button type="button" class={cmsButtonClass} onClick={state.openPicker}>
             {cmsMediaText[cmsLocale.get()].picker}
           </button>
         }
