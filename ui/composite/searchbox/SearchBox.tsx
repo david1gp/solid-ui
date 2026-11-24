@@ -3,6 +3,8 @@ import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { mdiUndo } from "@adaptive-ds/mdi/mdiUndo.js"
 import { cn } from "cn"
 import { createSignal, For, onSettled, Show } from "solid-js"
+import { classesInputFocus } from "#ui/input/input/classesInputFocus.js"
+import { classesInputSurface } from "#ui/input/input/classesInputSurface.js"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
@@ -133,7 +135,11 @@ function SearchInput(p: { searchQuerySignal: SignalObject<string>; placeholder?:
           placeholder={p.placeholder ?? "Search..."}
           value={p.searchQuerySignal.get()}
           onInput={(e) => p.searchQuerySignal.set(e.currentTarget.value)}
-          class="w-full pl-11 pr-4 py-3.5 bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white dark:focus:bg-neutral-900 transition-all text-gray-900 dark:text-neutral-100 placeholder:text-gray-400 dark:placeholder:text-neutral-500"
+          class={cn(
+            "w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white dark:focus:bg-(--input-bg) transition-all text-gray-900 dark:text-neutral-100 placeholder:text-gray-400",
+            classesInputSurface,
+            classesInputFocus,
+          )}
         />
       </div>
     </div>
@@ -157,7 +163,11 @@ function FilterDropdown(p: { filter: SearchFilterEntry; isActive: boolean; onSel
               value={filterQuery()}
               onInput={(e) => setFilterQuery(e.currentTarget.value)}
               placeholder={`Search ${p.filter.label}`}
-              class="h-10 w-full rounded-xl border border-slate-200 dark:border-neutral-700 bg-slate-50 dark:bg-neutral-800 px-3 text-sm text-slate-900 dark:text-neutral-100 outline-none transition focus:border-emerald-300 dark:focus:border-emerald-600 focus:bg-white dark:focus:bg-neutral-900 placeholder:text-slate-400 dark:placeholder:text-neutral-500"
+              class={cn(
+                "h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm text-slate-900 dark:text-neutral-100 transition focus:bg-white dark:focus:bg-(--input-bg) placeholder:text-slate-400",
+                classesInputSurface,
+                classesInputFocus,
+              )}
             />
           </div>
         </div>

@@ -1,16 +1,18 @@
 import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier.js"
+import { classesInputFocus } from "#ui/input/input/classesInputFocus.js"
+import { classesInputSurface } from "#ui/input/input/classesInputSurface.js"
 import { classArr } from "#ui/utils/classArr.js"
 
 export const classesInput = classArr(
   "inline-flex", // layout
   "w-full", // sizing
-  "bg-gray-50 dark:bg-[#202124]", // bg
-  "border border-input dark:border-white/10", // borders
+  "bg-gray-50", // bg
+  "border border-input", // borders
+  classesInputSurface,
   "rounded-md", // border radius
   "px-3 py-2", // spacing
   "placeholder:text-muted-foreground", // typography
   "file:border-0 file:bg-transparent file:font-medium", // file input styling
-  "focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2", // focus states
-  "dark:focus-visible:ring-white/40 dark:focus-visible:ring-offset-0 dark:focus-visible:border-white/30", // focus dark: neutral, no white offset gap
+  classesInputFocus, // focus states
   classesDisabledModifier, // disabled
 )

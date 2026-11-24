@@ -1,27 +1,11 @@
 import { cn } from "cn"
 import type { Component } from "solid-js"
 import { omit } from "solid-js"
-import { classesDisabledModifier } from "#ui/classes/classesDisabledModifier.js"
+import { classesInput } from "#ui/input/input/classesInput.js"
 import { type ComponentProps } from "@solidjs/web"
 
 /** Styled native multiline textarea element. */
 export const Textarea: Component<ComponentProps<"textarea">> = (p) => {
   const rest = omit(p, "class")
-  return (
-    <textarea
-      class={cn(
-        "flex", // layout
-        "min-h-[80px] w-full", // sizing
-        // "bg-transparent", // background
-        "bg-gray-50 dark:bg-[#202124]", // bg
-        "rounded-md border border-input dark:border-white/10", // borders
-        "placeholder:text-muted-foreground", // typography
-        "px-3 py-2", // spacing
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background", // focus states
-        classesDisabledModifier, // disabled
-        p.class,
-      )}
-      {...rest}
-    />
-  )
+  return <textarea class={cn(classesInput, "flex min-h-[80px] ring-offset-background", p.class)} {...rest} />
 }
