@@ -1,7 +1,9 @@
 import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
+import { cmsNumberFormat } from "../../i18n/cmsNumberFormat.js"
 import { PageHeader } from "../../ui/PageHeader.js"
+import { CmsDashboardAlertIcon } from "../dashboard/CmsDashboardAlertIcon.js"
 import { cmsNotificationsViewStateCreate } from "./cmsNotificationsViewStateCreate.js"
 
 export function CmsNotificationsView(_props: { id?: string }) {
@@ -53,6 +55,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
               <div
                 class={`flex flex-wrap items-start justify-between gap-3 p-4 ${state.store.isUnread(item.id) ? "bg-indigo-50/50 dark:bg-indigo-950/20" : ""}`}
               >
+                <CmsDashboardAlertIcon type={item.type} />
                 <button type="button" class="min-w-0 flex-1 text-left" onClick={() => state.store.markRead(item.id)}>
                   <span class="flex flex-wrap items-center gap-2 text-sm font-medium">
                     <span
@@ -66,6 +69,13 @@ export function CmsNotificationsView(_props: { id?: string }) {
                     </Show>
                   </span>
                   <span class="mt-1 block pl-4 text-xs text-neutral-500">{item.subtitle[state.locale()]}</span>
+                  <Show when={"amount" in item && item.amount}>
+                    {(amount) => (
+                      <span class="mt-1 block pl-4 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+                        +{cmsNumberFormat(amount(), { style: "currency", currency: "EUR" })}
+                      </span>
+                    )}
+                  </Show>
                   <time
                     class="mt-1 block pl-4 text-xs text-neutral-500"
                     datetime={item.createdAt.toISOString()}
