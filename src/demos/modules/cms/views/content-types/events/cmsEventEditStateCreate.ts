@@ -3,9 +3,9 @@ import { cmsNavigate } from "../../../shell/cmsNavigate.js"
 import type { CmsEventScheduleEntry } from "./CmsEventScheduleEntry.js"
 import { cmsEventDateGermanFormat } from "./cmsEventDateGermanFormat.js"
 import { cmsEventDateGermanParse } from "./cmsEventDateGermanParse.js"
-import type { cmsEvents } from "./cmsEvents.js"
 import { cmsEventScheduleNext } from "./cmsEventScheduleNext.js"
 import { cmsEventScheduleSorted } from "./cmsEventScheduleSorted.js"
+import type { cmsEvents } from "./cmsEvents.js"
 import { cmsEventTimeGermanParse } from "./cmsEventTimeGermanParse.js"
 
 const rowCreate = (id: number, entry: CmsEventScheduleEntry) => ({

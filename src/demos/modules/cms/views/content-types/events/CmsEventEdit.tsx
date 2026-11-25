@@ -46,7 +46,10 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
             <p class="absolute bottom-4 left-4 rounded-full bg-black/50 px-3 py-1 text-sm font-semibold text-emerald-300">
               {cmsEventDateParts(state.scheduleSorted()[0]?.date ?? "").day}.{" "}
               {cmsEventDateParts(state.scheduleSorted()[0]?.date ?? "").month} · {state.scheduleSorted()[0]?.time} Uhr
-              <Show when={state.scheduleSorted().length > 1}> · +{state.scheduleSorted().length - 1} weitere Termine</Show>
+              <Show when={state.scheduleSorted().length > 1}>
+                {" "}
+                · +{state.scheduleSorted().length - 1} weitere Termine
+              </Show>
             </p>
           </div>
           <div class="mt-4 flex flex-wrap gap-2">
