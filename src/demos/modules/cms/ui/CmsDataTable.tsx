@@ -1,4 +1,8 @@
+import { mdiArrowDownBold } from "@adaptive-ds/mdi/mdiArrowDownBold.js"
+import { mdiArrowUpBold } from "@adaptive-ds/mdi/mdiArrowUpBold.js"
+import { mdiArrowUpDownBold } from "@adaptive-ds/mdi/mdiArrowUpDownBold.js"
 import { For, type Element as JSXElement, Show } from "solid-js"
+import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsButtonClass } from "./cmsButtonClass.js"
 import { cmsDataTableStateCreate } from "./cmsDataTableStateCreate.js"
 import { cmsInputClass } from "./cmsInputClass.js"
@@ -132,12 +136,16 @@ export function CmsDataTable<T>(props: CmsDataTableProps<T>) {
                         onClick={() => state.sortToggle(column.id)}
                       >
                         {column.label}
-                        <span
-                          aria-hidden="true"
-                          class={`inline-block w-3 text-center ${state.sort().id === column.id ? "" : "text-gray-300 dark:text-neutral-600"}`}
-                        >
-                          {state.sort().id === column.id ? (state.sort().direction === "asc" ? "↑" : "↓") : "↕"}
-                        </span>
+                        <Icon
+                          path={
+                            state.sort().id === column.id
+                              ? state.sort().direction === "asc"
+                                ? mdiArrowUpBold
+                                : mdiArrowDownBold
+                              : mdiArrowUpDownBold
+                          }
+                          class={`size-4 shrink-0 ${state.sort().id === column.id ? "" : "text-gray-300 dark:text-neutral-600"}`}
+                        />
                       </button>
                     </Show>
                   </th>
