@@ -7,7 +7,6 @@ import { PageHeader } from "../../../ui/PageHeader.js"
 import { CmsTopsellerRibbon } from "../CmsTopsellerRibbon.js"
 import { CmsHeadphonesIllustration } from "./CmsHeadphonesIllustration.js"
 import { cmsProductEditStateCreate } from "./cmsProductEditStateCreate.js"
-import { cmsProductLowStockThreshold } from "./cmsProductLowStockThreshold.js"
 import { cmsProductPriceFormat } from "./cmsProductPriceFormat.js"
 import { cmsProductStockStatus } from "./cmsProductStockStatus.js"
 import { cmsProducts } from "./cmsProducts.js"
@@ -139,10 +138,6 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
                     onInput={(e) => state.quantitySet(e.currentTarget.value)}
                   />
                 </label>
-                <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
-                  Steuert die Verfügbarkeit in der Vorschau: ab {cmsProductLowStockThreshold + 1} „Auf Lager“, 1–
-                  {cmsProductLowStockThreshold} „Nur noch X Stück“, 0 „Ausverkauft“.
-                </p>
               </div>
             </div>
             <div>
