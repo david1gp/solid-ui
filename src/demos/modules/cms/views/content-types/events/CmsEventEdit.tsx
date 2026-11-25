@@ -5,6 +5,7 @@ import { cmsCardClass } from "../../../ui/cmsCardClass.js"
 import { cmsInputClass } from "../../../ui/cmsInputClass.js"
 import { cmsPrimaryButtonClass } from "../../../ui/cmsPrimaryButtonClass.js"
 import { PageHeader } from "../../../ui/PageHeader.js"
+import { CmsTopsellerRibbon } from "../CmsTopsellerRibbon.js"
 import { CmsFestivalIllustration } from "./CmsFestivalIllustration.js"
 import { cmsEventDateParts } from "./cmsEventDateParts.js"
 import { cmsEventEditStateCreate } from "./cmsEventEditStateCreate.js"
@@ -32,9 +33,7 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
             <CmsFestivalIllustration color={props.event.color} />
             <div class="absolute inset-x-0 bottom-0 h-[56%] bg-[linear-gradient(to_top,rgb(8_12_16/.97)_0%,rgb(8_12_16/.88)_50%,transparent_100%)]" />
             <Show when={state.featured()}>
-              <span class="absolute -right-[13.33cqw] top-[7.88cqw] w-[54.55cqw] rotate-45 bg-teal-300 py-[2.12cqw] text-center text-[3.64cqw] font-extrabold tracking-[.12em] text-[#06201c] shadow-[0_4px_12px_rgb(0_0_0/.3)]">
-                TOPSELLER
-              </span>
+              <CmsTopsellerRibbon />
             </Show>
             <div class="absolute inset-x-[6.06cqw] bottom-[6.06cqw]">
               <Show when={cmsEventTitleSplit(state.title()).eyebrow}>

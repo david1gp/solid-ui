@@ -4,9 +4,12 @@ import { cmsCardClass } from "../../../ui/cmsCardClass.js"
 import { cmsInputClass } from "../../../ui/cmsInputClass.js"
 import { cmsPrimaryButtonClass } from "../../../ui/cmsPrimaryButtonClass.js"
 import { PageHeader } from "../../../ui/PageHeader.js"
+import { CmsTopsellerRibbon } from "../CmsTopsellerRibbon.js"
+import { cmsEventTitleSplit } from "../events/cmsEventTitleSplit.js"
 import { CmsHeadphonesIllustration } from "./CmsHeadphonesIllustration.js"
 import { cmsProductEditStateCreate } from "./cmsProductEditStateCreate.js"
 import { cmsProductPriceFormat } from "./cmsProductPriceFormat.js"
+import { cmsProductStockStatus } from "./cmsProductStockStatus.js"
 import { cmsProducts } from "./cmsProducts.js"
 
 export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.get>[number]; backToList?: boolean }) {
@@ -24,21 +27,55 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
       <div class="grid items-start gap-6 lg:grid-cols-2">
         <section class={cmsCardClass}>
           <h2 class="mb-4 font-semibold">Produktbild</h2>
-          <div class="relative mx-auto aspect-[3/4] max-w-sm overflow-hidden rounded-2xl">
+          <div class="@container relative mx-auto aspect-[330/460] w-full max-w-sm overflow-hidden rounded-2xl">
             <CmsHeadphonesIllustration colorway={props.product.colorway} />
-            <div class="absolute left-4 top-4 flex gap-2">
-              <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
-                #{state.position()}
-              </span>
-              <Show when={state.featured()}>
-                <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
-                  Top
-                </span>
+            <div class="absolute inset-x-0 bottom-0 h-[50%] bg-[linear-gradient(to_top,rgb(8_12_16/.98)_0%,rgb(8_12_16/.92)_55%,transparent_100%)]" />
+            <Show when={state.featured()}>
+              <CmsTopsellerRibbon />
+            </Show>
+            <div class="absolute inset-x-[6.06cqw] bottom-[6.06cqw]">
+              <p class="line-clamp-1 text-[7.27cqw] font-extrabold leading-[1.2] text-white">
+                {cmsEventTitleSplit(props.product.title).eyebrow || cmsEventTitleSplit(props.product.title).title}
+              </p>
+              <Show when={cmsEventTitleSplit(props.product.title).eyebrow}>
+                <p class="mt-[1.21cqw] line-clamp-2 text-[4.24cqw] leading-[1.3] text-[#d6dde3]">
+                  {cmsEventTitleSplit(props.product.title).title}
+                </p>
               </Show>
+              <div class="mt-[2.42cqw] flex items-center gap-[2.12cqw] text-[3.94cqw] text-[#d6dde3]">
+                <span
+                  aria-hidden="true"
+                  class={`size-[2.12cqw] shrink-0 rounded-full ${cmsProductStockStatus(state.quantity()).dotClass}`}
+                />
+                <span>{cmsProductStockStatus(state.quantity()).label}</span>
+              </div>
+              <div class="mt-[4.85cqw] flex items-center justify-between border-t border-white/[.14] pt-[4.24cqw]">
+                <div>
+                  <p class="whitespace-nowrap text-[8.48cqw] font-extrabold leading-none text-white">
+                    {cmsProductPriceFormat(Number(state.price()) || 0)}
+                  </p>
+                  <p class="mt-[1.21cqw] text-[3.33cqw] text-[#9fb0b8]">inkl. MwSt.</p>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="flex size-[12.73cqw] shrink-0 items-center justify-center rounded-full bg-teal-300 text-[#06201c]"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="size-[6.06cqw]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 8h14l1 13H4L5 8Z" />
+                    <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+                  </svg>
+                </span>
+              </div>
             </div>
-            <p class="absolute bottom-4 left-4 rounded-full bg-black/50 px-3 py-1 text-sm font-semibold text-emerald-300">
-              {cmsProductPriceFormat(Number(state.price()) || 0)}
-            </p>
           </div>
           <div class="mt-4 flex flex-wrap gap-2">
             <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
