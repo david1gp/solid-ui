@@ -9,6 +9,7 @@ import { CmsFestivalIllustration } from "./CmsFestivalIllustration.js"
 import { cmsEventDateParts } from "./cmsEventDateParts.js"
 import { cmsEventEditStateCreate } from "./cmsEventEditStateCreate.js"
 import type { cmsEvents } from "./cmsEvents.js"
+import { cmsEventTitleSplit } from "./cmsEventTitleSplit.js"
 
 const input = `mt-1 w-full ${cmsInputClass}`
 export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[number] }) {
@@ -27,30 +28,77 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
       <div class="grid items-start gap-6 lg:grid-cols-2">
         <section class={cmsCardClass}>
           <h2 class="mb-4 font-semibold">Vorschau</h2>
-          <div class="relative mx-auto aspect-[3/4] max-w-sm overflow-hidden rounded-2xl">
+          <div class="@container relative mx-auto aspect-[330/460] w-full max-w-sm overflow-hidden rounded-2xl">
             <CmsFestivalIllustration color={props.event.color} />
-            <div class="absolute left-4 top-4 flex gap-2">
-              <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
-                #{state.position()}
+            <div class="absolute inset-x-0 bottom-0 h-[56%] bg-[linear-gradient(to_top,rgb(8_12_16/.97)_0%,rgb(8_12_16/.88)_50%,transparent_100%)]" />
+            <Show when={state.featured()}>
+              <span class="absolute -right-[13.33cqw] top-[7.88cqw] w-[54.55cqw] rotate-45 bg-teal-300 py-[2.12cqw] text-center text-[3.64cqw] font-extrabold tracking-[.12em] text-[#06201c] shadow-[0_4px_12px_rgb(0_0_0/.3)]">
+                TOPSELLER
               </span>
-              <Show when={state.featured()}>
-                <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
-                  Top
+            </Show>
+            <div class="absolute inset-x-[6.06cqw] bottom-[6.06cqw]">
+              <Show when={cmsEventTitleSplit(state.title()).eyebrow}>
+                <p class="mb-[1.82cqw] text-[3.64cqw] font-bold uppercase tracking-[.12em] text-teal-300">
+                  {cmsEventTitleSplit(state.title()).eyebrow}
+                </p>
+              </Show>
+              <p class="mb-[3.03cqw] line-clamp-2 text-[7.27cqw] font-extrabold leading-[1.2] text-white">
+                {cmsEventTitleSplit(state.title()).title}
+              </p>
+              <Show when={state.location()}>
+                <div class="flex items-center gap-[2.12cqw] text-[4.24cqw] text-[#d6dde3]">
+                  <svg
+                    aria-hidden="true"
+                    class="size-[4.55cqw] shrink-0 text-teal-300"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                  >
+                    <path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z" />
+                    <circle cx="12" cy="10" r="2.5" />
+                  </svg>
+                  <span>{state.location()}</span>
+                </div>
+              </Show>
+              <div class="mt-[4.85cqw] flex items-center justify-between border-t border-white/[.14] pt-[4.24cqw]">
+                <Show when={state.scheduleSorted()[0]} fallback={<span />}>
+                  {(entry) => (
+                    <time
+                      datetime={
+                        entry().date && entry().time ? `${entry().date}T${entry().time}` : entry().date || entry().time
+                      }
+                      class="flex items-center gap-[3.64cqw]"
+                    >
+                      <Show when={entry().date}>
+                        <span class="flex flex-col items-center">
+                          <span class="text-[8.48cqw] font-extrabold leading-none text-white">
+                            {cmsEventDateParts(entry().date).day}
+                          </span>
+                          <span class="mt-[.91cqw] text-[3.33cqw] font-extrabold uppercase tracking-[.14em] text-teal-300">
+                            {cmsEventDateParts(entry().date).month}
+                          </span>
+                        </span>
+                      </Show>
+                      <Show when={entry().date && entry().time}>
+                        <span aria-hidden="true" class="h-[10.3cqw] w-px bg-white/25" />
+                      </Show>
+                      <Show when={entry().time}>
+                        <span class="whitespace-nowrap text-[4.55cqw] font-semibold text-[#d6dde3]">
+                          {entry().time} Uhr
+                        </span>
+                      </Show>
+                    </time>
+                  )}
+                </Show>
+                <span
+                  aria-hidden="true"
+                  class="flex size-[12.73cqw] shrink-0 items-center justify-center rounded-full bg-teal-300 text-[6.06cqw] font-bold text-[#06201c]"
+                >
+                  →
                 </span>
-              </Show>
+              </div>
             </div>
-            <div class="absolute bottom-16 left-4 right-4 text-white drop-shadow-lg">
-              <p class="text-lg font-semibold leading-tight">{state.title()}</p>
-              <p class="mt-1 text-sm text-white/80">{state.location()}</p>
-            </div>
-            <p class="absolute bottom-4 left-4 rounded-full bg-black/50 px-3 py-1 text-sm font-semibold text-emerald-300">
-              {cmsEventDateParts(state.scheduleSorted()[0]?.date ?? "").day}.{" "}
-              {cmsEventDateParts(state.scheduleSorted()[0]?.date ?? "").month} · {state.scheduleSorted()[0]?.time} Uhr
-              <Show when={state.scheduleSorted().length > 1}>
-                {" "}
-                · +{state.scheduleSorted().length - 1} weitere Termine
-              </Show>
-            </p>
           </div>
           <div class="mt-4 flex flex-wrap gap-2">
             <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
