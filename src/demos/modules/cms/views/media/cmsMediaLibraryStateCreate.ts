@@ -1,11 +1,11 @@
 import { createMemo, createSignal } from "solid-js"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
 import { cmsMediaStore } from "./cmsMediaStore.js"
-import { cmsMediaSmallViewportCreate } from "./cmsMediaSmallViewportCreate.js"
+import { cmsMediaNarrowContainerCreate } from "./cmsMediaNarrowContainerCreate.js"
 import { cmsMediaText } from "./cmsMediaText.js"
 
 export function cmsMediaLibraryStateCreate() {
-  const smallViewport = cmsMediaSmallViewportCreate()
+  const container = cmsMediaNarrowContainerCreate()
   const [folder, setFolder] = createSignal("*")
   const [search, setSearch] = createSignal("")
   const [selectedId, setSelectedId] = createSignal<string>()
@@ -26,7 +26,8 @@ export function cmsMediaLibraryStateCreate() {
     folder,
     search,
     selected,
-    gridCollapsed: () => smallViewport() && !!selected(),
+    observeContainer: container.observe,
+    gridCollapsed: () => container.narrow() && !!selected(),
     filtered,
     folderName,
     folderToRemove,
