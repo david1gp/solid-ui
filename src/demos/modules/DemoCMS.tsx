@@ -386,6 +386,7 @@ export function DemoCMS() {
                   <button
                     type="button"
                     class="mt-2 w-full rounded-md px-2 py-2 text-left text-sm hover:bg-black/5 dark:hover:bg-white/10"
+                    data-close-user-menu
                     onClick={openSettings}
                   >
                     {cmsShellText[cmsLocale.get()].settings}
@@ -436,6 +437,7 @@ export function DemoCMS() {
             group={cmsShellText[cmsLocale.get()][view().group]}
             title={active() === settingsPageKey ? settingsLabel() : view().label[cmsLocale.get()]}
             locale={cmsLocale.get()}
+            onNavigate={() => setActive("")}
           />
           <main class="min-w-0 shrink-0 p-4 pb-24 sm:p-8 sm:pb-24">
             <Show when={active() === settingsPageKey} fallback={viewContent()}>

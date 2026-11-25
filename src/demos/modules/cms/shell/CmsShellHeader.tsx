@@ -6,8 +6,8 @@ import { CmsDashboardAlertIcon } from "../views/dashboard/CmsDashboardAlertIcon.
 import { cmsDashboardAlerts } from "../views/dashboard/cmsDashboardAlerts.js"
 import { cmsShellHeaderStateCreate } from "./cmsShellHeaderStateCreate.js"
 
-export function CmsShellHeader(p: { group: string; title: string; locale: "de" | "en" }) {
-  const state = cmsShellHeaderStateCreate()
+export function CmsShellHeader(p: { group: string; title: string; locale: "de" | "en"; onNavigate: () => void }) {
+  const state = cmsShellHeaderStateCreate(() => p.onNavigate())
   return (
     <header class="sticky top-0 z-30 flex shrink-0 flex-wrap items-center gap-3 border-b border-neutral-200 bg-white px-4 py-3 text-sm sm:px-8 dark:border-white/10 dark:bg-[#222326]">
       <nav aria-label="Breadcrumb" class="min-w-0 flex-1 truncate text-neutral-500">
