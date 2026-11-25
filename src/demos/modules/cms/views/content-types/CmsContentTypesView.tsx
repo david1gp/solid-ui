@@ -10,6 +10,9 @@ import { cmsPillClass } from "../../ui/cmsPillClass.js"
 import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
 import { PageHeader } from "../../ui/PageHeader.js"
 import { cmsContentTypesStateCreate } from "./cmsContentTypesStateCreate.js"
+import { CmsEventEdit } from "./events/CmsEventEdit.js"
+import { CmsEventList } from "./events/CmsEventList.js"
+import { cmsEvents } from "./events/cmsEvents.js"
 import { CmsProductEdit } from "./products/CmsProductEdit.js"
 import { CmsProductList } from "./products/CmsProductList.js"
 import { CmsProductTiles } from "./products/CmsProductTiles.js"
@@ -66,14 +69,20 @@ export function CmsContentTypesView(props: { id?: string }) {
     props.id === "article:fields"
       ? undefined
       : cmsProducts.get().find((item) => props.id === `article:${item.id}` || props.id === `article:${item.id}:list`)
+  const event = () => cmsEvents.get().find((item) => props.id === `event:${item.id}`)
   return (
     <div>
       <Show
-        when={!product()}
+        when={!product() && !event()}
         fallback={
-          <Show when={product()} keyed>
-            {(item) => <CmsProductEdit product={item} backToList={props.id?.endsWith(":list")} />}
-          </Show>
+          <>
+            <Show when={product()} keyed>
+              {(item) => <CmsProductEdit product={item} backToList={props.id?.endsWith(":list")} />}
+            </Show>
+            <Show when={event()} keyed>
+              {(item) => <CmsEventEdit event={item} />}
+            </Show>
+          </>
         }
       >
         <Show
@@ -143,13 +152,16 @@ export function CmsContentTypesView(props: { id?: string }) {
                   </For>
                 </div>
               </Show>
+              <Show when={item().id === "event"}>
+                <CmsEventList events={state.events} />
+              </Show>
               <Show when={item().id === "article" && state.tab() === "list"}>
                 <CmsProductList products={state.products} />
               </Show>
               <Show
                 when={item().id === "article" && state.tab() === "tiles"}
                 fallback={
-                  <Show when={item().id !== "article"}>
+                  <Show when={item().id !== "article" && item().id !== "event"}>
                     <section class={cmsCardClass}>
                       <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
                         <h2 class="font-semibold">{t().fields}</h2>

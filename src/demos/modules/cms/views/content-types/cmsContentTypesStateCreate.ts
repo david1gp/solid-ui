@@ -1,5 +1,7 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { cmsNavigate } from "../../shell/cmsNavigate.js"
+import { cmsEvents } from "./events/cmsEvents.js"
+import { cmsEventsSorted } from "./events/cmsEventsSorted.js"
 import { cmsProducts } from "./products/cmsProducts.js"
 import { cmsProductsSorted } from "./products/cmsProductsSorted.js"
 
@@ -24,13 +26,15 @@ const types = createSignalObject<ContentType[]>([
 let nextId = 0
 export function cmsContentTypesStateCreate(id: () => string | undefined) {
   const picker = createSignalObject<FieldType>("text")
-  const currentId = () => (id()?.startsWith("article:") ? "article" : id())
+  const currentId = () => id()?.split(":")[0]
   const current = () => types.get().find((item) => item.id === currentId())
   const updateFields = (update: (fields: Field[]) => Field[]) =>
     types.set(types.get().map((item) => (item.id === currentId() ? { ...item, fields: update(item.fields) } : item)))
   return {
     products: cmsProductsSorted,
-    entryCount: (typeId: string) => (typeId === "article" ? cmsProducts.get().length : 0),
+    events: cmsEventsSorted,
+    entryCount: (typeId: string) =>
+      typeId === "article" ? cmsProducts.get().length : typeId === "event" ? cmsEvents.get().length : 0,
     tab: () => (id() === "article:tiles" ? "tiles" : "list"),
     tabSet: (value: "list" | "tiles") =>
       cmsNavigate("content-types", value === "list" ? "article" : `article:${value}`),
