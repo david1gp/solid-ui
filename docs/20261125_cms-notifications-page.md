@@ -44,6 +44,6 @@ Make the CMS demo notifications page (`/modules/DemoCMS?view=notifications`) wor
 
 ## Status
 
-- Task 1: in progress (worktree implementer)
-- Task 2: in progress (same implementer)
-- Task 3: pending
+- Task 1: done
+- Task 2: done
+- Task 3: done
