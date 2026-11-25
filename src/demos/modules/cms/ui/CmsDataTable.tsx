@@ -114,11 +114,29 @@ export function CmsDataTable<T>(props: CmsDataTableProps<T>) {
               </th>
               <For each={state.visibleColumns()}>
                 {(column) => (
-                  <th class="p-3 text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-neutral-400">
+                  <th
+                    class="p-3 text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-neutral-400"
+                    aria-sort={
+                      column.sortable !== false && state.sort().id === column.id
+                        ? state.sort().direction === "asc"
+                          ? "ascending"
+                          : "descending"
+                        : undefined
+                    }
+                  >
                     <Show when={column.sortable !== false} fallback={column.label}>
-                      <button type="button" onClick={() => state.sortToggle(column.id)}>
-                        {column.label}{" "}
-                        {state.sort().id === column.id ? (state.sort().direction === "asc" ? "↑" : "↓") : ""}
+                      <button
+                        type="button"
+                        class="inline-flex items-center gap-1"
+                        onClick={() => state.sortToggle(column.id)}
+                      >
+                        {column.label}
+                        <span
+                          aria-hidden="true"
+                          class={`inline-block w-3 text-center ${state.sort().id === column.id ? "" : "text-gray-300 dark:text-neutral-600"}`}
+                        >
+                          {state.sort().id === column.id ? (state.sort().direction === "asc" ? "↑" : "↓") : "↕"}
+                        </span>
                       </button>
                     </Show>
                   </th>
