@@ -56,14 +56,20 @@ export function CmsNotificationsView(_props: { id?: string }) {
           <For each={state.items()}>
             {(item) => (
               <div
-                class={`flex flex-wrap items-start justify-between gap-3 p-4 ${state.store.isUnread(item.id) ? "bg-[color-mix(in_oklab,var(--dashboard-accent)_5%,transparent)] dark:bg-[color-mix(in_oklab,var(--dashboard-accent)_8%,transparent)]" : ""}`}
+                class={`flex items-center gap-3 p-4 ${state.store.isUnread(item.id) ? "bg-[color-mix(in_oklab,var(--dashboard-accent)_5%,transparent)] dark:bg-[color-mix(in_oklab,var(--dashboard-accent)_8%,transparent)]" : ""}`}
               >
-                <CmsDashboardAlertIcon type={item.type} size="small" />
-                <div class="min-w-0 flex-1 text-left">
-                  <span class="flex flex-wrap items-center gap-2 text-sm font-medium">
+                <div class="relative shrink-0">
+                  <CmsDashboardAlertIcon type={item.type} size="small" />
+                  <Show when={state.store.isUnread(item.id)}>
                     <span
-                      class={`h-2 w-2 shrink-0 rounded-full ${state.store.isUnread(item.id) ? "bg-[var(--dashboard-accent)]" : "bg-neutral-300 dark:bg-neutral-700"}`}
+                      class="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-[var(--dashboard-accent)] ring-2 ring-white dark:ring-neutral-900"
+                      role="img"
+                      aria-label={state.t().unreadFilter}
                     />
+                  </Show>
+                </div>
+                <div class="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 text-left">
+                  <span class="col-span-2 min-w-0 text-sm font-medium sm:col-span-1 sm:col-start-1 sm:row-start-1">
                     <Show when={state.actionInfo(item.id)?.kind === "navigation"} fallback={item.title[state.locale()]}>
                       <button
                         type="button"
@@ -75,31 +81,28 @@ export function CmsNotificationsView(_props: { id?: string }) {
                         {item.title[state.locale()]}
                       </button>
                     </Show>
-                    <Show when={state.store.isUnread(item.id)}>
-                      <span class="rounded-full bg-[color-mix(in_oklab,var(--dashboard-accent)_12%,transparent)] px-2 py-0.5 text-xs text-[color-mix(in_srgb,var(--dashboard-accent)_75%,black)] dark:text-[color-mix(in_srgb,var(--dashboard-accent)_65%,white)]">
-                        {state.t().new}
-                      </span>
-                    </Show>
                   </span>
-                  <span class="mt-1 block pl-4 text-xs text-neutral-500 dark:text-neutral-400">
-                    {item.subtitle[state.locale()]}
-                  </span>
+                  <Show when={item.subtitle[state.locale()]}>
+                    <span class="col-span-2 min-w-0 truncate text-xs text-neutral-500 dark:text-neutral-400 sm:col-span-1 sm:col-start-1 sm:row-start-2">
+                      {item.subtitle[state.locale()]}
+                    </span>
+                  </Show>
                   <Show when={"amount" in item && item.amount}>
                     {(amount) => (
-                      <span class="mt-1 block pl-4 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+                      <span class="col-start-2 row-start-3 text-right text-sm font-semibold tabular-nums text-emerald-700 dark:text-emerald-400 sm:row-start-2">
                         +{cmsNumberFormat(amount(), { style: "currency", currency: "EUR" })}
                       </span>
                     )}
                   </Show>
                   <time
-                    class="mt-1 block pl-4 text-xs text-neutral-500 dark:text-neutral-400"
+                    class="col-start-1 row-start-3 text-xs text-neutral-500 dark:text-neutral-400 sm:col-start-2 sm:row-start-1 sm:text-right"
                     datetime={item.createdAt.toISOString()}
                     title={state.fullTime(item.createdAt)}
                   >
                     {state.time(item.createdAt)}
                   </time>
                 </div>
-                <div class="flex w-full flex-wrap items-center gap-3 pl-8 text-sm sm:w-auto sm:pl-4">
+                <div class="flex shrink-0 items-center gap-1 text-sm sm:gap-3 sm:pl-4">
                   <Show when={state.actionInfo(item.id)?.kind === "restart"}>
                     <button
                       type="button"
