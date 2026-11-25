@@ -5,7 +5,7 @@ import { cmsCardClass } from "../../../ui/cmsCardClass.js"
 import { cmsInputClass } from "../../../ui/cmsInputClass.js"
 import { cmsPrimaryButtonClass } from "../../../ui/cmsPrimaryButtonClass.js"
 import { PageHeader } from "../../../ui/PageHeader.js"
-import { CmsEventDateBadge } from "./CmsEventDateBadge.js"
+import { CmsFestivalIllustration } from "./CmsFestivalIllustration.js"
 import { cmsEventDateParts } from "./cmsEventDateParts.js"
 import { cmsEventEditStateCreate } from "./cmsEventEditStateCreate.js"
 import type { cmsEvents } from "./cmsEvents.js"
@@ -27,27 +27,41 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
       <div class="grid items-start gap-6 lg:grid-cols-2">
         <section class={cmsCardClass}>
           <h2 class="mb-4 font-semibold">Vorschau</h2>
-          <div class="flex flex-wrap items-center gap-4">
-            <CmsEventDateBadge date={state.scheduleSorted()[0]?.date ?? ""} color={props.event.color} large />
-            <div class="min-w-0 flex-1">
-              <p class="font-semibold">{state.title()}</p>
-              <ul class="mt-1 text-sm text-gray-500 dark:text-neutral-400">
-                <For each={state.scheduleSorted()}>
-                  {(entry) => (
-                    <li>
-                      {cmsEventDateParts(entry.date).long}, {entry.time} Uhr
-                    </li>
-                  )}
-                </For>
-              </ul>
-              <p class="text-sm text-gray-500 dark:text-neutral-400">{state.location()}</p>
+          <div class="relative mx-auto aspect-[3/4] max-w-sm overflow-hidden rounded-2xl">
+            <CmsFestivalIllustration color={props.event.color} />
+            <div class="absolute left-4 top-4 flex gap-2">
+              <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
+                #{props.event.position}
+              </span>
               <Show when={state.featured()}>
-                <span class="mt-2 inline-block rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 dark:bg-neutral-800 dark:text-neutral-300">
+                <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
                   Top
                 </span>
               </Show>
             </div>
+            <div class="absolute bottom-16 left-4 right-4 text-white drop-shadow-lg">
+              <p class="text-lg font-semibold leading-tight">{state.title()}</p>
+              <p class="mt-1 text-sm text-white/80">{state.location()}</p>
+            </div>
+            <p class="absolute bottom-4 left-4 rounded-full bg-black/50 px-3 py-1 text-sm font-semibold text-emerald-300">
+              {cmsEventDateParts(state.scheduleSorted()[0]?.date ?? "").day}.{" "}
+              {cmsEventDateParts(state.scheduleSorted()[0]?.date ?? "").month} · {state.scheduleSorted()[0]?.time} Uhr
+              <Show when={state.scheduleSorted().length > 1}> · +{state.scheduleSorted().length - 1} weitere Termine</Show>
+            </p>
           </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
+              Aus Mediathek wählen
+            </button>
+            <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
+              Neues Bild hochladen
+            </button>
+          </div>
+          <Show when={state.imageNotice()}>
+            <p role="status" class="mt-3 text-sm text-neutral-600 dark:text-neutral-300">
+              {state.imageNotice()}
+            </p>
+          </Show>
         </section>
         <section class={`${cmsCardClass} space-y-4`}>
           <h2 class="font-semibold">Veranstaltungsdetails</h2>

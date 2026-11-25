@@ -26,6 +26,7 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
   const featured = createSignalObject(event.featured)
   const description = createSignalObject(event.description)
   const notice = createSignalObject("")
+  const imageNotice = createSignalObject("")
   let nextId = 0
   const schedule = createSignalObject<Row[]>(
     cmsEventScheduleSorted(event.schedule).map((entry) => rowCreate(nextId++, entry)),
@@ -86,6 +87,8 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
     description: () => description.get(),
     descriptionSet: (value: string) => description.set(value),
     notice: () => notice.get(),
+    imageNotice: () => imageNotice.get(),
+    imageUnavailable: () => imageNotice.set("Demo – nicht verfügbar"),
     save: () =>
       notice.set(
         schedule.get().every(rowValid)
