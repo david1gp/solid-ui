@@ -26,7 +26,9 @@ export function cmsDataTableStateCreate<T>(props: () => CmsDataTableProps<T>) {
   const pageNumber = createSignalObject(1)
   const pageSize = createSignalObject(untrack(() => Math.max(1, Math.floor(props().pageSize || 10))))
   const labels = () => ({ ...defaults, ...props().labels })
-  const visibleColumns = createMemo(() => props().columns.filter((column) => visibleIds.get().includes(column.id)))
+  const visibleColumns = createMemo(() =>
+    props().columns.filter((column) => column.hideable === false || visibleIds.get().includes(column.id)),
+  )
   const filteredRows = createMemo(() => {
     const needle = query.get().trim().toLocaleLowerCase()
     const rows = props().rows.filter((row) => {

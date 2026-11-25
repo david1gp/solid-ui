@@ -386,6 +386,7 @@ export function CmsPostsView(p: { id?: string }) {
                   columns={[
                     {
                       id: "title",
+                      hideable: false,
                       label: t().title,
                       value: (post) => post.title,
                       sortable: true,

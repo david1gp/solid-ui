@@ -11,6 +11,7 @@ export type CmsDataTableColumn<T> = {
   sortable?: boolean
   searchable?: boolean
   filterable?: boolean
+  hideable?: boolean
 }
 
 export type CmsDataTableLabels = {
@@ -68,7 +69,7 @@ export function CmsDataTable<T>(props: CmsDataTableProps<T>) {
         <details class="relative">
           <summary class={`${cmsButtonClass} cursor-pointer`}>{state.labels().columns}</summary>
           <div class="absolute z-10 mt-1 min-w-40 space-y-2 rounded-xl border border-gray-200 bg-white p-3 shadow-lg dark:border-neutral-800 dark:bg-neutral-900">
-            <For each={props.columns}>
+            <For each={props.columns.filter((column) => column.hideable !== false)}>
               {(column) => (
                 <label class="flex items-center gap-2">
                   <input
