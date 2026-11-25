@@ -426,7 +426,7 @@ export function DemoCMS() {
           />
         </Show>
         <div
-          class="flex min-w-0 flex-1 flex-col overflow-y-auto scroll-pt-[57px] bg-white dark:bg-[#222326]"
+          class="flex min-w-0 flex-1 flex-col overflow-y-auto scroll-pt-16 bg-white dark:bg-[#222326]"
           style={{
             "--app-sidebar-accent": accentColor.get(),
             "--dashboard-accent": "var(--app-sidebar-accent, var(--color-blue-600))",
