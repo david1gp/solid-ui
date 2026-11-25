@@ -15,7 +15,10 @@ On the DemoCMS product edit page (`?view=content-types&id=article:<product-id>`)
 
 ## Decisions
 - Toggle button in the "Produktbild" section header (right side of the `h2` row), icon `mdiChevronLeft` (same `Icon` component as sidebar), `aria-expanded`, `aria-controls`, aria-label/title "Produktbild einklappen" / "Produktbild ausklappen".
-- Desktop (`lg+`) collapsed: grid columns switch from `lg:grid-cols-2` to a narrow rail (e.g. `lg:grid-cols-[3rem_minmax(0,1fr)]`); the section renders as a slim vertical rail (same card styling) containing only the expand button (chevron rotated 180°) and a vertical "Produktbild" label (`[writing-mode:vertical-rl]` + rotate-180). Tile preview and media buttons are hidden (`inert`/not rendered) while collapsed. Smooth transition if trivial (`transition-[grid-template-columns]`), no layout jank.
+- Desktop (`lg+`) collapsed: the column shrinks to a narrow rail (~3rem); the section renders as a slim vertical rail (same card styling) containing only the expand button (chevron rotated 180°) and a vertical "Produktbild" label (`[writing-mode:vertical-rl]` + rotate-180). Tile preview and media buttons are visually hidden and `inert`/`aria-hidden` while collapsed.
+- Desktop collapsed rail keeps the SAME HEIGHT as the expanded section (tile + buttons) — it must not shrink vertically. Preferred approach: keep the content mounted (clipped via overflow-hidden, faded out, inert) so the height is preserved naturally; alternatively measure/lock height. Height must stay correct across viewport resizes.
+- Animation: collapse/expand uses the SAME animation as the CMS sidebar (`CmsSidebar.tsx`): same transitioned property type (width), same duration and easing classes, same chevron rotation transition. The details column grows/shrinks smoothly in sync (no jumps). Respect `motion-reduce` if the sidebar does.
+- Mobile (< `lg`): collapses vertically to the header row (unchanged behaviour); animate smoothly with the same duration/easing if trivial.
 - Mobile (< `lg`, single column): the same toggle collapses the section vertically to just its header row (chevron points down/up there is not required; reuse the same button, content hidden).
 - State: new local signal `imageCollapsed` in `cmsProductEditStateCreate.ts`, default `false`, not persisted (consistent with FAQ state).
 - No new libraries; use `@mdi/js` icons and existing `Icon` component already used in the file.
@@ -23,4 +26,6 @@ On the DemoCMS product edit page (`?view=content-types&id=article:<product-id>`)
 
 ## Tasks
 1. Implement collapse state + UI in `CmsProductEdit.tsx` / `cmsProductEditStateCreate.ts`. Verify `bunx tsc --noEmit`, `bunx biome format` on changed files, browser check (expanded, collapsed, re-expanded, desktop 1280px and mobile 390px, light + dark, keyboard toggle). Status: done (branch `feat/cms-product-image-collapse`, commit cc1a5bf)
-2. Merge to main, push, deploy (`bun run deploy`), live browser verification, cleanup worktree/branch. Status: done
+2. Merge to main, push, deploy (`bun run deploy`), live browser verification, cleanup worktree/branch. Status: done (main `104af1b`)
+3. Follow-up: collapsed rail keeps expanded height + sidebar-identical collapse/expand animation (see Decisions). Status: done (main `e62e8af`)
+4. Merge, push, deploy, live verify, cleanup for task 3. Status: done (main `e62e8af`; deployed and live verified)
