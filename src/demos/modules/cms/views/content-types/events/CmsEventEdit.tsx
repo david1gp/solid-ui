@@ -2,6 +2,7 @@ import { createUniqueId, For, Show, untrack } from "solid-js"
 import { CmsDatePicker } from "../../../ui/CmsDatePicker.js"
 import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
 import { cmsCardClass } from "../../../ui/cmsCardClass.js"
+import { CmsCollapsiblePreviewColumn } from "../../../ui/CmsCollapsiblePreviewColumn.js"
 import { cmsInputClass } from "../../../ui/cmsInputClass.js"
 import { cmsPrimaryButtonClass } from "../../../ui/cmsPrimaryButtonClass.js"
 import { PageHeader } from "../../../ui/PageHeader.js"
@@ -26,9 +27,8 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
         ← Veranstaltung / Event
       </button>
       <PageHeader title={props.event.title} />
-      <div class="grid items-start gap-6 lg:grid-cols-2">
-        <section class={cmsCardClass}>
-          <h2 class="mb-4 font-semibold">Vorschau</h2>
+      <div class="@container flex flex-col items-start gap-6 lg:flex-row">
+        <CmsCollapsiblePreviewColumn title="Vorschau">
           <div class="@container relative mx-auto aspect-[330/460] w-full max-w-sm overflow-hidden rounded-2xl">
             <CmsFestivalIllustration color={props.event.color} />
             <div class="absolute inset-x-0 bottom-0 h-[56%] bg-[linear-gradient(to_top,rgb(8_12_16/.97)_0%,rgb(8_12_16/.88)_50%,transparent_100%)]" />
@@ -112,8 +112,8 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
               {state.imageNotice()}
             </p>
           </Show>
-        </section>
-        <section class={`${cmsCardClass} @container space-y-4`}>
+        </CmsCollapsiblePreviewColumn>
+        <section class={`${cmsCardClass} @container w-full min-w-0 space-y-4 lg:flex-1`}>
           <h2 class="font-semibold">Veranstaltungsdetails</h2>
           <label class="block text-sm">
             Titel
