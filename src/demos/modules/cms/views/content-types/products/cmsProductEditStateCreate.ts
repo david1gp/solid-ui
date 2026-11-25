@@ -1,9 +1,13 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { cmsNavigate } from "../../../shell/cmsNavigate.js"
+import { cmsEventTitleSplit } from "../events/cmsEventTitleSplit.js"
 import { cmsProductOrder } from "./cmsProductOrder.js"
 import type { cmsProducts } from "./cmsProducts.js"
 
 export function cmsProductEditStateCreate(product: ReturnType<typeof cmsProducts.get>[number], backToList = false) {
+  const split = cmsEventTitleSplit(product.title)
+  const name = createSignalObject(split.eyebrow || split.title)
+  const subtitle = createSignalObject(split.eyebrow ? split.title : "")
   const position = createSignalObject(cmsProductOrder.get().indexOf(product.id) + 1 || product.position)
   const featured = createSignalObject(product.featured)
   const price = createSignalObject(String(product.price))
@@ -20,6 +24,11 @@ export function cmsProductEditStateCreate(product: ReturnType<typeof cmsProducts
   const imageNotice = createSignalObject("")
   let nextId = faq.get().length
   return {
+    name: () => name.get(),
+    nameSet: (value: string) => name.set(value),
+    subtitle: () => subtitle.get(),
+    subtitleSet: (value: string) => subtitle.set(value),
+    title: () => (subtitle.get() ? `${name.get()} – ${subtitle.get()}` : name.get()),
     position: () => position.get(),
     positionSet: (value: number) => position.set(value),
     featured: () => featured.get(),

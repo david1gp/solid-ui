@@ -5,9 +5,9 @@ import { cmsInputClass } from "../../../ui/cmsInputClass.js"
 import { cmsPrimaryButtonClass } from "../../../ui/cmsPrimaryButtonClass.js"
 import { PageHeader } from "../../../ui/PageHeader.js"
 import { CmsTopsellerRibbon } from "../CmsTopsellerRibbon.js"
-import { cmsEventTitleSplit } from "../events/cmsEventTitleSplit.js"
 import { CmsHeadphonesIllustration } from "./CmsHeadphonesIllustration.js"
 import { cmsProductEditStateCreate } from "./cmsProductEditStateCreate.js"
+import { cmsProductLowStockThreshold } from "./cmsProductLowStockThreshold.js"
 import { cmsProductPriceFormat } from "./cmsProductPriceFormat.js"
 import { cmsProductStockStatus } from "./cmsProductStockStatus.js"
 import { cmsProducts } from "./cmsProducts.js"
@@ -23,7 +23,7 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
       >
         ← Artikel / Article
       </button>
-      <PageHeader title={props.product.title} />
+      <PageHeader title={state.title() || "Produktname"} />
       <div class="grid items-start gap-6 lg:grid-cols-2">
         <section class={cmsCardClass}>
           <h2 class="mb-4 font-semibold">Produktbild</h2>
@@ -34,13 +34,13 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
               <CmsTopsellerRibbon />
             </Show>
             <div class="absolute inset-x-[6.06cqw] bottom-[6.06cqw]">
-              <p class="line-clamp-1 text-[7.27cqw] font-extrabold leading-[1.2] text-white">
-                {cmsEventTitleSplit(props.product.title).eyebrow || cmsEventTitleSplit(props.product.title).title}
+              <p
+                class={`line-clamp-1 text-[7.27cqw] font-extrabold leading-[1.2] ${state.name() ? "text-white" : "text-white/50"}`}
+              >
+                {state.name() || "Produktname"}
               </p>
-              <Show when={cmsEventTitleSplit(props.product.title).eyebrow}>
-                <p class="mt-[1.21cqw] line-clamp-2 text-[4.24cqw] leading-[1.3] text-[#d6dde3]">
-                  {cmsEventTitleSplit(props.product.title).title}
-                </p>
+              <Show when={state.subtitle()}>
+                <p class="mt-[1.21cqw] line-clamp-2 text-[4.24cqw] leading-[1.3] text-[#d6dde3]">{state.subtitle()}</p>
               </Show>
               <div class="mt-[2.42cqw] flex items-center gap-[2.12cqw] text-[3.94cqw] text-[#d6dde3]">
                 <span
@@ -94,6 +94,27 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
         <div class="space-y-6">
           <section class={`${cmsCardClass} space-y-4`}>
             <h2 class="font-semibold">Produktdetails</h2>
+            <label class="block text-sm">
+              Produktname
+              <input
+                class={`mt-1 w-full ${cmsInputClass}`}
+                value={state.name()}
+                onInput={(e) => state.nameSet(e.currentTarget.value)}
+              />
+            </label>
+            <div>
+              <label class="block text-sm">
+                Kurzbeschreibung
+                <input
+                  class={`mt-1 w-full ${cmsInputClass}`}
+                  value={state.subtitle()}
+                  onInput={(e) => state.subtitleSet(e.currentTarget.value)}
+                />
+              </label>
+              <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
+                Wird in der Vorschau unter dem Produktnamen angezeigt.
+              </p>
+            </div>
             <div class="grid gap-4 sm:grid-cols-2">
               <label class="block text-sm">
                 Preis (€)
@@ -106,17 +127,23 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
                   onInput={(e) => state.priceSet(e.currentTarget.value)}
                 />
               </label>
-              <label class="block text-sm">
-                Menge
-                <input
-                  class={`mt-1 w-full ${cmsInputClass}`}
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={state.quantity()}
-                  onInput={(e) => state.quantitySet(e.currentTarget.value)}
-                />
-              </label>
+              <div>
+                <label class="block text-sm">
+                  Menge
+                  <input
+                    class={`mt-1 w-full ${cmsInputClass}`}
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={state.quantity()}
+                    onInput={(e) => state.quantitySet(e.currentTarget.value)}
+                  />
+                </label>
+                <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
+                  Steuert die Verfügbarkeit in der Vorschau: ab {cmsProductLowStockThreshold + 1} „Auf Lager“, 1–
+                  {cmsProductLowStockThreshold} „Nur noch X Stück“, 0 „Ausverkauft“.
+                </p>
+              </div>
             </div>
             <div>
               <label class="block text-sm">
