@@ -19,3 +19,10 @@ test("article list, tiles and product routes retain their content type", () => {
     expect(state.tab()).toBe(tab)
   }
 })
+
+test("event list and event edit routes retain their content type", () => {
+  for (const id of ["event", "event:event-1"]) {
+    const state = cmsContentTypesStateCreate(() => id)
+    expect(state.current()?.id).toBe("event")
+  }
+})
