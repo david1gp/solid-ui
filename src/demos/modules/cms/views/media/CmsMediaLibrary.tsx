@@ -104,45 +104,51 @@ export function CmsMediaLibrary() {
             </button>
           </form>
         </aside>
-        <section class="min-w-0 flex-1 space-y-4">
-          <div class="flex flex-wrap gap-2">
-            <input
-              type="search"
-              aria-label={state.text().search}
-              placeholder={state.text().search}
-              value={state.search()}
-              onInput={(event) => state.changeSearch(event.currentTarget.value)}
-              class={`${cmsInputClass} min-w-40 flex-1`}
-            />
-          </div>
-          <Show
-            when={state.filtered().length}
-            fallback={
-              <div class={`${cmsCardClass} flex flex-col items-center gap-3 py-12 text-center`}>
-                <span class={cmsIconCircleClass}>
-                  <Icon path={mdiFolderMultipleOutline} class="size-5" />
-                </span>
-                <p class="text-sm text-gray-500 dark:text-neutral-400">{state.text().empty}</p>
-              </div>
-            }
-          >
-            <div class={`${cmsCardClass} grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4`}>
-              <For each={state.filtered()}>
-                {(item) => (
-                  <button
-                    type="button"
-                    onClick={() => state.select(item.id)}
-                    aria-pressed={state.selected()?.id === item.id ? "true" : "false"}
-                    class={`${cmsCardClass} overflow-hidden p-0 text-left text-sm hover:bg-gray-50 dark:hover:bg-neutral-800 ${state.selected()?.id === item.id ? "ring-2 ring-[var(--dashboard-accent)]" : ""}`}
-                  >
-                    <img src={item.url} alt={item.alt} class="aspect-square w-full object-cover" />
-                    <span class="block min-w-0 truncate p-2">{item.name}</span>
-                  </button>
-                )}
-              </For>
+        <div
+          class="grid min-w-0 flex-1 grid-rows-[1fr] opacity-100 transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none aria-hidden:grid-rows-[0fr] aria-hidden:opacity-0"
+          aria-hidden={state.gridCollapsed() ? "true" : undefined}
+          inert={state.gridCollapsed()}
+        >
+          <section class="min-h-0 min-w-0 space-y-4 overflow-hidden">
+            <div class="flex flex-wrap gap-2">
+              <input
+                type="search"
+                aria-label={state.text().search}
+                placeholder={state.text().search}
+                value={state.search()}
+                onInput={(event) => state.changeSearch(event.currentTarget.value)}
+                class={`${cmsInputClass} min-w-40 flex-1`}
+              />
             </div>
-          </Show>
-        </section>
+            <Show
+              when={state.filtered().length}
+              fallback={
+                <div class={`${cmsCardClass} flex flex-col items-center gap-3 py-12 text-center`}>
+                  <span class={cmsIconCircleClass}>
+                    <Icon path={mdiFolderMultipleOutline} class="size-5" />
+                  </span>
+                  <p class="text-sm text-gray-500 dark:text-neutral-400">{state.text().empty}</p>
+                </div>
+              }
+            >
+              <div class={`${cmsCardClass} grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4`}>
+                <For each={state.filtered()}>
+                  {(item) => (
+                    <button
+                      type="button"
+                      onClick={() => state.select(item.id)}
+                      aria-pressed={state.selected()?.id === item.id ? "true" : "false"}
+                      class={`${cmsCardClass} overflow-hidden p-0 text-left text-sm hover:bg-gray-50 dark:hover:bg-neutral-800 ${state.selected()?.id === item.id ? "ring-2 ring-[var(--dashboard-accent)]" : ""}`}
+                    >
+                      <img src={item.url} alt={item.alt} class="aspect-square w-full object-cover" />
+                      <span class="block min-w-0 truncate p-2">{item.name}</span>
+                    </button>
+                  )}
+                </For>
+              </div>
+            </Show>
+          </section>
+        </div>
         <Show when={state.selected()}>
           {(item) => (
             <aside class={`${cmsCardClass} w-full space-y-4 lg:w-72`}>
