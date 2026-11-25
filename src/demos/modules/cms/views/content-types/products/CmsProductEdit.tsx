@@ -1,4 +1,6 @@
+import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { For, Show, untrack } from "solid-js"
+import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
 import { cmsCardClass } from "../../../ui/cmsCardClass.js"
 import { cmsInputClass } from "../../../ui/cmsInputClass.js"
@@ -178,46 +180,69 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
             </label>
           </section>
           <section class={cmsCardClass}>
-            <h2 class="mb-4 font-semibold">FAQ</h2>
-            <div class="space-y-4">
-              <For each={state.faq()}>
-                {(item, index) => (
-                  <div class="space-y-3 rounded-xl border border-gray-200 p-4 dark:border-neutral-800">
-                    <div class="flex items-center justify-between gap-2">
-                      <h3 class="text-sm font-semibold">Frage {index() + 1}</h3>
-                      <button
-                        type="button"
-                        class={cmsButtonClass}
-                        aria-label={`Frage ${index() + 1} entfernen`}
-                        onClick={() => state.faqRemove(item.id)}
-                      >
-                        Entfernen
-                      </button>
-                    </div>
-                    <label class="block text-sm">
-                      Frage
-                      <input
-                        class={`mt-1 w-full ${cmsInputClass}`}
-                        value={item.question.get()}
-                        onInput={(e) => state.faqChange(item.id, "question", e.currentTarget.value)}
-                      />
-                    </label>
-                    <label class="block text-sm">
-                      Antwort
-                      <textarea
-                        class={`mt-1 w-full ${cmsInputClass}`}
-                        rows="2"
-                        value={item.answer.get()}
-                        onInput={(e) => state.faqChange(item.id, "answer", e.currentTarget.value)}
-                      />
-                    </label>
-                  </div>
-                )}
-              </For>
+            <h2 class="font-semibold">
+              <button
+                type="button"
+                class="flex w-full items-center justify-between gap-2 rounded-md text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)]"
+                aria-expanded={state.faqOpen() ? "true" : "false"}
+                aria-controls={state.faqContentId}
+                onClick={state.faqToggle}
+              >
+                FAQ
+                <Icon
+                  path={mdiChevronDown}
+                  class={`size-4 shrink-0 transition-transform duration-200 motion-reduce:transition-none ${state.faqOpen() ? "" : "-rotate-90"}`}
+                />
+              </button>
+            </h2>
+            <div
+              id={state.faqContentId}
+              aria-hidden={state.faqOpen() ? "false" : "true"}
+              inert={!state.faqOpen()}
+              class="grid grid-rows-[1fr] opacity-100 aria-hidden:grid-rows-[0fr] aria-hidden:opacity-0 transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none"
+            >
+              <div class="min-h-0 overflow-hidden">
+                <div class="space-y-4 pt-4">
+                  <For each={state.faq()}>
+                    {(item, index) => (
+                      <div class="space-y-3 rounded-xl border border-gray-200 p-4 dark:border-neutral-800">
+                        <div class="flex items-center justify-between gap-2">
+                          <h3 class="text-sm font-semibold">Frage {index() + 1}</h3>
+                          <button
+                            type="button"
+                            class={cmsButtonClass}
+                            aria-label={`Frage ${index() + 1} entfernen`}
+                            onClick={() => state.faqRemove(item.id)}
+                          >
+                            Entfernen
+                          </button>
+                        </div>
+                        <label class="block text-sm">
+                          Frage
+                          <input
+                            class={`mt-1 w-full ${cmsInputClass}`}
+                            value={item.question.get()}
+                            onInput={(e) => state.faqChange(item.id, "question", e.currentTarget.value)}
+                          />
+                        </label>
+                        <label class="block text-sm">
+                          Antwort
+                          <textarea
+                            class={`mt-1 w-full ${cmsInputClass}`}
+                            rows="2"
+                            value={item.answer.get()}
+                            onInput={(e) => state.faqChange(item.id, "answer", e.currentTarget.value)}
+                          />
+                        </label>
+                      </div>
+                    )}
+                  </For>
+                </div>
+                <button type="button" class={`${cmsButtonClass} mt-4`} onClick={state.faqAdd}>
+                  + Frage hinzufügen
+                </button>
+              </div>
             </div>
-            <button type="button" class={`${cmsButtonClass} mt-4`} onClick={state.faqAdd}>
-              + Frage hinzufügen
-            </button>
           </section>
         </div>
       </div>

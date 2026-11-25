@@ -1,4 +1,5 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { createUniqueId } from "solid-js"
 import { cmsNavigate } from "../../../shell/cmsNavigate.js"
 import { cmsEventTitleSplit } from "../events/cmsEventTitleSplit.js"
 import { cmsProductOrder } from "./cmsProductOrder.js"
@@ -20,6 +21,8 @@ export function cmsProductEditStateCreate(product: ReturnType<typeof cmsProducts
       answer: createSignalObject(item.answer),
     })),
   )
+  const faqOpen = createSignalObject(false)
+  const faqContentId = createUniqueId()
   const notice = createSignalObject("")
   const imageNotice = createSignalObject("")
   let nextId = faq.get().length
@@ -40,6 +43,9 @@ export function cmsProductEditStateCreate(product: ReturnType<typeof cmsProducts
     description: () => description.get(),
     descriptionSet: (value: string) => description.set(value),
     faq: () => faq.get(),
+    faqOpen: () => faqOpen.get(),
+    faqToggle: () => faqOpen.set(!faqOpen.get()),
+    faqContentId,
     faqAdd: () =>
       faq.set([...faq.get(), { id: nextId++, question: createSignalObject(""), answer: createSignalObject("") }]),
     faqRemove: (id: number) => faq.set(faq.get().filter((item) => item.id !== id)),
