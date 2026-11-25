@@ -1,4 +1,5 @@
 import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
+import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
 import { For, Show, untrack } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
@@ -25,72 +26,95 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
         ← Artikel / Article
       </button>
       <PageHeader title={state.title() || "Produktname"} />
-      <div class="grid items-start gap-6 lg:grid-cols-2">
-        <section class={cmsCardClass}>
-          <h2 class="mb-4 font-semibold">Produktbild</h2>
-          <div class="@container relative mx-auto aspect-[330/460] w-full max-w-sm overflow-hidden rounded-2xl">
-            <CmsHeadphonesIllustration colorway={props.product.colorway} />
-            <div class="absolute inset-x-0 bottom-0 h-[50%] bg-[linear-gradient(to_top,rgb(8_12_16/.98)_0%,rgb(8_12_16/.92)_55%,transparent_100%)]" />
-            <Show when={state.featured()}>
-              <CmsTopsellerRibbon />
-            </Show>
-            <div class="absolute inset-x-[6.06cqw] bottom-[6.06cqw]">
-              <p
-                class={`line-clamp-1 text-[7.27cqw] font-extrabold leading-[1.2] ${state.name() ? "text-white" : "text-white/50"}`}
-              >
-                {state.name() || "Produktname"}
-              </p>
-              <Show when={state.subtitle()}>
-                <p class="mt-[1.21cqw] line-clamp-2 text-[4.24cqw] leading-[1.3] text-[#d6dde3]">{state.subtitle()}</p>
+      <div
+        class={`grid items-start gap-6 ${state.imageCollapsed() ? "lg:grid-cols-[3rem_minmax(0,1fr)]" : "lg:grid-cols-2"}`}
+      >
+        <section class={`${cmsCardClass} ${state.imageCollapsed() ? "lg:!p-2" : ""}`}>
+          <div
+            class={`flex items-center justify-between gap-2 ${state.imageCollapsed() ? "lg:flex-col-reverse" : "mb-4"}`}
+          >
+            <h2 class={`font-semibold ${state.imageCollapsed() ? "lg:[writing-mode:vertical-rl] lg:rotate-180" : ""}`}>
+              Produktbild
+            </h2>
+            <button
+              type="button"
+              class="flex size-8 shrink-0 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)]"
+              aria-expanded={state.imageCollapsed() ? "false" : "true"}
+              aria-controls={state.imageContentId}
+              aria-label={state.imageCollapsed() ? "Produktbild ausklappen" : "Produktbild einklappen"}
+              title={state.imageCollapsed() ? "Produktbild ausklappen" : "Produktbild einklappen"}
+              onClick={state.imageToggle}
+            >
+              <Icon path={mdiChevronLeft} class={`size-5 ${state.imageCollapsed() ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+          <div id={state.imageContentId} hidden={state.imageCollapsed()} inert={state.imageCollapsed()}>
+            <div class="@container relative mx-auto aspect-[330/460] w-full max-w-sm overflow-hidden rounded-2xl">
+              <CmsHeadphonesIllustration colorway={props.product.colorway} />
+              <div class="absolute inset-x-0 bottom-0 h-[50%] bg-[linear-gradient(to_top,rgb(8_12_16/.98)_0%,rgb(8_12_16/.92)_55%,transparent_100%)]" />
+              <Show when={state.featured()}>
+                <CmsTopsellerRibbon />
               </Show>
-              <div class="mt-[2.42cqw] flex items-center gap-[2.12cqw] text-[3.94cqw] text-[#d6dde3]">
-                <span
-                  aria-hidden="true"
-                  class={`size-[2.12cqw] shrink-0 rounded-full ${cmsProductStockStatus(state.quantity()).dotClass}`}
-                />
-                <span>{cmsProductStockStatus(state.quantity()).label}</span>
-              </div>
-              <div class="mt-[4.85cqw] flex items-center justify-between border-t border-white/[.14] pt-[4.24cqw]">
-                <div>
-                  <p class="whitespace-nowrap text-[8.48cqw] font-extrabold leading-none text-white">
-                    {cmsProductPriceFormat(Number(state.price()) || 0)}
-                  </p>
-                  <p class="mt-[1.21cqw] text-[3.33cqw] text-[#9fb0b8]">inkl. MwSt.</p>
-                </div>
-                <span
-                  aria-hidden="true"
-                  class="flex size-[12.73cqw] shrink-0 items-center justify-center rounded-full bg-teal-300 text-[#06201c]"
+              <div class="absolute inset-x-[6.06cqw] bottom-[6.06cqw]">
+                <p
+                  class={`line-clamp-1 text-[7.27cqw] font-extrabold leading-[1.2] ${state.name() ? "text-white" : "text-white/50"}`}
                 >
-                  <svg
+                  {state.name() || "Produktname"}
+                </p>
+                <Show when={state.subtitle()}>
+                  <p class="mt-[1.21cqw] line-clamp-2 text-[4.24cqw] leading-[1.3] text-[#d6dde3]">
+                    {state.subtitle()}
+                  </p>
+                </Show>
+                <div class="mt-[2.42cqw] flex items-center gap-[2.12cqw] text-[3.94cqw] text-[#d6dde3]">
+                  <span
                     aria-hidden="true"
-                    class="size-[6.06cqw]"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    class={`size-[2.12cqw] shrink-0 rounded-full ${cmsProductStockStatus(state.quantity()).dotClass}`}
+                  />
+                  <span>{cmsProductStockStatus(state.quantity()).label}</span>
+                </div>
+                <div class="mt-[4.85cqw] flex items-center justify-between border-t border-white/[.14] pt-[4.24cqw]">
+                  <div>
+                    <p class="whitespace-nowrap text-[8.48cqw] font-extrabold leading-none text-white">
+                      {cmsProductPriceFormat(Number(state.price()) || 0)}
+                    </p>
+                    <p class="mt-[1.21cqw] text-[3.33cqw] text-[#9fb0b8]">inkl. MwSt.</p>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="flex size-[12.73cqw] shrink-0 items-center justify-center rounded-full bg-teal-300 text-[#06201c]"
                   >
-                    <path d="M5 8h14l1 13H4L5 8Z" />
-                    <path d="M9 9V6a3 3 0 0 1 6 0v3" />
-                  </svg>
-                </span>
+                    <svg
+                      aria-hidden="true"
+                      class="size-[6.06cqw]"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M5 8h14l1 13H4L5 8Z" />
+                      <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
+                Aus Mediathek wählen
+              </button>
+              <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
+                Neues Bild hochladen
+              </button>
+            </div>
+            <Show when={state.imageNotice()}>
+              <p role="status" class="mt-3 text-sm text-neutral-600 dark:text-neutral-300">
+                {state.imageNotice()}
+              </p>
+            </Show>
           </div>
-          <div class="mt-4 flex flex-wrap gap-2">
-            <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
-              Aus Mediathek wählen
-            </button>
-            <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
-              Neues Bild hochladen
-            </button>
-          </div>
-          <Show when={state.imageNotice()}>
-            <p role="status" class="mt-3 text-sm text-neutral-600 dark:text-neutral-300">
-              {state.imageNotice()}
-            </p>
-          </Show>
         </section>
         <div class="space-y-6">
           <section class={`${cmsCardClass} space-y-4`}>

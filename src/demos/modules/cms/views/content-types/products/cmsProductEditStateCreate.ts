@@ -25,6 +25,8 @@ export function cmsProductEditStateCreate(product: ReturnType<typeof cmsProducts
   const faqContentId = createUniqueId()
   const notice = createSignalObject("")
   const imageNotice = createSignalObject("")
+  const imageCollapsed = createSignalObject(false)
+  const imageContentId = createUniqueId()
   let nextId = faq.get().length
   return {
     name: () => name.get(),
@@ -55,6 +57,9 @@ export function cmsProductEditStateCreate(product: ReturnType<typeof cmsProducts
         .find((item) => item.id === id)
         ?.[field].set(value),
     notice: () => notice.get(),
+    imageCollapsed: () => imageCollapsed.get(),
+    imageToggle: () => imageCollapsed.set(!imageCollapsed.get()),
+    imageContentId,
     imageNotice: () => imageNotice.get(),
     imageUnavailable: () => imageNotice.set("Demo – nicht verfügbar"),
     save: () => notice.set("Demo – Änderungen werden nicht gespeichert"),
