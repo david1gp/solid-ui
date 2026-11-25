@@ -31,7 +31,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
               type="button"
               aria-pressed={state.filter() === filter.id ? "true" : "false"}
               onClick={() => state.setFilter(filter.id)}
-              class={`shrink-0 rounded-lg px-3 py-2 text-sm ${state.filter() === filter.id ? "bg-indigo-600 text-white" : "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"}`}
+              class={`shrink-0 rounded-lg px-3 py-2 text-sm ${state.filter() === filter.id ? "bg-[var(--dashboard-accent)] text-white" : "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"}`}
             >
               {filter.label} <span class="ml-1 opacity-75">{filter.count}</span>
             </button>
@@ -90,7 +90,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
                   <Show when={item.type !== "success"}>
                     <button
                       type="button"
-                      class="text-indigo-700 underline dark:text-indigo-300"
+                      class="text-[var(--dashboard-accent)] underline"
                       onClick={() => state.action(item.id)}
                     >
                       {state.actionLabel(item)}

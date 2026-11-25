@@ -48,7 +48,7 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
                     <button
                       type="button"
                       onClick={state.openNotifications}
-                      class="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-blue-500 dark:hover:bg-neutral-800"
+                      class="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-[var(--dashboard-accent)] dark:hover:bg-neutral-800"
                     >
                       <CmsDashboardAlertIcon type={alert.type} />
                       <span class="min-w-0 flex-1">
@@ -72,7 +72,7 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
             <button
               type="button"
               onClick={state.openNotifications}
-              class="w-full border-t border-neutral-100 px-4 py-3 text-center font-medium text-blue-600 hover:bg-gray-50 dark:border-neutral-800 dark:text-blue-400 dark:hover:bg-neutral-800"
+              class="w-full border-t border-neutral-100 px-4 py-3 text-center font-medium text-[var(--dashboard-accent)] hover:bg-gray-50 dark:border-neutral-800 dark:hover:bg-neutral-800"
             >
               {cmsShellText[p.locale].viewAll}
             </button>

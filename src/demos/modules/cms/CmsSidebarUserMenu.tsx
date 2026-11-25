@@ -141,7 +141,8 @@ function Segment(p: { selected: boolean; onClick: () => void; children: JSXEleme
       class={classArr(
         "flex items-center justify-center gap-1.5 h-8 px-2 rounded-md cursor-pointer text-sm font-medium", // layout
         "hover:bg-black/5 dark:hover:bg-white/10", // hover
-        p.selected && "bg-blue-50 dark:bg-white/10 hover:bg-blue-50", // selected
+        p.selected &&
+          "bg-[color-mix(in_oklab,var(--app-sidebar-accent,var(--color-blue-500))_12%,transparent)] hover:bg-[color-mix(in_oklab,var(--app-sidebar-accent,var(--color-blue-500))_12%,transparent)]", // selected
       )}
     >
       {p.children}
