@@ -3,7 +3,7 @@ import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsShellText } from "../i18n/cmsShellText.js"
 import { CmsDashboardAlertIcon } from "../views/dashboard/CmsDashboardAlertIcon.js"
-import { cmsDashboardAlerts } from "../views/dashboard/cmsDashboardAlerts.js"
+import { cmsNotificationsStore } from "../notifications/cmsNotificationsStore.js"
 import { cmsShellHeaderStateCreate } from "./cmsShellHeaderStateCreate.js"
 
 export function CmsShellHeader(p: { group: string; title: string; locale: "de" | "en"; onNavigate: () => void }) {
@@ -19,15 +19,15 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
       <details class="relative -mr-1.5">
         <summary
           class="relative cursor-pointer list-none rounded-lg p-1.5 hover:bg-black/5 dark:hover:bg-white/10"
-          aria-label={`${cmsShellText[p.locale].notifications}: ${cmsDashboardAlerts.length} ${cmsShellText[p.locale].unreadNotifications}`}
+          aria-label={`${cmsShellText[p.locale].notifications}: ${cmsNotificationsStore.unreadCount()} ${cmsShellText[p.locale].unreadNotifications}`}
         >
           <Icon path={mdiBellOutline} class="size-5" />
-          <Show when={cmsDashboardAlerts.length > 0}>
+          <Show when={cmsNotificationsStore.unreadCount() > 0}>
             <span
               aria-hidden="true"
               class="absolute -right-1 -top-1 flex min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold leading-4 text-white"
             >
-              {cmsDashboardAlerts.length}
+              {cmsNotificationsStore.unreadCount()}
             </span>
           </Show>
         </summary>
@@ -36,11 +36,11 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
             {cmsShellText[p.locale].notifications}
           </div>
           <Show
-            when={cmsDashboardAlerts.length > 0}
+            when={cmsNotificationsStore.unreadCount() > 0}
             fallback={<p class="p-4 text-neutral-500">{cmsShellText[p.locale].noNotifications}</p>}
           >
             <ul class="max-h-80 overflow-y-auto divide-y divide-neutral-100 dark:divide-neutral-800">
-              <For each={cmsDashboardAlerts}>
+              <For each={cmsNotificationsStore.unread()}>
                 {(alert) => (
                   <li>
                     <button
