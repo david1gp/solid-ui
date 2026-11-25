@@ -1,9 +1,6 @@
-import { mdiAlertCircleOutline } from "@adaptive-ds/mdi/mdiAlertCircleOutline.js"
-import { mdiCash } from "@adaptive-ds/mdi/mdiCash.js"
-import { mdiEmailOutline } from "@adaptive-ds/mdi/mdiEmailOutline.js"
 import { For, Show } from "solid-js"
-import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
+import { CmsDashboardAlertIcon } from "./CmsDashboardAlertIcon.js"
 import type { cmsDashboardStateCreate } from "./cmsDashboardStateCreate.js"
 
 export function CmsDashboardAlertsCard(props: {
@@ -34,26 +31,7 @@ export function CmsDashboardAlertsCard(props: {
                 onClick={() => props.state.navigate("notifications")}
                 class="flex w-full items-center gap-3 rounded-lg py-3 text-left hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent,var(--color-blue-500))] dark:hover:bg-neutral-800/60"
               >
-                <span
-                  class={
-                    alert.type === "payment"
-                      ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-neutral-800 dark:text-emerald-400"
-                      : alert.type === "error"
-                        ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600 dark:bg-neutral-800 dark:text-red-400"
-                        : "flex size-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-[var(--dashboard-accent,var(--color-blue-600))] dark:bg-neutral-800"
-                  }
-                >
-                  <Icon
-                    path={
-                      alert.type === "payment"
-                        ? mdiCash
-                        : alert.type === "error"
-                          ? mdiAlertCircleOutline
-                          : mdiEmailOutline
-                    }
-                    class="size-5"
-                  />
-                </span>
+                <CmsDashboardAlertIcon type={alert.type} />
                 <span class="min-w-0 flex-1">
                   <span class="block text-sm font-medium">{alert.title[cmsLocale.get()]}</span>
                   <span class="mt-0.5 block text-xs text-gray-500 dark:text-neutral-400">

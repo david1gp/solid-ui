@@ -262,6 +262,9 @@ export function CmsSidebar(p: CmsSidebarProps) {
               />
               <Popover.Portal>
                 <Popover.Content
+                  onClick={(event) => {
+                    if ((event.target as HTMLElement).closest("[data-close-user-menu]")) menu.setOpen(false)
+                  }}
                   class={classArr(
                     "z-50 p-3 rounded-xl border border-neutral-200 dark:border-white/10 shadow-lg", // layout
                     "bg-white dark:bg-[#202124]", // background

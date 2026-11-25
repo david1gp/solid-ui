@@ -1,6 +1,7 @@
 import { createSignal, For } from "solid-js"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
 import { PageHeader } from "../../ui/PageHeader.js"
+import { cmsDashboardAlerts } from "../dashboard/cmsDashboardAlerts.js"
 
 const text = {
   de: {
@@ -10,12 +11,6 @@ const text = {
     read: "Als gelesen markieren",
     unread: "Als ungelesen markieren",
     new: "Neu",
-    items: [
-      "Ein neuer Beitrag wurde veröffentlicht",
-      "Das tägliche Backup wurde erstellt",
-      "Anna hat dich zu einem Team eingeladen",
-    ],
-    dates: ["Heute, 10:30", "Heute, 03:00", "Gestern"],
   },
   en: {
     title: "Notifications",
@@ -24,12 +19,10 @@ const text = {
     read: "Mark as read",
     unread: "Mark as unread",
     new: "New",
-    items: ["A new post was published", "The daily backup was created", "Anna invited you to a team"],
-    dates: ["Today, 10:30", "Today, 03:00", "Yesterday"],
   },
 }
 export function CmsNotificationsView(_props: { id?: string }) {
-  const [unread, setUnread] = createSignal([true, true, false])
+  const [unread, setUnread] = createSignal(cmsDashboardAlerts.map(() => true))
   const t = () => text[cmsLocale.get()]
   return (
     <div>
@@ -40,14 +33,14 @@ export function CmsNotificationsView(_props: { id?: string }) {
           <button
             type="button"
             class="rounded-xl border border-neutral-300 px-4 py-2 text-sm dark:border-neutral-700"
-            onClick={() => setUnread([false, false, false])}
+            onClick={() => setUnread(cmsDashboardAlerts.map(() => false))}
           >
             {t().all}
           </button>
         }
       />
       <div class="divide-y divide-neutral-200 rounded-2xl border border-neutral-200 dark:divide-neutral-800 dark:border-neutral-800">
-        <For each={t().items}>
+        <For each={cmsDashboardAlerts}>
           {(item, i) => (
             <div class="flex flex-wrap items-center justify-between gap-3 p-4">
               <div class="min-w-0">
@@ -55,14 +48,14 @@ export function CmsNotificationsView(_props: { id?: string }) {
                   <span
                     class={`h-2 w-2 shrink-0 rounded-full ${unread()[i()] ? "bg-indigo-500" : "bg-neutral-300 dark:bg-neutral-700"}`}
                   />
-                  {item}
+                  {item.title[cmsLocale.get()]}
                   {unread()[i()] && (
                     <span class="rounded-full bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
                       {t().new}
                     </span>
                   )}
                 </div>
-                <p class="mt-1 pl-4 text-xs text-neutral-500">{t().dates[i()]}</p>
+                <p class="mt-1 pl-4 text-xs text-neutral-500">{item.subtitle[cmsLocale.get()]}</p>
               </div>
               <button
                 type="button"

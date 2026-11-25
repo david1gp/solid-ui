@@ -9,6 +9,8 @@ export const cmsShellText = {
     notifications: "Benachrichtigungen",
     settings: "Einstellungen",
     noNotifications: "Keine neuen Benachrichtigungen",
+    unreadNotifications: "ungelesene Benachrichtigungen",
+    viewAll: "Alle anzeigen",
   },
   en: {
     overview: "Overview",
@@ -20,5 +22,7 @@ export const cmsShellText = {
     notifications: "Notifications",
     settings: "Settings",
     noNotifications: "No new notifications",
+    unreadNotifications: "unread notifications",
+    viewAll: "View all",
   },
 } as const
