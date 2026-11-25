@@ -72,12 +72,12 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
             Titel
             <input class={input} value={state.title()} onInput={(e) => state.titleSet(e.currentTarget.value)} />
           </label>
-          <fieldset class="space-y-3">
+          <fieldset class="@container min-w-0 space-y-3">
             <legend class="mb-2 text-sm font-medium">Termine</legend>
             <For each={state.schedule()}>
               {(row, index) => (
-                <div class="grid items-start gap-x-4 gap-y-2 sm:grid-cols-[1fr_1fr_auto]">
-                  <div class="text-sm">
+                <div class="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-4 gap-y-2 @min-[34rem]:grid-cols-[minmax(0,2fr)_minmax(7rem,1fr)_auto]">
+                  <div class="col-span-2 min-w-0 text-sm @min-[34rem]:col-span-1">
                     <label for={`${idPrefix}-date-${row.id}`}>Datum</label>
                     <div class="mt-1 flex gap-2">
                       <input
@@ -100,7 +100,7 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
                       <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: TT.MM.JJJJ</span>
                     </Show>
                   </div>
-                  <label class="block text-sm">
+                  <label class="block min-w-0 text-sm">
                     Uhrzeit
                     <input
                       class={input}
@@ -118,7 +118,7 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
                   <Show when={state.schedule().length > 1}>
                     <button
                       type="button"
-                      class={`${cmsButtonClass} sm:mt-6`}
+                      class={`${cmsButtonClass} mt-6`}
                       aria-label={`Termin ${index() + 1} entfernen`}
                       onClick={() => state.scheduleRemove(row.id)}
                     >
