@@ -1,3 +1,4 @@
+import { CmsSaveBar } from "./cms/ui/CmsSaveBar.js"
 import { mdiAccountCogOutline } from "@adaptive-ds/mdi/mdiAccountCogOutline.js"
 import { mdiBrightnessAuto } from "@adaptive-ds/mdi/mdiBrightnessAuto.js"
 import { mdiCameraOutline } from "@adaptive-ds/mdi/mdiCameraOutline.js"
@@ -548,7 +549,7 @@ export function DemoCMS() {
                         </Field>
                       </div>
                     </SettingsCard>
-                    <SaveBar dirty={profileDirty()} onDiscard={discardProfile} />
+                    <CmsSaveBar dirty={profileDirty()} onDiscard={discardProfile} />
                   </form>
                 </Match>
                 <Match when={settingsPage.get() === "account"}>
@@ -633,7 +634,7 @@ export function DemoCMS() {
                           </Field>
                         </div>
                       </SettingsCard>
-                      <SaveBar dirty={accountDirty()} onDiscard={discardAccount} />
+                      <CmsSaveBar dirty={accountDirty()} onDiscard={discardAccount} />
                     </form>
                     <div class={"flex flex-col gap-3"}>
                       <SectionTitle>{t("Sicherheit", "Security")}</SectionTitle>
@@ -863,29 +864,6 @@ function SettingsCard(p: { children: JSXElement }) {
   return (
     <div class={"p-4 rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-white/5 dark:bg-[#292A2D]"}>
       {p.children}
-    </div>
-  )
-}
-
-/** Save/discard actions for a settings form; sticky from md so they stay reachable, static on mobile so they never cover fields. */
-function SaveBar(p: { dirty: boolean; onDiscard: () => void }) {
-  return (
-    <div
-      class={
-        "md:sticky md:bottom-0 -mx-1 px-1 py-3 flex items-center justify-end gap-3 bg-background dark:bg-[#222326] border-t border-transparent"
-      }
-    >
-      <span class={"mr-auto text-xs text-neutral-500 dark:text-neutral-400"} aria-live={"polite"}>
-        {p.dirty
-          ? t("Ungespeicherte Änderungen", "Unsaved changes")
-          : t("Alle Änderungen gespeichert", "All changes saved")}
-      </span>
-      <Button variant={"ghost"} class={"text-sm"} disabled={!p.dirty} onClick={() => p.onDiscard()}>
-        {t("Verwerfen", "Discard")}
-      </Button>
-      <Button type={"submit"} variant={"contrast"} class={"text-sm"} disabled={!p.dirty}>
-        {t("Speichern", "Save")}
-      </Button>
     </div>
   )
 }
