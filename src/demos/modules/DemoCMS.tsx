@@ -426,7 +426,7 @@ export function DemoCMS() {
           />
         </Show>
         <div
-          class="flex min-w-0 flex-1 flex-col bg-white dark:bg-[#222326]"
+          class="flex min-w-0 flex-1 flex-col overflow-y-auto bg-white dark:bg-[#222326]"
           style={{
             "--app-sidebar-accent": accentColor.get(),
             "--dashboard-accent": "var(--app-sidebar-accent, var(--color-blue-600))",
@@ -437,7 +437,7 @@ export function DemoCMS() {
             title={active() === settingsPageKey ? settingsLabel() : view().label[cmsLocale.get()]}
             locale={cmsLocale.get()}
           />
-          <main class={"flex-1 min-w-0 p-4 pb-24 sm:p-8 overflow-y-auto"}>
+          <main class="min-w-0 shrink-0 p-4 pb-24 sm:p-8 sm:pb-24">
             <Show when={active() === settingsPageKey} fallback={viewContent()}>
               <div class="mb-4 flex flex-col gap-3 md:hidden">
                 <button
