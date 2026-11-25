@@ -105,7 +105,7 @@ export function CmsMediaLibrary() {
           </form>
         </aside>
         <div
-          class="grid min-w-0 flex-1 overflow-hidden opacity-100 transition-[grid-template-rows,flex-grow,opacity] duration-500 ease-in-out motion-reduce:transition-none aria-hidden:opacity-0 max-lg:grid-rows-[1fr] max-lg:aria-hidden:grid-rows-[0fr] lg:aria-hidden:flex-[0_1_0%]"
+          class="grid min-w-0 flex-1 overflow-hidden opacity-100 transition-[grid-template-rows,flex-grow,margin,opacity] duration-500 ease-in-out motion-reduce:transition-none aria-hidden:opacity-0 max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:aria-hidden:-ml-4 lg:aria-hidden:flex-[0_1_0%]"
           aria-hidden={state.gridCollapsed() ? "true" : undefined}
           inert={state.gridCollapsed()}
         >
