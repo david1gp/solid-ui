@@ -1,4 +1,4 @@
-import { createMemo, createSignal } from "solid-js"
+import { createEffect, createMemo, createSignal, onCleanup } from "solid-js"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
 import { cmsMediaStore } from "./cmsMediaStore.js"
 import { cmsMediaNarrowContainerCreate } from "./cmsMediaNarrowContainerCreate.js"
@@ -12,6 +12,30 @@ export function cmsMediaLibraryStateCreate() {
   const [folderName, setFolderName] = createSignal("")
   const [folderToRemove, setFolderToRemove] = createSignal<string>()
   const selected = createMemo(() => cmsMediaStore.items().find((item) => item.id === selectedId()))
+  const [displayed, setDisplayed] = createSignal<ReturnType<typeof selected>>()
+  const [detailsOpen, setDetailsOpen] = createSignal(false)
+  let frame: number | undefined
+  let open = false
+  createEffect(selected, (item) => {
+    if (item) {
+      setDisplayed(item)
+      if (!open && frame === undefined) {
+        frame = requestAnimationFrame(() => {
+          frame = undefined
+          open = true
+          setDetailsOpen(true)
+        })
+      }
+      return
+    }
+    if (frame !== undefined) cancelAnimationFrame(frame)
+    frame = undefined
+    open = false
+    setDetailsOpen(false)
+  })
+  onCleanup(() => {
+    if (frame !== undefined) cancelAnimationFrame(frame)
+  })
   const filtered = createMemo(() =>
     cmsMediaStore
       .items()
@@ -26,6 +50,8 @@ export function cmsMediaLibraryStateCreate() {
     folder,
     search,
     selected,
+    displayed,
+    detailsOpen,
     observeContainer: container.observe,
     narrow: container.narrow,
     gridCollapsed: () => container.narrow() && !!selected(),
