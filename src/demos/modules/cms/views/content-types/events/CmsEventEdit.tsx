@@ -1,4 +1,4 @@
-import { createUniqueId, Show, untrack } from "solid-js"
+import { createUniqueId, For, Show, untrack } from "solid-js"
 import { CmsDatePicker } from "../../../ui/CmsDatePicker.js"
 import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
 import { cmsCardClass } from "../../../ui/cmsCardClass.js"
@@ -13,7 +13,7 @@ import type { cmsEvents } from "./cmsEvents.js"
 const input = `mt-1 w-full ${cmsInputClass}`
 export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[number] }) {
   const state = untrack(() => cmsEventEditStateCreate(props.event))
-  const dateId = createUniqueId()
+  const idPrefix = createUniqueId()
   return (
     <div>
       <button
@@ -28,12 +28,18 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
         <section class={cmsCardClass}>
           <h2 class="mb-4 font-semibold">Vorschau</h2>
           <div class="flex flex-wrap items-center gap-4">
-            <CmsEventDateBadge date={state.date()} color={props.event.color} large />
+            <CmsEventDateBadge date={state.scheduleSorted()[0]?.date ?? ""} color={props.event.color} large />
             <div class="min-w-0 flex-1">
               <p class="font-semibold">{state.title()}</p>
-              <p class="mt-1 text-sm text-gray-500 dark:text-neutral-400">
-                {cmsEventDateParts(state.date()).long}, {state.time()} Uhr
-              </p>
+              <ul class="mt-1 text-sm text-gray-500 dark:text-neutral-400">
+                <For each={state.scheduleSorted()}>
+                  {(entry) => (
+                    <li>
+                      {cmsEventDateParts(entry.date).long}, {entry.time} Uhr
+                    </li>
+                  )}
+                </For>
+              </ul>
               <p class="text-sm text-gray-500 dark:text-neutral-400">{state.location()}</p>
               <Show when={state.featured()}>
                 <span class="mt-2 inline-block rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 dark:bg-neutral-800 dark:text-neutral-300">
@@ -49,41 +55,67 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
             Titel
             <input class={input} value={state.title()} onInput={(e) => state.titleSet(e.currentTarget.value)} />
           </label>
+          <fieldset class="space-y-3">
+            <legend class="mb-2 text-sm font-medium">Termine</legend>
+            <For each={state.schedule()}>
+              {(row, index) => (
+                <div class="grid items-start gap-x-4 gap-y-2 sm:grid-cols-[1fr_1fr_auto]">
+                  <div class="text-sm">
+                    <label for={`${idPrefix}-date-${row.id}`}>Datum</label>
+                    <div class="mt-1 flex gap-2">
+                      <input
+                        id={`${idPrefix}-date-${row.id}`}
+                        class={`min-w-0 flex-1 ${cmsInputClass}`}
+                        lang="de"
+                        inputmode="numeric"
+                        placeholder="TT.MM.JJJJ"
+                        aria-invalid={state.dateValid(row) ? "false" : "true"}
+                        value={row.dateText.get()}
+                        onInput={(e) => state.dateTextSet(row.id, e.currentTarget.value)}
+                      />
+                      <CmsDatePicker
+                        value={row.date.get()}
+                        onSelect={(iso) => state.datePick(row.id, iso)}
+                        label={`Datum von Termin ${index() + 1} im Kalender wählen`}
+                      />
+                    </div>
+                    <Show when={!state.dateValid(row)}>
+                      <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: TT.MM.JJJJ</span>
+                    </Show>
+                  </div>
+                  <label class="block text-sm">
+                    Uhrzeit
+                    <input
+                      class={input}
+                      lang="de"
+                      inputmode="numeric"
+                      placeholder="HH:MM"
+                      aria-invalid={state.timeValid(row) ? "false" : "true"}
+                      value={row.timeText.get()}
+                      onInput={(e) => state.timeTextSet(row.id, e.currentTarget.value)}
+                    />
+                    <Show when={!state.timeValid(row)}>
+                      <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: HH:MM (24 Stunden)</span>
+                    </Show>
+                  </label>
+                  <Show when={state.schedule().length > 1}>
+                    <button
+                      type="button"
+                      class={`${cmsButtonClass} sm:mt-6`}
+                      aria-label={`Termin ${index() + 1} entfernen`}
+                      onClick={() => state.scheduleRemove(row.id)}
+                    >
+                      Entfernen
+                    </button>
+                  </Show>
+                </div>
+              )}
+            </For>
+            <button type="button" class={cmsButtonClass} onClick={state.scheduleAdd}>
+              + Termin hinzufügen
+            </button>
+          </fieldset>
           <div class="grid gap-4 sm:grid-cols-2">
-            <div class="text-sm">
-              <label for={dateId}>Datum</label>
-              <div class="mt-1 flex gap-2">
-                <input
-                  id={dateId}
-                  class={`min-w-0 flex-1 ${cmsInputClass}`}
-                  lang="de"
-                  inputmode="numeric"
-                  placeholder="TT.MM.JJJJ"
-                  aria-invalid={state.dateValid() ? "false" : "true"}
-                  value={state.dateText()}
-                  onInput={(e) => state.dateTextSet(e.currentTarget.value)}
-                />
-                <CmsDatePicker value={state.date()} onSelect={state.datePick} label="Datum im Kalender wählen" />
-              </div>
-              <Show when={!state.dateValid()}>
-                <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: TT.MM.JJJJ</span>
-              </Show>
-            </div>
-            <label class="block text-sm">
-              Uhrzeit
-              <input
-                class={input}
-                lang="de"
-                inputmode="numeric"
-                placeholder="HH:MM"
-                aria-invalid={state.timeValid() ? "false" : "true"}
-                value={state.timeText()}
-                onInput={(e) => state.timeTextSet(e.currentTarget.value)}
-              />
-              <Show when={!state.timeValid()}>
-                <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: HH:MM (24 Stunden)</span>
-              </Show>
-            </label>
             <label class="block text-sm">
               Ort
               <input class={input} value={state.location()} onInput={(e) => state.locationSet(e.currentTarget.value)} />

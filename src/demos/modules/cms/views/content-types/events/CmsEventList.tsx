@@ -8,6 +8,7 @@ import { cmsProductReorderStateCreate } from "../products/cmsProductReorderState
 import { CmsEventDateBadge } from "./CmsEventDateBadge.js"
 import { cmsEventDateParts } from "./cmsEventDateParts.js"
 import { cmsEventOrder } from "./cmsEventOrder.js"
+import { cmsEventScheduleSorted } from "./cmsEventScheduleSorted.js"
 import type { cmsEventsSorted } from "./cmsEventsSorted.js"
 
 export function CmsEventList(props: { events: typeof cmsEventsSorted }) {
@@ -39,16 +40,27 @@ export function CmsEventList(props: { events: typeof cmsEventsSorted }) {
                   <path d={mdiDragVertical} />
                 </svg>
               </button>
-              <CmsEventDateBadge date={event.date} color={event.color} />
+              <CmsEventDateBadge date={cmsEventScheduleSorted(event.schedule)[0]?.date ?? ""} color={event.color} />
               <div class="min-w-0 flex-1">
                 <h2 class="text-sm font-medium">{event.shortTitle}</h2>
                 <p class="mt-0.5 text-xs text-gray-500 dark:text-neutral-400">
                   {event.title} · {event.description}
                 </p>
                 <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-neutral-400">
-                  <span>
-                    {cmsEventDateParts(event.date).long}, {event.time} Uhr
-                  </span>
+                  <Show when={cmsEventScheduleSorted(event.schedule)[0]}>
+                    {(first) => (
+                      <span>
+                        {cmsEventDateParts(first().date).long}, {first().time} Uhr
+                      </span>
+                    )}
+                  </Show>
+                  <Show when={event.schedule.length > 1}>
+                    <span class={cmsPillClass}>
+                      {event.schedule.length - 1 === 1
+                        ? "+1 weiterer Termin"
+                        : `+${event.schedule.length - 1} weitere Termine`}
+                    </span>
+                  </Show>
                   <span>{event.location}</span>
                   <span>Plätze: {event.capacity}</span>
                   <span>#{state.position(event.id, index() + 1)}</span>
