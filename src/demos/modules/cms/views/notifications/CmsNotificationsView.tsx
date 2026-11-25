@@ -102,7 +102,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
                     {state.time(item.createdAt)}
                   </time>
                 </div>
-                <div class="flex shrink-0 items-center gap-1 text-sm sm:gap-3 sm:pl-4">
+                <div class="flex shrink-0 items-center gap-1 text-sm sm:w-[136px] sm:justify-end sm:gap-3 sm:pl-4">
                   <Show when={state.actionInfo(item.id)?.kind === "restart"}>
                     <button
                       type="button"
