@@ -18,7 +18,6 @@ export type CmsDataTableLabels = {
   filter: string
   all: string
   columns: string
-  export: string
   selected: string
   previous: string
   next: string
@@ -26,10 +25,6 @@ export type CmsDataTableLabels = {
   noResults: string
   selectAll: string
   selectRow: string
-  views: string
-  saveView: string
-  viewName: string
-  deleteView: string
   pageSize: string
 }
 
@@ -39,8 +34,6 @@ export type CmsDataTableProps<T> = {
   rowId: (row: T) => string
   bulkActions?: readonly { label: string; run: (rows: T[]) => void }[]
   labels?: Partial<CmsDataTableLabels>
-  storageKey?: string
-  csvFilename?: string
   pageSize?: number
 }
 
@@ -89,33 +82,6 @@ export function CmsDataTable<T>(props: CmsDataTableProps<T>) {
             </For>
           </div>
         </details>
-        <button type="button" class={cmsButtonClass} onClick={state.csvExport}>
-          {state.labels().export}
-        </button>
-        <select
-          class={cmsInputClass}
-          aria-label={state.labels().views}
-          value={state.activeView()}
-          onChange={(event) => state.viewApply(event.currentTarget.value)}
-        >
-          <option value="">{state.labels().views}</option>
-          <For each={state.views()}>{(view) => <option value={view.name}>{view.name}</option>}</For>
-        </select>
-        <input
-          class={cmsInputClass}
-          aria-label={state.labels().viewName}
-          placeholder={state.labels().viewName}
-          value={state.viewName()}
-          onInput={(event) => state.viewNameSet(event.currentTarget.value)}
-        />
-        <button type="button" class={cmsButtonClass} disabled={!state.viewName().trim()} onClick={state.viewSave}>
-          {state.labels().saveView}
-        </button>
-        <Show when={state.activeView()}>
-          <button type="button" class={cmsButtonClass} onClick={state.viewDelete}>
-            {state.labels().deleteView}
-          </button>
-        </Show>
       </div>
       <Show when={state.selectedRows().length > 0}>
         <div class="flex flex-wrap items-center gap-2 rounded-xl border border-gray-200 p-3 dark:border-gray-700">

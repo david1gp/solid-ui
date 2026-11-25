@@ -60,16 +60,11 @@ const texts = {
     filter: "Filter",
     all: "Alle",
     columns: "Spalten",
-    export: "CSV exportieren",
     selected: "ausgewählt",
     page: "Seite",
     noResults: "Keine Ergebnisse",
     selectAll: "Alle auswählen",
     selectRow: "Zeile auswählen",
-    views: "Ansichten",
-    saveView: "Ansicht speichern",
-    viewName: "Name der Ansicht",
-    deleteView: "Ansicht löschen",
     pageSize: "Zeilen pro Seite",
     bold: "Fett",
     italic: "Kursiv",
@@ -124,16 +119,11 @@ const texts = {
     filter: "Filter",
     all: "All",
     columns: "Columns",
-    export: "Export CSV",
     selected: "selected",
     page: "Page",
     noResults: "No results",
     selectAll: "Select all",
     selectRow: "Select row",
-    views: "Views",
-    saveView: "Save view",
-    viewName: "View name",
-    deleteView: "Delete view",
     pageSize: "Rows per page",
     bold: "Bold",
     italic: "Italic",
@@ -440,7 +430,6 @@ export function CmsPostsView(p: { id?: string }) {
                       },
                     },
                   ]}
-                  storageKey="cms-posts"
                 />
               </Show>
               <Show when={view() === "grid"}>

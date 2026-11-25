@@ -61,7 +61,6 @@ export function CmsUsersView(props: { id?: string }) {
                   filter: "Filter",
                   all: "All",
                   columns: "Columns",
-                  export: "Export CSV",
                   selected: "selected",
                   previous: "Previous",
                   next: "Next",
@@ -69,16 +68,10 @@ export function CmsUsersView(props: { id?: string }) {
                   noResults: "No results",
                   selectAll: "Select all",
                   selectRow: "Select row",
-                  views: "Views",
-                  saveView: "Save view",
-                  viewName: "View name",
-                  deleteView: "Delete view",
                   pageSize: "Rows per page",
                 }
               : undefined
           }
-          storageKey="cms-users"
-          csvFilename="users.csv"
           bulkActions={[{ label: state.text().remove, run: (rows) => state.remove(rows.map((row) => row.id)) }]}
           columns={[
             {

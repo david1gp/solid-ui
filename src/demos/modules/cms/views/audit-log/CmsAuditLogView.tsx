@@ -16,7 +16,6 @@ const text = {
       filter: "Filtern",
       all: "Alle",
       columns: "Spalten",
-      export: "CSV exportieren",
       selected: "ausgewählt",
       previous: "Zurück",
       next: "Weiter",
@@ -24,10 +23,6 @@ const text = {
       noResults: "Keine Ergebnisse",
       selectAll: "Alle auswählen",
       selectRow: "Zeile auswählen",
-      views: "Ansichten",
-      saveView: "Ansicht speichern",
-      viewName: "Name der Ansicht",
-      deleteView: "Ansicht löschen",
       pageSize: "Zeilen pro Seite",
     },
   },
@@ -44,7 +39,6 @@ const text = {
       filter: "Filter",
       all: "All",
       columns: "Columns",
-      export: "Export CSV",
       selected: "selected",
       previous: "Previous",
       next: "Next",
@@ -52,10 +46,6 @@ const text = {
       noResults: "No results",
       selectAll: "Select all",
       selectRow: "Select row",
-      views: "Views",
-      saveView: "Save view",
-      viewName: "View name",
-      deleteView: "Delete view",
       pageSize: "Rows per page",
     },
   },
@@ -82,7 +72,6 @@ export function CmsAuditLogView(_props: { id?: string }) {
         rows={rows}
         rowId={(row) => row.id}
         labels={t().labels}
-        csvFilename="audit-log.csv"
         columns={[
           {
             id: "date",
