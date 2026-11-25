@@ -110,9 +110,6 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
                   onInput={(e) => state.subtitleSet(e.currentTarget.value)}
                 />
               </label>
-              <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
-                Wird in der Vorschau unter dem Produktnamen angezeigt.
-              </p>
             </div>
             <div class="grid gap-4 sm:grid-cols-2">
               <label class="block text-sm">
