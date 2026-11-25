@@ -34,4 +34,4 @@ Reference screenshot (`/home/tim/.t3code-tim/userdata/attachments/ac98a220-1bb6-
 - Task 2: done (8b89fc6, dc91268, bcf53ff, 2daa5c4). Routes: `id=article:<productId>` editor, `id=article:tiles` Kacheln tab.
 - Task 3: done (016ad55, deployed 382d092)
 - Task 4 (shop position + featured): done (a943c91)
-- Task 5 (product Liste + Felder tab): done (6dc0fc1, 4e6dc5e). Deploy from a detached worktree needs `bun run deploy --branch=main` to hit production.
+- Task 5 (product Liste + Felder tab): in progress
