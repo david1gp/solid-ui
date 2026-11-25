@@ -1,4 +1,5 @@
-import { Show, untrack } from "solid-js"
+import { createUniqueId, Show, untrack } from "solid-js"
+import { CmsDatePicker } from "../../../ui/CmsDatePicker.js"
 import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
 import { cmsCardClass } from "../../../ui/cmsCardClass.js"
 import { cmsInputClass } from "../../../ui/cmsInputClass.js"
@@ -12,6 +13,7 @@ import type { cmsEvents } from "./cmsEvents.js"
 const input = `mt-1 w-full ${cmsInputClass}`
 export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[number] }) {
   const state = untrack(() => cmsEventEditStateCreate(props.event))
+  const dateId = createUniqueId()
   return (
     <div>
       <button
@@ -48,23 +50,39 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
             <input class={input} value={state.title()} onInput={(e) => state.titleSet(e.currentTarget.value)} />
           </label>
           <div class="grid gap-4 sm:grid-cols-2">
-            <label class="block text-sm">
-              Datum
-              <input
-                class={input}
-                type="date"
-                value={state.date()}
-                onInput={(e) => e.currentTarget.value && state.dateSet(e.currentTarget.value)}
-              />
-            </label>
+            <div class="text-sm">
+              <label for={dateId}>Datum</label>
+              <div class="mt-1 flex gap-2">
+                <input
+                  id={dateId}
+                  class={`min-w-0 flex-1 ${cmsInputClass}`}
+                  lang="de"
+                  inputmode="numeric"
+                  placeholder="TT.MM.JJJJ"
+                  aria-invalid={state.dateValid() ? "false" : "true"}
+                  value={state.dateText()}
+                  onInput={(e) => state.dateTextSet(e.currentTarget.value)}
+                />
+                <CmsDatePicker value={state.date()} onSelect={state.datePick} label="Datum im Kalender wählen" />
+              </div>
+              <Show when={!state.dateValid()}>
+                <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: TT.MM.JJJJ</span>
+              </Show>
+            </div>
             <label class="block text-sm">
               Uhrzeit
               <input
                 class={input}
-                type="time"
-                value={state.time()}
-                onInput={(e) => state.timeSet(e.currentTarget.value)}
+                lang="de"
+                inputmode="numeric"
+                placeholder="HH:MM"
+                aria-invalid={state.timeValid() ? "false" : "true"}
+                value={state.timeText()}
+                onInput={(e) => state.timeTextSet(e.currentTarget.value)}
               />
+              <Show when={!state.timeValid()}>
+                <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: HH:MM (24 Stunden)</span>
+              </Show>
             </label>
             <label class="block text-sm">
               Ort
