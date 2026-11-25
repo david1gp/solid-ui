@@ -40,10 +40,10 @@ export function CmsUsersView(props: { id?: string }) {
                   <p>
                     <strong>{state.text().email}:</strong> {user().email}
                   </p>
-                  <label class="block">
+                  <label class="flex items-center gap-4">
                     <span>{state.text().role}</span>
                     <select
-                      class={`mt-1 w-full ${cmsInputClass}`}
+                      class={cmsInputClass}
                       value={state.draftRole()}
                       onChange={(event) => state.draftRoleSet(event.currentTarget.value)}
                     >
@@ -52,10 +52,10 @@ export function CmsUsersView(props: { id?: string }) {
                       <option disabled={state.lastAdmin()}>Author</option>
                     </select>
                   </label>
-                  <label class="block">
+                  <label class="flex items-center gap-4">
                     <span>{state.text().status}</span>
                     <select
-                      class={`mt-1 w-full ${cmsInputClass}`}
+                      class={cmsInputClass}
                       value={state.draftStatus()}
                       onChange={(event) => state.draftStatusSet(event.currentTarget.value as CmsUserStatus)}
                     >
@@ -199,28 +199,28 @@ export function CmsUsersView(props: { id?: string }) {
               state.invite()
             }}
           >
-            <label class="block">
+            <label class="block space-y-1">
               <span>{state.text().name}</span>
               <input
-                class={`mt-1 ${control}`}
+                class={control}
                 value={state.name()}
                 onInput={(event) => state.nameSet(event.currentTarget.value)}
               />
             </label>
-            <label class="block">
+            <label class="block space-y-1">
               <span>{state.text().email}</span>
               <input
                 required
                 type="email"
-                class={`mt-1 ${control}`}
+                class={control}
                 value={state.email()}
                 onInput={(event) => state.emailSet(event.currentTarget.value)}
               />
             </label>
-            <label class="block">
+            <label class="block space-y-1">
               <span>{state.text().role}</span>
               <select
-                class={`mt-1 ${control}`}
+                class={control}
                 value={state.role()}
                 onChange={(event) => state.roleSet(event.currentTarget.value)}
               >
