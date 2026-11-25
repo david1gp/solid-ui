@@ -74,9 +74,17 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
           </label>
           <label class="block text-sm">
             Position in der Liste
-            <select class={input} value={state.position()} onChange={(e) => state.positionSet(Number(e.currentTarget.value))}>
+            <select
+              class={input}
+              value={state.position()}
+              onChange={(e) => state.positionSet(Number(e.currentTarget.value))}
+            >
               <For each={Array.from({ length: state.positionCount() })}>
-                {(_, index) => <option value={index() + 1}>{index() + 1} von {state.positionCount()}</option>}
+                {(_, index) => (
+                  <option value={index() + 1}>
+                    {index() + 1} von {state.positionCount()}
+                  </option>
+                )}
               </For>
             </select>
           </label>
@@ -84,8 +92,8 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
             <legend class="mb-2 text-sm font-medium">Termine</legend>
             <For each={state.schedule()}>
               {(row, index) => (
-                <div class="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-4 gap-y-2 @min-[34rem]:grid-cols-[minmax(0,2fr)_minmax(7rem,1fr)_auto]">
-                  <div class="col-span-2 min-w-0 text-sm @min-[34rem]:col-span-1">
+                <div class="grid min-w-0 gap-x-4 gap-y-2 @min-[28rem]:grid-cols-2">
+                  <div class="min-w-0 text-sm">
                     <label for={`${idPrefix}-date-${row.id}`}>Datum</label>
                     <div class="mt-1 flex gap-2">
                       <input
@@ -126,7 +134,7 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
                   <Show when={state.schedule().length > 1}>
                     <button
                       type="button"
-                      class={`${cmsButtonClass} mt-6`}
+                      class={`${cmsButtonClass} justify-self-start @min-[28rem]:col-span-2`}
                       aria-label={`Termin ${index() + 1} entfernen`}
                       onClick={() => state.scheduleRemove(row.id)}
                     >
