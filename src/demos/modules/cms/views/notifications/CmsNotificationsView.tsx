@@ -55,7 +55,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
               <div
                 class={`flex flex-wrap items-start justify-between gap-3 p-4 ${state.store.isUnread(item.id) ? "bg-indigo-50/50 dark:bg-indigo-950/20" : ""}`}
               >
-                <CmsDashboardAlertIcon type={item.type} />
+                <CmsDashboardAlertIcon type={item.type} size="small" />
                 <button type="button" class="min-w-0 flex-1 text-left" onClick={() => state.store.markRead(item.id)}>
                   <span class="flex flex-wrap items-center gap-2 text-sm font-medium">
                     <span
