@@ -79,8 +79,8 @@ export function CmsContentTypesView(props: { id?: string }) {
             <Show when={product()} keyed>
               {(item) => <CmsProductEdit product={item} backToList={props.id?.endsWith(":list")} />}
             </Show>
-            <Show when={event()} keyed>
-              {(item) => <CmsEventEdit event={item} />}
+            <Show when={event()?.id} keyed>
+              {(id) => <CmsEventEdit event={cmsEvents.get().find((item) => item.id === id)!} />}
             </Show>
           </>
         }
