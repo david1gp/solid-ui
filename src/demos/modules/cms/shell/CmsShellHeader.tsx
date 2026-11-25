@@ -31,7 +31,7 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
             </span>
           </Show>
         </summary>
-        <div class="absolute right-0 z-30 mt-2 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-lg dark:border-white/10 dark:bg-neutral-900">
+        <div class="absolute right-0 z-30 mt-2 w-[min(20rem,calc(100vw-6rem))] overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-lg dark:border-white/10 dark:bg-neutral-900">
           <div class="border-b border-neutral-100 px-4 py-3 font-semibold dark:border-neutral-800">
             {cmsShellText[p.locale].notifications}
           </div>
