@@ -31,7 +31,7 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
             <CmsFestivalIllustration color={props.event.color} />
             <div class="absolute left-4 top-4 flex gap-2">
               <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
-                #{props.event.position}
+                #{state.position()}
               </span>
               <Show when={state.featured()}>
                 <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-sm font-semibold text-white backdrop-blur">
@@ -71,6 +71,14 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
           <label class="block text-sm">
             Titel
             <input class={input} value={state.title()} onInput={(e) => state.titleSet(e.currentTarget.value)} />
+          </label>
+          <label class="block text-sm">
+            Position in der Liste
+            <select class={input} value={state.position()} onChange={(e) => state.positionSet(Number(e.currentTarget.value))}>
+              <For each={Array.from({ length: state.positionCount() })}>
+                {(_, index) => <option value={index() + 1}>{index() + 1} von {state.positionCount()}</option>}
+              </For>
+            </select>
           </label>
           <fieldset class="@container min-w-0 space-y-3">
             <legend class="mb-2 text-sm font-medium">Termine</legend>

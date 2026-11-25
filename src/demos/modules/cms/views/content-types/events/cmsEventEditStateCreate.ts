@@ -1,5 +1,7 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { cmsNavigate } from "../../../shell/cmsNavigate.js"
+import { cmsProductsMove } from "../products/cmsProductsMove.js"
+import { cmsEventOrder } from "./cmsEventOrder.js"
 import type { CmsEventScheduleEntry } from "./CmsEventScheduleEntry.js"
 import { cmsEventDateGermanFormat } from "./cmsEventDateGermanFormat.js"
 import { cmsEventDateGermanParse } from "./cmsEventDateGermanParse.js"
@@ -20,6 +22,7 @@ const rowCreate = (id: number, entry: CmsEventScheduleEntry) => ({
 type Row = ReturnType<typeof rowCreate>
 
 export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[number]) {
+  const position = createSignalObject(cmsEventOrder.get().indexOf(event.id) + 1 || event.position)
   const title = createSignalObject(event.title)
   const location = createSignalObject(event.location)
   const capacity = createSignalObject(String(event.capacity))
@@ -36,6 +39,15 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
     cmsEventDateGermanParse(item.dateText.get()) !== undefined &&
     cmsEventTimeGermanParse(item.timeText.get()) !== undefined
   return {
+    position: () => position.get(),
+    positionSet: (value: number) => {
+      const ids = cmsEventOrder.get()
+      const from = ids.indexOf(event.id)
+      if (from < 0 || !Number.isInteger(value) || value < 1 || value > ids.length) return
+      cmsEventOrder.set(cmsProductsMove(ids, from, value - 1))
+      position.set(value)
+    },
+    positionCount: () => cmsEventOrder.get().length,
     title: () => title.get(),
     titleSet: (value: string) => title.set(value),
     schedule: () => schedule.get(),
