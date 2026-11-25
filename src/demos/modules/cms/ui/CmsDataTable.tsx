@@ -144,7 +144,7 @@ export function CmsDataTable<T>(props: CmsDataTableProps<T>) {
                                 : mdiArrowDownBold
                               : mdiArrowUpDownBold
                           }
-                          class={`size-4 shrink-0 ${state.sort().id === column.id ? "" : "text-gray-300 dark:text-neutral-600"}`}
+                          class={`size-3 shrink-0 ${state.sort().id === column.id ? "" : "text-gray-300 dark:text-neutral-600"}`}
                         />
                       </button>
                     </Show>
