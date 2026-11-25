@@ -3,7 +3,10 @@ import { onCleanup } from "solid-js"
 import { cmsProductOrder } from "./cmsProductOrder.js"
 import { cmsProductsMove } from "./cmsProductsMove.js"
 
-export function cmsProductReorderStateCreate(tiles: boolean) {
+export function cmsProductReorderStateCreate(
+  tiles: boolean,
+  order: { get: () => string[]; set: (ids: string[]) => void } = cmsProductOrder,
+) {
   const dragged = createSignalObject<string | undefined>(undefined)
   const announcement = createSignalObject("")
   const preview = createSignalObject<string[] | undefined>(undefined)
@@ -29,7 +32,7 @@ export function cmsProductReorderStateCreate(tiles: boolean) {
       return index < 0 ? fallback : index + 1
     },
     start: (event: DragEvent, id: string) => {
-      preview.set(cmsProductOrder.get())
+      preview.set(order.get())
       dragged.set(id)
       event.dataTransfer?.setData("text/plain", id)
       if (event.dataTransfer) event.dataTransfer.effectAllowed = "move"
@@ -44,17 +47,17 @@ export function cmsProductReorderStateCreate(tiles: boolean) {
       if (!active) return
       event.preventDefault()
       if (event.dataTransfer) event.dataTransfer.dropEffect = "move"
-      const order = preview.get()
-      if (!order) return
-      const from = order.indexOf(active)
-      const to = order.indexOf(id)
-      if (from !== to && from >= 0 && to >= 0) preview.set(cmsProductsMove(order, from, to))
+      const ids = preview.get()
+      if (!ids) return
+      const from = ids.indexOf(active)
+      const to = ids.indexOf(id)
+      if (from !== to && from >= 0 && to >= 0) preview.set(cmsProductsMove(ids, from, to))
     },
     drop: (event: DragEvent) => {
       if (!dragged.get()) return
       event.preventDefault()
-      const order = preview.get()
-      if (order) cmsProductOrder.set(order)
+      const ids = preview.get()
+      if (ids) order.set(ids)
       cancel()
     },
     end: cancel,
@@ -67,11 +70,11 @@ export function cmsProductReorderStateCreate(tiles: boolean) {
             : 0
       if (!direction) return
       event.preventDefault()
-      const order = cmsProductOrder.get()
-      const from = order.indexOf(id)
+      const ids = order.get()
+      const from = ids.indexOf(id)
       const to = from + direction
-      if (from < 0 || to < 0 || to >= order.length) return
-      cmsProductOrder.set(cmsProductsMove(order, from, to))
+      if (from < 0 || to < 0 || to >= ids.length) return
+      order.set(cmsProductsMove(ids, from, to))
       announcement.set(`${name} auf Position ${to + 1} verschoben`)
       ;(event.currentTarget as HTMLButtonElement).focus()
     },
