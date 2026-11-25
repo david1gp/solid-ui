@@ -6,12 +6,13 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 export function CmsDashboardAlertIcon(props: { type: "payment" | "error" | "message" }) {
   return (
     <span
+      aria-hidden="true"
       class={
         props.type === "payment"
-          ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-neutral-800 dark:text-emerald-400"
+          ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400"
           : props.type === "error"
-            ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600 dark:bg-neutral-800 dark:text-red-400"
-            : "flex size-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-[var(--dashboard-accent,var(--color-blue-600))] dark:bg-neutral-800"
+            ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400"
+            : "flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-400"
       }
     >
       <Icon
