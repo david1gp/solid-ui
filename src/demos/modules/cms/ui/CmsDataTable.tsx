@@ -1,6 +1,7 @@
 import { mdiArrowDownBold } from "@adaptive-ds/mdi/mdiArrowDownBold.js"
 import { mdiArrowUpBold } from "@adaptive-ds/mdi/mdiArrowUpBold.js"
 import { mdiArrowUpDownBold } from "@adaptive-ds/mdi/mdiArrowUpDownBold.js"
+import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { For, type Element as JSXElement, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsButtonClass } from "./cmsButtonClass.js"
@@ -71,7 +72,12 @@ export function CmsDataTable<T>(props: CmsDataTableProps<T>) {
           )}
         </For>
         <details class="relative">
-          <summary class={`${cmsButtonClass} cursor-pointer`}>{state.labels().columns}</summary>
+          <summary
+            class={`${cmsButtonClass} inline-flex cursor-pointer list-none items-center gap-1 [&::-webkit-details-marker]:hidden`}
+          >
+            {state.labels().columns}
+            <Icon path={mdiChevronDown} class="size-4" />
+          </summary>
           <div class="absolute z-10 mt-1 min-w-40 space-y-2 rounded-xl border border-gray-200 bg-white p-3 shadow-lg dark:border-neutral-800 dark:bg-neutral-900">
             <For each={props.columns.filter((column) => column.hideable !== false)}>
               {(column) => (
