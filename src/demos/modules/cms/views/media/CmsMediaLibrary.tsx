@@ -1,4 +1,5 @@
 import { mdiFolderMultipleOutline } from "@adaptive-ds/mdi/mdiFolderMultipleOutline.js"
+import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsButtonClass } from "../../ui/cmsButtonClass.js"
@@ -97,9 +98,9 @@ export function CmsMediaLibrary() {
               type="submit"
               aria-label={state.text().addFolder}
               title={state.text().addFolder}
-              class={cmsButtonClass}
+              class={`${cmsButtonClass} inline-flex size-[34px] shrink-0 items-center justify-center !p-0`}
             >
-              +
+              <Icon path={mdiPlus} class="size-4" />
             </button>
           </form>
         </aside>
