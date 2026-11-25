@@ -27,7 +27,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
           </button>
         }
       />
-      <div class="mb-4 flex gap-2 overflow-x-auto pb-1" role="group" aria-label={state.t().title}>
+      <div class="mb-4 flex flex-wrap gap-2 pb-1" role="group" aria-label={state.t().title}>
         <For each={state.filters()}>
           {(filter) => (
             <button
