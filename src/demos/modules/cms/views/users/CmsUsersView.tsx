@@ -31,7 +31,7 @@ export function CmsUsersView(props: { id?: string }) {
             <Show when={state.user()}>
               {(user) => (
                 <form
-                  class="space-y-4 rounded-2xl border p-4 text-sm dark:border-gray-700"
+                  class="flex flex-col gap-4 rounded-2xl border p-4 text-sm dark:border-gray-700"
                   onSubmit={(event) => {
                     event.preventDefault()
                     state.submit()

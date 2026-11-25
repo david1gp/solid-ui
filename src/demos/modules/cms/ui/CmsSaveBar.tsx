@@ -8,7 +8,7 @@ export function CmsSaveBar(p: { dirty: boolean; onDiscard: () => void }) {
   return (
     <div
       class={
-        "md:sticky md:bottom-0 -mx-1 px-1 py-3 flex flex-wrap items-center justify-end gap-3 bg-background dark:bg-[#222326] border-t border-transparent"
+        "md:sticky md:bottom-0 -mx-1 px-1 flex flex-wrap items-center justify-end gap-3 bg-background dark:bg-[#222326]"
       }
     >
       <span class={"mr-auto w-full sm:w-auto text-xs text-neutral-500 dark:text-neutral-400"} aria-live={"polite"}>
