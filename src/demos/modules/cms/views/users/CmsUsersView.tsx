@@ -1,5 +1,10 @@
 import { Show } from "solid-js"
 import { CmsDataTable } from "../../ui/CmsDataTable.js"
+import { cmsDangerPillClass } from "../../ui/cmsDangerPillClass.js"
+import { cmsInputClass } from "../../ui/cmsInputClass.js"
+import { CmsSaveBar } from "../../ui/CmsSaveBar.js"
+import { ConfirmDialog } from "../../ui/ConfirmDialog.js"
+import type { CmsUserStatus } from "./cmsUserStatus.js"
 import { cmsPillClass } from "../../ui/cmsPillClass.js"
 import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
 import { cmsSuccessPillClass } from "../../ui/cmsSuccessPillClass.js"
@@ -25,21 +30,75 @@ export function CmsUsersView(props: { id?: string }) {
             <PageHeader title={state.user()?.name ?? state.text().details} />
             <Show when={state.user()}>
               {(user) => (
-                <div class="space-y-3 rounded-2xl border p-4 text-sm dark:border-gray-700">
+                <form
+                  class="space-y-3 rounded-2xl border p-4 text-sm dark:border-gray-700"
+                  onSubmit={(event) => {
+                    event.preventDefault()
+                    state.submit()
+                  }}
+                >
                   <p>
                     <strong>{state.text().email}:</strong> {user().email}
                   </p>
-                  <p>
-                    <strong>{state.text().role}:</strong> {user().role}
-                  </p>
-                  <p>
-                    <strong>{state.text().team}:</strong> {user().team}
-                  </p>
-                  <p>
-                    <strong>{state.text().status}:</strong>{" "}
-                    {user().status === "Eingeladen" ? state.text().invited : state.text().active}
-                  </p>
-                </div>
+                  <label class="block space-y-1">
+                    <span>{state.text().role}</span>
+                    <select
+                      class={cmsInputClass}
+                      value={state.draftRole()}
+                      onChange={(event) => state.draftRoleSet(event.currentTarget.value)}
+                    >
+                      <option>Administrator</option>
+                      <option disabled={state.lastAdmin()}>Editor</option>
+                      <option disabled={state.lastAdmin()}>Author</option>
+                    </select>
+                  </label>
+                  <label class="block space-y-1">
+                    <span>{state.text().status}</span>
+                    <select
+                      class={cmsInputClass}
+                      value={state.draftStatus()}
+                      onChange={(event) => state.draftStatusSet(event.currentTarget.value as CmsUserStatus)}
+                    >
+                      <option value="Aktiv">{state.text().active}</option>
+                      <option value="Deaktiviert" disabled={state.lastAdmin()}>
+                        {state.text().deactivated}
+                      </option>
+                      <Show when={user().status === "Eingeladen"}>
+                        <option value="Eingeladen">{state.text().invited}</option>
+                      </Show>
+                    </select>
+                  </label>
+                  <span
+                    class={
+                      user().status === "Eingeladen"
+                        ? cmsPillClass
+                        : user().status === "Deaktiviert"
+                          ? cmsDangerPillClass
+                          : cmsSuccessPillClass
+                    }
+                  >
+                    {state.statusLabel(user().status)}
+                  </span>
+                  <Show when={state.draftStatus() === "Deaktiviert"}>
+                    <p>{state.text().noAccess}</p>
+                  </Show>
+                  <Show when={state.lastAdmin()}>
+                    <p>{state.text().guard}</p>
+                  </Show>
+                  <Show when={state.dirty()}>
+                    <CmsSaveBar dirty={state.dirty()} onDiscard={state.discard} />
+                  </Show>
+                  <ConfirmDialog
+                    title={state.text().confirm}
+                    description={state.text().confirmDescription}
+                    open={state.confirmOpen()}
+                    onOpenChange={state.confirmOpenSet}
+                    onConfirm={state.save}
+                    confirmLabel={state.text().deactivate}
+                    cancelLabel={state.text().cancel}
+                    destructive
+                  />
+                </form>
               )}
             </Show>
           </div>
@@ -112,14 +171,21 @@ export function CmsUsersView(props: { id?: string }) {
               filterable: true,
               render: (row) => <span class={cmsPillClass}>{row.role}</span>,
             },
-            { id: "team", label: state.text().team, value: (row) => row.team, filterable: true },
             {
               id: "status",
               label: state.text().status,
-              value: (row) => (row.status === "Eingeladen" ? state.text().invited : state.text().active),
+              value: (row) => state.statusLabel(row.status),
               render: (row) => (
-                <span class={row.status === "Eingeladen" ? cmsPillClass : cmsSuccessPillClass}>
-                  {row.status === "Eingeladen" ? state.text().invited : state.text().active}
+                <span
+                  class={
+                    row.status === "Eingeladen"
+                      ? cmsPillClass
+                      : row.status === "Deaktiviert"
+                        ? cmsDangerPillClass
+                        : cmsSuccessPillClass
+                  }
+                >
+                  {state.statusLabel(row.status)}
                 </span>
               ),
               filterable: true,
@@ -162,18 +228,6 @@ export function CmsUsersView(props: { id?: string }) {
                 <option>Administrator</option>
                 <option>Editor</option>
                 <option>Author</option>
-              </select>
-            </label>
-            <label class="block space-y-1">
-              <span>{state.text().team}</span>
-              <select
-                class={control}
-                value={state.team()}
-                onChange={(event) => state.teamSet(event.currentTarget.value)}
-              >
-                <option>Redaktion</option>
-                <option>Marketing</option>
-                <option>Entwicklung</option>
               </select>
             </label>
             <div class="flex gap-2">
