@@ -26,97 +26,107 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
         ← Artikel / Article
       </button>
       <PageHeader title={state.title() || "Produktname"} />
-      <div
-        class={`grid items-start gap-6 ${state.imageCollapsed() ? "lg:grid-cols-[3rem_minmax(0,1fr)]" : "lg:grid-cols-2"}`}
-      >
-        <section class={`${cmsCardClass} ${state.imageCollapsed() ? "lg:!p-2" : ""}`}>
-          <div
-            class={`flex items-center justify-between gap-2 ${state.imageCollapsed() ? "lg:flex-col-reverse" : "mb-4"}`}
-          >
-            <h2 class={`font-semibold ${state.imageCollapsed() ? "lg:[writing-mode:vertical-rl] lg:rotate-180" : ""}`}>
+      <div class="@container flex flex-col items-start gap-6 lg:flex-row">
+        <section
+          class={`${cmsCardClass} relative w-full overflow-hidden transition-[width] duration-500 ease-in-out motion-reduce:transition-none ${state.imageCollapsed() ? "lg:w-12" : "lg:w-[calc((100%_-_1.5rem)/2)]"}`}
+        >
+          <div class="mb-4 flex h-8 items-center justify-between gap-2 lg:w-[calc((100cqw_-_1.5rem)/2_-_2.5rem_-_2px)]">
+            <h2
+              class={`font-semibold ${state.imageCollapsed() ? "lg:absolute lg:left-3 lg:top-12 lg:[writing-mode:vertical-rl] lg:rotate-180" : ""}`}
+            >
               Produktbild
             </h2>
             <button
               type="button"
-              class="flex size-8 shrink-0 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)]"
+              class={`flex size-8 shrink-0 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)] ${state.imageCollapsed() ? "lg:absolute lg:left-2 lg:top-2" : ""}`}
               aria-expanded={state.imageCollapsed() ? "false" : "true"}
               aria-controls={state.imageContentId}
               aria-label={state.imageCollapsed() ? "Produktbild ausklappen" : "Produktbild einklappen"}
               title={state.imageCollapsed() ? "Produktbild ausklappen" : "Produktbild einklappen"}
               onClick={state.imageToggle}
             >
-              <Icon path={mdiChevronLeft} class={`size-5 ${state.imageCollapsed() ? "rotate-180" : ""}`} />
+              <Icon
+                path={mdiChevronLeft}
+                class={`size-5 transition-transform duration-500 ease-in-out motion-reduce:transition-none ${state.imageCollapsed() ? "rotate-180" : ""}`}
+              />
             </button>
           </div>
-          <div id={state.imageContentId} hidden={state.imageCollapsed()} inert={state.imageCollapsed()}>
-            <div class="@container relative mx-auto aspect-[330/460] w-full max-w-sm overflow-hidden rounded-2xl">
-              <CmsHeadphonesIllustration colorway={props.product.colorway} />
-              <div class="absolute inset-x-0 bottom-0 h-[50%] bg-[linear-gradient(to_top,rgb(8_12_16/.98)_0%,rgb(8_12_16/.92)_55%,transparent_100%)]" />
-              <Show when={state.featured()}>
-                <CmsTopsellerRibbon />
-              </Show>
-              <div class="absolute inset-x-[6.06cqw] bottom-[6.06cqw]">
-                <p
-                  class={`line-clamp-1 text-[7.27cqw] font-extrabold leading-[1.2] ${state.name() ? "text-white" : "text-white/50"}`}
-                >
-                  {state.name() || "Produktname"}
-                </p>
-                <Show when={state.subtitle()}>
-                  <p class="mt-[1.21cqw] line-clamp-2 text-[4.24cqw] leading-[1.3] text-[#d6dde3]">
-                    {state.subtitle()}
-                  </p>
+          <div
+            id={state.imageContentId}
+            aria-hidden={state.imageCollapsed() ? "true" : "false"}
+            inert={state.imageCollapsed()}
+            class={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none lg:w-[calc((100cqw_-_1.5rem)/2_-_2.5rem_-_2px)] lg:grid-rows-[1fr] ${state.imageCollapsed() ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100"}`}
+          >
+            <div class="min-h-0 overflow-hidden">
+              <div class="@container relative mx-auto aspect-[330/460] w-full max-w-sm overflow-hidden rounded-2xl">
+                <CmsHeadphonesIllustration colorway={props.product.colorway} />
+                <div class="absolute inset-x-0 bottom-0 h-[50%] bg-[linear-gradient(to_top,rgb(8_12_16/.98)_0%,rgb(8_12_16/.92)_55%,transparent_100%)]" />
+                <Show when={state.featured()}>
+                  <CmsTopsellerRibbon />
                 </Show>
-                <div class="mt-[2.42cqw] flex items-center gap-[2.12cqw] text-[3.94cqw] text-[#d6dde3]">
-                  <span
-                    aria-hidden="true"
-                    class={`size-[2.12cqw] shrink-0 rounded-full ${cmsProductStockStatus(state.quantity()).dotClass}`}
-                  />
-                  <span>{cmsProductStockStatus(state.quantity()).label}</span>
-                </div>
-                <div class="mt-[4.85cqw] flex items-center justify-between border-t border-white/[.14] pt-[4.24cqw]">
-                  <div>
-                    <p class="whitespace-nowrap text-[8.48cqw] font-extrabold leading-none text-white">
-                      {cmsProductPriceFormat(Number(state.price()) || 0)}
-                    </p>
-                    <p class="mt-[1.21cqw] text-[3.33cqw] text-[#9fb0b8]">inkl. MwSt.</p>
-                  </div>
-                  <span
-                    aria-hidden="true"
-                    class="flex size-[12.73cqw] shrink-0 items-center justify-center rounded-full bg-teal-300 text-[#06201c]"
+                <div class="absolute inset-x-[6.06cqw] bottom-[6.06cqw]">
+                  <p
+                    class={`line-clamp-1 text-[7.27cqw] font-extrabold leading-[1.2] ${state.name() ? "text-white" : "text-white/50"}`}
                   >
-                    <svg
+                    {state.name() || "Produktname"}
+                  </p>
+                  <Show when={state.subtitle()}>
+                    <p class="mt-[1.21cqw] line-clamp-2 text-[4.24cqw] leading-[1.3] text-[#d6dde3]">
+                      {state.subtitle()}
+                    </p>
+                  </Show>
+                  <div class="mt-[2.42cqw] flex items-center gap-[2.12cqw] text-[3.94cqw] text-[#d6dde3]">
+                    <span
                       aria-hidden="true"
-                      class="size-[6.06cqw]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      class={`size-[2.12cqw] shrink-0 rounded-full ${cmsProductStockStatus(state.quantity()).dotClass}`}
+                    />
+                    <span>{cmsProductStockStatus(state.quantity()).label}</span>
+                  </div>
+                  <div class="mt-[4.85cqw] flex items-center justify-between border-t border-white/[.14] pt-[4.24cqw]">
+                    <div>
+                      <p class="whitespace-nowrap text-[8.48cqw] font-extrabold leading-none text-white">
+                        {cmsProductPriceFormat(Number(state.price()) || 0)}
+                      </p>
+                      <p class="mt-[1.21cqw] text-[3.33cqw] text-[#9fb0b8]">inkl. MwSt.</p>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="flex size-[12.73cqw] shrink-0 items-center justify-center rounded-full bg-teal-300 text-[#06201c]"
                     >
-                      <path d="M5 8h14l1 13H4L5 8Z" />
-                      <path d="M9 9V6a3 3 0 0 1 6 0v3" />
-                    </svg>
-                  </span>
+                      <svg
+                        aria-hidden="true"
+                        class="size-[6.06cqw]"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M5 8h14l1 13H4L5 8Z" />
+                        <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
               </div>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
+                  Aus Mediathek wählen
+                </button>
+                <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
+                  Neues Bild hochladen
+                </button>
+              </div>
+              <Show when={state.imageNotice()}>
+                <p role="status" class="mt-3 text-sm text-neutral-600 dark:text-neutral-300">
+                  {state.imageNotice()}
+                </p>
+              </Show>
             </div>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
-                Aus Mediathek wählen
-              </button>
-              <button type="button" class={cmsButtonClass} onClick={state.imageUnavailable}>
-                Neues Bild hochladen
-              </button>
-            </div>
-            <Show when={state.imageNotice()}>
-              <p role="status" class="mt-3 text-sm text-neutral-600 dark:text-neutral-300">
-                {state.imageNotice()}
-              </p>
-            </Show>
           </div>
         </section>
-        <div class="space-y-6">
+        <div class="w-full min-w-0 space-y-6 lg:flex-1">
           <section class={`${cmsCardClass} space-y-4`}>
             <h2 class="font-semibold">Produktdetails</h2>
             <label class="block text-sm">
