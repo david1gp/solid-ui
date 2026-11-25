@@ -5,7 +5,7 @@ import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
 import { cmsCardClass } from "../../../ui/cmsCardClass.js"
 import { cmsPillClass } from "../../../ui/cmsPillClass.js"
 import { cmsProductReorderStateCreate } from "../products/cmsProductReorderStateCreate.js"
-import { CmsEventDateBadge } from "./CmsEventDateBadge.js"
+import { CmsFestivalIllustration } from "./CmsFestivalIllustration.js"
 import { cmsEventDateParts } from "./cmsEventDateParts.js"
 import { cmsEventOrder } from "./cmsEventOrder.js"
 import { cmsEventScheduleSorted } from "./cmsEventScheduleSorted.js"
@@ -40,10 +40,12 @@ export function CmsEventList(props: { events: typeof cmsEventsSorted }) {
                   <path d={mdiDragVertical} />
                 </svg>
               </button>
-              <CmsEventDateBadge date={cmsEventScheduleSorted(event.schedule)[0]?.date ?? ""} color={event.color} />
+              <div class="size-16 shrink-0 overflow-hidden rounded-lg">
+                <CmsFestivalIllustration color={event.color} />
+              </div>
               <div class="min-w-0 flex-1">
                 <h2 class="text-sm font-medium">{event.shortTitle}</h2>
-                <p class="mt-0.5 text-xs text-gray-500 dark:text-neutral-400">
+                <p class="mt-0.5 truncate text-xs text-gray-500 dark:text-neutral-400">
                   {event.title} · {event.description}
                 </p>
                 <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-neutral-400">
