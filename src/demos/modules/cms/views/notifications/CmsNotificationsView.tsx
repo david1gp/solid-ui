@@ -1,4 +1,6 @@
 import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
+import { mdiEmailOpenOutline } from "@adaptive-ds/mdi/mdiEmailOpenOutline.js"
+import { mdiEmailOutline } from "@adaptive-ds/mdi/mdiEmailOutline.js"
 import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsNumberFormat } from "../../i18n/cmsNumberFormat.js"
@@ -55,7 +57,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
               <div
                 class={`flex flex-wrap items-start justify-between gap-3 p-4 ${state.store.isUnread(item.id) ? "bg-indigo-50/50 dark:bg-indigo-950/20" : ""}`}
               >
-                <CmsDashboardAlertIcon type={item.type} />
+                <CmsDashboardAlertIcon type={item.type} size="small" />
                 <button type="button" class="min-w-0 flex-1 text-left" onClick={() => state.store.markRead(item.id)}>
                   <span class="flex flex-wrap items-center gap-2 text-sm font-medium">
                     <span
@@ -86,7 +88,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
                     {state.time(item.createdAt)}
                   </time>
                 </button>
-                <div class="flex flex-wrap items-center gap-3 pl-4 text-sm">
+                <div class="flex w-full flex-wrap items-center gap-3 pl-8 text-sm sm:w-auto sm:pl-4">
                   <Show when={item.type !== "success"}>
                     <button
                       type="button"
@@ -98,14 +100,16 @@ export function CmsNotificationsView(_props: { id?: string }) {
                   </Show>
                   <button
                     type="button"
-                    class="text-neutral-600 underline dark:text-neutral-400"
+                    class="flex size-8 items-center justify-center rounded text-neutral-500 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:text-neutral-400 dark:hover:bg-neutral-800"
+                    aria-label={state.store.isUnread(item.id) ? state.t().read : state.t().unread}
+                    title={state.store.isUnread(item.id) ? state.t().read : state.t().unread}
                     onClick={() => state.store.toggleRead(item.id)}
                   >
-                    {state.store.isUnread(item.id) ? state.t().read : state.t().unread}
+                    <Icon path={state.store.isUnread(item.id) ? mdiEmailOpenOutline : mdiEmailOutline} class="size-4" />
                   </button>
                   <button
                     type="button"
-                    class="rounded p-1 text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
+                    class="flex size-8 items-center justify-center rounded text-neutral-500 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:text-neutral-400 dark:hover:bg-neutral-800"
                     aria-label={`${state.t().dismiss}: ${item.title[state.locale()]}`}
                     title={state.t().dismiss}
                     onClick={() => state.store.dismiss(item.id)}
