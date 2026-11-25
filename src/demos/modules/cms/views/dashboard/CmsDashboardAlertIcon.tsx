@@ -1,14 +1,15 @@
 import { mdiAlertCircleOutline } from "@adaptive-ds/mdi/mdiAlertCircleOutline.js"
 import { mdiCash } from "@adaptive-ds/mdi/mdiCash.js"
+import { mdiCheckCircleOutline } from "@adaptive-ds/mdi/mdiCheckCircleOutline.js"
 import { mdiEmailOutline } from "@adaptive-ds/mdi/mdiEmailOutline.js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 
-export function CmsDashboardAlertIcon(props: { type: "payment" | "error" | "message" }) {
+export function CmsDashboardAlertIcon(props: { type: "payment" | "error" | "message" | "success" }) {
   return (
     <span
       aria-hidden="true"
       class={
-        props.type === "payment"
+        props.type === "payment" || props.type === "success"
           ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400"
           : props.type === "error"
             ? "flex size-10 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400"
@@ -16,7 +17,15 @@ export function CmsDashboardAlertIcon(props: { type: "payment" | "error" | "mess
       }
     >
       <Icon
-        path={props.type === "payment" ? mdiCash : props.type === "error" ? mdiAlertCircleOutline : mdiEmailOutline}
+        path={
+          props.type === "payment"
+            ? mdiCash
+            : props.type === "success"
+              ? mdiCheckCircleOutline
+              : props.type === "error"
+                ? mdiAlertCircleOutline
+                : mdiEmailOutline
+        }
         class="size-5"
       />
     </span>
