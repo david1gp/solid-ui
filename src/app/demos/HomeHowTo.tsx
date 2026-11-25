@@ -19,6 +19,10 @@ export function HomeHowTo() {
           <li>Copy the link of that demo page from the address bar of your browser.</li>
           <li>Start a new AI session and paste the link there.</li>
           <li>Tell the AI to use this template for your page.</li>
+          <li>
+            Also tell the AI to put each newly created page or system into its own folder, so they can be edited
+            independently of each other.
+          </li>
         </ol>
         <aside
           class={
