@@ -66,7 +66,7 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
             </p>
           </Show>
         </section>
-        <section class={`${cmsCardClass} space-y-4`}>
+        <section class={`${cmsCardClass} @container space-y-4`}>
           <h2 class="font-semibold">Veranstaltungsdetails</h2>
           <label class="block text-sm">
             Titel
@@ -132,7 +132,7 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
               + Termin hinzufügen
             </button>
           </fieldset>
-          <div class="grid gap-4 sm:grid-cols-2">
+          <div class="grid gap-4 @min-[28rem]:grid-cols-2">
             <label class="block text-sm">
               Ort
               <input class={input} value={state.location()} onInput={(e) => state.locationSet(e.currentTarget.value)} />
