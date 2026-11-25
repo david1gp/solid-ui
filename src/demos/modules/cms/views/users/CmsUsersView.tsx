@@ -31,7 +31,7 @@ export function CmsUsersView(props: { id?: string }) {
             <Show when={state.user()}>
               {(user) => (
                 <form
-                  class="space-y-3 rounded-2xl border p-4 text-sm dark:border-gray-700"
+                  class="space-y-4 rounded-2xl border p-4 text-sm dark:border-gray-700"
                   onSubmit={(event) => {
                     event.preventDefault()
                     state.submit()
@@ -40,10 +40,10 @@ export function CmsUsersView(props: { id?: string }) {
                   <p>
                     <strong>{state.text().email}:</strong> {user().email}
                   </p>
-                  <label class="block space-y-1">
+                  <label class="block">
                     <span>{state.text().role}</span>
                     <select
-                      class={cmsInputClass}
+                      class={`mt-1 w-full ${cmsInputClass}`}
                       value={state.draftRole()}
                       onChange={(event) => state.draftRoleSet(event.currentTarget.value)}
                     >
@@ -52,10 +52,10 @@ export function CmsUsersView(props: { id?: string }) {
                       <option disabled={state.lastAdmin()}>Author</option>
                     </select>
                   </label>
-                  <label class="block space-y-1">
+                  <label class="block">
                     <span>{state.text().status}</span>
                     <select
-                      class={cmsInputClass}
+                      class={`mt-1 w-full ${cmsInputClass}`}
                       value={state.draftStatus()}
                       onChange={(event) => state.draftStatusSet(event.currentTarget.value as CmsUserStatus)}
                     >
@@ -68,17 +68,19 @@ export function CmsUsersView(props: { id?: string }) {
                       </Show>
                     </select>
                   </label>
-                  <span
-                    class={
-                      user().status === "Eingeladen"
-                        ? cmsPillClass
-                        : user().status === "Deaktiviert"
-                          ? cmsDangerPillClass
-                          : cmsSuccessPillClass
-                    }
-                  >
-                    {state.statusLabel(user().status)}
-                  </span>
+                  <div>
+                    <span
+                      class={
+                        user().status === "Eingeladen"
+                          ? cmsPillClass
+                          : user().status === "Deaktiviert"
+                            ? cmsDangerPillClass
+                            : cmsSuccessPillClass
+                      }
+                    >
+                      {state.statusLabel(user().status)}
+                    </span>
+                  </div>
                   <Show when={state.lastAdmin()}>
                     <p>{state.text().guard}</p>
                   </Show>
@@ -197,28 +199,28 @@ export function CmsUsersView(props: { id?: string }) {
               state.invite()
             }}
           >
-            <label class="block space-y-1">
+            <label class="block">
               <span>{state.text().name}</span>
               <input
-                class={control}
+                class={`mt-1 ${control}`}
                 value={state.name()}
                 onInput={(event) => state.nameSet(event.currentTarget.value)}
               />
             </label>
-            <label class="block space-y-1">
+            <label class="block">
               <span>{state.text().email}</span>
               <input
                 required
                 type="email"
-                class={control}
+                class={`mt-1 ${control}`}
                 value={state.email()}
                 onInput={(event) => state.emailSet(event.currentTarget.value)}
               />
             </label>
-            <label class="block space-y-1">
+            <label class="block">
               <span>{state.text().role}</span>
               <select
-                class={control}
+                class={`mt-1 ${control}`}
                 value={state.role()}
                 onChange={(event) => state.roleSet(event.currentTarget.value)}
               >

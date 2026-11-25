@@ -8,10 +8,10 @@ export function CmsSaveBar(p: { dirty: boolean; onDiscard: () => void }) {
   return (
     <div
       class={
-        "md:sticky md:bottom-0 -mx-1 px-1 py-3 flex items-center justify-end gap-3 bg-background dark:bg-[#222326] border-t border-transparent"
+        "md:sticky md:bottom-0 -mx-1 px-1 py-3 flex flex-wrap items-center justify-end gap-3 bg-background dark:bg-[#222326] border-t border-transparent"
       }
     >
-      <span class={"mr-auto text-xs text-neutral-500 dark:text-neutral-400"} aria-live={"polite"}>
+      <span class={"mr-auto w-full sm:w-auto text-xs text-neutral-500 dark:text-neutral-400"} aria-live={"polite"}>
         {p.dirty
           ? t("Ungespeicherte Änderungen", "Unsaved changes")
           : t("Alle Änderungen gespeichert", "All changes saved")}
