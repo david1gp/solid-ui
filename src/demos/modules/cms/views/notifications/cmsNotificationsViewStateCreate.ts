@@ -1,5 +1,6 @@
 import { createSignal } from "solid-js"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
+import { cmsNotificationActionGet } from "../../notifications/cmsNotificationActionGet.js"
 import { cmsNotificationsFilter } from "../../notifications/cmsNotificationsFilter.js"
 import { cmsNotificationsStore } from "../../notifications/cmsNotificationsStore.js"
 import { cmsNotificationTimeFormat } from "../../notifications/cmsNotificationTimeFormat.js"
@@ -20,11 +21,6 @@ const text = {
     empty: "Keine Benachrichtigungen",
     emptyFilter: "Keine Einträge für diesen Filter",
     dismiss: "Ausblenden",
-    backup: "Backup erneut starten",
-    form: "Formular-Log ansehen",
-    inquiry: "Anfrage öffnen",
-    invoice: "Rechnung ansehen",
-    feedback: "Demo-Aktion ausgeführt",
   },
   en: {
     title: "Notifications",
@@ -41,11 +37,6 @@ const text = {
     empty: "No notifications",
     emptyFilter: "No entries for this filter",
     dismiss: "Dismiss",
-    backup: "Restart backup",
-    form: "View form log",
-    inquiry: "Open inquiry",
-    invoice: "View invoice",
-    feedback: "Demo action completed",
   },
 }
 export function cmsNotificationsViewStateCreate() {
@@ -77,17 +68,12 @@ export function cmsNotificationsViewStateCreate() {
     fullTime: (date: Date) =>
       new Intl.DateTimeFormat(cmsLocale.get(), { dateStyle: "full", timeStyle: "short" }).format(date),
     locale: () => cmsLocale.get(),
-    actionLabel: (item: { id: string; type: string }) =>
-      item.id === "backup-error"
-        ? t().backup
-        : item.id === "form-error"
-          ? t().form
-          : item.type === "payment"
-            ? t().invoice
-            : t().inquiry,
+    actionInfo: (id: string) => cmsNotificationActionGet(id, cmsLocale.get()),
     action: (id: string) => {
+      const action = cmsNotificationActionGet(id, cmsLocale.get())
+      if (!action) return
       cmsNotificationsStore.markRead(id)
-      setFeedback(t().feedback)
+      setFeedback(action.feedback)
     },
   }
 }

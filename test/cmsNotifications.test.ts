@@ -1,8 +1,24 @@
 import { expect, test } from "bun:test"
 import { flush } from "solid-js"
+import { cmsNotificationActionGet } from "../src/demos/modules/cms/notifications/cmsNotificationActionGet.js"
 import { cmsNotificationTimeFormat } from "../src/demos/modules/cms/notifications/cmsNotificationTimeFormat.js"
 import { cmsNotificationsFilter } from "../src/demos/modules/cms/notifications/cmsNotificationsFilter.js"
 import { cmsNotificationsStoreCreate } from "../src/demos/modules/cms/notifications/cmsNotificationsStoreCreate.js"
+
+test("notification actions identify targets and localized feedback", () => {
+  for (const id of ["payment", "old-payment", "form-error", "contact", "message", "old-contact"]) {
+    expect(cmsNotificationActionGet(id, "de")?.kind).toBe("navigation")
+  }
+  expect(cmsNotificationActionGet("payment", "de")?.feedback).toContain("#1042")
+  expect(cmsNotificationActionGet("old-contact", "en")?.feedback).toContain("Marie Fischer")
+  expect(cmsNotificationActionGet("backup-error", "en")).toEqual({
+    kind: "restart",
+    label: "Restart backup",
+    feedback: "Demo: Backup is restarting",
+  })
+  expect(cmsNotificationActionGet("backup-success", "de")).toBeUndefined()
+  expect(cmsNotificationActionGet("form-recovered", "de")).toBeUndefined()
+})
 
 test("read state and dismissals update visible unread counts", () => {
   const store = cmsNotificationsStoreCreate()

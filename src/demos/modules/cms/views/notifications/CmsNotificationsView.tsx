@@ -1,6 +1,7 @@
 import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { mdiEmailOpenOutline } from "@adaptive-ds/mdi/mdiEmailOpenOutline.js"
 import { mdiEmailOutline } from "@adaptive-ds/mdi/mdiEmailOutline.js"
+import { mdiRefresh } from "@adaptive-ds/mdi/mdiRefresh.js"
 import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsNumberFormat } from "../../i18n/cmsNumberFormat.js"
@@ -58,12 +59,22 @@ export function CmsNotificationsView(_props: { id?: string }) {
                 class={`flex flex-wrap items-start justify-between gap-3 p-4 ${state.store.isUnread(item.id) ? "bg-[color-mix(in_oklab,var(--dashboard-accent)_5%,transparent)] dark:bg-[color-mix(in_oklab,var(--dashboard-accent)_8%,transparent)]" : ""}`}
               >
                 <CmsDashboardAlertIcon type={item.type} size="small" />
-                <button type="button" class="min-w-0 flex-1 text-left" onClick={() => state.store.markRead(item.id)}>
+                <div class="min-w-0 flex-1 text-left">
                   <span class="flex flex-wrap items-center gap-2 text-sm font-medium">
                     <span
                       class={`h-2 w-2 shrink-0 rounded-full ${state.store.isUnread(item.id) ? "bg-[var(--dashboard-accent)]" : "bg-neutral-300 dark:bg-neutral-700"}`}
                     />
-                    {item.title[state.locale()]}{" "}
+                    <Show when={state.actionInfo(item.id)?.kind === "navigation"} fallback={item.title[state.locale()]}>
+                      <button
+                        type="button"
+                        class="font-medium hover:text-[var(--dashboard-accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        title={state.actionInfo(item.id)?.label}
+                        aria-label={`${item.title[state.locale()]}: ${state.actionInfo(item.id)?.label}`}
+                        onClick={() => state.action(item.id)}
+                      >
+                        {item.title[state.locale()]}
+                      </button>
+                    </Show>
                     <Show when={state.store.isUnread(item.id)}>
                       <span class="rounded-full bg-[color-mix(in_oklab,var(--dashboard-accent)_12%,transparent)] px-2 py-0.5 text-xs text-[color-mix(in_srgb,var(--dashboard-accent)_75%,black)] dark:text-[color-mix(in_srgb,var(--dashboard-accent)_65%,white)]">
                         {state.t().new}
@@ -87,15 +98,17 @@ export function CmsNotificationsView(_props: { id?: string }) {
                   >
                     {state.time(item.createdAt)}
                   </time>
-                </button>
+                </div>
                 <div class="flex w-full flex-wrap items-center gap-3 pl-8 text-sm sm:w-auto sm:pl-4">
-                  <Show when={item.type !== "success"}>
+                  <Show when={state.actionInfo(item.id)?.kind === "restart"}>
                     <button
                       type="button"
-                      class="text-[var(--dashboard-accent)] underline"
+                      class="flex size-8 items-center justify-center rounded text-neutral-500 hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:text-neutral-400 dark:hover:bg-neutral-800"
+                      aria-label={state.actionInfo(item.id)?.label}
+                      title={state.actionInfo(item.id)?.label}
                       onClick={() => state.action(item.id)}
                     >
-                      {state.actionLabel(item)}
+                      <Icon path={mdiRefresh} class="size-4" />
                     </button>
                   </Show>
                   <button
