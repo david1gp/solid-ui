@@ -39,7 +39,7 @@ export function CmsMediaLibrary() {
           }}
         />
       </label>
-      <div ref={state.observeContainer} class="flex flex-col gap-4 lg:flex-row">
+      <div ref={state.observeContainer} class="@container flex flex-col gap-4 lg:flex-row">
         <aside class={`${cmsCardClass} w-full shrink-0 space-y-2 lg:w-56 lg:self-start`}>
           <h2 class="mb-4 text-base font-semibold">{state.text().folders}</h2>
           <For
@@ -105,11 +105,13 @@ export function CmsMediaLibrary() {
           </form>
         </aside>
         <div
-          class="grid min-w-0 flex-1 grid-rows-[1fr] opacity-100 transition-[grid-template-rows,flex-grow,opacity] duration-500 ease-in-out motion-reduce:transition-none aria-hidden:grid-rows-[0fr] aria-hidden:opacity-0 lg:aria-hidden:flex-[0_1_0%] lg:aria-hidden:grid-rows-[1fr]"
+          class="grid min-w-0 flex-1 overflow-hidden opacity-100 transition-[grid-template-rows,flex-grow,opacity] duration-500 ease-in-out motion-reduce:transition-none aria-hidden:opacity-0 max-lg:grid-rows-[1fr] max-lg:aria-hidden:grid-rows-[0fr] lg:aria-hidden:flex-[0_1_0%]"
           aria-hidden={state.gridCollapsed() ? "true" : undefined}
           inert={state.gridCollapsed()}
         >
-          <section class="min-h-0 min-w-0 space-y-4 overflow-hidden">
+          <section
+            class={`min-h-0 min-w-0 space-y-4 overflow-hidden ${state.narrow() ? "lg:w-[calc(100cqw-15rem)]" : ""}`}
+          >
             <div class="flex flex-wrap gap-2">
               <input
                 type="search"

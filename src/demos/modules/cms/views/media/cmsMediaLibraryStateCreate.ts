@@ -27,6 +27,7 @@ export function cmsMediaLibraryStateCreate() {
     search,
     selected,
     observeContainer: container.observe,
+    narrow: container.narrow,
     gridCollapsed: () => container.narrow() && !!selected(),
     filtered,
     folderName,
