@@ -79,9 +79,6 @@ export function CmsUsersView(props: { id?: string }) {
                   >
                     {state.statusLabel(user().status)}
                   </span>
-                  <Show when={state.draftStatus() === "Deaktiviert"}>
-                    <p>{state.text().noAccess}</p>
-                  </Show>
                   <Show when={state.lastAdmin()}>
                     <p>{state.text().guard}</p>
                   </Show>
