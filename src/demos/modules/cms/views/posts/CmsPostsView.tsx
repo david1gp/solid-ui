@@ -12,6 +12,7 @@ import { cmsIconCircleClass } from "../../ui/cmsIconCircleClass.js"
 import { cmsInputClass } from "../../ui/cmsInputClass.js"
 import { cmsPillClass } from "../../ui/cmsPillClass.js"
 import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
+import { cmsSuccessPillClass } from "../../ui/cmsSuccessPillClass.js"
 import { Drawer } from "../../ui/Drawer.js"
 import { Dropdown } from "../../ui/Dropdown.js"
 import { PageHeader } from "../../ui/PageHeader.js"
@@ -142,10 +143,7 @@ const input = `w-full ${cmsInputClass}`
 const card = cmsCardClass
 const tabClass = (active: boolean) =>
   `border-b-2 pb-3 text-sm ${active ? "border-[var(--dashboard-accent)] font-semibold text-[var(--dashboard-accent)]" : "border-transparent font-medium text-gray-500 hover:text-[var(--dashboard-accent)] dark:text-neutral-400"}`
-const statusClass = (post: Post) =>
-  post.status === "published"
-    ? "rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
-    : cmsPillClass
+const statusClass = (post: Post) => (post.status === "published" ? cmsSuccessPillClass : cmsPillClass)
 const blank = (): Post => ({
   id: globalThis.crypto?.randomUUID?.() ?? String(Date.now()),
   title: "",

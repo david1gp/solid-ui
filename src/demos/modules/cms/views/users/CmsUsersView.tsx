@@ -1,5 +1,8 @@
 import { Show } from "solid-js"
 import { CmsDataTable } from "../../ui/CmsDataTable.js"
+import { cmsPillClass } from "../../ui/cmsPillClass.js"
+import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
+import { cmsSuccessPillClass } from "../../ui/cmsSuccessPillClass.js"
 import { Drawer } from "../../ui/Drawer.js"
 import { PageHeader } from "../../ui/PageHeader.js"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
@@ -46,7 +49,7 @@ export function CmsUsersView(props: { id?: string }) {
           title={state.text().title}
           description={state.text().description}
           actions={
-            <button type="button" class={button} onClick={() => state.openSet(true)}>
+            <button type="button" class={cmsPrimaryButtonClass} onClick={() => state.openSet(true)}>
               {state.text().invite}
             </button>
           }
@@ -70,7 +73,7 @@ export function CmsUsersView(props: { id?: string }) {
                   selectRow: "Select row",
                   pageSize: "Rows per page",
                 }
-              : undefined
+              : { noResults: "Keine Ergebnisse" }
           }
           bulkActions={[{ label: state.text().remove, run: (rows) => state.remove(rows.map((row) => row.id)) }]}
           columns={[
@@ -83,12 +86,12 @@ export function CmsUsersView(props: { id?: string }) {
               render: (row) => (
                 <button
                   type="button"
-                  class="flex items-center gap-2 text-left font-medium underline"
+                  class="flex items-center gap-2 text-left font-medium hover:text-[var(--dashboard-accent)]"
                   onClick={() => state.detail(row.id)}
                 >
                   <span
                     aria-hidden="true"
-                    class="flex size-8 shrink-0 items-center justify-center rounded-full bg-neutral-200 text-xs no-underline dark:bg-neutral-700"
+                    class="flex size-8 shrink-0 items-center justify-center rounded-full bg-neutral-200 text-xs dark:bg-neutral-700"
                   >
                     {row.name
                       .split(/\s+/)
@@ -107,9 +110,7 @@ export function CmsUsersView(props: { id?: string }) {
               label: state.text().role,
               value: (row) => row.role,
               filterable: true,
-              render: (row) => (
-                <span class="rounded-full bg-neutral-100 px-2 py-1 text-xs dark:bg-neutral-700">{row.role}</span>
-              ),
+              render: (row) => <span class={cmsPillClass}>{row.role}</span>,
             },
             { id: "team", label: state.text().team, value: (row) => row.team, filterable: true },
             {
@@ -117,7 +118,7 @@ export function CmsUsersView(props: { id?: string }) {
               label: state.text().status,
               value: (row) => (row.status === "Eingeladen" ? state.text().invited : state.text().active),
               render: (row) => (
-                <span class="rounded-full bg-neutral-100 px-2 py-1 text-xs dark:bg-neutral-700">
+                <span class={row.status === "Eingeladen" ? cmsPillClass : cmsSuccessPillClass}>
                   {row.status === "Eingeladen" ? state.text().invited : state.text().active}
                 </span>
               ),
