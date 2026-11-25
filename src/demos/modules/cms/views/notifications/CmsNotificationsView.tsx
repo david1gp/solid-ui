@@ -55,17 +55,17 @@ export function CmsNotificationsView(_props: { id?: string }) {
           <For each={state.items()}>
             {(item) => (
               <div
-                class={`flex flex-wrap items-start justify-between gap-3 p-4 ${state.store.isUnread(item.id) ? "bg-indigo-50/50 dark:bg-indigo-950/20" : ""}`}
+                class={`flex flex-wrap items-start justify-between gap-3 p-4 ${state.store.isUnread(item.id) ? "bg-[color-mix(in_oklab,var(--dashboard-accent)_5%,transparent)] dark:bg-[color-mix(in_oklab,var(--dashboard-accent)_8%,transparent)]" : ""}`}
               >
                 <CmsDashboardAlertIcon type={item.type} size="small" />
                 <button type="button" class="min-w-0 flex-1 text-left" onClick={() => state.store.markRead(item.id)}>
                   <span class="flex flex-wrap items-center gap-2 text-sm font-medium">
                     <span
-                      class={`h-2 w-2 shrink-0 rounded-full ${state.store.isUnread(item.id) ? "bg-indigo-500" : "bg-neutral-300 dark:bg-neutral-700"}`}
+                      class={`h-2 w-2 shrink-0 rounded-full ${state.store.isUnread(item.id) ? "bg-[var(--dashboard-accent)]" : "bg-neutral-300 dark:bg-neutral-700"}`}
                     />
                     {item.title[state.locale()]}{" "}
                     <Show when={state.store.isUnread(item.id)}>
-                      <span class="rounded-full bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                      <span class="rounded-full bg-[color-mix(in_oklab,var(--dashboard-accent)_12%,transparent)] px-2 py-0.5 text-xs text-[color-mix(in_srgb,var(--dashboard-accent)_75%,black)] dark:text-[color-mix(in_srgb,var(--dashboard-accent)_65%,white)]">
                         {state.t().new}
                       </span>
                     </Show>
