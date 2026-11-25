@@ -24,7 +24,21 @@ test("read state and dismissals update visible unread counts", () => {
 test("filters use current visible read state and types", () => {
   const store = cmsNotificationsStoreCreate()
   expect(cmsNotificationsFilter(store.visible(), "unread", store.isUnread)).toHaveLength(5)
+  expect(cmsNotificationsFilter(store.visible(), "all", store.isUnread)).toHaveLength(9)
   expect(cmsNotificationsFilter(store.visible(), "error", store.isUnread)).toHaveLength(2)
+  expect(cmsNotificationsFilter(store.visible(), "payment", store.isUnread)).toHaveLength(2)
+  expect(cmsNotificationsFilter(store.visible(), "message", store.isUnread)).toHaveLength(3)
+  expect(
+    store
+      .visible()
+      .filter((item) => item.type === "success")
+      .map((item) => item.id),
+  ).toEqual(["backup-success", "form-recovered"])
+  store.toggleRead("backup-success")
+  flush()
+  expect(
+    cmsNotificationsFilter(store.visible(), "unread", store.isUnread).some((item) => item.id === "backup-success"),
+  ).toBe(true)
   store.markAllRead()
   flush()
   expect(cmsNotificationsFilter(store.visible(), "unread", store.isUnread)).toHaveLength(0)

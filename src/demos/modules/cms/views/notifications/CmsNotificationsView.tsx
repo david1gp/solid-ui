@@ -45,7 +45,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
         <Show
           when={state.items().length > 0}
           fallback={
-            <p class="p-6 text-sm text-neutral-500">
+            <p class="p-6 text-sm text-neutral-500 dark:text-neutral-400">
               {state.store.visible().length === 0 ? state.t().empty : state.t().emptyFilter}
             </p>
           }
@@ -68,7 +68,9 @@ export function CmsNotificationsView(_props: { id?: string }) {
                       </span>
                     </Show>
                   </span>
-                  <span class="mt-1 block pl-4 text-xs text-neutral-500">{item.subtitle[state.locale()]}</span>
+                  <span class="mt-1 block pl-4 text-xs text-neutral-500 dark:text-neutral-400">
+                    {item.subtitle[state.locale()]}
+                  </span>
                   <Show when={"amount" in item && item.amount}>
                     {(amount) => (
                       <span class="mt-1 block pl-4 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
@@ -77,7 +79,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
                     )}
                   </Show>
                   <time
-                    class="mt-1 block pl-4 text-xs text-neutral-500"
+                    class="mt-1 block pl-4 text-xs text-neutral-500 dark:text-neutral-400"
                     datetime={item.createdAt.toISOString()}
                     title={state.fullTime(item.createdAt)}
                   >
@@ -85,13 +87,15 @@ export function CmsNotificationsView(_props: { id?: string }) {
                   </time>
                 </button>
                 <div class="flex flex-wrap items-center gap-3 pl-4 text-sm">
-                  <button
-                    type="button"
-                    class="text-indigo-700 underline dark:text-indigo-300"
-                    onClick={() => state.action(item.id)}
-                  >
-                    {state.actionLabel(item)}
-                  </button>
+                  <Show when={item.type !== "success"}>
+                    <button
+                      type="button"
+                      class="text-indigo-700 underline dark:text-indigo-300"
+                      onClick={() => state.action(item.id)}
+                    >
+                      {state.actionLabel(item)}
+                    </button>
+                  </Show>
                   <button
                     type="button"
                     class="text-neutral-600 underline dark:text-neutral-400"
@@ -101,7 +105,7 @@ export function CmsNotificationsView(_props: { id?: string }) {
                   </button>
                   <button
                     type="button"
-                    class="rounded p-1 text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                    class="rounded p-1 text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
                     aria-label={`${state.t().dismiss}: ${item.title[state.locale()]}`}
                     title={state.t().dismiss}
                     onClick={() => state.store.dismiss(item.id)}

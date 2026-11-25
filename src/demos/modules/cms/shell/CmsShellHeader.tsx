@@ -37,7 +37,9 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
           </div>
           <Show
             when={cmsNotificationsStore.unreadCount() > 0}
-            fallback={<p class="p-4 text-neutral-500">{cmsShellText[p.locale].noNotifications}</p>}
+            fallback={
+              <p class="p-4 text-neutral-500 dark:text-neutral-400">{cmsShellText[p.locale].noNotifications}</p>
+            }
           >
             <ul class="max-h-80 overflow-y-auto divide-y divide-neutral-100 dark:divide-neutral-800">
               <For each={cmsNotificationsStore.unread()}>
@@ -51,7 +53,7 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
                       <CmsDashboardAlertIcon type={alert.type} />
                       <span class="min-w-0 flex-1">
                         <span class="block font-medium">{alert.title[p.locale]}</span>
-                        <span class="mt-0.5 block text-xs text-neutral-500 dark:text-neutral-400">
+                        <span class="mt-0.5 block text-xs text-neutral-500 dark:text-neutral-300">
                           {alert.subtitle[p.locale]}
                         </span>
                       </span>

@@ -41,7 +41,7 @@ export const cmsNotificationsData = [
   })),
   {
     id: "backup-success",
-    type: "message",
+    type: "success",
     title: { de: "Backup erfolgreich", en: "Backup successful" },
     subtitle: { de: "Das Backup wurde abgeschlossen", en: "Backup completed" },
     createdAt: new Date(now - 4 * 86_400_000),
@@ -66,7 +66,7 @@ export const cmsNotificationsData = [
   },
   {
     id: "form-recovered",
-    type: "message",
+    type: "success",
     title: { de: "Formular wieder erreichbar", en: "Form available again" },
     subtitle: { de: "Der Formularversand funktioniert wieder", en: "Form submissions are working again" },
     createdAt: new Date(now - 20 * 86_400_000),
