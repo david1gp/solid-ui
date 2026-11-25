@@ -15,7 +15,8 @@ export function CmsDatePicker(props: { value: string; onSelect: (iso: string) =>
     <CorvuPopover
       variant="outline"
       icon={mdiCalendarMonthOutline}
-      class="shrink-0 px-2.5"
+      class="shrink-0 rounded-lg border-gray-200 bg-white px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-900"
+      iconClass="size-5 text-neutral-600 fill-neutral-600 dark:text-neutral-300 dark:fill-neutral-300"
       ref={state.triggerRef}
       aria-label={props.label ?? "Kalender öffnen"}
       open={state.open()}
