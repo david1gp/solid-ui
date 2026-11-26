@@ -1,7 +1,6 @@
 import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
 import { mdiChevronRight } from "@adaptive-ds/mdi/mdiChevronRight.js"
 import { mdiClockOutline } from "@adaptive-ds/mdi/mdiClockOutline.js"
-import { mdiFilterOutline } from "@adaptive-ds/mdi/mdiFilterOutline.js"
 import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { For, Show } from "solid-js"
@@ -30,9 +29,6 @@ export function DemoKalender() {
             <p class="text-xs text-neutral-500 dark:text-neutral-400">{state.todayLabel()}</p>
           </div>
           <div class="flex flex-wrap items-center gap-4">
-            <button type="button" aria-label="Filtern" class="cursor-pointer text-neutral-500 dark:text-neutral-300">
-              <Icon path={mdiFilterOutline} class="size-5" />
-            </button>
             <button type="button" aria-label="Suchen" class="cursor-pointer text-neutral-500 dark:text-neutral-300">
               <Icon path={mdiMagnify} class="size-5" />
             </button>
