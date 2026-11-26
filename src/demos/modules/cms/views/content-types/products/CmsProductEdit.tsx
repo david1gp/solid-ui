@@ -1,6 +1,6 @@
-import { mdiChevronDown } from "@adaptive-ds/mdi/mdiChevronDown.js"
 import { For, Show, untrack } from "solid-js"
-import { Icon } from "#ui/static/icon/Icon.jsx"
+import { TabsTop } from "#ui/interactive/tabs/TabsTop.jsx"
+import { CmsEventFaqField } from "../events/CmsEventFaqField.js"
 import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
 import { cmsCardClass } from "../../../ui/cmsCardClass.js"
 import { CmsCollapsiblePreviewColumn } from "../../../ui/CmsCollapsiblePreviewColumn.js"
@@ -92,159 +92,107 @@ export function CmsProductEdit(props: { product: ReturnType<typeof cmsProducts.g
             </p>
           </Show>
         </CmsCollapsiblePreviewColumn>
-        <div class="w-full min-w-0 space-y-6 lg:flex-1">
-          <section class={`${cmsCardClass} space-y-4`}>
-            <h2 class="font-semibold">Produktdetails</h2>
-            <label class="block text-sm">
-              Produktname
-              <input
-                class={`mt-1 w-full ${cmsInputClass}`}
-                value={state.name()}
-                onInput={(e) => state.nameSet(e.currentTarget.value)}
-              />
-            </label>
-            <div>
-              <label class="block text-sm">
-                Kurzbeschreibung
-                <input
-                  class={`mt-1 w-full ${cmsInputClass}`}
-                  value={state.subtitle()}
-                  onInput={(e) => state.subtitleSet(e.currentTarget.value)}
-                />
-              </label>
-            </div>
-            <div class="grid gap-4 sm:grid-cols-2">
-              <label class="block text-sm">
-                Preis (€)
-                <input
-                  class={`mt-1 w-full ${cmsInputClass}`}
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={state.price()}
-                  onInput={(e) => state.priceSet(e.currentTarget.value)}
-                />
-              </label>
-              <div>
-                <label class="block text-sm">
-                  Menge
-                  <input
-                    class={`mt-1 w-full ${cmsInputClass}`}
-                    type="number"
-                    min="0"
-                    step="1"
-                    value={state.quantity()}
-                    onInput={(e) => state.quantitySet(e.currentTarget.value)}
-                  />
-                </label>
-              </div>
-            </div>
-            <div>
-              <label class="block text-sm">
-                Position im Shop
-                <select
-                  class={`mt-1 w-full ${cmsInputClass}`}
-                  value={state.position()}
-                  onChange={(e) => state.positionSet(Number(e.currentTarget.value))}
-                >
-                  <For each={cmsProducts.get()}>
-                    {(_, index) => (
-                      <option value={index() + 1}>
-                        {index() + 1} von {cmsProducts.get().length}
-                      </option>
-                    )}
-                  </For>
-                </select>
-              </label>
-              <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
-                Bestimmt die Reihenfolge in der Produktübersicht.
-              </p>
-            </div>
-            <label class="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                class="size-4 accent-[var(--dashboard-accent)]"
-                checked={state.featured()}
-                onChange={(e) => state.featuredSet(e.currentTarget.checked)}
-              />
-              Hervorgehoben (Top-Produkt)
-            </label>
-            <label class="block text-sm">
-              Beschreibung
-              <textarea
-                class={`mt-1 w-full ${cmsInputClass}`}
-                rows="4"
-                value={state.description()}
-                onInput={(e) => state.descriptionSet(e.currentTarget.value)}
-              />
-            </label>
-          </section>
-          <section class={cmsCardClass}>
-            <h2 class="font-semibold">
-              <button
-                type="button"
-                class="flex w-full items-center justify-between gap-2 rounded-md text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)]"
-                aria-expanded={state.faqOpen() ? "true" : "false"}
-                aria-controls={state.faqContentId}
-                onClick={state.faqToggle}
-              >
-                FAQ
-                <Icon
-                  path={mdiChevronDown}
-                  class={`size-4 shrink-0 transition-transform duration-200 motion-reduce:transition-none ${state.faqOpen() ? "" : "-rotate-90"}`}
-                />
-              </button>
-            </h2>
-            <div
-              id={state.faqContentId}
-              aria-hidden={state.faqOpen() ? "false" : "true"}
-              inert={!state.faqOpen()}
-              class="grid grid-rows-[1fr] opacity-100 aria-hidden:grid-rows-[0fr] aria-hidden:opacity-0 transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none"
-            >
-              <div class="min-h-0 overflow-hidden">
+        <section class={`${cmsCardClass} @container w-full min-w-0 space-y-4 lg:flex-1`}>
+          <h2 class="font-semibold">Produktdetails</h2>
+          <TabsTop
+            valueSignal={state.tab}
+            getOptions={() => ["Details", "FAQ"]}
+            valueText={(value) => (state.tabHasErrors(value) ? `${value} 🔴 (Fehler)` : value)}
+            valueChildren={(value) =>
+              value === "Details" ? (
                 <div class="space-y-4 pt-4">
-                  <For each={state.faq()}>
-                    {(item, index) => (
-                      <div class="space-y-3 rounded-xl border border-gray-200 p-4 dark:border-neutral-800">
-                        <div class="flex items-center justify-between gap-2">
-                          <h3 class="text-sm font-semibold">Frage {index() + 1}</h3>
-                          <button
-                            type="button"
-                            class={cmsButtonClass}
-                            aria-label={`Frage ${index() + 1} entfernen`}
-                            onClick={() => state.faqRemove(item.id)}
-                          >
-                            Entfernen
-                          </button>
-                        </div>
-                        <label class="block text-sm">
-                          Frage
-                          <input
-                            class={`mt-1 w-full ${cmsInputClass}`}
-                            value={item.question.get()}
-                            onInput={(e) => state.faqChange(item.id, "question", e.currentTarget.value)}
-                          />
-                        </label>
-                        <label class="block text-sm">
-                          Antwort
-                          <textarea
-                            class={`mt-1 w-full ${cmsInputClass}`}
-                            rows="2"
-                            value={item.answer.get()}
-                            onInput={(e) => state.faqChange(item.id, "answer", e.currentTarget.value)}
-                          />
-                        </label>
-                      </div>
-                    )}
-                  </For>
+                  <label class="block text-sm">
+                    Produktname
+                    <input
+                      class={`mt-1 w-full ${cmsInputClass}`}
+                      value={state.name()}
+                      onInput={(e) => state.nameSet(e.currentTarget.value)}
+                    />
+                  </label>
+                  <div>
+                    <label class="block text-sm">
+                      Kurzbeschreibung
+                      <input
+                        class={`mt-1 w-full ${cmsInputClass}`}
+                        value={state.subtitle()}
+                        onInput={(e) => state.subtitleSet(e.currentTarget.value)}
+                      />
+                    </label>
+                  </div>
+                  <div class="grid gap-4 sm:grid-cols-2">
+                    <label class="block text-sm">
+                      Preis (€)
+                      <input
+                        class={`mt-1 w-full ${cmsInputClass}`}
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={state.price()}
+                        onInput={(e) => state.priceSet(e.currentTarget.value)}
+                      />
+                    </label>
+                    <div>
+                      <label class="block text-sm">
+                        Menge
+                        <input
+                          class={`mt-1 w-full ${cmsInputClass}`}
+                          type="number"
+                          min="0"
+                          step="1"
+                          value={state.quantity()}
+                          onInput={(e) => state.quantitySet(e.currentTarget.value)}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block text-sm">
+                      Position im Shop
+                      <select
+                        class={`mt-1 w-full ${cmsInputClass}`}
+                        value={state.position()}
+                        onChange={(e) => state.positionSet(Number(e.currentTarget.value))}
+                      >
+                        <For each={cmsProducts.get()}>
+                          {(_, index) => (
+                            <option value={index() + 1}>
+                              {index() + 1} von {cmsProducts.get().length}
+                            </option>
+                          )}
+                        </For>
+                      </select>
+                    </label>
+                    <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
+                      Bestimmt die Reihenfolge in der Produktübersicht.
+                    </p>
+                  </div>
+                  <label class="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      class="size-4 accent-[var(--dashboard-accent)]"
+                      checked={state.featured()}
+                      onChange={(e) => state.featuredSet(e.currentTarget.checked)}
+                    />
+                    Hervorgehoben (Top-Produkt)
+                  </label>
+                  <label class="block text-sm">
+                    Beschreibung
+                    <textarea
+                      class={`mt-1 w-full ${cmsInputClass}`}
+                      rows="4"
+                      value={state.description()}
+                      onInput={(e) => state.descriptionSet(e.currentTarget.value)}
+                    />
+                  </label>
                 </div>
-                <button type="button" class={`${cmsButtonClass} mt-4`} onClick={state.faqAdd}>
-                  + Frage hinzufügen
-                </button>
-              </div>
-            </div>
-          </section>
-        </div>
+              ) : (
+                <div class="pt-4">
+                  <CmsEventFaqField state={state} />
+                </div>
+              )
+            }
+          />
+        </section>
       </div>
       <Show when={state.notice()}>
         <p role="status" class="mt-4 text-sm text-neutral-600 dark:text-neutral-300">

@@ -5,7 +5,12 @@ import { cmsInputClass } from "../../../ui/cmsInputClass.js"
 import type { cmsEventEditStateCreate } from "./cmsEventEditStateCreate.js"
 import { cmsEventFieldReorderStateCreate } from "./cmsEventFieldReorderStateCreate.js"
 
-export function CmsEventFaqField(props: { state: ReturnType<typeof cmsEventEditStateCreate> }) {
+export function CmsEventFaqField(props: {
+  state: Pick<
+    ReturnType<typeof cmsEventEditStateCreate>,
+    "faq" | "faqAdd" | "faqRemove" | "faqUpdate" | "faqMove" | "faqValidationAttempted"
+  >
+}) {
   const reorder = cmsEventFieldReorderStateCreate(
     () => props.state.faq(),
     (from, to) => props.state.faqMove(from, to),
