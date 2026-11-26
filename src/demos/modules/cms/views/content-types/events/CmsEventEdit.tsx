@@ -8,6 +8,10 @@ import { cmsInputClass } from "../../../ui/cmsInputClass.js"
 import { cmsPrimaryButtonClass } from "../../../ui/cmsPrimaryButtonClass.js"
 import { PageHeader } from "../../../ui/PageHeader.js"
 import { CmsTopsellerRibbon } from "../CmsTopsellerRibbon.js"
+import { CmsEventAgendaField } from "./CmsEventAgendaField.js"
+import { CmsEventCategoriesField } from "./CmsEventCategoriesField.js"
+import { CmsEventFaqField } from "./CmsEventFaqField.js"
+import { CmsEventTextListField } from "./CmsEventTextListField.js"
 import { CmsFestivalIllustration } from "./CmsFestivalIllustration.js"
 import { cmsEventDateParts } from "./cmsEventDateParts.js"
 import { cmsEventEditStateCreate } from "./cmsEventEditStateCreate.js"
@@ -132,7 +136,8 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
           <h2 class="font-semibold">Veranstaltungsdetails</h2>
           <TabsTop
             valueSignal={state.tab}
-            getOptions={() => ["Details", "Tickets"]}
+            getOptions={() => ["Details", "Inhalt", "Ablauf", "FAQ", "Tickets"]}
+            valueText={(value) => (state.tabHasErrors(value) ? `${value} 🔴 (Fehler)` : value)}
             valueChildren={(value) =>
               value === "Details" ? (
                 <div class="space-y-4 pt-4">
@@ -164,6 +169,20 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
                       onInput={(e) => state.locationSet(e.currentTarget.value)}
                     />
                   </label>
+                  <label class="block text-sm">
+                    Veranstalter
+                    <input
+                      class={input}
+                      value={state.organizer()}
+                      onInput={(e) => state.organizerSet(e.currentTarget.value)}
+                    />
+                  </label>
+                  <CmsEventCategoriesField
+                    categories={state.categories}
+                    suggestions={state.categorySuggestions}
+                    add={state.categoryAdd}
+                    remove={state.categoryRemove}
+                  />
                   <label class="flex items-center gap-2 text-sm">
                     <input
                       type="checkbox"
@@ -182,6 +201,46 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
                       onInput={(e) => state.descriptionSet(e.currentTarget.value)}
                     />
                   </label>{" "}
+                </div>
+              ) : value === "Inhalt" ? (
+                <div class="space-y-6 pt-4">
+                  <CmsEventTextListField
+                    label="Highlights"
+                    addLabel="+ Highlight hinzufügen"
+                    entries={state.highlights}
+                    add={() => state.textListAdd("highlights")}
+                    update={(index, text) => state.textListUpdate("highlights", index, text)}
+                    remove={(index) => state.textListRemove("highlights", index)}
+                  />
+                  <section class="space-y-4">
+                    <h3 class="text-sm font-semibold">Leistungen</h3>
+                    <CmsEventTextListField
+                      label="Inklusive"
+                      optional
+                      addLabel="+ Leistung hinzufügen"
+                      entries={state.servicesIncluded}
+                      add={() => state.textListAdd("servicesIncluded")}
+                      update={(index, text) => state.textListUpdate("servicesIncluded", index, text)}
+                      remove={(index) => state.textListRemove("servicesIncluded", index)}
+                    />
+                    <CmsEventTextListField
+                      label="Nicht enthalten"
+                      optional
+                      addLabel="+ Leistung hinzufügen"
+                      entries={state.servicesExcluded}
+                      add={() => state.textListAdd("servicesExcluded")}
+                      update={(index, text) => state.textListUpdate("servicesExcluded", index, text)}
+                      remove={(index) => state.textListRemove("servicesExcluded", index)}
+                    />
+                  </section>
+                </div>
+              ) : value === "Ablauf" ? (
+                <div class="pt-4">
+                  <CmsEventAgendaField state={state} />
+                </div>
+              ) : value === "FAQ" ? (
+                <div class="pt-4">
+                  <CmsEventFaqField state={state} />
                 </div>
               ) : (
                 <div class="pt-4">
