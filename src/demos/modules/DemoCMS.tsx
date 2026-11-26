@@ -448,7 +448,7 @@ export function DemoCMS() {
             locale={cmsLocale.get()}
             onNavigate={() => setActive("")}
           />
-          <main class="min-w-0 shrink-0 p-4 pb-24 sm:p-8 sm:pb-24">
+          <main data-cms-main class="min-w-0 shrink-0 p-4 pb-24 sm:p-8 sm:pb-24">
             <Show
               when={active() === settingsPageKey}
               fallback={<CmsViewEnter view={cmsNavigation.get().view}>{viewContent()}</CmsViewEnter>}

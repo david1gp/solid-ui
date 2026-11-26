@@ -159,6 +159,11 @@ body:has([data-bottom-mobile-navbar-demo]) [data-demo-notice] {
 }
 
 @media (width < 40rem) {
+  /* Let CMS content scroll above the fixed demo notice on small screens. */
+  body:has([data-demo-notice]) [data-cms-main] {
+    padding-bottom: 16rem;
+  }
+
   body:has([data-bottom-mobile-navbar-demo]) [data-demo-floating-buttons] {
     bottom: calc(4.5rem + env(safe-area-inset-bottom));
   }
