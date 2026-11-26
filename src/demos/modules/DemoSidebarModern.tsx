@@ -299,8 +299,6 @@ export function DemoSidebarModern() {
         <span class={"demo-sidebar-modern-shape-cyan"} />
       </div>
       <div class={"demo-sidebar-modern-dock relative flex shrink-0"}>
-        {/* Neon light spilling out of the sidebar edge; follows the rail width and stays behind the content. */}
-        <div aria-hidden="true" class={"demo-sidebar-modern-edge-glow"} />
         <ModernSidebar
           class={
             automaticMotion() ? "demo-sidebar-modern-rail demo-sidebar-modern-rail-auto" : "demo-sidebar-modern-rail"
