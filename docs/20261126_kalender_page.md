@@ -19,5 +19,10 @@ A full-width demo page "Kalender" in the **Modules** catalog, category **Seiten*
 2. The Monday-first grid uses ISO calendar week labels and highlights today and its weekday in the current month.
 3. Event cards show a title, time, duration, and colored marker with a German tooltip. "N weitere" opens a closable popover with all appointments for that day.
 4. Previous/next changes month across years; the other view toggles retain the month grid.
-5. Clicking a day's free area or its "+" button (shown on hover and keyboard focus, always on touch devices) opens "Neuer Termin": free-text title with suggestions, "Ganztägig" switch, Beginn/Ende in 15-minute steps (default: next half hour today, otherwise 09:00; one hour long; moving Beginn keeps the duration), and a people search with team suggestions (↑/↓/Enter, Backspace removes the last chip) or external people by e-mail.
+5. Clicking a day's free area or its "+" button (shown on hover and keyboard focus, always on touch devices) starts a new appointment; see Quick create below. The full "Neuer Termin" dialog has a free-text title with suggestions, "Ganztägig" switch, Beginn/Ende in 15-minute steps (default: next half hour today, otherwise 09:00; one hour long; moving Beginn keeps the duration), and a people search with team suggestions (↑/↓/Enter, Backspace removes the last chip) or external people by e-mail.
 6. Clicking an appointment card or an entry in the "N weitere" popover opens "Termin bearbeiten" with Speichern and Löschen. Cards and the popover show "mit …"; all-day appointments are listed first as "Ganztägig".
+
+## Quick create
+- On desktop, a day click or its "+" button opens an anchored popover with title, Beginn and Ende. "Speichern" validates and creates the appointment; "Weitere Optionen" opens the full dialog with the entered values.
+- The header button "+ Neuer Termin" opens the full dialog for today if displayed, otherwise for the first displayed day.
+- On screens narrower than 640px, a day click opens the full dialog directly as a bottom sheet; editing uses the same mobile layout.
