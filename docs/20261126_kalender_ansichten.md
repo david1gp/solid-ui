@@ -27,6 +27,24 @@ In `src/demos/modules/DemoKalender.tsx` (Demo: https://adaptive-solid-ui.pages.d
     - Slot click only in non-collapsed segments; maps y → minute via segments (half-hour rounding as now). Creating a task outside the range via "+"/"Neuer Termin" expands the range automatically (reactive).
   - Click on an empty slot opens the create dialog for that day with start = clicked hour (rounded to half hour), end = +1h if the form API allows; otherwise default start. Keyboard path stays via "+".
   - Woche keeps `min-w-[1000px]` with horizontal scroll on mobile; Tag fills width.
+- **Feste Farben je Kategorie** (replaces random colors):
+  - Category is derived from the task title: case-insensitive match on the title prefix (text before an optional " (Name)" / " mit …" suffix), e.g. "Kundenanruf (Müller)" → Kundenanruf. Pure helper `kalenderCategoryOf(title)` + map `kalenderCategories` (one export per file) with unit tests.
+  - Map (name → color name, saturated but matching the existing soft palette style; same hex used for border-left, marker, all-day lane):
+    - Kundenanruf → Blau (#3b82f6-ish)
+    - Kundentermin → Indigo
+    - Präsentation → Lila
+    - Teammeeting → Grün
+    - Sprint-Planung → Türkis
+    - Code-Review, Projekt-Review → Orange
+    - Workshop → Gelb/Amber
+    - 1:1-Gespräch → Rosa
+    - Privat: Zahnarzt, Mittagessen, Geburtstag → Koralle/Rot
+    - anything else → Grau ("Sonstiges")
+  - Demo titles: "Telefonat" becomes "Kundenanruf (Name)" and "Kundentermin" becomes "Kundentermin (Name)" with deterministic German surnames; color always comes from the category (no more random color pick in `kalenderEventsCreate.ts`).
+  - **Eigene Farbe (manual color)**: the full create/edit dialog gets a "Farbe" field: a row of round swatches (radiogroup, keyboard arrows, aria-checked, tooltip/aria-label with color name) — first option "Automatisch" (shows the category color of the current title with a small "A"/auto icon) followed by all palette colors (category colors + Grau). Default = Automatisch. `KalenderTask` gets `colorManual: boolean` (or optional manual color key); form state gets the selected color key with validation against the palette.
+  - Color resolution: manual color if set, else category color of the title. With Automatisch, changing the title recolors (live preview in the Automatisch swatch); a manual color survives title changes. Quick create: no picker, uses Automatisch. Undo restores previous color as part of the task.
+  - Title suggestions in dialog/quick create list the categories.
+  - Marker tooltip/aria: "Kategorie {Kategorie} · {Farbe}" instead of "Farbe X für Y".
 - Keep all existing design tokens/classes (neutral/violet, dark mode), aria attributes, URL dialog params, undo logic. No new dependencies. Pure helpers (time → minutes, overlap layout) in their own files under `src/demos/modules/kalender/` (one export per file) with unit tests.
 
 ## Tasks
@@ -34,4 +52,5 @@ In `src/demos/modules/DemoKalender.tsx` (Demo: https://adaptive-solid-ui.pages.d
 2. Browser verification of view switching. — status: done
 3. Time grid for Tag/Heute/Woche as described (`KalenderTimeGrid.tsx`, `kalenderTimeGridStateCreate.ts`, `kalenderOverlapLayout.ts` + tests). — status: done
 4. Browser verification of time grid. — status: done
-5. Compact hours for Tag/Heute/Woche as described above. — status: open
+5. Compact hours, now-line, Heute as day view, month today highlight. — status: done
+6. Feste Farben je Kategorie, as described above. — status: done
