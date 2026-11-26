@@ -6,6 +6,7 @@ import { cmsEventOrder } from "./cmsEventOrder.js"
 import type { CmsEventScheduleEntry } from "./CmsEventScheduleEntry.js"
 import { cmsEventDateGermanFormat } from "./cmsEventDateGermanFormat.js"
 import { cmsEventDateGermanParse } from "./cmsEventDateGermanParse.js"
+import { cmsEventPriceMinimumFormat } from "./cmsEventPriceMinimumFormat.js"
 import { cmsEventScheduleNext } from "./cmsEventScheduleNext.js"
 import { cmsEventScheduleSorted } from "./cmsEventScheduleSorted.js"
 import type { cmsEvents } from "./cmsEvents.js"
@@ -76,6 +77,10 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
     title: () => title.get(),
     titleSet: (value: string) => title.set(value),
     schedule: () => schedule.get(),
+    priceMinimum: () => cmsEventPriceMinimumFormat(schedule.get().map((item) => ({
+      priceRegular: item.priceRegular.get().trim() === "" ? undefined : Number(item.priceRegular.get()),
+      priceReduced: item.priceReduced.get().trim() === "" ? undefined : Number(item.priceReduced.get()),
+    }))),
     /** Valid appointments in chronological order, for the preview. */
     scheduleSorted: () =>
       cmsEventScheduleSorted(schedule.get().map((item) => ({ date: item.date.get(), time: item.time.get() }))),

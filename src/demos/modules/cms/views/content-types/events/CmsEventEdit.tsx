@@ -61,6 +61,9 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
                   <span>{state.location()}</span>
                 </div>
               </Show>
+              <Show when={state.priceMinimum()}>
+                <p class="mt-[2cqw] text-[4.24cqw] font-semibold text-[#d6dde3]">{state.priceMinimum()}</p>
+              </Show>
               <div class="mt-[4.85cqw] flex items-center justify-between border-t border-white/[.14] pt-[4.24cqw]">
                 <Show when={state.scheduleSorted()[0]} fallback={<span />}>
                   {(entry) => (
