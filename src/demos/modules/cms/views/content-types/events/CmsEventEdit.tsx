@@ -1,9 +1,9 @@
 import { createUniqueId, For, Show, untrack } from "solid-js"
 import { TabsTop } from "#ui/interactive/tabs/TabsTop.jsx"
+import { CmsCollapsiblePreviewColumn } from "../../../ui/CmsCollapsiblePreviewColumn.js"
 import { CmsDatePicker } from "../../../ui/CmsDatePicker.js"
 import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
 import { cmsCardClass } from "../../../ui/cmsCardClass.js"
-import { CmsCollapsiblePreviewColumn } from "../../../ui/CmsCollapsiblePreviewColumn.js"
 import { cmsInputClass } from "../../../ui/cmsInputClass.js"
 import { cmsPrimaryButtonClass } from "../../../ui/cmsPrimaryButtonClass.js"
 import { PageHeader } from "../../../ui/PageHeader.js"
@@ -96,9 +96,20 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
                 </Show>
                 <span
                   aria-hidden="true"
-                  class="flex size-[12.73cqw] shrink-0 items-center justify-center rounded-full bg-teal-300 text-[6.06cqw] font-bold text-[#06201c]"
+                  class="flex size-[12.73cqw] shrink-0 items-center justify-center rounded-full bg-teal-300 text-[#06201c]"
                 >
-                  →
+                  <svg
+                    aria-hidden="true"
+                    class="size-[6.06cqw]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
                 </span>
               </div>
             </div>
