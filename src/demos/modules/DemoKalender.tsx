@@ -6,7 +6,6 @@ import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { For, Show } from "solid-js"
 import { Button } from "#ui/interactive/button/Button.jsx"
-import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import "./kalender/KalenderDay.css"
 import { KalenderEvent } from "./kalender/KalenderEvent.jsx"
@@ -31,21 +30,6 @@ export function DemoKalender() {
             <p class="text-xs text-neutral-500 dark:text-neutral-400">{state.todayLabel()}</p>
           </div>
           <div class="flex flex-wrap items-center gap-4">
-            <div class="flex -space-x-2">
-              <For each={["#b88c77", "#947c76", "#9b785f", "#ad8d7b"]}>
-                {(color) => (
-                  <span
-                    class="grid size-8 place-items-center overflow-hidden rounded-full border-2 border-neutral-100 dark:border-[#1e2023]"
-                    style={{ background: color }}
-                  >
-                    <AppSidebarCssAvatar />
-                  </span>
-                )}
-              </For>
-              <span class="grid size-8 place-items-center rounded-full border-2 border-neutral-100 bg-neutral-600 text-[10px] text-white dark:border-[#1e2023]">
-                +4
-              </span>
-            </div>
             <button type="button" aria-label="Filtern" class="cursor-pointer text-neutral-500 dark:text-neutral-300">
               <Icon path={mdiFilterOutline} class="size-5" />
             </button>
