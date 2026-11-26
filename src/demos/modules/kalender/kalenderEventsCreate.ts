@@ -1,7 +1,10 @@
 import { kalenderColors } from "./kalenderColors.js"
+import { kalenderDateKey } from "./kalenderDateKey.js"
 import { kalenderDurations } from "./kalenderDurations.js"
 import type { KalenderTask } from "./KalenderTask.js"
 import { kalenderTaskCreate } from "./kalenderTaskCreate.js"
+import { kalenderTasksSort } from "./kalenderTasksSort.js"
+import { kalenderTimeFromMinutes } from "./kalenderTimeFromMinutes.js"
 import { kalenderTitles } from "./kalenderTitles.js"
 
 export function kalenderEventsCreate(year: number, month: number): KalenderTask[][] {
@@ -14,14 +17,22 @@ export function kalenderEventsCreate(year: number, month: number): KalenderTask[
   return Array.from({ length: total }, (_, index) => {
     const weekday = new Date(year, month, index + 1).getDay()
     const count = random(weekday === 0 || weekday === 6 ? 3 : 6)
-    return Array.from({ length: count }, () => {
-      const title = kalenderTitles[random(kalenderTitles.length)]!
-      const color = kalenderColors[random(kalenderColors.length)]!
-      const hour = 8 + random(10)
-      const minute = random(4) * 15
-      const duration = kalenderDurations[random(kalenderDurations.length)]!
-      const time = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`
-      return kalenderTaskCreate({ title, time, duration, color })
-    }).sort((a, b) => a.time.localeCompare(b.time))
+    const key = kalenderDateKey(year, month, index + 1)
+    return kalenderTasksSort(
+      Array.from({ length: count }, (_, taskIndex) => {
+        const title = kalenderTitles[random(kalenderTitles.length)]!
+        const color = kalenderColors[random(kalenderColors.length)]!
+        const start = (8 + random(10)) * 60 + random(4) * 15
+        const duration = kalenderDurations[random(kalenderDurations.length)]!
+        return kalenderTaskCreate({
+          id: `${key}-g${taskIndex}`,
+          title,
+          allDay: false,
+          start: kalenderTimeFromMinutes(start),
+          end: kalenderTimeFromMinutes(start + duration),
+          color,
+        })
+      }),
+    )
   })
 }

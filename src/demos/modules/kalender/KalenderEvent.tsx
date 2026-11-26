@@ -17,8 +17,14 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
             class="relative rounded-sm border-l-2 bg-neutral-100 px-2 py-1.5 shadow-md dark:bg-[#262c2e]"
             style={{ "border-left-color": task().color }}
           >
+            <button
+              type="button"
+              aria-label={`Termin „${task().title}“ (${task().meta}) bearbeiten`}
+              class="absolute inset-0 cursor-pointer rounded-sm hover:bg-violet-500/10 focus-visible:outline-2 focus-visible:outline-violet-500"
+              onClick={() => props.state.editOpen(props.cell.day!, task().id)}
+            />
             <span
-              class="kalender-event-marker absolute right-1.5 top-1.5"
+              class="kalender-event-marker absolute right-1.5 top-1.5 z-10"
               tabindex="0"
               aria-label={`Farbe ${task().name} für ${task().title}`}
               role="img"
@@ -31,11 +37,15 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
                 Farbe {task().name} für {task().title}
               </span>
             </span>
-            <div class="truncate pr-3 text-xs font-medium">{task().title}</div>
-            <div class="truncate text-[9px] text-neutral-500 dark:text-neutral-400">{task().meta}</div>
-            <Show when={task().people.length > 0}>
-              <div class="truncate text-[9px] text-violet-600 dark:text-violet-300">mit {task().people.join(", ")}</div>
-            </Show>
+            <div class="pointer-events-none relative">
+              <div class="truncate pr-3 text-xs font-medium">{task().title}</div>
+              <div class="truncate text-[9px] text-neutral-500 dark:text-neutral-400">{task().meta}</div>
+              <Show when={task().people.length > 0}>
+                <div class="truncate text-[9px] text-violet-600 dark:text-violet-300">
+                  mit {task().people.join(", ")}
+                </div>
+              </Show>
+            </div>
           </div>
           <Show when={props.cell.tasks.length > 1}>
             <CorvuPopover
@@ -57,10 +67,15 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
                   <Icon path={mdiClose} class="size-4" />
                 </button>
               </div>
-              <div class="mt-4 space-y-3">
+              <div class="mt-3 space-y-1">
                 <For each={props.cell.tasks}>
                   {(event) => (
-                    <div class="flex gap-2">
+                    <button
+                      type="button"
+                      aria-label={`Termin „${event.title}“ (${event.meta}) bearbeiten`}
+                      class="-mx-1.5 flex w-[calc(100%+0.75rem)] cursor-pointer gap-2 rounded px-1.5 py-1 text-left hover:bg-violet-500/10"
+                      onClick={() => props.state.popoverEditOpen(props.cell.day!, event.id)}
+                    >
                       <span
                         class="mt-1 size-2.5 shrink-0 rounded-[2px]"
                         style={{
@@ -76,7 +91,7 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
                           </div>
                         </Show>
                       </div>
-                    </div>
+                    </button>
                   )}
                 </For>
               </div>

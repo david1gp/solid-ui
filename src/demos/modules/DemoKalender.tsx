@@ -8,8 +8,9 @@ import { For, Show } from "solid-js"
 import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import "./kalender/KalenderDay.css"
-import { KalenderCreateDialog } from "./kalender/KalenderCreateDialog.jsx"
 import { KalenderEvent } from "./kalender/KalenderEvent.jsx"
+import { KalenderTaskDialog } from "./kalender/KalenderTaskDialog.jsx"
+import { KalenderToast } from "./kalender/KalenderToast.jsx"
 import { kalenderStateCreate } from "./kalender/kalenderStateCreate.js"
 
 export function DemoKalender() {
@@ -127,7 +128,8 @@ export function DemoKalender() {
           </div>
         </div>
       </main>
-      <KalenderCreateDialog state={state} />
+      <KalenderTaskDialog state={state} />
+      <KalenderToast state={state} />
     </div>
   )
 }
