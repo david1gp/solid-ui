@@ -6,12 +6,13 @@ A full-width demo page "Kalender" in the **Modules** catalog, category **Seiten*
 ## Decisions
 - `DemoKalender` is registered in `src/app/demos/demoList.ts` and displayed as "Kalender" via `DemoViews.tsx`.
 - Calendar components and state live in `src/demos/modules/kalender/`; reuse existing popover, icons, and avatar components without new dependencies.
-- All visible interface text, accessible labels, and tooltips are in German; brand names remain unchanged.
+- Interface text, accessible labels, and tooltips are in German.
 - Tailwind styling supports dark and light modes, with violet accents and a horizontally scrollable grid on narrow screens.
-- Demo data is deterministic and starts in April 2020.
+- Local current date is resolved on mount to avoid server/client hydration differences. The initial server and client render has an empty calendar until mounting.
+- Generic appointments are generated deterministically using a year/month seed; returning to a month reproduces its appointments.
 
 ## Features
-1. Header: "Aufgabenplanung", "10 Aufgaben für heute geplant", avatar stack, filter and search controls, German month label with previous/next controls, and Heute | Tag | Woche | Monat toggle.
-2. Monday-first grid with MEZ, Woche labels, short weekday names, and day number badges.
-3. Event cards show a brand, duration, and a colored marker with a German tooltip. "N weitere" opens a closable popover with the full German date and task list.
-4. Previous/next changes month; the view toggle changes its selected state while retaining the month grid.
+1. The header shows the number of today's appointments, a German month label and navigation. Heute returns to the current month.
+2. The Monday-first grid uses ISO calendar week labels and highlights today and its weekday in the current month.
+3. Event cards show a title, time, duration, and colored marker with a German tooltip. "N weitere" opens a closable popover with all appointments for that day.
+4. Previous/next changes month across years; the other view toggles retain the month grid.
