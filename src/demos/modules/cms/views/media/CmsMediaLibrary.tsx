@@ -151,8 +151,9 @@ export function CmsMediaLibrary() {
             </Show>
           </section>
         </div>
+        {/* Keep the wrapper rendered: display:none would prevent its open/close transition. */}
         <div
-          class="grid w-full min-w-0 overflow-hidden opacity-100 transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:flex-1 lg:self-start lg:overflow-visible lg:aria-hidden:hidden aria-hidden:opacity-0"
+          class="grid w-full min-w-0 overflow-hidden opacity-100 transition-[grid-template-rows,flex-grow,margin,opacity] duration-500 ease-in-out motion-reduce:transition-none max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:flex-1 lg:self-start lg:aria-hidden:-ml-4 lg:aria-hidden:flex-[0_1_0%] aria-hidden:opacity-0"
           aria-hidden={state.detailsOpen() ? undefined : "true"}
           inert={!state.detailsOpen()}
         >
