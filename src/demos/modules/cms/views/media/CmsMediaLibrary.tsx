@@ -8,6 +8,7 @@ import { cmsCardClass } from "../../ui/cmsCardClass.js"
 import { cmsIconCircleClass } from "../../ui/cmsIconCircleClass.js"
 import { cmsInputClass } from "../../ui/cmsInputClass.js"
 import { cmsPrimaryButtonClass } from "../../ui/cmsPrimaryButtonClass.js"
+import { cmsTileTransitionClass } from "../../ui/cmsTileTransitionClass.js"
 import { cmsMediaLibraryStateCreate } from "./cmsMediaLibraryStateCreate.js"
 import { cmsMediaStore } from "./cmsMediaStore.js"
 
@@ -105,13 +106,11 @@ export function CmsMediaLibrary() {
           </form>
         </aside>
         <div
-          class={`grid min-w-0 flex-1 overflow-hidden opacity-100 transition-[grid-template-rows,flex-grow,margin,opacity] duration-500 ease-in-out motion-reduce:transition-none aria-hidden:opacity-0 max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] ${state.selected() ? "lg:hidden" : ""}`}
-          aria-hidden={state.gridCollapsed() ? "true" : undefined}
-          inert={state.gridCollapsed()}
+          class={`${cmsTileTransitionClass} grid min-w-0 flex-1 overflow-hidden max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:aria-hidden:-mr-4 lg:aria-hidden:flex-[0_1_0%]`}
+          aria-hidden={state.detailsOpen() ? "true" : undefined}
+          inert={state.detailsOpen()}
         >
-          <section
-            class={`min-h-0 min-w-0 space-y-4 overflow-hidden ${state.narrow() ? "lg:w-[calc(100cqw-15rem)]" : ""}`}
-          >
+          <section class="min-h-0 min-w-0 space-y-4 overflow-hidden lg:w-[calc(100cqw-15rem)]">
             <div class="flex flex-wrap gap-2">
               <input
                 type="search"
@@ -153,11 +152,14 @@ export function CmsMediaLibrary() {
         </div>
         {/* Keep the wrapper rendered: display:none would prevent its open/close transition. */}
         <div
-          class="grid w-full min-w-0 overflow-hidden opacity-100 transition-[grid-template-rows,flex-grow,margin,opacity] duration-500 ease-in-out motion-reduce:transition-none max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:flex-1 lg:self-start lg:aria-hidden:-ml-4 lg:aria-hidden:flex-[0_1_0%] aria-hidden:opacity-0"
+          class={`${cmsTileTransitionClass} grid min-w-0 overflow-hidden max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:flex-1 lg:self-start lg:aria-hidden:-ml-4 lg:aria-hidden:flex-[0_1_0%]`}
+          onTransitionEnd={(event) => {
+            if (event.target === event.currentTarget) state.finishClose()
+          }}
           aria-hidden={state.detailsOpen() ? undefined : "true"}
           inert={!state.detailsOpen()}
         >
-          <div class="min-h-0 min-w-0 overflow-hidden">
+          <div class="min-h-0 min-w-0 overflow-hidden lg:w-[calc(100cqw-15rem)]">
             <Show when={state.displayed()}>
               {(item) => (
                 <aside

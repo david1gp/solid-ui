@@ -15,9 +15,11 @@ export function cmsMediaLibraryStateCreate() {
   const [displayed, setDisplayed] = createSignal<ReturnType<typeof selected>>()
   const [detailsOpen, setDetailsOpen] = createSignal(false)
   let frame: number | undefined
+  let closeTimer: ReturnType<typeof setTimeout> | undefined
   let open = false
   createEffect(selected, (item) => {
     if (item) {
+      clearTimeout(closeTimer)
       setDisplayed(item)
       if (!open && frame === undefined) {
         frame = requestAnimationFrame(() => {
@@ -32,9 +34,14 @@ export function cmsMediaLibraryStateCreate() {
     frame = undefined
     open = false
     setDetailsOpen(false)
+    clearTimeout(closeTimer)
+    closeTimer = setTimeout(() => {
+      if (!selected()) setDisplayed(undefined)
+    }, 400)
   })
   onCleanup(() => {
     if (frame !== undefined) cancelAnimationFrame(frame)
+    clearTimeout(closeTimer)
   })
   const filtered = createMemo(() =>
     cmsMediaStore
@@ -52,6 +59,12 @@ export function cmsMediaLibraryStateCreate() {
     selected,
     displayed,
     detailsOpen,
+    finishClose() {
+      if (!selected()) {
+        clearTimeout(closeTimer)
+        setDisplayed(undefined)
+      }
+    },
     observeContainer: container.observe,
     narrow: container.narrow,
     gridCollapsed: () => container.narrow() && !!selected(),

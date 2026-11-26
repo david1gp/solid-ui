@@ -2,13 +2,14 @@ import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
 import type { JSX } from "@solidjs/web"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { cmsCardClass } from "./cmsCardClass.js"
+import { cmsTileTransitionClass } from "./cmsTileTransitionClass.js"
 import { cmsCollapsiblePreviewColumnStateCreate } from "./cmsCollapsiblePreviewColumnStateCreate.js"
 
 export function CmsCollapsiblePreviewColumn(props: { title: string; children: JSX.Element }) {
   const state = cmsCollapsiblePreviewColumnStateCreate()
   return (
     <section
-      class={`${cmsCardClass} relative w-full overflow-hidden transition-[width] duration-500 ease-in-out motion-reduce:transition-none ${state.collapsed() ? "lg:w-12" : "lg:w-[calc((100%_-_1.5rem)/2)]"}`}
+      class={`${cmsCardClass} ${cmsTileTransitionClass} relative w-full overflow-hidden ${state.collapsed() ? "lg:w-12" : "lg:w-[calc((100%_-_1.5rem)/2)]"}`}
     >
       <div class="mb-4 flex h-8 items-center justify-between gap-2">
         <h2
@@ -33,7 +34,7 @@ export function CmsCollapsiblePreviewColumn(props: { title: string; children: JS
         >
           <Icon
             path={mdiChevronLeft}
-            class={`size-5 transition-transform duration-500 ease-in-out motion-reduce:transition-none ${state.collapsed() ? "rotate-180" : ""}`}
+            class={`size-5 transition-transform duration-[350ms] ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none ${state.collapsed() ? "rotate-180" : ""}`}
           />
         </button>
       </div>
@@ -41,7 +42,7 @@ export function CmsCollapsiblePreviewColumn(props: { title: string; children: JS
         id={state.contentId}
         aria-hidden={state.collapsed() ? "true" : "false"}
         inert={state.collapsed()}
-        class={`grid transition-[grid-template-rows,visibility] duration-500 ease-in-out motion-reduce:transition-none lg:w-[calc((100cqw_-_1.5rem)/2_-_2.5rem_-_2px)] lg:grid-rows-[1fr] ${state.collapsed() ? "grid-rows-[0fr] lg:invisible" : "grid-rows-[1fr]"}`}
+        class={`${cmsTileTransitionClass} grid lg:w-[calc((100cqw_-_1.5rem)/2_-_2.5rem_-_2px)] lg:grid-rows-[1fr] ${state.collapsed() ? "grid-rows-[0fr]" : "grid-rows-[1fr]"}`}
       >
         <div class="min-h-0 overflow-hidden">{props.children}</div>
       </div>
