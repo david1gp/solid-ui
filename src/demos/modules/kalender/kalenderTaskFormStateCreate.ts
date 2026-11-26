@@ -13,6 +13,7 @@ export function kalenderTaskFormStateCreate() {
   const title = createSignalObject("")
   const allDay = createSignalObject(false)
   const start = createSignalObject("09:00")
+  let lastValidStart = "09:00"
   const end = createSignalObject("10:00")
   const people = createSignalObject<string[]>([])
   const personQuery = createSignalObject("")
@@ -56,6 +57,7 @@ export function kalenderTaskFormStateCreate() {
     title.set(values.title)
     allDay.set(values.allDay)
     start.set(values.start)
+    lastValidStart = values.start
     end.set(values.end)
     people.set(values.people)
     personQuery.set("")
@@ -78,10 +80,11 @@ export function kalenderTaskFormStateCreate() {
     /** Moving the start keeps the current duration. */
     startChange: (value: string) => {
       const next = kalenderTimeMinutes(value)
-      const duration = kalenderTimeMinutes(end.get()) - kalenderTimeMinutes(start.get())
+      const duration = kalenderTimeMinutes(end.get()) - kalenderTimeMinutes(lastValidStart)
       start.set(value)
       error.set("")
       if (Number.isNaN(next)) return
+      lastValidStart = value
       end.set(kalenderTimeFromMinutes(next + (duration > 0 ? duration : defaultDuration)))
     },
     end: end.get,
@@ -158,7 +161,10 @@ export function kalenderTaskFormStateCreate() {
       }
       const startMinutes = kalenderTimeMinutes(start.get())
       const endMinutes = kalenderTimeMinutes(end.get())
-      if (!allDay.get() && (Number.isNaN(startMinutes) || Number.isNaN(endMinutes))) {
+      if (
+        !allDay.get() &&
+        (Number.isNaN(startMinutes) || Number.isNaN(endMinutes) || startMinutes % 15 !== 0 || endMinutes % 15 !== 0)
+      ) {
         error.set("Bitte gültige Uhrzeiten wählen.")
         return undefined
       }

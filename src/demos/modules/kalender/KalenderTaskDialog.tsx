@@ -1,3 +1,4 @@
+import { KalenderTimeField } from "./KalenderTimeField.jsx"
 import { mdiDeleteOutline } from "@adaptive-ds/mdi/mdiDeleteOutline.js"
 import { For, Show } from "solid-js"
 import { CorvuDialog } from "#ui/interactive/dialog/CorvuDialog.jsx"
@@ -60,28 +61,8 @@ export function KalenderTaskDialog(props: { state: State }) {
         <Show when={!form.allDay()}>
           <div class="space-y-1">
             <div class="grid grid-cols-2 gap-3">
-              <label class="block space-y-1 text-sm">
-                <span class="font-medium">Beginn</span>
-                <input
-                  class={fieldClass}
-                  type="time"
-                  step="900"
-                  required
-                  value={form.start()}
-                  onInput={(event) => form.startChange(event.currentTarget.value)}
-                />
-              </label>
-              <label class="block space-y-1 text-sm">
-                <span class="font-medium">Ende</span>
-                <input
-                  class={fieldClass}
-                  type="time"
-                  step="900"
-                  required
-                  value={form.end()}
-                  onInput={(event) => form.endChange(event.currentTarget.value)}
-                />
-              </label>
+              <KalenderTimeField label="Beginn" value={form.start()} onChange={form.startChange} />
+              <KalenderTimeField label="Ende" value={form.end()} onChange={form.endChange} />
             </div>
             <Show when={form.durationLabel()}>
               <p class="text-[11px] text-neutral-500 dark:text-neutral-400">Dauer: {form.durationLabel()}</p>

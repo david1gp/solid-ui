@@ -1,3 +1,4 @@
+import { KalenderTimeField } from "./KalenderTimeField.jsx"
 import Popover from "@corvu-next/popover"
 import { For, Show } from "solid-js"
 import type { JSX } from "@solidjs/web"
@@ -61,28 +62,8 @@ export function KalenderQuickCreate(props: { cell: Cell; state: State; children:
               </datalist>
             </label>
             <div class="grid grid-cols-2 gap-3">
-              <label class="block space-y-1 text-sm">
-                <span class="font-medium">Beginn</span>
-                <input
-                  class={fieldClass}
-                  type="time"
-                  step="900"
-                  required
-                  value={form.start()}
-                  onInput={(event) => form.startChange(event.currentTarget.value)}
-                />
-              </label>
-              <label class="block space-y-1 text-sm">
-                <span class="font-medium">Ende</span>
-                <input
-                  class={fieldClass}
-                  type="time"
-                  step="900"
-                  required
-                  value={form.end()}
-                  onInput={(event) => form.endChange(event.currentTarget.value)}
-                />
-              </label>
+              <KalenderTimeField label="Beginn" value={form.start()} onChange={form.startChange} />
+              <KalenderTimeField label="Ende" value={form.end()} onChange={form.endChange} />
             </div>
             <Show when={form.error()}>
               <p role="alert" class="text-sm text-red-600 dark:text-red-400">

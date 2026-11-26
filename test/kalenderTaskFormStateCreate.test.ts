@@ -39,6 +39,27 @@ test("moving the start keeps the duration", () => {
   expect(form.durationLabel()).toBe("1 Std. 30 Min.")
 })
 
+test("editing an incomplete start preserves the previous duration once normalized", () => {
+  const form = kalenderTaskFormStateCreate()
+  form.reset("09:00")
+  form.endChange("10:30")
+  flush()
+  form.startChange("1530")
+  flush()
+  form.startChange("15:30")
+  flush()
+  expect(form.end()).toBe("17:00")
+})
+
+test("appointment form rejects times outside quarter-hour steps", () => {
+  const form = kalenderTaskFormStateCreate()
+  form.reset("09:00")
+  form.titleChange("Workshop")
+  form.endChange("10:10")
+  flush()
+  expect(form.validate()).toBeUndefined()
+})
+
 test("all-day appointments skip the time check", () => {
   const form = kalenderTaskFormStateCreate()
   form.reset("09:00")
