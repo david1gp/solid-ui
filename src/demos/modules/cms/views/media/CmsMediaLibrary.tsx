@@ -105,11 +105,7 @@ export function CmsMediaLibrary() {
             </button>
           </form>
         </aside>
-        <div
-          class={`${cmsTileTransitionClass} grid min-w-0 flex-1 overflow-hidden max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr]`}
-          aria-hidden={state.gridHidden() ? "true" : undefined}
-          inert={state.gridHidden()}
-        >
+        <div class="grid min-w-0 flex-1 overflow-hidden">
           <section class="min-h-0 min-w-0 space-y-4 overflow-hidden">
             <div class="flex flex-wrap gap-2">
               <input
@@ -132,7 +128,9 @@ export function CmsMediaLibrary() {
                 </div>
               }
             >
-              <div class={`${cmsCardClass} grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-[repeat(2,7rem)]`}>
+              <div
+                class={`${cmsCardClass} grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-[repeat(2,minmax(0,7rem))]`}
+              >
                 <For each={state.filtered()}>
                   {(item) => (
                     <button
@@ -152,14 +150,14 @@ export function CmsMediaLibrary() {
         </div>
         {/* Keep the wrapper rendered: display:none would prevent its open/close transition. */}
         <div
-          class={`${cmsTileTransitionClass} grid min-w-0 overflow-hidden max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:flex-[0_0_calc((100cqw-16rem)/2)] lg:self-start lg:aria-hidden:-ml-4 lg:aria-hidden:flex-[0_0_0%]`}
+          class={`${cmsTileTransitionClass} grid min-w-0 overflow-hidden max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:flex-[0_0_clamp(20rem,32cqw,26rem)] lg:self-start lg:aria-hidden:-ml-4 lg:aria-hidden:flex-[0_0_0%]`}
           onTransitionEnd={(event) => {
             if (event.target === event.currentTarget) state.finishClose()
           }}
           aria-hidden={state.detailsOpen() ? undefined : "true"}
           inert={!state.detailsOpen()}
         >
-          <div class="min-h-0 min-w-0 overflow-hidden lg:w-[calc((100cqw-16rem)/2)]">
+          <div class="min-h-0 min-w-0 overflow-hidden lg:w-[clamp(20rem,32cqw,26rem)]">
             <Show when={state.displayed()}>
               {(item) => (
                 <aside
