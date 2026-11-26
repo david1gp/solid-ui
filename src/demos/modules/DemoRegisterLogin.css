@@ -137,7 +137,7 @@
 
   .auth-heading {
     margin-bottom: 26px;
-    text-align: center;
+    text-align: left;
   }
 
   .auth-heading h1 {
@@ -149,7 +149,7 @@
 
   .auth-heading p {
     max-width: 390px;
-    margin: 9px auto 0;
+    margin: 9px 0 0;
     color: var(--text-muted);
     font-size: var(--text-body);
   }
@@ -697,17 +697,12 @@
       border-radius: 17px;
     }
 
-    .auth-heading {
-      text-align: left;
-    }
-
     .auth-heading h1 {
       font-size: var(--text-title-mobile);
     }
 
     .auth-heading p {
       max-width: 330px;
-      margin-inline: 0;
     }
 
     .auth-container:has(#resetEmail) .auth-heading p {
