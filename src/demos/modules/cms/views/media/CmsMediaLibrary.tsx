@@ -105,7 +105,7 @@ export function CmsMediaLibrary() {
           </form>
         </aside>
         <div
-          class="grid min-w-0 flex-1 overflow-hidden opacity-100 transition-[grid-template-rows,flex-grow,margin,opacity] duration-500 ease-in-out motion-reduce:transition-none aria-hidden:opacity-0 max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:aria-hidden:-ml-4 lg:aria-hidden:flex-[0_1_0%]"
+          class={`grid min-w-0 flex-1 overflow-hidden opacity-100 transition-[grid-template-rows,flex-grow,margin,opacity] duration-500 ease-in-out motion-reduce:transition-none aria-hidden:opacity-0 max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] ${state.selected() ? "lg:hidden" : ""}`}
           aria-hidden={state.gridCollapsed() ? "true" : undefined}
           inert={state.gridCollapsed()}
         >
@@ -152,14 +152,14 @@ export function CmsMediaLibrary() {
           </section>
         </div>
         <div
-          class="grid w-full overflow-hidden opacity-100 transition-[grid-template-rows,width,margin,opacity] duration-500 ease-in-out motion-reduce:transition-none max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:w-72 lg:shrink-0 lg:aria-hidden:-ml-4 lg:aria-hidden:w-0 aria-hidden:opacity-0"
+          class="grid w-full min-w-0 overflow-hidden opacity-100 transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:h-[calc(100dvh-4rem)] lg:flex-1 lg:self-start lg:overflow-visible lg:aria-hidden:hidden aria-hidden:opacity-0"
           aria-hidden={state.detailsOpen() ? undefined : "true"}
           inert={!state.detailsOpen()}
         >
-          <div class="min-h-0 min-w-0 overflow-hidden lg:w-72">
+          <div class="min-h-0 min-w-0 overflow-hidden lg:h-full">
             <Show when={state.displayed()}>
               {(item) => (
-                <aside class={`${cmsCardClass} w-full space-y-4`}>
+                <aside class={`${cmsCardClass} @container w-full space-y-4 lg:h-full lg:overflow-y-auto`}>
                   <div class="flex items-center justify-between">
                     <h2 class="font-semibold">{state.text().details}</h2>
                     <button type="button" aria-label={state.text().close} onClick={() => state.select(undefined)}>
@@ -167,99 +167,111 @@ export function CmsMediaLibrary() {
                     </button>
                   </div>
                   <p class="break-all text-sm">{item().name}</p>
-                  <button
-                    type="button"
-                    aria-label={state.text().focus}
-                    class="relative block w-full overflow-hidden rounded-xl"
-                    onClick={(event) => {
-                      const rect = event.currentTarget.getBoundingClientRect()
-                      cmsMediaStore.update(item().id, {
-                        focusX: Math.round(
-                          Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100)),
-                        ),
-                        focusY: Math.round(
-                          Math.max(0, Math.min(100, ((event.clientY - rect.top) / rect.height) * 100)),
-                        ),
-                      })
-                    }}
-                  >
-                    <img src={item().url} alt={item().alt} class="block w-full" />
-                    <span
-                      class="pointer-events-none absolute border-2 border-white shadow"
-                      style={{
-                        left: `${item().cropX}%`,
-                        top: `${item().cropY}%`,
-                        width: `${item().cropWidth}%`,
-                        height: `${item().cropHeight}%`,
-                      }}
-                    />
-                    <span
-                      class="pointer-events-none absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-neutral-900"
-                      style={{ left: `${item().focusX}%`, top: `${item().focusY}%` }}
-                    />
-                  </button>
-                  <p class="text-xs text-neutral-500">
-                    {state.text().focusHint} ({item().focusX}%, {item().focusY}%)
-                  </p>
-                  <label class="block text-sm">
-                    {state.text().alt}
-                    <input
-                      class={`${cmsInputClass} mt-1 w-full`}
-                      value={item().alt}
-                      onInput={(event) => cmsMediaStore.update(item().id, { alt: event.currentTarget.value })}
-                    />
-                  </label>
-                  <label class="block text-sm">
-                    {state.text().folder}
-                    <select
-                      class={`${cmsInputClass} mt-1 w-full`}
-                      value={item().folder}
-                      onChange={(event) => cmsMediaStore.update(item().id, { folder: event.currentTarget.value })}
-                    >
-                      <option value="">{state.text().root}</option>
-                      <For each={cmsMediaStore.folders()}>{(folder) => <option value={folder}>{folder}</option>}</For>
-                    </select>
-                  </label>
-                  <fieldset class="space-y-2">
-                    <legend class="text-sm font-medium">{state.text().crop}</legend>
-                    <p class="text-xs text-neutral-500">{state.text().cropHint}</p>
-                    <For each={["cropX", "cropY", "cropWidth", "cropHeight"] as const}>
-                      {(key, index) => (
-                        <label class="flex items-center gap-2 text-xs">
-                          <span class="w-14">
-                            {[state.text().x, state.text().y, state.text().width, state.text().height][index()]}
-                          </span>
-                          <input
-                            type="range"
-                            min={key === "cropWidth" || key === "cropHeight" ? 1 : 0}
-                            max={
-                              key === "cropX"
-                                ? 100 - item().cropWidth
-                                : key === "cropY"
-                                  ? 100 - item().cropHeight
-                                  : key === "cropWidth"
-                                    ? 100 - item().cropX
-                                    : 100 - item().cropY
-                            }
-                            value={item()[key]}
-                            onInput={(event) =>
-                              cmsMediaStore.update(item().id, { [key]: Number(event.currentTarget.value) })
-                            }
-                            class="min-w-0 flex-1"
-                          />
-                          <span>{item()[key]}%</span>
-                        </label>
-                      )}
-                    </For>
-                  </fieldset>
-                  <div class="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      class={`${cmsButtonClass} text-red-700 dark:text-red-400`}
-                      onClick={state.remove}
-                    >
-                      {state.text().delete}
-                    </button>
+                  <div class="@3xl:grid @3xl:grid-cols-2 @3xl:items-start @3xl:gap-6">
+                    <div class="min-w-0 space-y-2">
+                      <button
+                        type="button"
+                        aria-label={state.text().focus}
+                        class="relative block w-full max-w-full overflow-hidden rounded-xl lg:w-fit"
+                        onClick={(event) => {
+                          const rect = event.currentTarget.getBoundingClientRect()
+                          cmsMediaStore.update(item().id, {
+                            focusX: Math.round(
+                              Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100)),
+                            ),
+                            focusY: Math.round(
+                              Math.max(0, Math.min(100, ((event.clientY - rect.top) / rect.height) * 100)),
+                            ),
+                          })
+                        }}
+                      >
+                        <img
+                          src={item().url}
+                          alt={item().alt}
+                          class="block w-full max-w-full object-contain lg:max-h-[calc(100dvh-13rem)] lg:w-auto"
+                        />
+                        <span
+                          class="pointer-events-none absolute border-2 border-white shadow"
+                          style={{
+                            left: `${item().cropX}%`,
+                            top: `${item().cropY}%`,
+                            width: `${item().cropWidth}%`,
+                            height: `${item().cropHeight}%`,
+                          }}
+                        />
+                        <span
+                          class="pointer-events-none absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-neutral-900"
+                          style={{ left: `${item().focusX}%`, top: `${item().focusY}%` }}
+                        />
+                      </button>
+                      <p class="text-xs text-neutral-500">
+                        {state.text().focusHint} ({item().focusX}%, {item().focusY}%)
+                      </p>
+                    </div>
+                    <div class="min-w-0 space-y-4">
+                      <label class="block text-sm">
+                        {state.text().alt}
+                        <input
+                          class={`${cmsInputClass} mt-1 w-full`}
+                          value={item().alt}
+                          onInput={(event) => cmsMediaStore.update(item().id, { alt: event.currentTarget.value })}
+                        />
+                      </label>
+                      <label class="block text-sm">
+                        {state.text().folder}
+                        <select
+                          class={`${cmsInputClass} mt-1 w-full`}
+                          value={item().folder}
+                          onChange={(event) => cmsMediaStore.update(item().id, { folder: event.currentTarget.value })}
+                        >
+                          <option value="">{state.text().root}</option>
+                          <For each={cmsMediaStore.folders()}>
+                            {(folder) => <option value={folder}>{folder}</option>}
+                          </For>
+                        </select>
+                      </label>
+                      <fieldset class="space-y-2">
+                        <legend class="text-sm font-medium">{state.text().crop}</legend>
+                        <p class="text-xs text-neutral-500">{state.text().cropHint}</p>
+                        <For each={["cropX", "cropY", "cropWidth", "cropHeight"] as const}>
+                          {(key, index) => (
+                            <label class="flex items-center gap-2 text-xs">
+                              <span class="w-14">
+                                {[state.text().x, state.text().y, state.text().width, state.text().height][index()]}
+                              </span>
+                              <input
+                                type="range"
+                                min={key === "cropWidth" || key === "cropHeight" ? 1 : 0}
+                                max={
+                                  key === "cropX"
+                                    ? 100 - item().cropWidth
+                                    : key === "cropY"
+                                      ? 100 - item().cropHeight
+                                      : key === "cropWidth"
+                                        ? 100 - item().cropX
+                                        : 100 - item().cropY
+                                }
+                                value={item()[key]}
+                                onInput={(event) =>
+                                  cmsMediaStore.update(item().id, { [key]: Number(event.currentTarget.value) })
+                                }
+                                class="min-w-0 flex-1"
+                              />
+                              <span>{item()[key]}%</span>
+                            </label>
+                          )}
+                        </For>
+                      </fieldset>
+                      <div class="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          class={`${cmsButtonClass} text-red-700 dark:text-red-400`}
+                          onClick={state.remove}
+                        >
+                          {state.text().delete}
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </aside>
               )}
