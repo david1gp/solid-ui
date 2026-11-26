@@ -135,6 +135,14 @@ export function cmsUsersStateCreate(props: () => { id?: string }) {
     text: () => text[cmsLocale.get()],
     users: users.get,
     user,
+    initials: () =>
+      (user()?.name ?? "")
+        .trim()
+        .split(/\s+/)
+        .map((part) => part.charAt(0))
+        .join("")
+        .slice(0, 2)
+        .toUpperCase(),
     lastAdmin,
     draftRole: draftRole.get,
     draftRoleSet: (value: string) => draftRole.set(value),

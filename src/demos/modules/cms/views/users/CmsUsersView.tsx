@@ -50,12 +50,7 @@ export function CmsUsersView(props: { id?: string }) {
                         aria-hidden="true"
                         class="flex size-12 shrink-0 items-center justify-center rounded-full bg-neutral-200 text-sm font-medium dark:bg-neutral-700"
                       >
-                        {user()
-                          .name.split(/\s+/)
-                          .map((part) => part.charAt(0))
-                          .join("")
-                          .slice(0, 2)
-                          .toUpperCase()}
+                        {state.initials()}
                       </span>
                       <div class="min-w-0 space-y-1">
                         <h2 class="font-semibold">{user().name}</h2>
