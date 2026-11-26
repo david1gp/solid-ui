@@ -7,6 +7,7 @@ const t = (de: string, en: string) => (cmsLocale.get() === "de" ? de : en)
 export function CmsSaveBar(p: { dirty: boolean; onDiscard: () => void }) {
   return (
     <div
+      data-cms-unsaved={p.dirty ? "" : undefined}
       class={
         "md:sticky md:bottom-0 -mx-1 px-1 flex flex-wrap items-center justify-end gap-3 bg-background dark:bg-[#222326]"
       }

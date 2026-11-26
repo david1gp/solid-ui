@@ -159,6 +159,12 @@ body:has([data-bottom-mobile-navbar-demo]) [data-demo-notice] {
 }
 
 @media (width < 40rem) {
+  /* Keep the notice away from mobile save controls while a CMS form is dirty. */
+  body:has([data-cms-unsaved]) [data-demo-notice] {
+    top: 1rem;
+    bottom: auto;
+  }
+
   /* Let CMS content scroll above the fixed demo notice on small screens. */
   body:has([data-demo-notice]) [data-cms-main] {
     padding-bottom: 16rem;
