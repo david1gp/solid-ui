@@ -3,6 +3,7 @@ import { For, Show } from "solid-js"
 import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import type { kalenderStateCreate } from "./kalenderStateCreate.js"
+import "./KalenderEvent.css"
 
 type State = ReturnType<typeof kalenderStateCreate>
 type Cell = ReturnType<State["days"]>[number]
@@ -17,7 +18,7 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
             style={{ "border-left-color": task().borderColor }}
           >
             <span
-              class="group/marker absolute right-1.5 top-1.5"
+              class="kalender-event-marker absolute right-1.5 top-1.5"
               tabindex="0"
               aria-label={`Farbe ${task().name} für ${task().title}`}
               role="img"
@@ -25,7 +26,7 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
               <span class="block size-2.5 rounded-[2px]" style={{ background: task().color }} />
               <span
                 role="tooltip"
-                class="pointer-events-none absolute right-0 top-4 z-10 hidden w-max max-w-40 rounded bg-neutral-900 px-2 py-1 text-[10px] text-white shadow-lg group-hover/marker:block group-focus/marker:block dark:bg-white dark:text-neutral-900"
+                class="kalender-event-tooltip pointer-events-none absolute right-0 top-4 z-10 hidden w-max max-w-40 rounded bg-neutral-900 px-2 py-1 text-[10px] text-white shadow-lg dark:bg-white dark:text-neutral-900"
               >
                 Farbe {task().name} für {task().title}
               </span>

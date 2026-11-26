@@ -1,0 +1,4 @@
+.kalender-event-marker:hover .kalender-event-tooltip,
+.kalender-event-marker:focus .kalender-event-tooltip {
+  display: block;
+}
