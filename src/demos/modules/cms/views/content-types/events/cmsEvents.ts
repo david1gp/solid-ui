@@ -1,4 +1,6 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import type { CmsEventAgendaEntry } from "./CmsEventAgendaEntry.js"
+import type { CmsEventFaqEntry } from "./CmsEventFaqEntry.js"
 import type { CmsEventScheduleEntry } from "./CmsEventScheduleEntry.js"
 
 export const cmsEvents = createSignalObject<
@@ -11,11 +13,28 @@ export const cmsEvents = createSignalObject<
     schedule: CmsEventScheduleEntry[]
     location: string
     description: string
+    organizer: string
+    categories: string[]
+    highlights: string[]
+    servicesIncluded: string[]
+    servicesExcluded: string[]
+    faq: CmsEventFaqEntry[]
+    agenda: CmsEventAgendaEntry[]
     color: string
   }[]
 >([
   {
     id: "event-1",
+    organizer: "Klang-Team Berlin",
+    categories: ["Audio", "Live"],
+    highlights: ["Probehören", "Fachberatung"],
+    servicesIncluded: ["Getränke", "Beratung"],
+    servicesExcluded: ["Anreise"],
+    faq: [{ id: "faq-1-1", question: "Muss ich Kopfhörer mitbringen?", answer: "Nein, alle Modelle stehen bereit." }],
+    agenda: [
+      { id: "agenda-1-1", kind: "day", day: 1, title: "Veranstaltungstag" },
+      { id: "agenda-1-2", kind: "time", time: "18:30", title: "Begrüßung", description: "Wir freuen uns auf Sie." },
+    ],
     position: 1,
     featured: true,
     title: "Hörtest-Abend – Studio One live erleben",
@@ -27,6 +46,16 @@ export const cmsEvents = createSignalObject<
   },
   {
     id: "event-2",
+    organizer: "Tonstudio Elbe",
+    categories: ["Workshop", "Audio"],
+    highlights: ["Praxisübungen", "Mixing"],
+    servicesIncluded: ["Arbeitsplatz", "Unterlagen"],
+    servicesExcluded: ["Mittagessen"],
+    faq: [{ id: "faq-2-1", question: "Sind Vorkenntnisse nötig?", answer: "Grundkenntnisse sind hilfreich." }],
+    agenda: [
+      { id: "agenda-2-1", kind: "day", day: 1, title: "Veranstaltungstag" },
+      { id: "agenda-2-2", kind: "time", time: "10:00", title: "Einführung", description: "Wir freuen uns auf Sie." },
+    ],
     position: 2,
     featured: false,
     title: "Workshop – Mixing mit Kopfhörern",
@@ -42,6 +71,16 @@ export const cmsEvents = createSignalObject<
   },
   {
     id: "event-3",
+    organizer: "Studio One",
+    categories: ["Online", "Angebote"],
+    highlights: ["Sonderpreise", "Neuheiten"],
+    servicesIncluded: ["Online-Zugang"],
+    servicesExcluded: ["Versandkosten"],
+    faq: [{ id: "faq-3-1", question: "Wie erhalte ich Zugang?", answer: "Der Sale ist online frei zugänglich." }],
+    agenda: [
+      { id: "agenda-3-1", kind: "day", day: 1, title: "Veranstaltungstag" },
+      { id: "agenda-3-2", kind: "time", time: "09:00", title: "Sale-Start", description: "Wir freuen uns auf Sie." },
+    ],
     position: 3,
     featured: false,
     title: "Winter-Sale Opening",
@@ -53,6 +92,16 @@ export const cmsEvents = createSignalObject<
   },
   {
     id: "event-4",
+    organizer: "Studio One München",
+    categories: ["Live", "Produktvorstellung"],
+    highlights: ["Live-DJ", "Produktpremiere"],
+    servicesIncluded: ["Eintritt", "Getränke"],
+    servicesExcluded: ["Anreise"],
+    faq: [{ id: "faq-4-1", question: "Gibt es eine Garderobe?", answer: "Ja, eine Garderobe ist vorhanden." }],
+    agenda: [
+      { id: "agenda-4-1", kind: "day", day: 1, title: "Veranstaltungstag" },
+      { id: "agenda-4-2", kind: "time", time: "19:00", title: "Einlass", description: "Wir freuen uns auf Sie." },
+    ],
     position: 4,
     featured: true,
     title: "Launch-Event – Silver Wave",
@@ -64,6 +113,18 @@ export const cmsEvents = createSignalObject<
   },
   {
     id: "event-5",
+    organizer: "Audio Community Köln",
+    categories: ["Community", "Audio"],
+    highlights: ["Audio-Talk", "Austausch"],
+    servicesIncluded: ["Moderation", "Getränke"],
+    servicesExcluded: ["Verpflegung"],
+    faq: [
+      { id: "faq-5-1", question: "Kann ich eigene Musik mitbringen?", answer: "Ja, Lieblingsalben sind willkommen." },
+    ],
+    agenda: [
+      { id: "agenda-5-1", kind: "day", day: 1, title: "Veranstaltungstag" },
+      { id: "agenda-5-2", kind: "time", time: "17:00", title: "Begrüßung", description: "Wir freuen uns auf Sie." },
+    ],
     position: 5,
     featured: false,
     title: "Community-Treffen – Audio-Talk",
