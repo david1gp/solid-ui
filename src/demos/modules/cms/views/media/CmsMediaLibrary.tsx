@@ -40,7 +40,7 @@ export function CmsMediaLibrary() {
           }}
         />
       </label>
-      <div ref={state.observeContainer} class="@container flex flex-col gap-4 lg:flex-row">
+      <div ref={state.observeContainer} class="@container flex flex-col gap-4 lg:flex-row lg:items-start">
         <aside class={`${cmsCardClass} w-full shrink-0 space-y-2 lg:w-56 lg:self-start`}>
           <h2 class="mb-4 text-base font-semibold">{state.text().folders}</h2>
           <For
@@ -106,11 +106,11 @@ export function CmsMediaLibrary() {
           </form>
         </aside>
         <div
-          class={`${cmsTileTransitionClass} grid min-w-0 flex-1 overflow-hidden max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:aria-hidden:-mr-4 lg:aria-hidden:flex-[0_1_0%]`}
-          aria-hidden={state.detailsOpen() ? "true" : undefined}
-          inert={state.detailsOpen()}
+          class={`${cmsTileTransitionClass} grid min-w-0 flex-1 overflow-hidden max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr]`}
+          aria-hidden={state.gridHidden() ? "true" : undefined}
+          inert={state.gridHidden()}
         >
-          <section class="min-h-0 min-w-0 space-y-4 overflow-hidden lg:w-[calc(100cqw-15rem)]">
+          <section class="min-h-0 min-w-0 space-y-4 overflow-hidden">
             <div class="flex flex-wrap gap-2">
               <input
                 type="search"
@@ -132,16 +132,16 @@ export function CmsMediaLibrary() {
                 </div>
               }
             >
-              <div class={`${cmsCardClass} grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4`}>
+              <div class={`${cmsCardClass} grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-[repeat(2,7rem)]`}>
                 <For each={state.filtered()}>
                   {(item) => (
                     <button
                       type="button"
                       onClick={() => state.select(item.id)}
                       aria-pressed={state.selected()?.id === item.id ? "true" : "false"}
-                      class={`${cmsCardClass} overflow-hidden p-0 text-left text-sm hover:bg-gray-50 dark:hover:bg-neutral-800 ${state.selected()?.id === item.id ? "ring-2 ring-[var(--dashboard-accent)]" : ""}`}
+                      class={`${cmsCardClass} overflow-hidden !p-0 text-left text-sm hover:bg-gray-50 dark:hover:bg-neutral-800 ${state.selected()?.id === item.id ? "ring-2 ring-[var(--dashboard-accent)]" : ""}`}
                     >
-                      <img src={item.url} alt={item.alt} class="aspect-square w-full object-cover" />
+                      <img src={item.url} alt={item.alt} class="aspect-square w-full object-cover lg:h-28" />
                       <span class="block min-w-0 truncate p-2">{item.name}</span>
                     </button>
                   )}
@@ -152,14 +152,14 @@ export function CmsMediaLibrary() {
         </div>
         {/* Keep the wrapper rendered: display:none would prevent its open/close transition. */}
         <div
-          class={`${cmsTileTransitionClass} grid min-w-0 overflow-hidden max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:flex-1 lg:self-start lg:aria-hidden:-ml-4 lg:aria-hidden:flex-[0_1_0%]`}
+          class={`${cmsTileTransitionClass} grid min-w-0 overflow-hidden max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:flex-[0_0_calc((100cqw-16rem)/2)] lg:self-start lg:aria-hidden:-ml-4 lg:aria-hidden:flex-[0_0_0%]`}
           onTransitionEnd={(event) => {
             if (event.target === event.currentTarget) state.finishClose()
           }}
           aria-hidden={state.detailsOpen() ? undefined : "true"}
           inert={!state.detailsOpen()}
         >
-          <div class="min-h-0 min-w-0 overflow-hidden lg:w-[calc(100cqw-15rem)]">
+          <div class="min-h-0 min-w-0 overflow-hidden lg:w-[calc((100cqw-16rem)/2)]">
             <Show when={state.displayed()}>
               {(item) => (
                 <aside

@@ -6,6 +6,15 @@ import { cmsMediaText } from "./cmsMediaText.js"
 
 export function cmsMediaLibraryStateCreate() {
   const container = cmsMediaNarrowContainerCreate()
+  const [mobile, setMobile] = createSignal(
+    typeof matchMedia !== "undefined" && matchMedia("(max-width: 1023px)").matches,
+  )
+  if (typeof matchMedia !== "undefined") {
+    const query = matchMedia("(max-width: 1023px)")
+    const update = () => setMobile(query.matches)
+    query.addEventListener("change", update)
+    onCleanup(() => query.removeEventListener("change", update))
+  }
   const [folder, setFolder] = createSignal("*")
   const [search, setSearch] = createSignal("")
   const [selectedId, setSelectedId] = createSignal<string>()
@@ -37,7 +46,7 @@ export function cmsMediaLibraryStateCreate() {
     clearTimeout(closeTimer)
     closeTimer = setTimeout(() => {
       if (!selected()) setDisplayed(undefined)
-    }, 400)
+    }, 5000)
   })
   onCleanup(() => {
     if (frame !== undefined) cancelAnimationFrame(frame)
@@ -59,6 +68,7 @@ export function cmsMediaLibraryStateCreate() {
     selected,
     displayed,
     detailsOpen,
+    gridHidden: () => mobile() && detailsOpen(),
     finishClose() {
       if (!selected()) {
         clearTimeout(closeTimer)
