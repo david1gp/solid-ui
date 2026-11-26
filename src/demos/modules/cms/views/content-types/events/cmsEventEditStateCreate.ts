@@ -77,10 +77,13 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
     title: () => title.get(),
     titleSet: (value: string) => title.set(value),
     schedule: () => schedule.get(),
-    priceMinimum: () => cmsEventPriceMinimumFormat(schedule.get().map((item) => ({
-      priceRegular: item.priceRegular.get().trim() === "" ? undefined : Number(item.priceRegular.get()),
-      priceReduced: item.priceReduced.get().trim() === "" ? undefined : Number(item.priceReduced.get()),
-    }))),
+    priceMinimum: () =>
+      cmsEventPriceMinimumFormat(
+        schedule.get().map((item) => ({
+          priceRegular: item.priceRegular.get().trim() === "" ? undefined : Number(item.priceRegular.get()),
+          priceReduced: item.priceReduced.get().trim() === "" ? undefined : Number(item.priceReduced.get()),
+        })),
+      ),
     /** Valid appointments in chronological order, for the preview. */
     scheduleSorted: () =>
       cmsEventScheduleSorted(schedule.get().map((item) => ({ date: item.date.get(), time: item.time.get() }))),

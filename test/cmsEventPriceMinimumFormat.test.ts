@@ -11,10 +11,12 @@ test("ignores empty values and formats whole-euro prices", () => {
 })
 
 test("finds the minimum across dates and both price types with German decimals", () => {
-  expect(cmsEventPriceMinimumFormat([
-    { priceRegular: 20, priceReduced: 12 },
-    { priceRegular: 9.5, priceReduced: 15 },
-    { priceReduced: 10 },
-  ])).toBe("ab 9,50 €")
+  expect(
+    cmsEventPriceMinimumFormat([
+      { priceRegular: 20, priceReduced: 12 },
+      { priceRegular: 9.5, priceReduced: 15 },
+      { priceReduced: 10 },
+    ]),
+  ).toBe("ab 9,50 €")
   expect(cmsEventPriceMinimumFormat([{ priceRegular: 15, priceReduced: 9.5 }])).toBe("ab 9,50 €")
 })
