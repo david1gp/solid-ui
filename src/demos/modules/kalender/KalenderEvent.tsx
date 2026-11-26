@@ -33,6 +33,9 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
             </span>
             <div class="truncate pr-3 text-xs font-medium">{task().title}</div>
             <div class="truncate text-[9px] text-neutral-500 dark:text-neutral-400">{task().meta}</div>
+            <Show when={task().people.length > 0}>
+              <div class="truncate text-[9px] text-violet-600 dark:text-violet-300">mit {task().people.join(", ")}</div>
+            </Show>
           </div>
           <Show when={props.cell.tasks.length > 1}>
             <CorvuPopover
@@ -67,6 +70,11 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
                       <div>
                         <div class="text-xs font-medium">{event.title}</div>
                         <div class="text-[9px] text-neutral-500">{event.meta}</div>
+                        <Show when={event.people.length > 0}>
+                          <div class="text-[9px] text-violet-600 dark:text-violet-300">
+                            mit {event.people.join(", ")}
+                          </div>
+                        </Show>
                       </div>
                     </div>
                   )}

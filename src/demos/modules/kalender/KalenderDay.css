@@ -1,0 +1,14 @@
+/* Plain :hover instead of Tailwind's group-hover, which only applies under (hover: hover). */
+.kalender-day-add {
+  opacity: 0;
+}
+.kalender-day:hover .kalender-day-add,
+.kalender-day-add:focus-visible {
+  opacity: 1;
+}
+/* Touch devices have no hover: keep the add button visible. */
+@media (hover: none) {
+  .kalender-day-add {
+    opacity: 1;
+  }
+}

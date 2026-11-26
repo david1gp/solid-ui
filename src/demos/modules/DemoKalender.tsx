@@ -3,9 +3,12 @@ import { mdiChevronRight } from "@adaptive-ds/mdi/mdiChevronRight.js"
 import { mdiClockOutline } from "@adaptive-ds/mdi/mdiClockOutline.js"
 import { mdiFilterOutline } from "@adaptive-ds/mdi/mdiFilterOutline.js"
 import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
+import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { For, Show } from "solid-js"
 import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
+import "./kalender/KalenderDay.css"
+import { KalenderCreateDialog } from "./kalender/KalenderCreateDialog.jsx"
 import { KalenderEvent } from "./kalender/KalenderEvent.jsx"
 import { kalenderStateCreate } from "./kalender/kalenderStateCreate.js"
 
@@ -92,13 +95,29 @@ export function DemoKalender() {
                       KW {cell.week}
                     </div>
                   </Show>
-                  <div class="min-h-28 border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60">
+                  {/* biome-ignore lint/a11y/noStaticElementInteractions: mouse shortcut; the focusable "+" button is the keyboard path */}
+                  {/* biome-ignore lint/a11y/useKeyWithClickEvents: mouse shortcut; the focusable "+" button is the keyboard path */}
+                  <div
+                    class={`kalender-day min-h-28 border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60 ${cell.day ? "cursor-pointer hover:bg-violet-500/5" : ""}`}
+                    onClick={(event) => state.cellClick(event, cell.day)}
+                  >
                     <Show when={cell.day}>
-                      <span
-                        class={`inline-block rounded-sm px-1 text-[10px] shadow-sm ${cell.isToday ? "bg-violet-600 font-bold text-white" : "bg-neutral-200 text-neutral-600 dark:bg-[#33363b] dark:text-neutral-300"}`}
-                      >
-                        {cell.day}
-                      </span>
+                      <div class="flex items-center justify-between">
+                        <span
+                          class={`inline-block rounded-sm px-1 text-[10px] shadow-sm ${cell.isToday ? "bg-violet-600 font-bold text-white" : "bg-neutral-200 text-neutral-600 dark:bg-[#33363b] dark:text-neutral-300"}`}
+                        >
+                          {cell.day}
+                        </span>
+                        <button
+                          type="button"
+                          aria-label={`Termin am ${state.dateLabel(cell.day!)} hinzufügen`}
+                          title="Neuer Termin"
+                          onClick={() => state.createOpen(cell.day!)}
+                          class="kalender-day-add grid size-5 place-items-center rounded text-neutral-500 transition-opacity hover:bg-violet-600 hover:text-white dark:text-neutral-400"
+                        >
+                          <Icon path={mdiPlus} class="size-4" />
+                        </button>
+                      </div>
                     </Show>
                     <KalenderEvent cell={cell} state={state} />
                   </div>
@@ -108,6 +127,7 @@ export function DemoKalender() {
           </div>
         </div>
       </main>
+      <KalenderCreateDialog state={state} />
     </div>
   )
 }
