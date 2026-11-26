@@ -15,10 +15,16 @@ In `src/demos/modules/DemoKalender.tsx` (Demo: https://adaptive-solid-ui.pages.d
 - **Time grid for Tag/Heute/Woche** (replaces the stacked-list cells):
   - Header row: left 58px column (clock + "MEZ" as now); per day column the weekday + date number (today highlighted violet as now) and the existing "+" button.
   - "Ganztägig" lane below the header: left label column shows "Ganztägig" (small, neutral), per day the all-day tasks as compact tiles.
-  - Body: 24 hour rows 00:00–24:00, fixed hour height (e.g. 48px/h), left column shows hour labels ("08:00", text-xs, neutral-500, aligned to the hour line like Google Calendar), horizontal hour lines (+ subtle half-hour lines) across day columns, vertical day separators.
+  - Body: only the needed hours (see "Compact hours" below), fixed hour height (e.g. 48px/h), left column shows hour labels ("08:00", text-xs, neutral-500, aligned to the hour line like Google Calendar), horizontal hour lines (+ subtle half-hour lines) across day columns, vertical day separators.
   - Timed tasks absolutely positioned: top = start minutes × px/min, height = (end − start) × px/min with a minimum (~20px); short tiles show title + time on one line. Overlapping tasks within a day are laid out side by side (columns per overlap cluster). Tile styling identical to existing tiles (colored left border, neutral bg, dark variants, color marker, edit button/aria-label "Termin „…“ (hh:mm–hh:mm) bearbeiten").
   - Current-time line (violet) in today's column, updates every minute.
-  - Body is vertically scrollable (fixed max height e.g. ~ 600px / viewport-based) with initial scroll to ~07:00, or to now−1h when today is visible.
+  - **Compact hours** (user feedback: full 24h grid looks broken/empty): the body shows only hours that matter for the visible days, no inner vertical scroll, no initial scroll logic.
+    - Range = floor(earliest timed start) … ceil(latest timed end) across all visible days (Tag: 1 day, Woche: 7 days). All-day tasks don't count.
+    - Inside the range, runs of ≥ 2 consecutive full hours without any timed task (across all visible days) collapse into a thin gap row (~16px, subtle dashed/neutral band, label like "10:00–13:00" or "…" in the hour column). A single empty hour between tasks stays normal height.
+    - No timed tasks in view: show a compact default range 08:00–12:00 (so slot click still works).
+    - Pixel mapping is piecewise (segments: visible hour blocks + collapsed gaps); a pure helper `kalenderHourSegmentsCreate` (tasks → segments with startMinute, endMinute, collapsed, top, height) + `minute → y` / `y → minute` mapping, unit-tested.
+    - Now-line only rendered when now falls inside a non-collapsed segment.
+    - Slot click only in non-collapsed segments; maps y → minute via segments (half-hour rounding as now). Creating a task outside the range via "+"/"Neuer Termin" expands the range automatically (reactive).
   - Click on an empty slot opens the create dialog for that day with start = clicked hour (rounded to half hour), end = +1h if the form API allows; otherwise default start. Keyboard path stays via "+".
   - Woche keeps `min-w-[1000px]` with horizontal scroll on mobile; Tag fills width.
 - Keep all existing design tokens/classes (neutral/violet, dark mode), aria attributes, URL dialog params, undo logic. No new dependencies. Pure helpers (time → minutes, overlap layout) in their own files under `src/demos/modules/kalender/` (one export per file) with unit tests.
@@ -26,5 +32,6 @@ In `src/demos/modules/DemoKalender.tsx` (Demo: https://adaptive-solid-ui.pages.d
 ## Tasks
 1. View switching (Heute/Tag/Woche/Monat), navigation, labels, range helpers + tests. — status: done
 2. Browser verification of view switching. — status: done
-3. Time grid for Tag/Heute/Woche as described (new components e.g. `KalenderTimeGrid.tsx`, `KalenderTimeEvent.tsx`, helpers `kalenderTimeMinutes.ts`, `kalenderOverlapLayout.ts` + tests). — status: open
-4. Browser verification of time grid (desktop/mobile, light/dark, overlap, all-day lane, slot click, edit, undo, now line). — status: open
+3. Time grid for Tag/Heute/Woche as described (`KalenderTimeGrid.tsx`, `kalenderTimeGridStateCreate.ts`, `kalenderOverlapLayout.ts` + tests). — status: done
+4. Browser verification of time grid. — status: done
+5. Compact hours for Tag/Heute/Woche as described above. — status: open
