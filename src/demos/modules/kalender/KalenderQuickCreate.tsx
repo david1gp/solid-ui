@@ -12,7 +12,7 @@ const fieldClass =
   "w-full min-w-0 rounded border border-neutral-300 bg-white px-2.5 py-2 text-sm text-neutral-900 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/30 dark:border-neutral-600 dark:bg-[#1b1d20] dark:text-neutral-100"
 
 /** A day cell and its anchored quick-create form. */
-export function KalenderQuickCreate(props: { cell: Cell; state: State; children: JSX.Element }) {
+export function KalenderQuickCreate(props: { cell: Cell; state: State; children: JSX.Element; header?: boolean }) {
   const { anchor, anchorSet, form } = kalenderQuickCreateStateCreate(props.state)
   return (
     <Popover
@@ -26,8 +26,14 @@ export function KalenderQuickCreate(props: { cell: Cell; state: State; children:
       <Popover.Anchor
         ref={anchorSet}
         tabindex="-1"
-        class={`kalender-day ${props.state.view() === "Monat" ? "min-h-28" : "min-h-80"} border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60 ${props.cell.day !== undefined ? "cursor-pointer hover:bg-violet-500/5" : ""}`}
-        onClick={(event) => props.state.cellClick(event, props.cell.day)}
+        class={
+          props.header
+            ? "min-w-0 flex-1"
+            : `kalender-day min-h-28 border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60 ${props.cell.day !== undefined ? "cursor-pointer hover:bg-violet-500/5" : ""}`
+        }
+        onClick={(event) => {
+          if (!props.header) props.state.cellClick(event, props.cell.day)
+        }}
       >
         {props.children}
       </Popover.Anchor>

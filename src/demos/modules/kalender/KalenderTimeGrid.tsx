@@ -2,6 +2,7 @@ import { mdiClockOutline } from "@adaptive-ds/mdi/mdiClockOutline.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
+import { KalenderQuickCreate } from "./KalenderQuickCreate.jsx"
 import type { kalenderStateCreate } from "./kalenderStateCreate.js"
 import { kalenderOverlapLayout } from "./kalenderOverlapLayout.js"
 import { kalenderTimeGridStateCreate } from "./kalenderTimeGridStateCreate.js"
@@ -20,26 +21,28 @@ export function KalenderTimeGrid(props: { state: ReturnType<typeof kalenderState
           </div>
           <For each={props.state.days()}>
             {(cell, index) => (
-              <div class="flex h-12 min-w-0 flex-1 items-center justify-between border-r border-neutral-300 px-2 last:border-r-0 dark:border-black/60">
-                <span class={`text-sm font-semibold ${cell.isToday ? "text-violet-500" : ""}`}>
-                  {props.state.view() === "Woche"
-                    ? ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"][index()]
-                    : props.state.dateLabel(cell.day!)}
-                  <Show when={props.state.view() === "Woche"}>
-                    {" "}
-                    <span class={cell.isToday ? "rounded bg-violet-600 px-1 text-white" : ""}>{cell.displayDay}</span>
-                  </Show>
-                </span>
-                <button
-                  type="button"
-                  aria-label={`Termin am ${props.state.dateLabel(cell.day!)} hinzufügen`}
-                  title="Neuer Termin"
-                  onClick={() => props.state.createOpen(cell.day!)}
-                  class="grid size-6 place-items-center rounded text-neutral-500 hover:bg-violet-600 hover:text-white"
-                >
-                  <Icon path={mdiPlus} class="size-4" />
-                </button>
-              </div>
+              <KalenderQuickCreate cell={cell} state={props.state} header>
+                <div class="flex h-12 min-w-0 items-center justify-between border-r border-neutral-300 px-2 last:border-r-0 dark:border-black/60">
+                  <span class={`text-sm font-semibold ${cell.isToday ? "text-violet-500" : ""}`}>
+                    {props.state.view() === "Woche"
+                      ? ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"][index()]
+                      : props.state.dateLabel(cell.day!)}
+                    <Show when={props.state.view() === "Woche"}>
+                      {" "}
+                      <span class={cell.isToday ? "rounded bg-violet-600 px-1 text-white" : ""}>{cell.displayDay}</span>
+                    </Show>
+                  </span>
+                  <button
+                    type="button"
+                    aria-label={`Termin am ${props.state.dateLabel(cell.day!)} hinzufügen`}
+                    title="Neuer Termin"
+                    onClick={() => props.state.quickOpen(cell.day!)}
+                    class="grid size-6 place-items-center rounded text-neutral-500 hover:bg-violet-600 hover:text-white"
+                  >
+                    <Icon path={mdiPlus} class="size-4" />
+                  </button>
+                </div>
+              </KalenderQuickCreate>
             )}
           </For>
         </div>
