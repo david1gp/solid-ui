@@ -1,22 +1,24 @@
 import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
 import { mdiChevronRight } from "@adaptive-ds/mdi/mdiChevronRight.js"
 import { mdiClockOutline } from "@adaptive-ds/mdi/mdiClockOutline.js"
+import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { For, Show } from "solid-js"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import "./kalender/KalenderDay.css"
+import { demoKalenderStateCreate } from "./demoKalenderStateCreate.js"
 import { KalenderEvent } from "./kalender/KalenderEvent.jsx"
 import { KalenderQuickCreate } from "./kalender/KalenderQuickCreate.jsx"
 import { KalenderTaskDialog } from "./kalender/KalenderTaskDialog.jsx"
+import { KalenderTimeGrid } from "./kalender/KalenderTimeGrid.jsx"
 import { KalenderToast } from "./kalender/KalenderToast.jsx"
 import { kalenderNewTaskDayPick } from "./kalender/kalenderNewTaskDayPick.js"
-import { KalenderTimeGrid } from "./kalender/KalenderTimeGrid.jsx"
-import { kalenderStateCreate } from "./kalender/kalenderStateCreate.js"
 
 export function DemoKalender() {
-  const state = kalenderStateCreate()
+  const demo = demoKalenderStateCreate()
+  const state = demo.calendar
   return (
     <div
       class="flex h-dvh w-full overflow-hidden bg-neutral-100 text-neutral-900 dark:bg-[#1e2023] dark:text-neutral-100"
@@ -29,9 +31,43 @@ export function DemoKalender() {
             <p class="text-xs text-neutral-500 dark:text-neutral-400">{state.todayLabel()}</p>
           </div>
           <div class="flex flex-wrap items-center gap-4">
-            <button type="button" aria-label="Suchen" class="cursor-pointer text-neutral-500 dark:text-neutral-300">
-              <Icon path={mdiMagnify} class="size-5" />
-            </button>
+            <Show
+              when={demo.searchOpen()}
+              fallback={
+                <button
+                  type="button"
+                  aria-label="Suchen"
+                  onClick={demo.searchShow}
+                  class="cursor-pointer text-neutral-500 dark:text-neutral-300"
+                >
+                  <Icon path={mdiMagnify} class="size-5" />
+                </button>
+              }
+            >
+              <div class="flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-3 py-1.5 text-neutral-500 focus-within:border-violet-500 dark:border-neutral-600 dark:bg-[#1b1d20] dark:text-neutral-300">
+                <Icon path={mdiMagnify} class="size-5" />
+                <input
+                  ref={(element) => queueMicrotask(() => element.focus())}
+                  type="search"
+                  aria-label="Termine suchen"
+                  placeholder="Termine suchen…"
+                  value={demo.search()}
+                  onInput={(event) => demo.searchChange(event.currentTarget.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") demo.searchClose()
+                  }}
+                  class="w-36 min-w-0 bg-transparent text-sm text-neutral-900 outline-none dark:text-neutral-100 [&::-webkit-search-cancel-button]:hidden"
+                />
+                <button
+                  type="button"
+                  aria-label="Suche schließen"
+                  onClick={demo.searchClose}
+                  class="cursor-pointer hover:text-violet-500"
+                >
+                  <Icon path={mdiClose} class="size-5" />
+                </button>
+              </div>
+            </Show>
             <div class="flex items-center gap-1 text-sm font-medium">
               <span class="min-w-28 text-center">{state.monthLabel()}</span>
               <button
