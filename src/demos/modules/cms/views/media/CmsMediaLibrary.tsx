@@ -152,14 +152,16 @@ export function CmsMediaLibrary() {
           </section>
         </div>
         <div
-          class="grid w-full min-w-0 overflow-hidden opacity-100 transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:h-[calc(100dvh-4rem)] lg:flex-1 lg:self-start lg:overflow-visible lg:aria-hidden:hidden aria-hidden:opacity-0"
+          class="grid w-full min-w-0 overflow-hidden opacity-100 transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none max-lg:grid-rows-[1fr] max-lg:aria-hidden:-mt-4 max-lg:aria-hidden:grid-rows-[0fr] lg:sticky lg:top-8 lg:flex-1 lg:self-start lg:overflow-visible lg:aria-hidden:hidden aria-hidden:opacity-0"
           aria-hidden={state.detailsOpen() ? undefined : "true"}
           inert={!state.detailsOpen()}
         >
-          <div class="min-h-0 min-w-0 overflow-hidden lg:h-full">
+          <div class="min-h-0 min-w-0 overflow-hidden">
             <Show when={state.displayed()}>
               {(item) => (
-                <aside class={`${cmsCardClass} @container w-full space-y-4 lg:h-full lg:overflow-y-auto`}>
+                <aside
+                  class={`${cmsCardClass} @container w-full space-y-4 lg:max-h-[calc(100dvh-4rem)] lg:overflow-y-auto`}
+                >
                   <div class="flex items-center justify-between">
                     <h2 class="font-semibold">{state.text().details}</h2>
                     <button type="button" aria-label={state.text().close} onClick={() => state.select(undefined)}>
@@ -167,7 +169,7 @@ export function CmsMediaLibrary() {
                     </button>
                   </div>
                   <p class="break-all text-sm">{item().name}</p>
-                  <div class="@3xl:grid @3xl:grid-cols-2 @3xl:items-start @3xl:gap-6">
+                  <div class="@3xl:grid @3xl:grid-cols-[minmax(0,1fr)_minmax(18rem,24rem)] @3xl:items-start @3xl:gap-6">
                     <div class="min-w-0 space-y-2">
                       <button
                         type="button"
