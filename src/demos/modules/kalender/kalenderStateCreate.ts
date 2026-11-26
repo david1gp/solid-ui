@@ -271,6 +271,8 @@ export function kalenderStateCreate() {
         dialogClose()
         return
       }
+      quickDay.set(undefined)
+      openDay.set(undefined)
       view.set(value)
     },
     changeMonth: (delta: number) => {
