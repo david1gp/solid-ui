@@ -50,10 +50,24 @@ export function DemoKalender() {
             </button>
             <div class="flex items-center gap-1 text-sm font-medium">
               <span class="min-w-28 text-center">{state.monthLabel()}</span>
-              <button type="button" aria-label="Vorheriger Monat" onClick={() => state.changeMonth(-1)}>
+              <button
+                type="button"
+                aria-label={
+                  state.view() === "Woche"
+                    ? "Vorherige Woche"
+                    : `Vorheriger ${state.view() === "Monat" ? "Monat" : "Tag"}`
+                }
+                onClick={() => state.changeMonth(-1)}
+              >
                 <Icon path={mdiChevronLeft} class="size-5" />
               </button>
-              <button type="button" aria-label="Nächster Monat" onClick={() => state.changeMonth(1)}>
+              <button
+                type="button"
+                aria-label={
+                  state.view() === "Woche" ? "Nächste Woche" : `Nächster ${state.view() === "Monat" ? "Monat" : "Tag"}`
+                }
+                onClick={() => state.changeMonth(1)}
+              >
                 <Icon path={mdiChevronRight} class="size-5" />
               </button>
             </div>
@@ -74,12 +88,20 @@ export function DemoKalender() {
           </div>
         </header>
         <div class="overflow-x-auto rounded border border-neutral-300 dark:border-black/50">
-          <div class="grid min-w-[1000px] grid-cols-[58px_repeat(7,minmax(0,1fr))] bg-white dark:bg-[#1b1d20]">
+          <div
+            class={`grid bg-white dark:bg-[#1b1d20] ${state.view() === "Tag" || state.view() === "Heute" ? "grid-cols-[58px_minmax(0,1fr)]" : "min-w-[1000px] grid-cols-[58px_repeat(7,minmax(0,1fr))]"}`}
+          >
             <div class="flex h-12 flex-col items-center justify-center border-r border-neutral-300 bg-neutral-100 text-neutral-500 dark:border-black/60 dark:bg-[#111315]">
               <Icon path={mdiClockOutline} class="size-4" />
               <span class="text-[9px]">MEZ</span>
             </div>
-            <For each={["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]}>
+            <For
+              each={
+                state.view() === "Tag" || state.view() === "Heute"
+                  ? [state.monthLabel()]
+                  : ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+              }
+            >
               {(day, index) => (
                 <div
                   class={`grid h-12 place-items-center bg-neutral-100 text-sm font-semibold dark:bg-[#111315] ${index() === state.todayWeekday() ? "text-violet-500" : ""}`}
@@ -99,15 +121,15 @@ export function DemoKalender() {
                   {/* biome-ignore lint/a11y/noStaticElementInteractions: mouse shortcut; the focusable "+" button is the keyboard path */}
                   {/* biome-ignore lint/a11y/useKeyWithClickEvents: mouse shortcut; the focusable "+" button is the keyboard path */}
                   <div
-                    class={`kalender-day min-h-28 border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60 ${cell.day ? "cursor-pointer hover:bg-violet-500/5" : ""}`}
+                    class={`kalender-day ${state.view() === "Monat" ? "min-h-28" : "min-h-80"} border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60 ${cell.day !== undefined ? "cursor-pointer hover:bg-violet-500/5" : ""}`}
                     onClick={(event) => state.cellClick(event, cell.day)}
                   >
-                    <Show when={cell.day}>
+                    <Show when={cell.day !== undefined}>
                       <div class="flex items-center justify-between">
                         <span
                           class={`inline-block rounded-sm px-1 text-[10px] shadow-sm ${cell.isToday ? "bg-violet-600 font-bold text-white" : "bg-neutral-200 text-neutral-600 dark:bg-[#33363b] dark:text-neutral-300"}`}
                         >
-                          {cell.day}
+                          {cell.displayDay}
                         </span>
                         <button
                           type="button"
@@ -120,7 +142,16 @@ export function DemoKalender() {
                         </button>
                       </div>
                     </Show>
-                    <KalenderEvent cell={cell} state={state} />
+                    <Show
+                      when={state.view() === "Monat"}
+                      fallback={
+                        <For each={cell.tasks}>
+                          {(task) => <KalenderEvent cell={{ ...cell, tasks: [task] }} state={state} />}
+                        </For>
+                      }
+                    >
+                      <KalenderEvent cell={cell} state={state} />
+                    </Show>
                   </div>
                 </>
               )}

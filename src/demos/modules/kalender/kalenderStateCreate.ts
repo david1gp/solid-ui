@@ -3,6 +3,8 @@ import * as v from "valibot"
 import { themeInit } from "#ui/interactive/theme/themeSignal.js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { kalenderDateKey } from "./kalenderDateKey.js"
+import { kalenderDateShift } from "./kalenderDateShift.js"
+import { kalenderRangeCreate } from "./kalenderRangeCreate.js"
 import { kalenderDateKeySchema } from "./kalenderDateKeySchema.js"
 import { kalenderEventsCreate } from "./kalenderEventsCreate.js"
 import type { KalenderTask } from "./KalenderTask.js"
@@ -53,6 +55,7 @@ export function kalenderStateCreate() {
   // Render the same placeholder on the server and during hydration; read local time after mount.
   const today = createSignalObject<Date | undefined>(undefined)
   const month = createSignalObject<Date | undefined>(undefined)
+  const cursor = createSignalObject<Date | undefined>(undefined)
   const view = createSignalObject("Monat")
   const openDay = createSignalObject<number | undefined>(undefined)
   // Days changed in this session (created, edited, deleted), keyed by local date; replace generated appointments.
@@ -65,22 +68,38 @@ export function kalenderStateCreate() {
 
   const events = createMemo(() => {
     const date = month.get()
-    return date ? kalenderEventsCreate(date.getFullYear(), date.getMonth()) : []
+    if (!date) return new Map<string, KalenderTask[][]>()
+    return new Map(
+      [-1, 0, 1].map((offset) => {
+        const target = new Date(date.getFullYear(), date.getMonth() + offset, 1)
+        return [
+          `${target.getFullYear()}-${target.getMonth()}`,
+          kalenderEventsCreate(target.getFullYear(), target.getMonth()),
+        ]
+      }),
+    )
   })
-  const dayKey = (day: number) => {
+  const dayDate = (day: number) => {
     const date = month.get()
-    return date ? kalenderDateKey(date.getFullYear(), date.getMonth(), day) : ""
+    return date ? new Date(date.getFullYear(), date.getMonth(), day) : undefined
   }
-  const dayTasks = (day: number) => overrides.get()[dayKey(day)] ?? events()[day - 1] ?? []
-  const currentMonth = () => {
-    const date = month.get()
-    const now = today.get()
-    return !!date && !!now && date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth()
+  const dayKey = (day: number) => {
+    const date = dayDate(day)
+    return date ? kalenderDateKey(date.getFullYear(), date.getMonth(), date.getDate()) : ""
+  }
+  const dayTasks = (day: number) => {
+    const date = dayDate(day)
+    return date
+      ? (overrides.get()[dayKey(day)] ??
+          events().get(`${date.getFullYear()}-${date.getMonth()}`)?.[date.getDate() - 1] ??
+          [])
+      : []
   }
   /** Next half hour for today, otherwise 09:00. */
   const defaultStart = (day: number) => {
     const now = today.get()
-    return now && currentMonth() && now.getDate() === day ? startAfter(now) : "09:00"
+    const date = dayDate(day)
+    return now && date && date.toDateString() === now.toDateString() ? startAfter(now) : "09:00"
   }
 
   const toastShow = (message: string, undo: Overrides) => {
@@ -124,6 +143,7 @@ export function kalenderStateCreate() {
     const now = new Date()
     today.set(now)
     month.set(new Date(now.getFullYear(), now.getMonth(), 1))
+    cursor.set(now)
     // Restore an open dialog from the URL. Writes are batched until the next flush, so this
     // block derives everything from the parsed date instead of reading the `month` signal back.
     const params = new URL(window.location.href).searchParams
@@ -132,6 +152,7 @@ export function kalenderStateCreate() {
     if (!target) return dialogParamWrite(undefined)
     const [year, monthIndex, day] = target
     month.set(new Date(year, monthIndex, 1))
+    cursor.set(new Date(year, monthIndex, day))
     if (!editId) {
       const isToday = year === now.getFullYear() && monthIndex === now.getMonth() && day === now.getDate()
       form.reset(isToday ? startAfter(now) : "09:00")
@@ -147,18 +168,30 @@ export function kalenderStateCreate() {
   const days = () => {
     const date = month.get()
     if (!date) return []
-    const offset = (new Date(date.getFullYear(), date.getMonth(), 1).getDay() + 6) % 7
-    const total = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
-    const length = Math.ceil((offset + total) / 7) * 7
-    return Array.from({ length }, (_, index) => {
-      const day = index - offset + 1
-      const valid = day > 0 && day <= total
+    const reference = cursor.get()
+    if (!reference) return []
+    return kalenderRangeCreate(reference, view.get()).map((cellDate, index) => {
+      const day = cellDate
+        ? Math.round(
+            (Date.UTC(cellDate.getFullYear(), cellDate.getMonth(), cellDate.getDate()) -
+              Date.UTC(date.getFullYear(), date.getMonth(), 1)) /
+              86400000,
+          ) + 1
+        : undefined
       return {
         index,
-        day: valid ? day : undefined,
-        week: weekNumber(new Date(date.getFullYear(), date.getMonth(), day)),
-        isToday: valid && currentMonth() && today.get()?.getDate() === day,
-        tasks: valid ? dayTasks(day) : [],
+        day,
+        displayDay: cellDate?.getDate(),
+        week: weekNumber(
+          cellDate ??
+            new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              index - ((new Date(date.getFullYear(), date.getMonth(), 1).getDay() + 6) % 7) + 1,
+            ),
+        ),
+        isToday: !!cellDate && cellDate.toDateString() === today.get()?.toDateString(),
+        tasks: day !== undefined ? kalenderTasksSort(dayTasks(day)) : [],
       }
     })
   }
@@ -166,8 +199,27 @@ export function kalenderStateCreate() {
   return {
     days,
     openDay: openDay.get,
-    monthLabel: () => month.get()?.toLocaleDateString("de-DE", { month: "long", year: "numeric" }) ?? "",
-    todayWeekday: () => (currentMonth() ? (today.get()!.getDay() + 6) % 7 : -1),
+    monthLabel: () => {
+      const date = cursor.get()
+      if (!date) return ""
+      if (view.get() === "Monat") return date.toLocaleDateString("de-DE", { month: "long", year: "numeric" })
+      if (view.get() === "Woche") {
+        const range = kalenderRangeCreate(date, "Woche")
+        return `KW ${weekNumber(range[0]!)} · ${range[0]!.toLocaleDateString("de-DE")} – ${range[6]!.toLocaleDateString("de-DE")}`
+      }
+      return date.toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+    },
+    todayWeekday: () => {
+      const now = today.get()
+      const date = cursor.get()
+      if (!now || !date) return -1
+      if (view.get() === "Monat") {
+        return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth()
+          ? (now.getDay() + 6) % 7
+          : -1
+      }
+      return kalenderRangeCreate(date, view.get()).findIndex((day) => day?.toDateString() === now.toDateString())
+    },
     todayLabel: () => {
       const now = today.get()
       if (!now) return ""
@@ -184,6 +236,8 @@ export function kalenderStateCreate() {
         const now = new Date()
         today.set(now)
         month.set(new Date(now.getFullYear(), now.getMonth(), 1))
+        cursor.set(now)
+        view.set("Heute")
         openDay.set(undefined)
         dialogClose()
         return
@@ -191,9 +245,12 @@ export function kalenderStateCreate() {
       view.set(value)
     },
     changeMonth: (delta: number) => {
-      const date = month.get()
+      const date = cursor.get()
       if (!date) return
-      month.set(new Date(date.getFullYear(), date.getMonth() + delta, 1))
+      const next = kalenderDateShift(date, view.get(), delta)
+      cursor.set(next)
+      month.set(new Date(next.getFullYear(), next.getMonth(), 1))
+      if (view.get() === "Heute") view.set("Tag")
       openDay.set(undefined)
       dialogClose()
     },
