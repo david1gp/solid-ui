@@ -1,5 +1,6 @@
 import { isServer } from "@solidjs/web"
 import * as v from "valibot"
+import { themeTransitionRun } from "#ui/interactive/theme/themeTransitionRun.js"
 import {
   getThemeFromStorageOrBrowserPref,
   nextTheme2,
@@ -18,7 +19,7 @@ let themeListenersRegistered = false
 export function themeInit() {
   if (isServer) return // Skip during SSR
   const theme = getThemeFromStorageOrBrowserPref()
-  themeSet(theme, false)
+  themeApply(theme)
   if (themeListenersRegistered) return
   themeListenersRegistered = true
   themeRegisterStorageListener()
@@ -29,15 +30,21 @@ export function themeInit() {
 function themeRegisterOsListener() {
   const media = window.matchMedia("(prefers-color-scheme: dark)")
   media.addEventListener("change", () => {
-    if (themeSignal.get() === themeVariant.os) setThemeToBrowser(themeVariant.os)
+    if (themeSignal.get() === themeVariant.os) {
+      themeTransitionRun(() => setThemeToBrowser(themeVariant.os))
+    }
   })
 }
 
 export function themeSet(theme: ThemeVariant, saveToStorage: boolean) {
-  themeSignal.set(theme)
-  setThemeToBrowser(theme)
+  themeTransitionRun(() => themeApply(theme))
   if (!saveToStorage) return
   localStorage.setItem(themeLocalStorageKey, theme)
+}
+
+function themeApply(theme: ThemeVariant) {
+  themeSignal.set(theme)
+  setThemeToBrowser(theme)
 }
 
 function themeRegisterStorageListener() {
@@ -49,7 +56,7 @@ function themeRegisterStorageListener() {
       console.log("failed to parse storage event")
       return
     }
-    themeSet(result.output, false)
+    themeApply(result.output)
   }
   window.addEventListener("storage", onStorage)
   return () => {
