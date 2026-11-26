@@ -281,7 +281,6 @@ export function kalenderStateCreate() {
       const next = kalenderDateShift(date, view.get(), delta)
       cursor.set(next)
       month.set(new Date(next.getFullYear(), next.getMonth(), 1))
-      if (view.get() === "Heute") view.set("Tag")
       openDay.set(undefined)
       quickDay.set(undefined)
       dialogClose()

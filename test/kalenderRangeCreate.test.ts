@@ -21,13 +21,13 @@ describe("calendar ranges", () => {
     expect(range.length).toBe(35)
     expect(range[0]).toBeUndefined()
     expect(range[6]?.getDate()).toBe(1)
-    expect(kalenderRangeCreate(date, "Tag")[0]?.getDate()).toBe(10)
+    expect(kalenderRangeCreate(date, "Heute")[0]?.getDate()).toBe(10)
   })
   test("calendar days remain consecutive across daylight saving transitions", () => {
     for (const date of [new Date(2026, 2, 29), new Date(2026, 9, 25)]) {
       const range = kalenderRangeCreate(date, "Woche")
       expect(range.map((day) => day?.getDay())).toEqual([1, 2, 3, 4, 5, 6, 0])
-      const next = kalenderDateShift(date, "Tag", 1)
+      const next = kalenderDateShift(date, "Heute", 1)
       expect(next.getDate()).toBe(date.getDate() + 1)
       expect(next.getHours()).toBe(0)
     }

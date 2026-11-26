@@ -89,7 +89,7 @@ export function DemoKalender() {
               <span class="hidden sm:inline">Neuer Termin</span>
             </Button>
             <fieldset class="flex rounded-md bg-neutral-200 p-1 dark:bg-[#181a1d]" aria-label="Kalenderansicht">
-              <For each={["Heute", "Tag", "Woche", "Monat"]}>
+              <For each={["Heute", "Woche", "Monat"]}>
                 {(view) => (
                   <button
                     type="button"
@@ -106,20 +106,12 @@ export function DemoKalender() {
         </header>
         <Show when={state.view() === "Monat"} fallback={<KalenderTimeGrid state={state} />}>
           <div class="overflow-x-auto rounded border border-neutral-300 dark:border-black/50">
-            <div
-              class={`grid bg-white dark:bg-[#1b1d20] ${state.view() === "Tag" || state.view() === "Heute" ? "grid-cols-[58px_minmax(0,1fr)]" : "min-w-[1000px] grid-cols-[58px_repeat(7,minmax(0,1fr))]"}`}
-            >
+            <div class="grid min-w-[1000px] grid-cols-[58px_repeat(7,minmax(0,1fr))] bg-white dark:bg-[#1b1d20]">
               <div class="flex h-12 flex-col items-center justify-center border-r border-neutral-300 bg-neutral-100 text-neutral-500 dark:border-black/60 dark:bg-[#111315]">
                 <Icon path={mdiClockOutline} class="size-4" />
                 <span class="text-[9px]">MEZ</span>
               </div>
-              <For
-                each={
-                  state.view() === "Tag" || state.view() === "Heute"
-                    ? [state.monthLabel()]
-                    : ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-                }
-              >
+              <For each={["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]}>
                 {(day, index) => (
                   <div
                     class={`grid h-12 place-items-center bg-neutral-100 text-sm font-semibold dark:bg-[#111315] ${index() === state.todayWeekday() ? "text-violet-500" : ""}`}

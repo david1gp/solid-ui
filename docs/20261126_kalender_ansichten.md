@@ -10,9 +10,9 @@ In `src/demos/modules/DemoKalender.tsx` (Demo: https://adaptive-solid-ui.pages.d
 
 ## Decisions
 - **Monat**: unchanged (cells with first event + "N weitere" popover).
-- **Heute**: Tag for today, Heute pressed; prev/next → Tag with shifted date.
-- Prev/next step: Monat ±1 month, Woche ±7 days, Tag ±1 day. Labels: month / "KW n · range" / full date.
-- **Time grid for Tag/Heute/Woche** (replaces the stacked-list cells):
+- **Heute**: the single-day view; clicking Heute resets the reference date to today. Heute stays pressed when navigating to another day.
+- Prev/next step: Monat ±1 month, Woche ±7 days, Heute ±1 day. Labels: month / "KW n · range" / full date.
+- **Time grid for Heute/Woche** (replaces the stacked-list cells):
   - Header row: left 58px column (clock + "MEZ" as now); per day column the weekday + date number (today highlighted violet as now) and the existing "+" button.
   - "Ganztägig" lane below the header: left label column shows "Ganztägig" (small, neutral), per day the all-day tasks as compact tiles.
   - Body: only the needed hours (see "Compact hours" below), fixed hour height (e.g. 48px/h), left column shows hour labels ("08:00", text-xs, neutral-500, aligned to the hour line like Google Calendar), horizontal hour lines (+ subtle half-hour lines) across day columns, vertical day separators.
