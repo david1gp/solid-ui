@@ -2,7 +2,7 @@ import type { KalenderTask } from "./KalenderTask.js"
 import { kalenderTimeMinutes } from "./kalenderTimeMinutes.js"
 
 /** Build hour-sized rows, folding consecutive empty hours across all visible days. */
-export function kalenderHourSegmentsCreate(tasks: KalenderTask[]) {
+export function kalenderHourSegmentsCreate(tasks: KalenderTask[], nowHour?: number) {
   const timed = tasks
     .filter((task) => !task.allDay)
     .map((task) => ({
@@ -12,6 +12,9 @@ export function kalenderHourSegmentsCreate(tasks: KalenderTask[]) {
     .filter(
       ({ start, end }) => Number.isFinite(start) && Number.isFinite(end) && start >= 0 && end <= 1440 && end > start,
     )
+  if (nowHour !== undefined && Number.isInteger(nowHour) && nowHour >= 0 && nowHour < 24) {
+    timed.push({ start: nowHour * 60, end: (nowHour + 1) * 60 })
+  }
   const firstHour = timed.length ? Math.floor(Math.min(...timed.map((item) => item.start)) / 60) * 60 : 480
   const lastHour = timed.length ? Math.ceil(Math.max(...timed.map((item) => item.end)) / 60) * 60 : 720
   let start = timed.length ? Math.max(0, firstHour - 60) : 480

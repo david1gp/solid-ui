@@ -8,7 +8,13 @@ import { kalenderTimeFromMinutes } from "./kalenderTimeFromMinutes.js"
 
 export function kalenderTimeGridStateCreate(props: { state: ReturnType<typeof kalenderStateCreate> }) {
   const now = createSignalObject(new Date())
-  const segments = createMemo(() => kalenderHourSegmentsCreate(props.state.days().flatMap((day) => day.tasks)))
+  const todayVisible = () => props.state.days().some((day) => day.isToday)
+  const segments = createMemo(() =>
+    kalenderHourSegmentsCreate(
+      props.state.days().flatMap((day) => day.tasks),
+      todayVisible() ? now.get().getHours() : undefined,
+    ),
+  )
   onSettled(() => {
     const timer = setInterval(() => now.set(new Date()), 60_000)
     return () => clearInterval(timer)
@@ -18,10 +24,18 @@ export function kalenderTimeGridStateCreate(props: { state: ReturnType<typeof ka
     height: () => segments().reduce((total, segment) => total + segment.height, 0),
     timeLabel: kalenderTimeFromMinutes,
     y: (minute: number) => kalenderHourMinuteToY(segments(), minute),
+    nowLabel: () => kalenderTimeFromMinutes(now.get().getHours() * 60 + now.get().getMinutes()),
     nowY: () => {
+      if (!todayVisible()) return undefined
       const minute = now.get().getHours() * 60 + now.get().getMinutes()
       const segment = segments().find((item) => minute >= item.startMinute && minute < item.endMinute)
       return segment && !segment.collapsed ? kalenderHourMinuteToY(segments(), minute) : undefined
+    },
+    hourLabelVisible: (top: number) => {
+      if (!todayVisible()) return true
+      const minute = now.get().getHours() * 60 + now.get().getMinutes()
+      const y = kalenderHourMinuteToY(segments(), minute)
+      return y === undefined || Math.abs(top - y) >= 14
     },
     slotClick: (event: MouseEvent, day: number) => {
       if ((event.target as Element).closest("button, [role=img]")) return

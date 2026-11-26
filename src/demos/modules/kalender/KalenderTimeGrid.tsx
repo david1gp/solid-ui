@@ -79,12 +79,22 @@ export function KalenderTimeGrid(props: { state: ReturnType<typeof kalenderState
                     class={`absolute inset-x-0 flex items-center justify-end pr-1 text-right tabular-nums text-neutral-500 dark:text-neutral-400 ${segment.collapsed ? "bg-neutral-100 text-[9px] dark:bg-neutral-800" : "text-xs font-medium"}`}
                     style={{ top: `${segment.top}px`, height: segment.collapsed ? `${segment.height}px` : "auto" }}
                   >
-                    {segment.collapsed
-                      ? `${state.timeLabel(segment.startMinute)}–${state.timeLabel(segment.endMinute)}`
-                      : state.timeLabel(segment.startMinute)}
+                    <Show when={segment.collapsed || state.hourLabelVisible(segment.top)}>
+                      {segment.collapsed
+                        ? `${state.timeLabel(segment.startMinute)}–${state.timeLabel(segment.endMinute)}`
+                        : state.timeLabel(segment.startMinute)}
+                    </Show>
                   </div>
                 )}
               </For>
+              <Show when={state.nowY() !== undefined}>
+                <div
+                  class="pointer-events-none absolute inset-x-0 z-30 -translate-y-1/2 rounded bg-white px-1 text-right text-xs font-medium tabular-nums text-violet-600 dark:bg-[#1b1d20] dark:text-violet-400"
+                  style={{ top: `${state.nowY()}px` }}
+                >
+                  {state.nowLabel()}
+                </div>
+              </Show>
             </div>
             <For each={props.state.days()}>
               {(cell) => (
@@ -154,12 +164,14 @@ export function KalenderTimeGrid(props: { state: ReturnType<typeof kalenderState
                       </div>
                     )}
                   </For>
-                  <Show when={cell.isToday && state.nowY() !== undefined}>
+                  <Show when={state.nowY() !== undefined}>
                     <div
-                      class="pointer-events-none absolute z-20 h-px w-full bg-violet-600"
+                      class={`pointer-events-none absolute z-20 h-px w-full ${cell.isToday ? "bg-violet-600" : "bg-violet-500/40"}`}
                       style={{ top: `${state.nowY()}px` }}
                     >
-                      <span class="absolute -left-1 -top-1 size-2 rounded-full bg-violet-600" />
+                      <Show when={cell.isToday}>
+                        <span class="absolute -left-1 -top-1 size-2 rounded-full bg-violet-600" />
+                      </Show>
                     </div>
                   </Show>
                 </div>

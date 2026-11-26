@@ -64,6 +64,25 @@ describe("compact calendar hours", () => {
     expect(late.map(({ startMinute }) => startMinute)).toEqual([1200, 1260, 1320, 1380])
     expect([...early, ...late].every((segment) => !segment.collapsed)).toBe(true)
   })
+  test("keeps the current hour visible inside a normally collapsed gap", () => {
+    const segments = kalenderHourSegmentsCreate([task("08:00", "09:00"), task("16:00", "17:00")], 12)
+    expect(segments.find((segment) => segment.startMinute === 720)).toMatchObject({ endMinute: 780, collapsed: false })
+    expect(
+      segments.filter((segment) => segment.collapsed).map((segment) => [segment.startMinute, segment.endMinute]),
+    ).toEqual([
+      [540, 720],
+      [780, 960],
+    ])
+  })
+  test("extends the range for the current hour, including at midnight and without tasks", () => {
+    for (const hour of [0, 23]) {
+      const segments = kalenderHourSegmentsCreate([], hour)
+      expect(segments.find((segment) => segment.startMinute === hour * 60)).toMatchObject({ collapsed: false })
+      expect(segments.length).toBeGreaterThanOrEqual(4)
+    }
+    const segments = kalenderHourSegmentsCreate([task("10:00", "11:00")], 20)
+    expect(segments.find((segment) => segment.startMinute === 1200)).toMatchObject({ collapsed: false })
+  })
   test("considers tasks across days and expands for earlier appointments", () => {
     const segments = kalenderHourSegmentsCreate([
       task("06:00", "07:00"),
