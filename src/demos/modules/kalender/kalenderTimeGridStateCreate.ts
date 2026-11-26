@@ -1,31 +1,35 @@
-import { createEffect, onSettled } from "solid-js"
+import { createMemo, onSettled } from "solid-js"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { kalenderHourMinuteToY } from "./kalenderHourMinuteToY.js"
+import { kalenderHourSegmentsCreate } from "./kalenderHourSegmentsCreate.js"
+import { kalenderHourYToMinute } from "./kalenderHourYToMinute.js"
 import type { kalenderStateCreate } from "./kalenderStateCreate.js"
 import { kalenderTimeFromMinutes } from "./kalenderTimeFromMinutes.js"
 
 export function kalenderTimeGridStateCreate(props: { state: ReturnType<typeof kalenderStateCreate> }) {
   const now = createSignalObject(new Date())
-  let scroller: HTMLDivElement | undefined
+  const segments = createMemo(() => kalenderHourSegmentsCreate(props.state.days().flatMap((day) => day.tasks)))
   onSettled(() => {
     const timer = setInterval(() => now.set(new Date()), 60_000)
     return () => clearInterval(timer)
   })
-  createEffect(props.state.days, (days) => {
-    if (!days.length || !scroller) return
-    const date = new Date()
-    scroller.scrollTop = days.some((day) => day.isToday) ? Math.max(0, (date.getHours() - 1) * 48) : 7 * 48
-  })
   return {
-    now: now.get,
-    scrollerSet: (element: HTMLDivElement) => {
-      scroller = element
+    segments,
+    height: () => segments().reduce((total, segment) => total + segment.height, 0),
+    timeLabel: kalenderTimeFromMinutes,
+    y: (minute: number) => kalenderHourMinuteToY(segments(), minute),
+    nowY: () => {
+      const minute = now.get().getHours() * 60 + now.get().getMinutes()
+      const segment = segments().find((item) => minute >= item.startMinute && minute < item.endMinute)
+      return segment && !segment.collapsed ? kalenderHourMinuteToY(segments(), minute) : undefined
     },
     slotClick: (event: MouseEvent, day: number) => {
       if ((event.target as Element).closest("button, [role=img]")) return
       const rect = event.currentTarget instanceof HTMLElement ? event.currentTarget.getBoundingClientRect() : undefined
       if (!rect) return
-      const minutes = Math.min(23 * 60 + 30, Math.max(0, Math.floor((event.clientY - rect.top) / 24) * 30))
-      props.state.createOpen(day, kalenderTimeFromMinutes(minutes))
+      const minute = kalenderHourYToMinute(segments(), event.clientY - rect.top)
+      if (minute === undefined) return
+      props.state.createOpen(day, kalenderTimeFromMinutes(Math.min(1410, Math.floor(minute / 30) * 30)))
     },
   }
 }

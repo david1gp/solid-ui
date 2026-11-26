@@ -70,17 +70,19 @@ export function KalenderTimeGrid(props: { state: ReturnType<typeof kalenderState
             )}
           </For>
         </div>
-        <div ref={state.scrollerSet} class="max-h-[600px] overflow-y-auto">
-          <div class="flex h-[1152px]">
+        <div>
+          <div class="flex" style={{ height: `${state.height()}px` }}>
             <div class="relative w-[58px] shrink-0 border-r border-neutral-300 dark:border-black/60">
-              <For each={Array.from({ length: 24 }, (_, i) => i)}>
-                {(hour) => (
-                  <span
-                    class={`absolute right-2 text-right text-xs font-medium tabular-nums text-neutral-500 dark:text-neutral-400 ${hour === 0 ? "" : "-translate-y-1/2"}`}
-                    style={{ top: `${hour * 48}px` }}
+              <For each={state.segments()}>
+                {(segment) => (
+                  <div
+                    class={`absolute inset-x-0 flex items-center justify-end pr-1 text-right tabular-nums text-neutral-500 dark:text-neutral-400 ${segment.collapsed ? "bg-neutral-100 text-[9px] dark:bg-neutral-800" : "text-xs font-medium"}`}
+                    style={{ top: `${segment.top}px`, height: segment.collapsed ? `${segment.height}px` : "auto" }}
                   >
-                    {String(hour).padStart(2, "0")}:00
-                  </span>
+                    {segment.collapsed
+                      ? `${state.timeLabel(segment.startMinute)}–${state.timeLabel(segment.endMinute)}`
+                      : state.timeLabel(segment.startMinute)}
+                  </div>
                 )}
               </For>
             </div>
@@ -88,19 +90,36 @@ export function KalenderTimeGrid(props: { state: ReturnType<typeof kalenderState
               {(cell) => (
                 <div
                   class="relative min-w-0 flex-1 cursor-pointer border-r border-neutral-300 last:border-r-0 dark:border-black/60"
-                  style={{
-                    "background-image":
-                      "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, var(--grid-half) 23px, var(--grid-half) 24px, transparent 24px, transparent 47px, var(--grid-hour) 47px, var(--grid-hour) 48px)",
-                  }}
                   onClick={(event) => state.slotClick(event, cell.day!)}
                 >
+                  <For each={state.segments()}>
+                    {(segment) => (
+                      <div
+                        class={
+                          segment.collapsed
+                            ? "pointer-events-none absolute inset-x-0 border-y border-dashed border-neutral-300 bg-neutral-100/80 dark:border-neutral-600 dark:bg-neutral-800/80"
+                            : "pointer-events-none absolute inset-x-0 border-t border-neutral-300 dark:border-neutral-700"
+                        }
+                        style={{
+                          top: `${segment.top}px`,
+                          height: `${segment.height}px`,
+                          ...(segment.collapsed
+                            ? {}
+                            : {
+                                "background-image":
+                                  "linear-gradient(to bottom, transparent 23px, var(--grid-half) 23px, var(--grid-half) 24px, transparent 24px)",
+                              }),
+                        }}
+                      />
+                    )}
+                  </For>
                   <For each={kalenderOverlapLayout(cell.tasks)}>
                     {(item) => (
                       <div
                         class="absolute z-10 overflow-hidden rounded-sm border-l-2 bg-neutral-100 px-2 py-0.5 shadow-md dark:bg-[#262c2e]"
                         style={{
-                          top: `${item.start * 0.8}px`,
-                          height: `${Math.max(20, (item.end - item.start) * 0.8)}px`,
+                          top: `${state.y(item.start) ?? 0}px`,
+                          height: `${Math.max(20, (state.y(item.end) ?? 0) - (state.y(item.start) ?? 0))}px`,
                           left: `${(item.column / item.columns) * 100}%`,
                           width: `${100 / item.columns}%`,
                           "border-left-color": item.task.color,
@@ -135,10 +154,10 @@ export function KalenderTimeGrid(props: { state: ReturnType<typeof kalenderState
                       </div>
                     )}
                   </For>
-                  <Show when={cell.isToday}>
+                  <Show when={cell.isToday && state.nowY() !== undefined}>
                     <div
                       class="pointer-events-none absolute z-20 h-px w-full bg-violet-600"
-                      style={{ top: `${(state.now().getHours() * 60 + state.now().getMinutes()) * 0.8}px` }}
+                      style={{ top: `${state.nowY()}px` }}
                     >
                       <span class="absolute -left-1 -top-1 size-2 rounded-full bg-violet-600" />
                     </div>
