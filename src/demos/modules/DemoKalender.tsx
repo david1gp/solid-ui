@@ -27,7 +27,7 @@ export function DemoKalender() {
       <main class="min-w-0 flex-1 overflow-auto p-5 lg:p-8">
         <header class="mb-5 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 class="text-lg font-semibold">Aufgabenplanung</h1>
+            <h1 class="text-lg font-semibold">Terminkalender</h1>
             <p class="text-xs text-neutral-500 dark:text-neutral-400">{state.todayLabel()}</p>
           </div>
           <div class="flex flex-wrap items-center gap-4">
