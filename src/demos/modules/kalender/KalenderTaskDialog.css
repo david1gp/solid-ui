@@ -1,0 +1,55 @@
+@media (max-width: 639px) {
+  .kalender-task-dialog {
+    inset: auto 0 0;
+    width: 100%;
+    max-width: none;
+    max-height: 90dvh;
+    translate: none;
+    transform: none;
+    border-radius: 1rem 1rem 0 0;
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+
+  .kalender-task-dialog::before {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 0.25rem;
+    margin: -0.75rem auto 1rem;
+    border-radius: 9999px;
+    background: #a3a3a3;
+  }
+
+  .kalender-task-dialog[data-open] {
+    animation: kalender-sheet-up 250ms ease-out;
+  }
+
+  .kalender-task-dialog[data-closed] {
+    animation: kalender-sheet-down 200ms ease-in;
+  }
+}
+
+@keyframes kalender-sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes kalender-sheet-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@media (max-width: 639px) and (prefers-reduced-motion: reduce) {
+  .kalender-task-dialog[data-open],
+  .kalender-task-dialog[data-closed] {
+    animation-duration: 0.01ms;
+  }
+}

@@ -5,6 +5,7 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import { KalenderPeopleField } from "./KalenderPeopleField.jsx"
 import type { kalenderStateCreate } from "./kalenderStateCreate.js"
 import { kalenderTitles } from "./kalenderTitles.js"
+import "./KalenderTaskDialog.css"
 
 type State = ReturnType<typeof kalenderStateCreate>
 
@@ -22,7 +23,7 @@ export function KalenderTaskDialog(props: { state: State }) {
       onOpenChange={props.state.dialogOpenChange}
       class="hidden"
       descriptionClass="text-sm text-neutral-500 dark:text-neutral-400"
-      innerClass="w-[calc(100%-2rem)] max-w-md rounded-lg border-neutral-300 bg-white text-neutral-900 dark:border-neutral-700 dark:bg-[#25282c] dark:text-neutral-100"
+      innerClass="kalender-task-dialog w-[calc(100%-2rem)] max-w-md rounded-lg border-neutral-300 bg-white text-neutral-900 dark:border-neutral-700 dark:bg-[#25282c] dark:text-neutral-100"
     >
       <form class="space-y-4" novalidate onSubmit={props.state.dialogSubmit}>
         <label class="block space-y-1 text-sm">

@@ -5,12 +5,15 @@ import { mdiFilterOutline } from "@adaptive-ds/mdi/mdiFilterOutline.js"
 import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { For, Show } from "solid-js"
+import { Button } from "#ui/interactive/button/Button.jsx"
 import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import "./kalender/KalenderDay.css"
 import { KalenderEvent } from "./kalender/KalenderEvent.jsx"
+import { KalenderQuickCreate } from "./kalender/KalenderQuickCreate.jsx"
 import { KalenderTaskDialog } from "./kalender/KalenderTaskDialog.jsx"
 import { KalenderToast } from "./kalender/KalenderToast.jsx"
+import { kalenderNewTaskDayPick } from "./kalender/kalenderNewTaskDayPick.js"
 import { kalenderStateCreate } from "./kalender/kalenderStateCreate.js"
 
 export function DemoKalender() {
@@ -71,6 +74,17 @@ export function DemoKalender() {
                 <Icon path={mdiChevronRight} class="size-5" />
               </button>
             </div>
+            <Button
+              aria-label="Neuer Termin"
+              onClick={() => {
+                const day = kalenderNewTaskDayPick(state.days())
+                if (day !== undefined) state.createOpen(day)
+              }}
+            >
+              <Icon path={mdiPlus} class="size-4" />
+              <span class="sm:hidden">Neu</span>
+              <span class="hidden sm:inline">Neuer Termin</span>
+            </Button>
             <fieldset class="flex rounded-md bg-neutral-200 p-1 dark:bg-[#181a1d]" aria-label="Kalenderansicht">
               <For each={["Heute", "Tag", "Woche", "Monat"]}>
                 {(view) => (
@@ -118,12 +132,7 @@ export function DemoKalender() {
                       KW {cell.week}
                     </div>
                   </Show>
-                  {/* biome-ignore lint/a11y/noStaticElementInteractions: mouse shortcut; the focusable "+" button is the keyboard path */}
-                  {/* biome-ignore lint/a11y/useKeyWithClickEvents: mouse shortcut; the focusable "+" button is the keyboard path */}
-                  <div
-                    class={`kalender-day ${state.view() === "Monat" ? "min-h-28" : "min-h-80"} border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60 ${cell.day !== undefined ? "cursor-pointer hover:bg-violet-500/5" : ""}`}
-                    onClick={(event) => state.cellClick(event, cell.day)}
-                  >
+                  <KalenderQuickCreate cell={cell} state={state}>
                     <Show when={cell.day !== undefined}>
                       <div class="flex items-center justify-between">
                         <span
@@ -135,7 +144,7 @@ export function DemoKalender() {
                           type="button"
                           aria-label={`Termin am ${state.dateLabel(cell.day!)} hinzufügen`}
                           title="Neuer Termin"
-                          onClick={() => state.createOpen(cell.day!)}
+                          onClick={() => state.quickOpen(cell.day!)}
                           class="kalender-day-add grid size-5 place-items-center rounded text-neutral-500 transition-opacity hover:bg-violet-600 hover:text-white dark:text-neutral-400"
                         >
                           <Icon path={mdiPlus} class="size-4" />
@@ -152,7 +161,7 @@ export function DemoKalender() {
                     >
                       <KalenderEvent cell={cell} state={state} />
                     </Show>
-                  </div>
+                  </KalenderQuickCreate>
                 </>
               )}
             </For>

@@ -58,6 +58,7 @@ export function kalenderStateCreate() {
   const cursor = createSignalObject<Date | undefined>(undefined)
   const view = createSignalObject("Monat")
   const openDay = createSignalObject<number | undefined>(undefined)
+  const quickDay = createSignalObject<number | undefined>(undefined)
   // Days changed in this session (created, edited, deleted), keyed by local date; replace generated appointments.
   const overrides = createSignalObject<Overrides>({})
   const dialog = createSignalObject<Dialog | undefined>(undefined)
@@ -120,12 +121,20 @@ export function kalenderStateCreate() {
     dialogParamWrite(undefined)
   }
   const createOpen = (day: number) => {
+    quickDay.set(undefined)
     form.reset(defaultStart(day))
     openDay.set(undefined)
     dialog.set({ mode: "create", day })
     dialogParamWrite({ mode: "create", value: dayKey(day) })
   }
+  const quickOpen = (day: number) => {
+    if (window.matchMedia("(max-width: 639px)").matches) return createOpen(day)
+    form.reset(defaultStart(day))
+    openDay.set(undefined)
+    quickDay.set(day)
+  }
   const editOpen = (day: number, id: string) => {
+    quickDay.set(undefined)
     const task = dayTasks(day).find((entry) => entry.id === id)
     if (!task) return
     form.load(task)
@@ -199,6 +208,25 @@ export function kalenderStateCreate() {
   return {
     days,
     openDay: openDay.get,
+    quickDay: quickDay.get,
+    quickOpenChange: (open: boolean) => {
+      if (!open) quickDay.set(undefined)
+    },
+    quickOpen,
+    quickMore: () => {
+      const day = quickDay.get()
+      if (day === undefined) return
+      quickDay.set(undefined)
+      let timer: ReturnType<typeof setTimeout> | undefined
+      const open = () => {
+        document.removeEventListener("focusin", open)
+        clearTimeout(timer)
+        dialog.set({ mode: "create", day })
+        dialogParamWrite({ mode: "create", value: dayKey(day) })
+      }
+      document.addEventListener("focusin", open)
+      timer = setTimeout(open, 500)
+    },
     monthLabel: () => {
       const date = cursor.get()
       if (!date) return ""
@@ -239,6 +267,7 @@ export function kalenderStateCreate() {
         cursor.set(now)
         view.set("Heute")
         openDay.set(undefined)
+        quickDay.set(undefined)
         dialogClose()
         return
       }
@@ -252,6 +281,7 @@ export function kalenderStateCreate() {
       month.set(new Date(next.getFullYear(), next.getMonth(), 1))
       if (view.get() === "Heute") view.set("Tag")
       openDay.set(undefined)
+      quickDay.set(undefined)
       dialogClose()
     },
     setOpenDay: (day: number | undefined) => openDay.set(day),
@@ -282,12 +312,14 @@ export function kalenderStateCreate() {
     cellClick: (event: MouseEvent, day: number | undefined) => {
       if (day === undefined) return
       const target = event.target as Element
-      if (target.closest("button, a, input, select, [tabindex]")) return
-      createOpen(day)
+      const interactive = target.closest("button, a, input, select, [tabindex]")
+      if (interactive && interactive !== event.currentTarget) return
+      quickOpen(day)
     },
     dialogSubmit: (event: SubmitEvent) => {
       event.preventDefault()
-      const current = dialog.get()
+      const quick = quickDay.get()
+      const current = dialog.get() ?? (quick === undefined ? undefined : { mode: "create" as const, day: quick })
       if (!current) return
       const input = form.validate()
       if (!input) return
@@ -296,7 +328,8 @@ export function kalenderStateCreate() {
         idCounter += 1
         const task = kalenderTaskCreate({ ...input, id: `${dayKey(current.day)}-n${idCounter}` })
         dayTasksSet(current.day, [...tasks, task], `„${task.title}“ erstellt`)
-        dialogClose()
+        quickDay.set(undefined)
+        if (dialog.get()) dialogClose()
         return
       }
       const previous = tasks.find((task) => task.id === current.id)
