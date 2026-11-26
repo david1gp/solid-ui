@@ -14,6 +14,7 @@ import { KalenderQuickCreate } from "./kalender/KalenderQuickCreate.jsx"
 import { KalenderTaskDialog } from "./kalender/KalenderTaskDialog.jsx"
 import { KalenderToast } from "./kalender/KalenderToast.jsx"
 import { kalenderNewTaskDayPick } from "./kalender/kalenderNewTaskDayPick.js"
+import { KalenderTimeGrid } from "./kalender/KalenderTimeGrid.jsx"
 import { kalenderStateCreate } from "./kalender/kalenderStateCreate.js"
 
 export function DemoKalender() {
@@ -103,72 +104,74 @@ export function DemoKalender() {
             </fieldset>
           </div>
         </header>
-        <div class="overflow-x-auto rounded border border-neutral-300 dark:border-black/50">
-          <div
-            class={`grid bg-white dark:bg-[#1b1d20] ${state.view() === "Tag" || state.view() === "Heute" ? "grid-cols-[58px_minmax(0,1fr)]" : "min-w-[1000px] grid-cols-[58px_repeat(7,minmax(0,1fr))]"}`}
-          >
-            <div class="flex h-12 flex-col items-center justify-center border-r border-neutral-300 bg-neutral-100 text-neutral-500 dark:border-black/60 dark:bg-[#111315]">
-              <Icon path={mdiClockOutline} class="size-4" />
-              <span class="text-[9px]">MEZ</span>
-            </div>
-            <For
-              each={
-                state.view() === "Tag" || state.view() === "Heute"
-                  ? [state.monthLabel()]
-                  : ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-              }
+        <Show when={state.view() === "Monat"} fallback={<KalenderTimeGrid state={state} />}>
+          <div class="overflow-x-auto rounded border border-neutral-300 dark:border-black/50">
+            <div
+              class={`grid bg-white dark:bg-[#1b1d20] ${state.view() === "Tag" || state.view() === "Heute" ? "grid-cols-[58px_minmax(0,1fr)]" : "min-w-[1000px] grid-cols-[58px_repeat(7,minmax(0,1fr))]"}`}
             >
-              {(day, index) => (
-                <div
-                  class={`grid h-12 place-items-center bg-neutral-100 text-sm font-semibold dark:bg-[#111315] ${index() === state.todayWeekday() ? "text-violet-500" : ""}`}
-                >
-                  {day}
-                </div>
-              )}
-            </For>
-            <For each={state.days()}>
-              {(cell) => (
-                <>
-                  <Show when={cell.index % 7 === 0}>
-                    <div class="min-h-28 border-r border-t border-neutral-300 px-2 pt-3 text-[10px] text-neutral-500 dark:border-black/60">
-                      KW {cell.week}
-                    </div>
-                  </Show>
-                  <KalenderQuickCreate cell={cell} state={state}>
-                    <Show when={cell.day !== undefined}>
-                      <div class="flex items-center justify-between">
-                        <span
-                          class={`inline-block rounded-sm px-1 text-[10px] shadow-sm ${cell.isToday ? "bg-violet-600 font-bold text-white" : "bg-neutral-200 text-neutral-600 dark:bg-[#33363b] dark:text-neutral-300"}`}
-                        >
-                          {cell.displayDay}
-                        </span>
-                        <button
-                          type="button"
-                          aria-label={`Termin am ${state.dateLabel(cell.day!)} hinzufügen`}
-                          title="Neuer Termin"
-                          onClick={() => state.quickOpen(cell.day!)}
-                          class="kalender-day-add grid size-5 place-items-center rounded text-neutral-500 transition-opacity hover:bg-violet-600 hover:text-white dark:text-neutral-400"
-                        >
-                          <Icon path={mdiPlus} class="size-4" />
-                        </button>
+              <div class="flex h-12 flex-col items-center justify-center border-r border-neutral-300 bg-neutral-100 text-neutral-500 dark:border-black/60 dark:bg-[#111315]">
+                <Icon path={mdiClockOutline} class="size-4" />
+                <span class="text-[9px]">MEZ</span>
+              </div>
+              <For
+                each={
+                  state.view() === "Tag" || state.view() === "Heute"
+                    ? [state.monthLabel()]
+                    : ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+                }
+              >
+                {(day, index) => (
+                  <div
+                    class={`grid h-12 place-items-center bg-neutral-100 text-sm font-semibold dark:bg-[#111315] ${index() === state.todayWeekday() ? "text-violet-500" : ""}`}
+                  >
+                    {day}
+                  </div>
+                )}
+              </For>
+              <For each={state.days()}>
+                {(cell) => (
+                  <>
+                    <Show when={cell.index % 7 === 0}>
+                      <div class="min-h-28 border-r border-t border-neutral-300 px-2 pt-3 text-[10px] text-neutral-500 dark:border-black/60">
+                        KW {cell.week}
                       </div>
                     </Show>
-                    <Show
-                      when={state.view() === "Monat"}
-                      fallback={
-                        <For each={cell.tasks}>
-                          {(task) => <KalenderEvent cell={{ ...cell, tasks: [task] }} state={state} />}
-                        </For>
-                      }
-                    >
-                      <KalenderEvent cell={cell} state={state} />
-                    </Show>
-                  </KalenderQuickCreate>
-                </>
-              )}
-            </For>
+                    <KalenderQuickCreate cell={cell} state={state}>
+                      <Show when={cell.day !== undefined}>
+                        <div class="flex items-center justify-between">
+                          <span
+                            class={`inline-block rounded-sm px-1 text-[10px] shadow-sm ${cell.isToday ? "bg-violet-600 font-bold text-white" : "bg-neutral-200 text-neutral-600 dark:bg-[#33363b] dark:text-neutral-300"}`}
+                          >
+                            {cell.displayDay}
+                          </span>
+                          <button
+                            type="button"
+                            aria-label={`Termin am ${state.dateLabel(cell.day!)} hinzufügen`}
+                            title="Neuer Termin"
+                            onClick={() => state.quickOpen(cell.day!)}
+                            class="kalender-day-add grid size-5 place-items-center rounded text-neutral-500 transition-opacity hover:bg-violet-600 hover:text-white dark:text-neutral-400"
+                          >
+                            <Icon path={mdiPlus} class="size-4" />
+                          </button>
+                        </div>
+                      </Show>
+                      <Show
+                        when={state.view() === "Monat"}
+                        fallback={
+                          <For each={cell.tasks}>
+                            {(task) => <KalenderEvent cell={{ ...cell, tasks: [task] }} state={state} />}
+                          </For>
+                        }
+                      >
+                        <KalenderEvent cell={cell} state={state} />
+                      </Show>
+                    </KalenderQuickCreate>
+                  </>
+                )}
+              </For>
+            </div>
           </div>
-        </div>
+        </Show>
       </main>
       <KalenderTaskDialog state={state} />
       <KalenderToast state={state} />

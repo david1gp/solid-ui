@@ -120,9 +120,9 @@ export function kalenderStateCreate() {
     dialog.set(undefined)
     dialogParamWrite(undefined)
   }
-  const createOpen = (day: number) => {
+  const createOpen = (day: number, start?: string) => {
     quickDay.set(undefined)
-    form.reset(defaultStart(day))
+    form.reset(start ?? defaultStart(day))
     openDay.set(undefined)
     dialog.set({ mode: "create", day })
     dialogParamWrite({ mode: "create", value: dayKey(day) })

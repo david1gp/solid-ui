@@ -1,0 +1,8 @@
+.kalender-time-grid {
+  --grid-half: rgb(163 163 163 / 0.15);
+  --grid-hour: rgb(163 163 163 / 0.4);
+}
+.dark .kalender-time-grid {
+  --grid-half: rgb(163 163 163 / 0.1);
+  --grid-hour: rgb(163 163 163 / 0.25);
+}
