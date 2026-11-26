@@ -44,7 +44,11 @@ export function CmsCollapsiblePreviewColumn(props: { title: string; children: JS
         inert={state.collapsed()}
         class={`${cmsTileTransitionClass} grid lg:w-[calc((100cqw_-_1.5rem)/2_-_2.5rem_-_2px)] lg:grid-rows-[1fr] ${state.collapsed() ? "grid-rows-[0fr]" : "grid-rows-[1fr]"}`}
       >
-        <div class="min-h-0 overflow-hidden">{props.children}</div>
+        <div
+          class={`min-h-0 overflow-hidden lg:transition-opacity lg:duration-150 motion-reduce:transition-none ${state.collapsed() ? "lg:opacity-0" : "lg:delay-300 lg:opacity-100"}`}
+        >
+          {props.children}
+        </div>
       </div>
     </section>
   )
