@@ -262,6 +262,14 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
                               </button>
                             </Show>
                           </div>
+                          <label class="block min-w-0 text-sm">
+                            Titel
+                            <input
+                              class={input}
+                              value={row.title.get()}
+                              onInput={(e) => state.scheduleFieldSet(row.id, "title", e.currentTarget.value)}
+                            />
+                          </label>
                           <div class="grid min-w-0 gap-x-3 gap-y-2 @min-[20rem]:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
                             <div class="min-w-0 text-sm">
                               <label for={`${idPrefix}-date-${row.id}`}>Datum</label>
@@ -343,6 +351,50 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
                                 onInput={(e) => state.scheduleFieldSet(row.id, "priceReduced", e.currentTarget.value)}
                               />
                             </label>
+                          </div>
+                          <label class="block min-w-0 text-sm">
+                            Max. Tickets pro Bestellung
+                            <input
+                              class={input}
+                              type="number"
+                              min="1"
+                              step="1"
+                              value={row.maxPerOrder.get()}
+                              aria-invalid={state.maxPerOrderInvalid(row) ? "true" : "false"}
+                              onInput={(e) => state.scheduleFieldSet(row.id, "maxPerOrder", e.currentTarget.value)}
+                            />
+                            <span class="mt-1 block text-xs text-neutral-500 dark:text-neutral-400">
+                              Leer lassen für unbegrenzt.
+                            </span>
+                            <Show when={state.maxPerOrderInvalid(row)}>
+                              <span class="mt-1 block text-xs text-red-600 dark:text-red-400">
+                                Bitte eine ganze Zahl ab 1 und höchstens die Anzahl der Plätze eingeben.
+                              </span>
+                            </Show>
+                          </label>
+                          <label class="block min-w-0 text-sm">
+                            Beschreibung
+                            <textarea
+                              class={input}
+                              rows="3"
+                              value={row.description.get()}
+                              onInput={(e) => state.scheduleFieldSet(row.id, "description", e.currentTarget.value)}
+                            />
+                          </label>
+                          <div>
+                            <label class="flex items-center gap-2 text-sm">
+                              <input
+                                type="checkbox"
+                                class="size-4 accent-[var(--dashboard-accent)]"
+                                checked={row.unlockCodeRequired.get()}
+                                onChange={(e) => state.scheduleUnlockCodeSet(row.id, e.currentTarget.checked)}
+                              />
+                              Freischaltungscode erforderlich
+                            </label>
+                            <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                              Bei aktivierter Pflicht brauchen Käufer einen gültigen Freischaltungscode für dieses
+                              Produkt.
+                            </p>
                           </div>
                         </div>
                       )}

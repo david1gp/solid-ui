@@ -12,6 +12,7 @@ import { cmsEventDateGermanParse } from "./cmsEventDateGermanParse.js"
 import { cmsEventListMove } from "./cmsEventListMove.js"
 import { cmsEventOrder } from "./cmsEventOrder.js"
 import { cmsEventPriceMinimumFormat } from "./cmsEventPriceMinimumFormat.js"
+import { cmsEventMaxPerOrderValid } from "./cmsEventMaxPerOrderValid.js"
 import { cmsEventScheduleNext } from "./cmsEventScheduleNext.js"
 import { cmsEventScheduleSorted } from "./cmsEventScheduleSorted.js"
 import { cmsEvents } from "./cmsEvents.js"
@@ -25,6 +26,10 @@ const rowCreate = (id: number, entry: CmsEventScheduleEntry) => ({
   /** What the user typed (German format). */
   dateText: createSignalObject(cmsEventDateGermanFormat(entry.date)),
   timeText: createSignalObject(entry.time),
+  title: createSignalObject(entry.title ?? ""),
+  description: createSignalObject(entry.description ?? ""),
+  maxPerOrder: createSignalObject(entry.maxPerOrder?.toString() ?? ""),
+  unlockCodeRequired: createSignalObject(entry.unlockCodeRequired),
   capacity: createSignalObject(entry.capacity?.toString() ?? ""),
   priceRegular: createSignalObject(entry.priceRegular?.toString() ?? ""),
   priceReduced: createSignalObject(entry.priceReduced?.toString() ?? ""),
@@ -83,7 +88,8 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
   const row = (id: number) => schedule.get().find((item) => item.id === id)
   const rowValid = (item: Row) =>
     cmsEventDateGermanParse(item.dateText.get()) !== undefined &&
-    cmsEventTimeGermanParse(item.timeText.get()) !== undefined
+    cmsEventTimeGermanParse(item.timeText.get()) !== undefined &&
+    cmsEventMaxPerOrderValid(item.maxPerOrder.get(), item.capacity.get())
   const agendaIncluded = (item: CmsEventAgendaEntry) =>
     Boolean(
       item.title.trim() ||
@@ -199,9 +205,16 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
     timeValid: (item: Row) => cmsEventTimeGermanParse(item.timeText.get()) !== undefined,
     location: () => location.get(),
     locationSet: (value: string) => location.set(value),
-    scheduleFieldSet: (id: number, field: "capacity" | "priceRegular" | "priceReduced", value: string) => {
+    scheduleFieldSet: (
+      id: number,
+      field: "capacity" | "priceRegular" | "priceReduced" | "title" | "description" | "maxPerOrder",
+      value: string,
+    ) => {
       row(id)?.[field].set(value)
     },
+    scheduleUnlockCodeSet: (id: number, value: boolean) => row(id)?.unlockCodeRequired.set(value),
+    maxPerOrderInvalid: (item: Row) =>
+      agendaValidationAttempted.get() && !cmsEventMaxPerOrderValid(item.maxPerOrder.get(), item.capacity.get()),
     featured: () => featured.get(),
     featuredSet: (value: boolean) => featured.set(value),
     description: () => description.get(),
@@ -214,8 +227,18 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
       const faqEntries = faq.get().filter((item) => item.question.trim() || item.answer.trim())
       const agendaEntries = agenda.get().filter(agendaIncluded)
       const errors: string[] = []
-      if (!schedule.get().every(rowValid))
+      if (
+        schedule
+          .get()
+          .some(
+            (item) =>
+              cmsEventDateGermanParse(item.dateText.get()) === undefined ||
+              cmsEventTimeGermanParse(item.timeText.get()) === undefined,
+          )
+      )
         errors.push("Termine: Bitte Datum (TT.MM.JJJJ) und Uhrzeit (HH:MM) korrekt angeben")
+      if (schedule.get().some((item) => !cmsEventMaxPerOrderValid(item.maxPerOrder.get(), item.capacity.get())))
+        errors.push("Termine: Bitte eine gültige maximale Ticketzahl pro Bestellung angeben")
       if (agendaEntries.some(agendaInvalid))
         errors.push("Ablauf: Bitte eine gültige Uhrzeit (HH:MM) oder positive Tageszahl angeben")
       if (faqEntries.some((item) => !item.question.trim() || !item.answer.trim()))

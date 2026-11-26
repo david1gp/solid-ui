@@ -2,6 +2,10 @@
 export type CmsEventScheduleEntry = {
   date: string
   time: string
+  title?: string
+  maxPerOrder?: number
+  description?: string
+  unlockCodeRequired: boolean
   capacity?: number
   priceRegular?: number
   priceReduced?: number

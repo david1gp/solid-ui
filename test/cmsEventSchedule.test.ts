@@ -37,6 +37,10 @@ test("ticket fields belong to individual appointments and new appointments start
 })
 
 test("a new appointment defaults to the following day at the same time", () => {
-  expect(cmsEventScheduleNext({ date: "2026-12-31", time: "18:30" })).toEqual({ date: "2027-01-01", time: "18:30" })
+  expect(cmsEventScheduleNext({ date: "2026-12-31", time: "18:30" })).toEqual({
+    date: "2027-01-01",
+    time: "18:30",
+    unlockCodeRequired: false,
+  })
   expect(cmsEventScheduleNext(undefined).time).toBe("10:00")
 })
