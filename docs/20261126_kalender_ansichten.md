@@ -9,7 +9,7 @@ In `src/demos/modules/DemoKalender.tsx` (Demo: https://adaptive-solid-ui.pages.d
 - `KalenderTask`: `allDay`, `start`/`end` as `HH:MM`. Native `Date`; no new date lib.
 
 ## Decisions
-- **Monat**: unchanged (cells with first event + "N weitere" popover).
+- **Monat**: cells show the first event + "N weitere" popover; today's cell has a subtle violet background and inset ring, with its day-number pill unchanged.
 - **Heute**: the single-day view; clicking Heute resets the reference date to today. Heute stays pressed when navigating to another day.
 - Prev/next step: Monat ±1 month, Woche ±7 days, Heute ±1 day. Labels: month / "KW n · range" / full date.
 - **Time grid for Heute/Woche** (replaces the stacked-list cells):

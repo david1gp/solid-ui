@@ -30,7 +30,7 @@ export function KalenderQuickCreate(props: { cell: Cell; state: State; children:
         class={
           props.header
             ? "min-w-0 flex-1"
-            : `kalender-day min-h-28 border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60 ${props.cell.day !== undefined ? "cursor-pointer hover:bg-violet-500/5" : ""}`
+            : `kalender-day min-h-28 border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60 ${props.cell.day !== undefined ? "cursor-pointer hover:bg-violet-500/5" : ""} ${props.cell.isToday ? "bg-violet-500/5 ring-1 ring-violet-500/40 ring-inset hover:bg-violet-500/10 dark:bg-violet-500/10" : ""}`
         }
         onClick={(event) => {
           if (!props.header) props.state.cellClick(event, props.cell.day)
