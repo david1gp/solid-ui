@@ -118,5 +118,28 @@ test("editing loads an existing appointment into the form", () => {
     start: "10:00",
     end: "10:45",
     people: ["Anna Schmidt"],
+    colorKey: "Automatisch",
   })
+})
+
+test("form validates color keys and loads manual colors", () => {
+  const form = kalenderTaskFormStateCreate()
+  form.reset("09:00")
+  form.titleChange("Teammeeting")
+  form.colorChange("invalid")
+  flush()
+  expect(form.validate()).toBeUndefined()
+  flush()
+  expect(form.error()).toBe("Bitte eine gültige Farbe wählen.")
+  form.colorChange("Orange")
+  flush()
+  const input = form.validate()!
+  form.load(kalenderTaskCreate({ ...input, id: "1" }))
+  form.titleChange("Präsentation")
+  flush()
+  expect(form.colorKey()).toBe("Orange")
+  expect(form.autoColor().name).toBe("Lila")
+  form.reset("09:00")
+  flush()
+  expect(form.colorKey()).toBe("Automatisch")
 })

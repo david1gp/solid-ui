@@ -1,4 +1,3 @@
-import { kalenderColors } from "./kalenderColors.js"
 import { kalenderDateKey } from "./kalenderDateKey.js"
 import { kalenderDurations } from "./kalenderDurations.js"
 import type { KalenderTask } from "./KalenderTask.js"
@@ -20,8 +19,12 @@ export function kalenderEventsCreate(year: number, month: number): KalenderTask[
     const key = kalenderDateKey(year, month, index + 1)
     return kalenderTasksSort(
       Array.from({ length: count }, (_, taskIndex) => {
-        const title = kalenderTitles[random(kalenderTitles.length)]!
-        const color = kalenderColors[random(kalenderColors.length)]!
+        const baseTitle = kalenderTitles[random(kalenderTitles.length)]!
+        const names = ["Müller", "Schmidt", "Weber", "Fischer"]
+        const title =
+          baseTitle === "Kundenanruf" || baseTitle === "Kundentermin"
+            ? `${baseTitle} (${names[random(names.length)]})`
+            : baseTitle
         const start = (8 + random(10)) * 60 + random(4) * 15
         const duration = kalenderDurations[random(kalenderDurations.length)]!
         return kalenderTaskCreate({
@@ -30,7 +33,6 @@ export function kalenderEventsCreate(year: number, month: number): KalenderTask[
           allDay: false,
           start: kalenderTimeFromMinutes(start),
           end: kalenderTimeFromMinutes(start + duration),
-          color,
         })
       }),
     )

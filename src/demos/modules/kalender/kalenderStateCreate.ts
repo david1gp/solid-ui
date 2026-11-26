@@ -333,12 +333,7 @@ export function kalenderStateCreate() {
         if (dialog.get()) dialogClose()
         return
       }
-      const previous = tasks.find((task) => task.id === current.id)
-      const task = kalenderTaskCreate({
-        ...input,
-        id: current.id,
-        color: previous ? { color: previous.color, name: previous.name } : undefined,
-      })
+      const task = kalenderTaskCreate({ ...input, id: current.id })
       dayTasksSet(
         current.day,
         tasks.map((entry) => (entry.id === current.id ? task : entry)),

@@ -3,6 +3,7 @@ export type KalenderTask = {
   id: string
   color: string
   name: string
+  colorManual?: boolean
   title: string
   allDay: boolean
   /** `HH:MM`, ignored for all-day appointments. */

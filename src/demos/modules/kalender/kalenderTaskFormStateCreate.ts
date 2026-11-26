@@ -1,4 +1,6 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { kalenderColors } from "./kalenderColors.js"
+import { kalenderColorResolve } from "./kalenderColorResolve.js"
 import { kalenderEmailIs } from "./kalenderEmailIs.js"
 import { kalenderPeople } from "./kalenderPeople.js"
 import type { KalenderTask } from "./KalenderTask.js"
@@ -11,6 +13,7 @@ const suggestionLimit = 6
 /** Form state for the "Neuer Termin" / "Termin bearbeiten" dialog. */
 export function kalenderTaskFormStateCreate() {
   const title = createSignalObject("")
+  const colorKey = createSignalObject("Automatisch")
   const allDay = createSignalObject(false)
   const start = createSignalObject("09:00")
   let lastValidStart = "09:00"
@@ -53,8 +56,17 @@ export function kalenderTaskFormStateCreate() {
     if (person) return personAdd(person)
     if (personQuery.get().trim()) error.set("Person nicht gefunden – bitte aus der Liste wählen oder E-Mail eingeben.")
   }
-  const fill = (values: { title: string; allDay: boolean; start: string; end: string; people: string[] }) => {
+  const fill = (values: {
+    title: string
+    allDay: boolean
+    start: string
+    end: string
+    people: string[]
+    colorManual?: boolean
+    name?: string
+  }) => {
     title.set(values.title)
+    colorKey.set(values.colorManual ? (values.name ?? "Automatisch") : "Automatisch")
     allDay.set(values.allDay)
     start.set(values.start)
     lastValidStart = values.start
@@ -66,6 +78,12 @@ export function kalenderTaskFormStateCreate() {
   }
 
   return {
+    colorKey: colorKey.get,
+    colorChange: (value: string) => {
+      colorKey.set(value)
+      error.set("")
+    },
+    autoColor: () => kalenderColorResolve(title.get(), "Automatisch"),
     title: title.get,
     titleChange: (value: string) => {
       title.set(value)
@@ -159,6 +177,10 @@ export function kalenderTaskFormStateCreate() {
         error.set("Bitte einen Titel eingeben.")
         return undefined
       }
+      if (colorKey.get() !== "Automatisch" && !kalenderColors.some((color) => color.name === colorKey.get())) {
+        error.set("Bitte eine gültige Farbe wählen.")
+        return undefined
+      }
       const startMinutes = kalenderTimeMinutes(start.get())
       const endMinutes = kalenderTimeMinutes(end.get())
       if (
@@ -180,7 +202,14 @@ export function kalenderTaskFormStateCreate() {
       }
       const allPeople =
         pendingPerson && !people.get().includes(pendingPerson) ? [...people.get(), pendingPerson] : people.get()
-      return { title: trimmed, allDay: allDay.get(), start: start.get(), end: end.get(), people: allPeople }
+      return {
+        title: trimmed,
+        allDay: allDay.get(),
+        start: start.get(),
+        end: end.get(),
+        people: allPeople,
+        colorKey: colorKey.get(),
+      }
     },
   }
 }

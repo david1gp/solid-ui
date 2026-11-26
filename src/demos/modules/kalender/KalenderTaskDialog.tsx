@@ -3,6 +3,7 @@ import { mdiDeleteOutline } from "@adaptive-ds/mdi/mdiDeleteOutline.js"
 import { For, Show } from "solid-js"
 import { CorvuDialog } from "#ui/interactive/dialog/CorvuDialog.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
+import { kalenderColors } from "./kalenderColors.js"
 import { KalenderPeopleField } from "./KalenderPeopleField.jsx"
 import type { kalenderStateCreate } from "./kalenderStateCreate.js"
 import { kalenderTitles } from "./kalenderTitles.js"
@@ -69,6 +70,47 @@ export function KalenderTaskDialog(props: { state: State }) {
             </Show>
           </div>
         </Show>
+        <fieldset class="space-y-2">
+          <legend class="text-sm font-medium">Farbe</legend>
+          <div class="flex flex-wrap gap-2" role="radiogroup" aria-label="Farbe">
+            <label title={`Automatisch · ${form.autoColor().name}`} class="cursor-pointer">
+              <input
+                class="peer sr-only"
+                type="radio"
+                name="kalender-farbe"
+                value="Automatisch"
+                aria-label="Automatisch"
+                checked={form.colorKey() === "Automatisch"}
+                onChange={() => form.colorChange("Automatisch")}
+              />
+              <span
+                class="flex size-8 items-center justify-center rounded-full border-2 border-white text-xs font-bold text-white ring-1 ring-neutral-400 peer-checked:ring-2 peer-checked:ring-violet-600 peer-focus-visible:outline-2 peer-focus-visible:outline-violet-500"
+                style={{ background: form.autoColor().color }}
+              >
+                A
+              </span>
+            </label>
+            <For each={kalenderColors}>
+              {(color) => (
+                <label title={color.name} class="cursor-pointer">
+                  <input
+                    class="peer sr-only"
+                    type="radio"
+                    name="kalender-farbe"
+                    value={color.name}
+                    aria-label={color.name}
+                    checked={form.colorKey() === color.name}
+                    onChange={() => form.colorChange(color.name)}
+                  />
+                  <span
+                    class="block size-8 rounded-full border-2 border-white ring-1 ring-neutral-400 peer-checked:ring-2 peer-checked:ring-violet-600 peer-focus-visible:outline-2 peer-focus-visible:outline-violet-500"
+                    style={{ background: color.color }}
+                  />
+                </label>
+              )}
+            </For>
+          </div>
+        </fieldset>
         <KalenderPeopleField form={form} />
         <Show when={form.error()}>
           <p role="alert" class="text-sm text-red-600 dark:text-red-400">

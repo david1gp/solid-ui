@@ -2,6 +2,7 @@ import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { For, Show } from "solid-js"
 import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
+import { kalenderCategoryOf } from "./kalenderCategoryOf.js"
 import type { kalenderStateCreate } from "./kalenderStateCreate.js"
 import "./KalenderEvent.css"
 
@@ -26,7 +27,7 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
             <span
               class="kalender-event-marker absolute right-1.5 top-1.5 z-10"
               tabindex="0"
-              aria-label={`Farbe ${task().name} für ${task().title}`}
+              aria-label={`Kategorie ${kalenderCategoryOf(task().title).name} · ${task().name}`}
               role="img"
             >
               <span class="block size-2.5 rounded-[2px]" style={{ background: task().color }} />
@@ -34,7 +35,7 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
                 role="tooltip"
                 class="kalender-event-tooltip pointer-events-none absolute right-0 top-4 z-10 hidden w-max max-w-40 rounded bg-neutral-900 px-2 py-1 text-[10px] text-white shadow-lg dark:bg-white dark:text-neutral-900"
               >
-                Farbe {task().name} für {task().title}
+                Kategorie {kalenderCategoryOf(task().title).name} · {task().name}
               </span>
             </span>
             <div class="pointer-events-none relative">

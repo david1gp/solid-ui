@@ -3,6 +3,7 @@ import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { For, Show } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { KalenderQuickCreate } from "./KalenderQuickCreate.jsx"
+import { kalenderCategoryOf } from "./kalenderCategoryOf.js"
 import type { kalenderStateCreate } from "./kalenderStateCreate.js"
 import { kalenderOverlapLayout } from "./kalenderOverlapLayout.js"
 import { kalenderTimeGridStateCreate } from "./kalenderTimeGridStateCreate.js"
@@ -145,14 +146,14 @@ export function KalenderTimeGrid(props: { state: ReturnType<typeof kalenderState
                           class="kalender-event-marker absolute right-1 top-1 z-10"
                           tabindex="0"
                           role="img"
-                          aria-label={`Farbe ${item.task.name} für ${item.task.title}`}
+                          aria-label={`Kategorie ${kalenderCategoryOf(item.task.title).name} · ${item.task.name}`}
                         >
                           <span class="block size-2 rounded-[2px]" style={{ background: item.task.color }} />
                           <span
                             role="tooltip"
                             class="kalender-event-tooltip pointer-events-none absolute right-0 top-4 z-10 hidden w-max rounded bg-neutral-900 px-2 py-1 text-[10px] text-white"
                           >
-                            Farbe {item.task.name} für {item.task.title}
+                            Kategorie {kalenderCategoryOf(item.task.title).name} · {item.task.name}
                           </span>
                         </span>
                         <div class="pointer-events-none truncate pr-3 text-xs font-medium">

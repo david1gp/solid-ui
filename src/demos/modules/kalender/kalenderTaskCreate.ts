@@ -1,4 +1,4 @@
-import { kalenderColors } from "./kalenderColors.js"
+import { kalenderColorResolve } from "./kalenderColorResolve.js"
 import type { KalenderTask } from "./KalenderTask.js"
 
 export function kalenderTaskCreate(input: {
@@ -8,13 +8,13 @@ export function kalenderTaskCreate(input: {
   start: string
   end: string
   people?: string[]
-  color?: (typeof kalenderColors)[number]
+  colorKey?: string
 }): KalenderTask {
-  const color =
-    input.color ??
-    kalenderColors[[...input.title].reduce((sum, char) => sum + char.charCodeAt(0), 0) % kalenderColors.length]!
+  const colorKey = input.colorKey ?? "Automatisch"
+  const color = kalenderColorResolve(input.title, colorKey)
   return {
     ...color,
+    colorManual: colorKey !== "Automatisch",
     id: input.id,
     title: input.title,
     allDay: input.allDay,
