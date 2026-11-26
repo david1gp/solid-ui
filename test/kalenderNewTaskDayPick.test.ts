@@ -36,6 +36,17 @@ test("new appointment chooses today at either month boundary", () => {
   ).toBe(31)
 })
 
+test("new appointment uses cross-month week offsets and single-day ranges", () => {
+  const week = [
+    { day: -1, isToday: false },
+    { day: 0, isToday: true },
+    { day: 1, isToday: false },
+  ]
+  expect(kalenderNewTaskDayPick(week)).toBe(0)
+  expect(kalenderNewTaskDayPick(week.map((cell) => ({ ...cell, isToday: false })))).toBe(-1)
+  expect(kalenderNewTaskDayPick([{ day: 32, isToday: false }])).toBe(32)
+})
+
 test("new appointment has no day before the calendar is populated", () => {
   expect(kalenderNewTaskDayPick([])).toBeUndefined()
   expect(kalenderNewTaskDayPick([{ day: undefined, isToday: false }])).toBeUndefined()

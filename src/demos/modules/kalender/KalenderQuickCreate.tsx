@@ -33,7 +33,9 @@ export function KalenderQuickCreate(props: { cell: Cell; state: State; children:
       </Popover.Anchor>
       <Popover.Portal>
         <Popover.Content class="z-50 w-80 max-w-[calc(100vw-2rem)] rounded-lg border border-neutral-300 bg-white p-4 text-neutral-900 shadow-xl dark:border-neutral-700 dark:bg-[#25282c] dark:text-neutral-100">
-          <h2 class="mb-3 text-sm font-semibold">{props.cell.day !== undefined && props.state.dateLabel(props.cell.day)}</h2>
+          <h2 class="mb-3 text-sm font-semibold">
+            {props.cell.day !== undefined && props.state.dateLabel(props.cell.day)}
+          </h2>
           <form class="space-y-3" novalidate onSubmit={props.state.dialogSubmit}>
             <label class="block space-y-1 text-sm">
               <span class="font-medium">Titel</span>

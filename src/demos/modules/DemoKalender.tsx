@@ -75,6 +75,8 @@ export function DemoKalender() {
               </button>
             </div>
             <Button
+              variant="none"
+              class="gap-1 bg-violet-600 text-sm text-white shadow-lg shadow-violet-600/30 hover:bg-violet-500"
               aria-label="Neuer Termin"
               onClick={() => {
                 const day = kalenderNewTaskDayPick(state.days())
