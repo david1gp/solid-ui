@@ -19,8 +19,8 @@ In `src/demos/modules/DemoKalender.tsx` (Demo: https://adaptive-solid-ui.pages.d
   - Timed tasks absolutely positioned: top = start minutes × px/min, height = (end − start) × px/min with a minimum (~20px); short tiles show title + time on one line. Overlapping tasks within a day are laid out side by side (columns per overlap cluster). Tile styling identical to existing tiles (colored left border, neutral bg, dark variants, color marker, edit button/aria-label "Termin „…“ (hh:mm–hh:mm) bearbeiten").
   - Current-time line (violet) in today's column, updates every minute.
   - **Compact hours** (user feedback: full 24h grid looks broken/empty): the body shows only hours that matter for the visible days, no inner vertical scroll, no initial scroll logic.
-    - Range = floor(earliest timed start) … ceil(latest timed end) across all visible days (Tag: 1 day, Woche: 7 days). All-day tasks don't count.
-    - Inside the range, runs of ≥ 2 consecutive full hours without any timed task (across all visible days) collapse into a thin gap row (~16px, subtle dashed/neutral band, label like "10:00–13:00" or "…" in the hour column). A single empty hour between tasks stays normal height.
+    - Range = floor(earliest timed start) minus one hour … ceil(latest timed end) plus one hour across all visible days (Tag: 1 day, Woche: 7 days), clamped to 00:00–24:00. Show at least four hours, extending the end or, at midnight, the start. All-day tasks don't count.
+    - Between tasks, runs of ≥ 2 consecutive full hours without any timed task (across all visible days) collapse into a thin gap row (~16px, subtle dashed/neutral band, label like "10:00–13:00" or "…" in the hour column). A single empty hour and boundary padding stay normal height.
     - No timed tasks in view: show a compact default range 08:00–12:00 (so slot click still works).
     - Pixel mapping is piecewise (segments: visible hour blocks + collapsed gaps); a pure helper `kalenderHourSegmentsCreate` (tasks → segments with startMinute, endMinute, collapsed, top, height) + `minute → y` / `y → minute` mapping, unit-tested.
     - Now-line only rendered when now falls inside a non-collapsed segment.

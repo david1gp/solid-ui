@@ -37,18 +37,32 @@ describe("compact calendar hours", () => {
         height,
       ]),
     ).toEqual([
-      [480, 540, false, 0, 48],
-      [540, 600, false, 48, 48],
-      [600, 660, false, 96, 48],
-      [660, 840, true, 144, 20],
-      [840, 900, false, 164, 48],
-      [900, 960, false, 212, 48],
+      [420, 480, false, 0, 48],
+      [480, 540, false, 48, 48],
+      [540, 600, false, 96, 48],
+      [600, 660, false, 144, 48],
+      [660, 840, true, 192, 20],
+      [840, 900, false, 212, 48],
+      [900, 960, false, 260, 48],
+      [960, 1020, false, 308, 48],
     ])
-    expect(kalenderHourMinuteToY(segments, 870)).toBe(188)
-    expect(kalenderHourMinuteToY(segments, 960)).toBe(260)
-    expect(kalenderHourYToMinute(segments, 174)).toBe(852.5)
-    expect(kalenderHourYToMinute(segments, 150)).toBeUndefined()
-    expect(kalenderHourYToMinute(segments, 260)).toBeUndefined()
+    expect(kalenderHourMinuteToY(segments, 870)).toBe(236)
+    expect(kalenderHourMinuteToY(segments, 960)).toBe(308)
+    expect(kalenderHourYToMinute(segments, 222)).toBe(852.5)
+    expect(kalenderHourYToMinute(segments, 198)).toBeUndefined()
+    expect(kalenderHourYToMinute(segments, 356)).toBeUndefined()
+  })
+  test("pads a single appointment and shows at least four full hours", () => {
+    const segments = kalenderHourSegmentsCreate([task("10:15", "11:00")])
+    expect(segments.map(({ startMinute }) => startMinute)).toEqual([540, 600, 660, 720])
+    expect(segments.every((segment) => !segment.collapsed)).toBe(true)
+  })
+  test("clamps padding and extends the range at midnight", () => {
+    const early = kalenderHourSegmentsCreate([task("00:00", "00:30")])
+    const late = kalenderHourSegmentsCreate([task("23:00", "23:59")])
+    expect(early.map(({ startMinute }) => startMinute)).toEqual([0, 60, 120, 180])
+    expect(late.map(({ startMinute }) => startMinute)).toEqual([1200, 1260, 1320, 1380])
+    expect([...early, ...late].every((segment) => !segment.collapsed)).toBe(true)
   })
   test("considers tasks across days and expands for earlier appointments", () => {
     const segments = kalenderHourSegmentsCreate([
@@ -62,6 +76,6 @@ describe("compact calendar hours", () => {
       [420, 540],
       [600, 720],
     ])
-    expect(segments[0]?.startMinute).toBe(360)
+    expect(segments[0]?.startMinute).toBe(300)
   })
 })
