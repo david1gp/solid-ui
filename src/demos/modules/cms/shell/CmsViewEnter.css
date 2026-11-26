@@ -1,0 +1,16 @@
+@media (prefers-reduced-motion: no-preference) {
+  .cms-view-enter {
+    animation: cms-view-enter 450ms ease-out both;
+  }
+}
+
+@keyframes cms-view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

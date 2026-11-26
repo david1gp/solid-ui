@@ -9,6 +9,7 @@ import { RegisterLoginSubmit } from "../../../registerLogin/RegisterLoginSubmit.
 import { RegisterLoginSwitch } from "../../../registerLogin/RegisterLoginSwitch.jsx"
 import { cmsLocale } from "../../i18n/cmsLocale.js"
 import { cmsNavigate } from "../../shell/cmsNavigate.js"
+import { CmsViewEnter } from "../../shell/CmsViewEnter.js"
 import { cmsSimpleAuthStateCreate } from "./cmsSimpleAuthStateCreate.js"
 
 export function CmsSimpleAuthView(props: { mode: "login" | "register" | "forgot" }) {
@@ -24,49 +25,51 @@ export function CmsSimpleAuthView(props: { mode: "login" | "register" | "forgot"
         </button>
       }
     >
-      <Show
-        when={props.mode !== "forgot"}
-        fallback={
-          <>
-            <RegisterLoginHeading title={state.texts().reset} description={state.texts().resetDescription} />
-            <form class="form-stack" novalidate onSubmit={state.submitReset} onInput={state.clearResetError}>
-              <RegisterLoginField id="resetEmail" label={state.texts().email} error={state.resetErrors().resetEmail}>
-                <Input
-                  id="resetEmail"
-                  name="resetEmail"
-                  type="email"
-                  autocomplete="email"
-                  placeholder={state.texts().emailPlaceholder}
-                  required
-                  aria-invalid={state.resetErrors().resetEmail ? "true" : undefined}
-                  aria-describedby={state.resetErrors().resetEmail ? "resetEmailError" : undefined}
-                />
-              </RegisterLoginField>
-              <RegisterLoginSubmit loading={false}>{state.texts().sendLink}</RegisterLoginSubmit>
-            </form>
-            <p class="!mt-6 text-center">
-              <button class="text-button" type="button" onClick={() => cmsNavigate("auth-login")}>
-                {cmsLocale.get() === "de" ? "Zurück zur Anmeldung" : "Back to sign in"}
-              </button>
-            </p>
-          </>
-        }
-      >
-        <RegisterLoginHeading
-          title={props.mode === "register" ? state.texts().createAccount : state.texts().welcome}
-          description={props.mode === "register" ? state.texts().registerDescription : state.texts().loginDescription}
-        />
-        <RegisterLoginDemoForm state={state} />
-        <RegisterLoginSocial
-          divider={props.mode === "register" ? state.texts().orSignUp : state.texts().orSignIn}
-          continueWith={state.texts().continueWith}
-        />
-        <RegisterLoginSwitch
-          prompt={props.mode === "register" ? state.texts().hasAccount : state.texts().noAccount}
-          label={props.mode === "register" ? state.texts().signIn : state.texts().signUp}
-          onClick={() => state.changeMode(props.mode === "login" ? "register" : "login")}
-        />
-      </Show>
+      <CmsViewEnter view={props.mode}>
+        <Show
+          when={props.mode !== "forgot"}
+          fallback={
+            <>
+              <RegisterLoginHeading title={state.texts().reset} description={state.texts().resetDescription} />
+              <form class="form-stack" novalidate onSubmit={state.submitReset} onInput={state.clearResetError}>
+                <RegisterLoginField id="resetEmail" label={state.texts().email} error={state.resetErrors().resetEmail}>
+                  <Input
+                    id="resetEmail"
+                    name="resetEmail"
+                    type="email"
+                    autocomplete="email"
+                    placeholder={state.texts().emailPlaceholder}
+                    required
+                    aria-invalid={state.resetErrors().resetEmail ? "true" : undefined}
+                    aria-describedby={state.resetErrors().resetEmail ? "resetEmailError" : undefined}
+                  />
+                </RegisterLoginField>
+                <RegisterLoginSubmit loading={false}>{state.texts().sendLink}</RegisterLoginSubmit>
+              </form>
+              <p class="!mt-6 text-center">
+                <button class="text-button" type="button" onClick={() => cmsNavigate("auth-login")}>
+                  {cmsLocale.get() === "de" ? "Zurück zur Anmeldung" : "Back to sign in"}
+                </button>
+              </p>
+            </>
+          }
+        >
+          <RegisterLoginHeading
+            title={props.mode === "register" ? state.texts().createAccount : state.texts().welcome}
+            description={props.mode === "register" ? state.texts().registerDescription : state.texts().loginDescription}
+          />
+          <RegisterLoginDemoForm state={state} />
+          <RegisterLoginSocial
+            divider={props.mode === "register" ? state.texts().orSignUp : state.texts().orSignIn}
+            continueWith={state.texts().continueWith}
+          />
+          <RegisterLoginSwitch
+            prompt={props.mode === "register" ? state.texts().hasAccount : state.texts().noAccount}
+            label={props.mode === "register" ? state.texts().signIn : state.texts().signUp}
+            onClick={() => state.changeMode(props.mode === "login" ? "register" : "login")}
+          />
+        </Show>
+      </CmsViewEnter>
     </RegisterLoginShell>
   )
 }

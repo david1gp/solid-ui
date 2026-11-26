@@ -48,6 +48,7 @@ import { demoCmsMobileCollapseCreate } from "./cms/demoCmsMobileCollapseCreate.j
 import { cmsLocale } from "./cms/i18n/cmsLocale.js"
 import { cmsShellText } from "./cms/i18n/cmsShellText.js"
 import { CmsFullscreenLayout } from "./cms/shell/CmsFullscreenLayout.jsx"
+import { CmsViewEnter } from "./cms/shell/CmsViewEnter.js"
 import { CmsShellHeader } from "./cms/shell/CmsShellHeader.jsx"
 import type { CmsViewKey } from "./cms/shell/CmsViewKey.js"
 import { cmsNavigate } from "./cms/shell/cmsNavigate.js"
@@ -342,7 +343,14 @@ export function DemoCMS() {
     <Show
       when={active() === settingsPageKey || view().layout === "app"}
       fallback={
-        <Show when={view().layout === "auth"} fallback={<CmsFullscreenLayout>{viewContent()}</CmsFullscreenLayout>}>
+        <Show
+          when={view().layout === "auth"}
+          fallback={
+            <CmsFullscreenLayout>
+              <CmsViewEnter view={cmsNavigation.get().view}>{viewContent()}</CmsViewEnter>
+            </CmsFullscreenLayout>
+          }
+        >
           {viewContent()}
         </Show>
       }
@@ -441,7 +449,10 @@ export function DemoCMS() {
             onNavigate={() => setActive("")}
           />
           <main class="min-w-0 shrink-0 p-4 pb-24 sm:p-8 sm:pb-24">
-            <Show when={active() === settingsPageKey} fallback={viewContent()}>
+            <Show
+              when={active() === settingsPageKey}
+              fallback={<CmsViewEnter view={cmsNavigation.get().view}>{viewContent()}</CmsViewEnter>}
+            >
               <div class="mb-4 flex flex-col gap-3 md:hidden">
                 <button
                   type="button"
@@ -475,383 +486,392 @@ export function DemoCMS() {
                   </For>
                 </nav>
               </div>
-              <h1 class={"text-2xl font-semibold mb-6"}>{settingsPageLabel()}</h1>
-              <Switch>
-                <Match when={settingsPage.get() === "profile"}>
-                  <form
-                    class={"flex flex-col gap-3 max-w-2xl"}
-                    onSubmit={(e) => {
-                      e.preventDefault()
-                      saveProfile()
-                    }}
-                  >
-                    <SettingsCard>
-                      <div
-                        class={
-                          "flex flex-wrap items-center gap-4 pb-4 mb-4 border-b border-neutral-200 dark:border-white/10"
-                        }
-                      >
-                        <div class={"size-16 shrink-0 rounded-full overflow-hidden"}>
-                          <CmsSidebarCssAvatar />
-                        </div>
-                        <div class={"flex flex-1 flex-col gap-1 min-w-0"}>
-                          <span class={"text-sm font-medium"}>{t("Profilbild", "Profile picture")}</span>
-                          <span class={"text-xs text-neutral-500 dark:text-neutral-400"}>
-                            {t("JPG oder PNG, max. 2 MB", "JPG or PNG, max. 2 MB")}
-                          </span>
-                        </div>
-                        <Button
-                          variant={"outline"}
-                          class={"w-full sm:w-auto sm:ml-auto gap-2 text-sm whitespace-nowrap"}
-                          onClick={() =>
-                            toastAdd({
-                              title: t(
-                                "Bild-Upload ist in der Demo nicht verfügbar",
-                                "Image upload is not available in the demo",
-                              ),
-                              duration: 3000,
-                            })
-                          }
-                        >
-                          <Icon path={mdiCameraOutline} class={"size-4"} />
-                          {t("Bild ändern", "Change image")}
-                        </Button>
-                      </div>
-                      <div class={"grid gap-4 sm:grid-cols-2"}>
-                        <Field label={t("Vorname", "First name")} for={"settings-first-name"}>
-                          <Input
-                            id={"settings-first-name"}
-                            autocomplete={"given-name"}
-                            value={firstNameDraft.get()}
-                            onInput={(e) => firstNameDraft.set(e.currentTarget.value)}
-                          />
-                        </Field>
-                        <Field label={t("Nachname", "Last name")} for={"settings-last-name"}>
-                          <Input
-                            id={"settings-last-name"}
-                            autocomplete={"family-name"}
-                            value={lastNameDraft.get()}
-                            onInput={(e) => lastNameDraft.set(e.currentTarget.value)}
-                          />
-                        </Field>
-                        <Field
-                          label={t("Telefonnummer", "Phone number")}
-                          for={"settings-phone"}
-                          class={"sm:col-span-2"}
-                        >
-                          <Input
-                            id={"settings-phone"}
-                            type={"tel"}
-                            autocomplete={"tel"}
-                            value={phoneDraft.get()}
-                            onInput={(e) => phoneDraft.set(e.currentTarget.value)}
-                          />
-                        </Field>
-                      </div>
-                    </SettingsCard>
-                    <CmsSaveBar dirty={profileDirty()} onDiscard={discardProfile} />
-                  </form>
-                </Match>
-                <Match when={settingsPage.get() === "account"}>
-                  <div class={"flex flex-col gap-6 max-w-2xl"}>
+              <CmsViewEnter view={settingsPage.get()}>
+                <h1 class={"text-2xl font-semibold mb-6"}>{settingsPageLabel()}</h1>
+                <Switch>
+                  <Match when={settingsPage.get() === "profile"}>
                     <form
-                      class={"flex flex-col gap-3"}
-                      // Own German validation message instead of the browser's (English) native popup.
-                      novalidate
+                      class={"flex flex-col gap-3 max-w-2xl"}
                       onSubmit={(e) => {
                         e.preventDefault()
-                        saveAccount()
+                        saveProfile()
                       }}
                     >
-                      <SectionTitle>{t("Konto", "Account")}</SectionTitle>
                       <SettingsCard>
-                        <div class={"grid gap-4"}>
-                          <Field label={t("Benutzername", "Username")} for={"settings-username"}>
+                        <div
+                          class={
+                            "flex flex-wrap items-center gap-4 pb-4 mb-4 border-b border-neutral-200 dark:border-white/10"
+                          }
+                        >
+                          <div class={"size-16 shrink-0 rounded-full overflow-hidden"}>
+                            <CmsSidebarCssAvatar />
+                          </div>
+                          <div class={"flex flex-1 flex-col gap-1 min-w-0"}>
+                            <span class={"text-sm font-medium"}>{t("Profilbild", "Profile picture")}</span>
+                            <span class={"text-xs text-neutral-500 dark:text-neutral-400"}>
+                              {t("JPG oder PNG, max. 2 MB", "JPG or PNG, max. 2 MB")}
+                            </span>
+                          </div>
+                          <Button
+                            variant={"outline"}
+                            class={"w-full sm:w-auto sm:ml-auto gap-2 text-sm whitespace-nowrap"}
+                            onClick={() =>
+                              toastAdd({
+                                title: t(
+                                  "Bild-Upload ist in der Demo nicht verfügbar",
+                                  "Image upload is not available in the demo",
+                                ),
+                                duration: 3000,
+                              })
+                            }
+                          >
+                            <Icon path={mdiCameraOutline} class={"size-4"} />
+                            {t("Bild ändern", "Change image")}
+                          </Button>
+                        </div>
+                        <div class={"grid gap-4 sm:grid-cols-2"}>
+                          <Field label={t("Vorname", "First name")} for={"settings-first-name"}>
                             <Input
-                              id={"settings-username"}
-                              autocomplete={"username"}
-                              value={usernameDraft.get()}
-                              onInput={(e) => usernameDraft.set(e.currentTarget.value)}
+                              id={"settings-first-name"}
+                              autocomplete={"given-name"}
+                              value={firstNameDraft.get()}
+                              onInput={(e) => firstNameDraft.set(e.currentTarget.value)}
                             />
                           </Field>
-                          <Field label={t("E-Mail-Adresse", "Email address")} for={"settings-email"}>
+                          <Field label={t("Nachname", "Last name")} for={"settings-last-name"}>
                             <Input
-                              id={"settings-email"}
-                              type={"email"}
-                              autocomplete={"email"}
-                              value={emailDraft.get()}
-                              onInput={(e) => emailDraft.set(e.currentTarget.value)}
+                              id={"settings-last-name"}
+                              autocomplete={"family-name"}
+                              value={lastNameDraft.get()}
+                              onInput={(e) => lastNameDraft.set(e.currentTarget.value)}
                             />
-                            <Show
-                              when={pendingEmail.get()}
-                              fallback={
-                                <span class={"text-xs font-normal text-neutral-500 dark:text-neutral-400"}>
-                                  {t(
-                                    "Änderungen werden erst nach Bestätigung per E-Mail wirksam.",
-                                    "Changes take effect after email confirmation.",
-                                  )}
-                                </span>
-                              }
-                            >
-                              {(pending) => (
-                                <div
-                                  class={
-                                    "flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-normal text-amber-700 dark:text-amber-400"
-                                  }
-                                >
-                                  <span>
-                                    {t(
-                                      "Bestätigung ausstehend: Wir haben einen Link an",
-                                      "Confirmation pending: We sent a link to",
-                                    )}{" "}
-                                    <strong>{pending()}</strong>.
-                                  </span>
-                                  <button
-                                    type={"button"}
-                                    class={"underline cursor-pointer"}
-                                    onClick={() =>
-                                      toastAdd({
-                                        title: t(`Link erneut an ${pending()} gesendet`, `Link resent to ${pending()}`),
-                                        duration: 3000,
-                                      })
-                                    }
-                                  >
-                                    {t("Erneut senden", "Resend")}
-                                  </button>
-                                  <button type={"button"} class={"underline cursor-pointer"} onClick={confirmEmail}>
-                                    {t("Bestätigen (Demo)", "Confirm (demo)")}
-                                  </button>
-                                  <button
-                                    type={"button"}
-                                    class={"underline cursor-pointer"}
-                                    onClick={() => pendingEmail.set(undefined)}
-                                  >
-                                    {t("Abbrechen", "Cancel")}
-                                  </button>
-                                </div>
-                              )}
-                            </Show>
+                          </Field>
+                          <Field
+                            label={t("Telefonnummer", "Phone number")}
+                            for={"settings-phone"}
+                            class={"sm:col-span-2"}
+                          >
+                            <Input
+                              id={"settings-phone"}
+                              type={"tel"}
+                              autocomplete={"tel"}
+                              value={phoneDraft.get()}
+                              onInput={(e) => phoneDraft.set(e.currentTarget.value)}
+                            />
                           </Field>
                         </div>
                       </SettingsCard>
-                      <CmsSaveBar dirty={accountDirty()} onDiscard={discardAccount} />
+                      <CmsSaveBar dirty={profileDirty()} onDiscard={discardProfile} />
                     </form>
-                    <div class={"flex flex-col gap-3"}>
-                      <SectionTitle>{t("Sicherheit", "Security")}</SectionTitle>
-                      <SettingsCard>
-                        <SettingsRow
-                          icon={mdiLockReset}
-                          title={t("Passwort", "Password")}
-                          description={`${t("Zuletzt geändert", "Last changed")}: ${passwordChangedAt.get() === "vor 3 Monaten" ? t("vor 3 Monaten", "3 months ago") : t("gerade eben", "just now")}`}
-                          action={
-                            <Show when={!passwordFormOpen.get()}>
-                              <Button variant={"outline"} class={"text-sm"} onClick={() => passwordFormOpen.set(true)}>
-                                {t("Passwort ändern", "Change password")}
+                  </Match>
+                  <Match when={settingsPage.get() === "account"}>
+                    <div class={"flex flex-col gap-6 max-w-2xl"}>
+                      <form
+                        class={"flex flex-col gap-3"}
+                        // Own German validation message instead of the browser's (English) native popup.
+                        novalidate
+                        onSubmit={(e) => {
+                          e.preventDefault()
+                          saveAccount()
+                        }}
+                      >
+                        <SectionTitle>{t("Konto", "Account")}</SectionTitle>
+                        <SettingsCard>
+                          <div class={"grid gap-4"}>
+                            <Field label={t("Benutzername", "Username")} for={"settings-username"}>
+                              <Input
+                                id={"settings-username"}
+                                autocomplete={"username"}
+                                value={usernameDraft.get()}
+                                onInput={(e) => usernameDraft.set(e.currentTarget.value)}
+                              />
+                            </Field>
+                            <Field label={t("E-Mail-Adresse", "Email address")} for={"settings-email"}>
+                              <Input
+                                id={"settings-email"}
+                                type={"email"}
+                                autocomplete={"email"}
+                                value={emailDraft.get()}
+                                onInput={(e) => emailDraft.set(e.currentTarget.value)}
+                              />
+                              <Show
+                                when={pendingEmail.get()}
+                                fallback={
+                                  <span class={"text-xs font-normal text-neutral-500 dark:text-neutral-400"}>
+                                    {t(
+                                      "Änderungen werden erst nach Bestätigung per E-Mail wirksam.",
+                                      "Changes take effect after email confirmation.",
+                                    )}
+                                  </span>
+                                }
+                              >
+                                {(pending) => (
+                                  <div
+                                    class={
+                                      "flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-normal text-amber-700 dark:text-amber-400"
+                                    }
+                                  >
+                                    <span>
+                                      {t(
+                                        "Bestätigung ausstehend: Wir haben einen Link an",
+                                        "Confirmation pending: We sent a link to",
+                                      )}{" "}
+                                      <strong>{pending()}</strong>.
+                                    </span>
+                                    <button
+                                      type={"button"}
+                                      class={"underline cursor-pointer"}
+                                      onClick={() =>
+                                        toastAdd({
+                                          title: t(
+                                            `Link erneut an ${pending()} gesendet`,
+                                            `Link resent to ${pending()}`,
+                                          ),
+                                          duration: 3000,
+                                        })
+                                      }
+                                    >
+                                      {t("Erneut senden", "Resend")}
+                                    </button>
+                                    <button type={"button"} class={"underline cursor-pointer"} onClick={confirmEmail}>
+                                      {t("Bestätigen (Demo)", "Confirm (demo)")}
+                                    </button>
+                                    <button
+                                      type={"button"}
+                                      class={"underline cursor-pointer"}
+                                      onClick={() => pendingEmail.set(undefined)}
+                                    >
+                                      {t("Abbrechen", "Cancel")}
+                                    </button>
+                                  </div>
+                                )}
+                              </Show>
+                            </Field>
+                          </div>
+                        </SettingsCard>
+                        <CmsSaveBar dirty={accountDirty()} onDiscard={discardAccount} />
+                      </form>
+                      <div class={"flex flex-col gap-3"}>
+                        <SectionTitle>{t("Sicherheit", "Security")}</SectionTitle>
+                        <SettingsCard>
+                          <SettingsRow
+                            icon={mdiLockReset}
+                            title={t("Passwort", "Password")}
+                            description={`${t("Zuletzt geändert", "Last changed")}: ${passwordChangedAt.get() === "vor 3 Monaten" ? t("vor 3 Monaten", "3 months ago") : t("gerade eben", "just now")}`}
+                            action={
+                              <Show when={!passwordFormOpen.get()}>
+                                <Button
+                                  variant={"outline"}
+                                  class={"text-sm"}
+                                  onClick={() => passwordFormOpen.set(true)}
+                                >
+                                  {t("Passwort ändern", "Change password")}
+                                </Button>
+                              </Show>
+                            }
+                          />
+                          <Show when={passwordFormOpen.get()}>
+                            <form
+                              class={"grid gap-4 pt-2 pb-4 border-b border-neutral-200 dark:border-white/10"}
+                              onSubmit={(e) => {
+                                e.preventDefault()
+                                changePassword()
+                              }}
+                            >
+                              <Field
+                                label={t("Aktuelles Passwort", "Current password")}
+                                for={"settings-password-current"}
+                              >
+                                <Input
+                                  id={"settings-password-current"}
+                                  type={"password"}
+                                  autocomplete={"current-password"}
+                                  value={passwordCurrent.get()}
+                                  onInput={(e) => passwordCurrent.set(e.currentTarget.value)}
+                                />
+                              </Field>
+                              <div class={"grid gap-4 sm:grid-cols-2"}>
+                                <Field label={t("Neues Passwort", "New password")} for={"settings-password-new"}>
+                                  <Input
+                                    id={"settings-password-new"}
+                                    type={"password"}
+                                    autocomplete={"new-password"}
+                                    value={passwordNew.get()}
+                                    onInput={(e) => passwordNew.set(e.currentTarget.value)}
+                                  />
+                                </Field>
+                                <Field
+                                  label={t("Neues Passwort bestätigen", "Confirm new password")}
+                                  for={"settings-password-confirm"}
+                                >
+                                  <Input
+                                    id={"settings-password-confirm"}
+                                    type={"password"}
+                                    autocomplete={"new-password"}
+                                    value={passwordConfirm.get()}
+                                    onInput={(e) => passwordConfirm.set(e.currentTarget.value)}
+                                  />
+                                </Field>
+                              </div>
+                              <Show
+                                when={passwordError.get()}
+                                fallback={
+                                  <span class={"text-xs text-neutral-500 dark:text-neutral-400"}>
+                                    {t("Mindestens 8 Zeichen.", "At least 8 characters.")}
+                                  </span>
+                                }
+                              >
+                                <span role={"alert"} class={"text-xs text-red-600 dark:text-red-400"}>
+                                  {passwordError.get()}
+                                </span>
+                              </Show>
+                              <div class={"flex justify-end gap-2"}>
+                                <Button variant={"ghost"} class={"text-sm"} onClick={closePasswordForm}>
+                                  {t("Abbrechen", "Cancel")}
+                                </Button>
+                                <Button type={"submit"} variant={"contrast"} class={"text-sm"}>
+                                  {t("Passwort aktualisieren", "Update password")}
+                                </Button>
+                              </div>
+                            </form>
+                          </Show>
+                          <SettingsRow
+                            icon={mdiShieldAccountOutline}
+                            title={t("Zwei-Faktor-Authentifizierung", "Two-factor authentication")}
+                            description={
+                              twoFactor.get()
+                                ? t("Aktiv – Code per Authenticator-App", "Active – code via authenticator app")
+                                : t(
+                                    "Nicht aktiv – empfohlen für mehr Sicherheit",
+                                    "Inactive – recommended for added security",
+                                  )
+                            }
+                            action={
+                              <Button
+                                variant={"outline"}
+                                class={"text-sm"}
+                                onClick={() => {
+                                  if (twoFactor.get()) twoFactor.set(false)
+                                  else twoFactorSetup.set(!twoFactorSetup.get())
+                                }}
+                              >
+                                {twoFactor.get() ? t("Deaktivieren", "Disable") : t("Aktivieren", "Enable")}
                               </Button>
-                            </Show>
-                          }
-                        />
-                        <Show when={passwordFormOpen.get()}>
+                            }
+                          />
+                          <Show when={twoFactorSetup.get()}>
+                            <div class="grid gap-3 border-t border-neutral-200 py-4 dark:border-white/10">
+                              <div class="flex size-28 items-center justify-center border border-dashed border-neutral-400 text-center text-xs">
+                                QR
+                                <br />
+                                {t("Platzhalter", "placeholder")}
+                              </div>
+                              <Field label={t("Bestätigungscode", "Verification code")} for="settings-2fa-code">
+                                <Input
+                                  id="settings-2fa-code"
+                                  inputmode="numeric"
+                                  value={twoFactorCode.get()}
+                                  onInput={(e) => twoFactorCode.set(e.currentTarget.value)}
+                                />
+                              </Field>
+                              <Button
+                                variant="outline"
+                                disabled={!twoFactorCode.get().trim()}
+                                onClick={() => {
+                                  twoFactor.set(true)
+                                  twoFactorSetup.set(false)
+                                  twoFactorCode.set("")
+                                }}
+                              >
+                                {t("Einrichtung bestätigen", "Confirm setup")}
+                              </Button>
+                            </div>
+                          </Show>
+                        </SettingsCard>
+                      </div>
+                      <div class={"flex flex-col gap-3"}>
+                        <SectionTitle>{t("Aktive Sitzungen", "Active sessions")}</SectionTitle>
+                        <SettingsCard>
+                          <For each={sessions.get()}>
+                            {(session) => (
+                              <SettingsRow
+                                icon={session.icon}
+                                title={
+                                  session.current
+                                    ? t("Chrome auf Linux", "Chrome on Linux")
+                                    : t("Safari auf iPhone", "Safari on iPhone")
+                                }
+                                description={
+                                  session.current
+                                    ? `${t("Berlin · Jetzt aktiv", "Berlin · Active now")} · ${t("Dieses Gerät", "This device")}`
+                                    : t("Hamburg · vor 2 Tagen", "Hamburg · 2 days ago")
+                                }
+                                action={
+                                  <Show when={!session.current}>
+                                    <Button
+                                      variant={"outlineRed"}
+                                      class={"text-sm"}
+                                      onClick={() => endSession(session.id)}
+                                    >
+                                      {t("Abmelden", "Sign out")}
+                                    </Button>
+                                  </Show>
+                                }
+                              />
+                            )}
+                          </For>
+                        </SettingsCard>
+                        <p class={"text-xs text-neutral-500 dark:text-neutral-400"}>
+                          {t("Mitglied seit März 2024", "Member since March 2024")}
+                        </p>
+                      </div>
+                      <div class="flex flex-col gap-3">
+                        <SectionTitle>{t("Persönliche API-Tokens", "Personal API tokens")}</SectionTitle>
+                        <SettingsCard>
+                          <For each={tokens.get()}>
+                            {(token) => (
+                              <div class="flex flex-wrap items-center gap-3 border-b border-neutral-200 py-3 dark:border-white/10">
+                                <span class="text-sm">{token} · ••••••••</span>
+                                <Button
+                                  class="ml-auto text-sm"
+                                  variant="outlineRed"
+                                  onClick={() => tokens.set(tokens.get().filter((item) => item !== token))}
+                                >
+                                  {t("Widerrufen", "Revoke")}
+                                </Button>
+                              </div>
+                            )}
+                          </For>
                           <form
-                            class={"grid gap-4 pt-2 pb-4 border-b border-neutral-200 dark:border-white/10"}
+                            class="flex flex-wrap gap-2 pt-4"
                             onSubmit={(e) => {
                               e.preventDefault()
-                              changePassword()
+                              const name = tokenName.get().trim()
+                              if (name && !tokens.get().includes(name)) {
+                                tokens.set([...tokens.get(), name])
+                                tokenName.set("")
+                              }
                             }}
                           >
-                            <Field
-                              label={t("Aktuelles Passwort", "Current password")}
-                              for={"settings-password-current"}
-                            >
-                              <Input
-                                id={"settings-password-current"}
-                                type={"password"}
-                                autocomplete={"current-password"}
-                                value={passwordCurrent.get()}
-                                onInput={(e) => passwordCurrent.set(e.currentTarget.value)}
-                              />
-                            </Field>
-                            <div class={"grid gap-4 sm:grid-cols-2"}>
-                              <Field label={t("Neues Passwort", "New password")} for={"settings-password-new"}>
-                                <Input
-                                  id={"settings-password-new"}
-                                  type={"password"}
-                                  autocomplete={"new-password"}
-                                  value={passwordNew.get()}
-                                  onInput={(e) => passwordNew.set(e.currentTarget.value)}
-                                />
-                              </Field>
-                              <Field
-                                label={t("Neues Passwort bestätigen", "Confirm new password")}
-                                for={"settings-password-confirm"}
-                              >
-                                <Input
-                                  id={"settings-password-confirm"}
-                                  type={"password"}
-                                  autocomplete={"new-password"}
-                                  value={passwordConfirm.get()}
-                                  onInput={(e) => passwordConfirm.set(e.currentTarget.value)}
-                                />
-                              </Field>
-                            </div>
-                            <Show
-                              when={passwordError.get()}
-                              fallback={
-                                <span class={"text-xs text-neutral-500 dark:text-neutral-400"}>
-                                  {t("Mindestens 8 Zeichen.", "At least 8 characters.")}
-                                </span>
-                              }
-                            >
-                              <span role={"alert"} class={"text-xs text-red-600 dark:text-red-400"}>
-                                {passwordError.get()}
-                              </span>
-                            </Show>
-                            <div class={"flex justify-end gap-2"}>
-                              <Button variant={"ghost"} class={"text-sm"} onClick={closePasswordForm}>
-                                {t("Abbrechen", "Cancel")}
-                              </Button>
-                              <Button type={"submit"} variant={"contrast"} class={"text-sm"}>
-                                {t("Passwort aktualisieren", "Update password")}
-                              </Button>
-                            </div>
-                          </form>
-                        </Show>
-                        <SettingsRow
-                          icon={mdiShieldAccountOutline}
-                          title={t("Zwei-Faktor-Authentifizierung", "Two-factor authentication")}
-                          description={
-                            twoFactor.get()
-                              ? t("Aktiv – Code per Authenticator-App", "Active – code via authenticator app")
-                              : t(
-                                  "Nicht aktiv – empfohlen für mehr Sicherheit",
-                                  "Inactive – recommended for added security",
-                                )
-                          }
-                          action={
-                            <Button
-                              variant={"outline"}
-                              class={"text-sm"}
-                              onClick={() => {
-                                if (twoFactor.get()) twoFactor.set(false)
-                                else twoFactorSetup.set(!twoFactorSetup.get())
-                              }}
-                            >
-                              {twoFactor.get() ? t("Deaktivieren", "Disable") : t("Aktivieren", "Enable")}
-                            </Button>
-                          }
-                        />
-                        <Show when={twoFactorSetup.get()}>
-                          <div class="grid gap-3 border-t border-neutral-200 py-4 dark:border-white/10">
-                            <div class="flex size-28 items-center justify-center border border-dashed border-neutral-400 text-center text-xs">
-                              QR
-                              <br />
-                              {t("Platzhalter", "placeholder")}
-                            </div>
-                            <Field label={t("Bestätigungscode", "Verification code")} for="settings-2fa-code">
-                              <Input
-                                id="settings-2fa-code"
-                                inputmode="numeric"
-                                value={twoFactorCode.get()}
-                                onInput={(e) => twoFactorCode.set(e.currentTarget.value)}
-                              />
-                            </Field>
-                            <Button
-                              variant="outline"
-                              disabled={!twoFactorCode.get().trim()}
-                              onClick={() => {
-                                twoFactor.set(true)
-                                twoFactorSetup.set(false)
-                                twoFactorCode.set("")
-                              }}
-                            >
-                              {t("Einrichtung bestätigen", "Confirm setup")}
-                            </Button>
-                          </div>
-                        </Show>
-                      </SettingsCard>
-                    </div>
-                    <div class={"flex flex-col gap-3"}>
-                      <SectionTitle>{t("Aktive Sitzungen", "Active sessions")}</SectionTitle>
-                      <SettingsCard>
-                        <For each={sessions.get()}>
-                          {(session) => (
-                            <SettingsRow
-                              icon={session.icon}
-                              title={
-                                session.current
-                                  ? t("Chrome auf Linux", "Chrome on Linux")
-                                  : t("Safari auf iPhone", "Safari on iPhone")
-                              }
-                              description={
-                                session.current
-                                  ? `${t("Berlin · Jetzt aktiv", "Berlin · Active now")} · ${t("Dieses Gerät", "This device")}`
-                                  : t("Hamburg · vor 2 Tagen", "Hamburg · 2 days ago")
-                              }
-                              action={
-                                <Show when={!session.current}>
-                                  <Button
-                                    variant={"outlineRed"}
-                                    class={"text-sm"}
-                                    onClick={() => endSession(session.id)}
-                                  >
-                                    {t("Abmelden", "Sign out")}
-                                  </Button>
-                                </Show>
-                              }
+                            <Input
+                              aria-label={t("Token-Name", "Token name")}
+                              placeholder={t("Token-Name", "Token name")}
+                              value={tokenName.get()}
+                              onInput={(e) => tokenName.set(e.currentTarget.value)}
                             />
-                          )}
-                        </For>
-                      </SettingsCard>
-                      <p class={"text-xs text-neutral-500 dark:text-neutral-400"}>
-                        {t("Mitglied seit März 2024", "Member since March 2024")}
-                      </p>
+                            <Button type="submit" variant="outline">
+                              {t("Token erstellen", "Create token")}
+                            </Button>
+                          </form>
+                        </SettingsCard>
+                      </div>
                     </div>
-                    <div class="flex flex-col gap-3">
-                      <SectionTitle>{t("Persönliche API-Tokens", "Personal API tokens")}</SectionTitle>
-                      <SettingsCard>
-                        <For each={tokens.get()}>
-                          {(token) => (
-                            <div class="flex flex-wrap items-center gap-3 border-b border-neutral-200 py-3 dark:border-white/10">
-                              <span class="text-sm">{token} · ••••••••</span>
-                              <Button
-                                class="ml-auto text-sm"
-                                variant="outlineRed"
-                                onClick={() => tokens.set(tokens.get().filter((item) => item !== token))}
-                              >
-                                {t("Widerrufen", "Revoke")}
-                              </Button>
-                            </div>
-                          )}
-                        </For>
-                        <form
-                          class="flex flex-wrap gap-2 pt-4"
-                          onSubmit={(e) => {
-                            e.preventDefault()
-                            const name = tokenName.get().trim()
-                            if (name && !tokens.get().includes(name)) {
-                              tokens.set([...tokens.get(), name])
-                              tokenName.set("")
-                            }
-                          }}
-                        >
-                          <Input
-                            aria-label={t("Token-Name", "Token name")}
-                            placeholder={t("Token-Name", "Token name")}
-                            value={tokenName.get()}
-                            onInput={(e) => tokenName.set(e.currentTarget.value)}
-                          />
-                          <Button type="submit" variant="outline">
-                            {t("Token erstellen", "Create token")}
-                          </Button>
-                        </form>
-                      </SettingsCard>
-                    </div>
-                  </div>
-                </Match>
-                <Match when={settingsPage.get() === "appearance"}>
-                  <CmsSettingsPanel class={"max-w-2xl"} sections={sections()} />
-                </Match>
-              </Switch>
+                  </Match>
+                  <Match when={settingsPage.get() === "appearance"}>
+                    <CmsSettingsPanel class={"max-w-2xl"} sections={sections()} />
+                  </Match>
+                </Switch>
+              </CmsViewEnter>
             </Show>
           </main>
         </div>
