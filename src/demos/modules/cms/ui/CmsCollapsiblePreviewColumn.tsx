@@ -10,15 +10,21 @@ export function CmsCollapsiblePreviewColumn(props: { title: string; children: JS
     <section
       class={`${cmsCardClass} relative w-full overflow-hidden transition-[width] duration-500 ease-in-out motion-reduce:transition-none ${state.collapsed() ? "lg:w-12" : "lg:w-[calc((100%_-_1.5rem)/2)]"}`}
     >
-      <div class="mb-4 flex h-8 items-center justify-between gap-2 lg:w-[calc((100cqw_-_1.5rem)/2_-_2.5rem_-_2px)]">
+      <div class="mb-4 flex h-8 items-center justify-between gap-2">
         <h2
-          class={`font-semibold ${state.collapsed() ? "lg:absolute lg:left-3 lg:top-12 lg:[writing-mode:vertical-rl] lg:rotate-180" : ""}`}
+          class={`font-semibold lg:whitespace-nowrap lg:transition-opacity lg:duration-150 motion-reduce:transition-none ${state.collapsed() ? "lg:opacity-0" : "lg:delay-300 lg:opacity-100"}`}
         >
           {props.title}
         </h2>
+        <span
+          aria-hidden="true"
+          class={`pointer-events-none absolute left-3 top-12 hidden rotate-180 whitespace-nowrap font-semibold [writing-mode:vertical-rl] transition-opacity duration-150 motion-reduce:transition-none lg:block ${state.collapsed() ? "opacity-100 delay-300" : "opacity-0"}`}
+        >
+          {props.title}
+        </span>
         <button
           type="button"
-          class={`flex size-8 shrink-0 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)] ${state.collapsed() ? "lg:absolute lg:left-2 lg:top-2" : ""}`}
+          class="flex size-8 shrink-0 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dashboard-accent)] lg:absolute lg:right-2 lg:top-2"
           aria-expanded={state.collapsed() ? "false" : "true"}
           aria-controls={state.contentId}
           aria-label={`${props.title} ${state.collapsed() ? "ausklappen" : "einklappen"}`}
@@ -35,7 +41,7 @@ export function CmsCollapsiblePreviewColumn(props: { title: string; children: JS
         id={state.contentId}
         aria-hidden={state.collapsed() ? "true" : "false"}
         inert={state.collapsed()}
-        class={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none lg:w-[calc((100cqw_-_1.5rem)/2_-_2.5rem_-_2px)] lg:grid-rows-[1fr] ${state.collapsed() ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100"}`}
+        class={`grid transition-[grid-template-rows,visibility] duration-500 ease-in-out motion-reduce:transition-none lg:w-[calc((100cqw_-_1.5rem)/2_-_2.5rem_-_2px)] lg:grid-rows-[1fr] ${state.collapsed() ? "grid-rows-[0fr] lg:invisible" : "grid-rows-[1fr]"}`}
       >
         <div class="min-h-0 overflow-hidden">{props.children}</div>
       </div>
