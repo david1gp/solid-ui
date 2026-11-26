@@ -64,7 +64,7 @@ export function CmsEventList(props: { events: typeof cmsEventsSorted }) {
                     </span>
                   </Show>
                   <span>{event.location}</span>
-                  <span>Plätze: {event.capacity}</span>
+                  <span>Plätze: {event.schedule.reduce((total, entry) => total + (entry.capacity ?? 0), 0)}</span>
                   <span>#{state.position(event.id, index() + 1)}</span>
                   <Show when={event.featured}>
                     <span class={cmsPillClass}>Top</span>

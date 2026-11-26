@@ -1,4 +1,5 @@
 import { createUniqueId, For, Show, untrack } from "solid-js"
+import { TabsTop } from "#ui/interactive/tabs/TabsTop.jsx"
 import { CmsDatePicker } from "../../../ui/CmsDatePicker.js"
 import { cmsButtonClass } from "../../../ui/cmsButtonClass.js"
 import { cmsCardClass } from "../../../ui/cmsCardClass.js"
@@ -115,121 +116,163 @@ export function CmsEventEdit(props: { event: ReturnType<typeof cmsEvents.get>[nu
         </CmsCollapsiblePreviewColumn>
         <section class={`${cmsCardClass} @container w-full min-w-0 space-y-4 lg:flex-1`}>
           <h2 class="font-semibold">Veranstaltungsdetails</h2>
-          <label class="block text-sm">
-            Titel
-            <input class={input} value={state.title()} onInput={(e) => state.titleSet(e.currentTarget.value)} />
-          </label>
-          <label class="block text-sm">
-            Position in der Liste
-            <select
-              class={input}
-              value={state.position()}
-              onChange={(e) => state.positionSet(Number(e.currentTarget.value))}
-            >
-              <For each={Array.from({ length: state.positionCount() })}>
-                {(_, index) => (
-                  <option value={index() + 1}>
-                    {index() + 1} von {state.positionCount()}
-                  </option>
-                )}
-              </For>
-            </select>
-          </label>
-          <fieldset class="@container min-w-0 space-y-3">
-            <legend class="mb-2 text-sm font-medium">Termine</legend>
-            <For each={state.schedule()}>
-              {(row, index) => (
-                <div class="grid min-w-0 gap-x-4 gap-y-2 @min-[28rem]:grid-cols-2">
-                  <div class="min-w-0 text-sm">
-                    <label for={`${idPrefix}-date-${row.id}`}>Datum</label>
-                    <div class="mt-1 flex gap-2">
-                      <input
-                        id={`${idPrefix}-date-${row.id}`}
-                        class={`min-w-0 flex-1 ${cmsInputClass}`}
-                        lang="de"
-                        inputmode="numeric"
-                        placeholder="TT.MM.JJJJ"
-                        aria-invalid={state.dateValid(row) ? "false" : "true"}
-                        value={row.dateText.get()}
-                        onInput={(e) => state.dateTextSet(row.id, e.currentTarget.value)}
-                      />
-                      <CmsDatePicker
-                        value={row.date.get()}
-                        onSelect={(iso) => state.datePick(row.id, iso)}
-                        label={`Datum von Termin ${index() + 1} im Kalender wählen`}
-                      />
-                    </div>
-                    <Show when={!state.dateValid(row)}>
-                      <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: TT.MM.JJJJ</span>
-                    </Show>
-                  </div>
-                  <label class="block min-w-0 text-sm">
-                    Uhrzeit
+          <TabsTop
+            valueSignal={state.tab}
+            getOptions={() => ["Details", "Tickets"]}
+            valueChildren={(value) =>
+              value === "Details" ? (
+                <div class="space-y-4 pt-4">
+                  <label class="block text-sm">
+                    Titel
+                    <input class={input} value={state.title()} onInput={(e) => state.titleSet(e.currentTarget.value)} />
+                  </label>
+                  <label class="block text-sm">
+                    Position in der Liste
+                    <select
+                      class={input}
+                      value={state.position()}
+                      onChange={(e) => state.positionSet(Number(e.currentTarget.value))}
+                    >
+                      <For each={Array.from({ length: state.positionCount() })}>
+                        {(_, index) => (
+                          <option value={index() + 1}>
+                            {index() + 1} von {state.positionCount()}
+                          </option>
+                        )}
+                      </For>
+                    </select>
+                  </label>
+                  <label class="block text-sm">
+                    Ort
                     <input
                       class={input}
-                      lang="de"
-                      inputmode="numeric"
-                      placeholder="HH:MM"
-                      aria-invalid={state.timeValid(row) ? "false" : "true"}
-                      value={row.timeText.get()}
-                      onInput={(e) => state.timeTextSet(row.id, e.currentTarget.value)}
+                      value={state.location()}
+                      onInput={(e) => state.locationSet(e.currentTarget.value)}
                     />
-                    <Show when={!state.timeValid(row)}>
-                      <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: HH:MM (24 Stunden)</span>
-                    </Show>
                   </label>
-                  <Show when={state.schedule().length > 1}>
-                    <button
-                      type="button"
-                      class={`${cmsButtonClass} justify-self-start @min-[28rem]:col-span-2`}
-                      aria-label={`Termin ${index() + 1} entfernen`}
-                      onClick={() => state.scheduleRemove(row.id)}
-                    >
-                      Entfernen
-                    </button>
-                  </Show>
+                  <label class="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      class="size-4 accent-[var(--dashboard-accent)]"
+                      checked={state.featured()}
+                      onChange={(e) => state.featuredSet(e.currentTarget.checked)}
+                    />
+                    Hervorgehoben (Top-Veranstaltung)
+                  </label>
+                  <label class="block text-sm">
+                    Beschreibung
+                    <textarea
+                      class={input}
+                      rows="4"
+                      value={state.description()}
+                      onInput={(e) => state.descriptionSet(e.currentTarget.value)}
+                    />
+                  </label>{" "}
                 </div>
-              )}
-            </For>
-            <button type="button" class={cmsButtonClass} onClick={state.scheduleAdd}>
-              + Termin hinzufügen
-            </button>
-          </fieldset>
-          <div class="grid gap-4 @min-[28rem]:grid-cols-2">
-            <label class="block text-sm">
-              Ort
-              <input class={input} value={state.location()} onInput={(e) => state.locationSet(e.currentTarget.value)} />
-            </label>
-            <label class="block text-sm">
-              Plätze
-              <input
-                class={input}
-                type="number"
-                min="0"
-                step="1"
-                value={state.capacity()}
-                onInput={(e) => state.capacitySet(e.currentTarget.value)}
-              />
-            </label>
-          </div>
-          <label class="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              class="size-4 accent-[var(--dashboard-accent)]"
-              checked={state.featured()}
-              onChange={(e) => state.featuredSet(e.currentTarget.checked)}
-            />
-            Hervorgehoben (Top-Veranstaltung)
-          </label>
-          <label class="block text-sm">
-            Beschreibung
-            <textarea
-              class={input}
-              rows="4"
-              value={state.description()}
-              onInput={(e) => state.descriptionSet(e.currentTarget.value)}
-            />
-          </label>
+              ) : (
+                <div class="pt-4">
+                  <fieldset class="@container min-w-0 space-y-3">
+                    <legend class="mb-2 text-sm font-medium">Termine</legend>
+                    <For each={state.schedule()}>
+                      {(row, index) => (
+                        <div class="grid min-w-0 gap-x-4 gap-y-2 @min-[28rem]:grid-cols-2">
+                          <div class="min-w-0 text-sm">
+                            <label for={`${idPrefix}-date-${row.id}`}>Datum</label>
+                            <div class="mt-1 flex gap-2">
+                              <input
+                                id={`${idPrefix}-date-${row.id}`}
+                                class={`min-w-0 flex-1 ${cmsInputClass}`}
+                                lang="de"
+                                inputmode="numeric"
+                                placeholder="TT.MM.JJJJ"
+                                aria-invalid={state.dateValid(row) ? "false" : "true"}
+                                value={row.dateText.get()}
+                                onInput={(e) => state.dateTextSet(row.id, e.currentTarget.value)}
+                              />
+                              <CmsDatePicker
+                                value={row.date.get()}
+                                onSelect={(iso) => state.datePick(row.id, iso)}
+                                label={`Datum von Termin ${index() + 1} im Kalender wählen`}
+                              />
+                            </div>
+                            <Show when={!state.dateValid(row)}>
+                              <span class="mt-1 block text-xs text-red-600 dark:text-red-400">Format: TT.MM.JJJJ</span>
+                            </Show>
+                          </div>
+                          <label class="block min-w-0 text-sm">
+                            Uhrzeit
+                            <input
+                              class={input}
+                              lang="de"
+                              inputmode="numeric"
+                              placeholder="HH:MM"
+                              aria-invalid={state.timeValid(row) ? "false" : "true"}
+                              value={row.timeText.get()}
+                              onInput={(e) => state.timeTextSet(row.id, e.currentTarget.value)}
+                            />
+                            <Show when={!state.timeValid(row)}>
+                              <span class="mt-1 block text-xs text-red-600 dark:text-red-400">
+                                Format: HH:MM (24 Stunden)
+                              </span>
+                            </Show>
+                          </label>
+                          <label class="block min-w-0 text-sm" for={`${idPrefix}-capacity-${row.id}`}>
+                            Plätze
+                            <input
+                              id={`${idPrefix}-capacity-${row.id}`}
+                              class={input}
+                              type="number"
+                              min="0"
+                              step="1"
+                              value={row.capacity.get()}
+                              onInput={(e) => state.scheduleFieldSet(row.id, "capacity", e.currentTarget.value)}
+                            />
+                          </label>
+                          <label class="block min-w-0 text-sm" for={`${idPrefix}-price-regular-${row.id}`}>
+                            Preis normal (€)
+                            <input
+                              id={`${idPrefix}-price-regular-${row.id}`}
+                              class={input}
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={row.priceRegular.get()}
+                              onInput={(e) => state.scheduleFieldSet(row.id, "priceRegular", e.currentTarget.value)}
+                            />
+                          </label>
+                          <label class="block min-w-0 text-sm" for={`${idPrefix}-price-reduced-${row.id}`}>
+                            Preis ermäßigt (€)
+                            <input
+                              id={`${idPrefix}-price-reduced-${row.id}`}
+                              class={input}
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={row.priceReduced.get()}
+                              onInput={(e) => state.scheduleFieldSet(row.id, "priceReduced", e.currentTarget.value)}
+                            />
+                          </label>
+                          <Show when={state.schedule().length > 1}>
+                            <button
+                              type="button"
+                              class={`${cmsButtonClass} justify-self-start @min-[28rem]:col-span-2`}
+                              aria-label={`Termin ${index() + 1} entfernen`}
+                              onClick={() => state.scheduleRemove(row.id)}
+                            >
+                              Entfernen
+                            </button>
+                          </Show>
+                        </div>
+                      )}
+                    </For>
+                    <button type="button" class={cmsButtonClass} onClick={state.scheduleAdd}>
+                      + Termin hinzufügen
+                    </button>
+                  </fieldset>
+                </div>
+              )
+            }
+          />
         </section>
       </div>
       <Show when={state.notice()}>

@@ -1,4 +1,5 @@
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { onCleanup } from "solid-js"
 import { cmsNavigate } from "../../../shell/cmsNavigate.js"
 import { cmsProductsMove } from "../products/cmsProductsMove.js"
 import { cmsEventOrder } from "./cmsEventOrder.js"
@@ -18,6 +19,9 @@ const rowCreate = (id: number, entry: CmsEventScheduleEntry) => ({
   /** What the user typed (German format). */
   dateText: createSignalObject(cmsEventDateGermanFormat(entry.date)),
   timeText: createSignalObject(entry.time),
+  capacity: createSignalObject(entry.capacity?.toString() ?? ""),
+  priceRegular: createSignalObject(entry.priceRegular?.toString() ?? ""),
+  priceReduced: createSignalObject(entry.priceReduced?.toString() ?? ""),
 })
 type Row = ReturnType<typeof rowCreate>
 
@@ -25,7 +29,27 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
   const position = createSignalObject(cmsEventOrder.get().indexOf(event.id) + 1 || event.position)
   const title = createSignalObject(event.title)
   const location = createSignalObject(event.location)
-  const capacity = createSignalObject(String(event.capacity))
+  const tabValue = () =>
+    typeof window !== "undefined" && new URL(window.location.href).searchParams.get("eventTab") === "Tickets"
+      ? "Tickets"
+      : "Details"
+  const tabState = createSignalObject(tabValue())
+  const tab = {
+    get: tabState.get,
+    set: (value: string) => {
+      tabState.set(value)
+      if (typeof window === "undefined") return
+      const url = new URL(window.location.href)
+      if (value === "Tickets") url.searchParams.set("eventTab", value)
+      else url.searchParams.delete("eventTab")
+      window.history.replaceState(window.history.state, "", url)
+    },
+  }
+  if (typeof window !== "undefined") {
+    const syncTab = () => tabState.set(tabValue())
+    window.addEventListener("popstate", syncTab)
+    onCleanup(() => window.removeEventListener("popstate", syncTab))
+  }
   const featured = createSignalObject(event.featured)
   const description = createSignalObject(event.description)
   const notice = createSignalObject("")
@@ -39,6 +63,7 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
     cmsEventDateGermanParse(item.dateText.get()) !== undefined &&
     cmsEventTimeGermanParse(item.timeText.get()) !== undefined
   return {
+    tab,
     position: () => position.get(),
     positionSet: (value: number) => {
       const ids = cmsEventOrder.get()
@@ -92,8 +117,9 @@ export function cmsEventEditStateCreate(event: ReturnType<typeof cmsEvents.get>[
     timeValid: (item: Row) => cmsEventTimeGermanParse(item.timeText.get()) !== undefined,
     location: () => location.get(),
     locationSet: (value: string) => location.set(value),
-    capacity: () => capacity.get(),
-    capacitySet: (value: string) => capacity.set(value),
+    scheduleFieldSet: (id: number, field: "capacity" | "priceRegular" | "priceReduced", value: string) => {
+      row(id)?.[field].set(value)
+    },
     featured: () => featured.get(),
     featuredSet: (value: boolean) => featured.set(value),
     description: () => description.get(),
