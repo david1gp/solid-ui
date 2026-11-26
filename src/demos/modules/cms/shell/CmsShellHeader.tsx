@@ -16,9 +16,12 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
         </span>
         <span class="font-medium text-neutral-950 dark:text-neutral-50">{p.title}</span>
       </nav>
-      <details class="relative -mr-1.5">
-        <summary
-          class="relative cursor-pointer list-none rounded-lg p-1.5 hover:bg-black/5 dark:hover:bg-white/10"
+      <div ref={state.setContainer} class="relative -mr-1.5">
+        <button
+          type="button"
+          onClick={state.toggle}
+          aria-expanded={state.open() ? "true" : "false"}
+          class="relative cursor-pointer rounded-lg p-1.5 hover:bg-black/5 dark:hover:bg-white/10"
           aria-label={`${cmsShellText[p.locale].notifications}: ${cmsNotificationsStore.unreadCount()} ${cmsShellText[p.locale].unreadNotifications}`}
         >
           <Icon path={mdiBellOutline} class="size-5" />
@@ -30,8 +33,12 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
               {cmsNotificationsStore.unreadCount()}
             </span>
           </Show>
-        </summary>
-        <div class="absolute right-0 z-30 mt-2 w-[min(20rem,calc(100vw-6rem))] overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-lg dark:border-white/10 dark:bg-neutral-900">
+        </button>
+        <div
+          aria-hidden={state.open() ? "false" : "true"}
+          inert={!state.open()}
+          class={`absolute right-0 z-30 mt-2 w-[min(20rem,calc(100vw-6rem))] origin-top-right overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-lg transition-[opacity,transform,visibility] duration-500 ease-in-out motion-reduce:transition-none dark:border-white/10 dark:bg-neutral-900 ${state.open() ? "visible opacity-100 [transform:scale(1)]" : "invisible pointer-events-none opacity-0 [transform:scale(.95)]"}`}
+        >
           <div class="border-b border-neutral-100 px-4 py-3 font-semibold dark:border-neutral-800">
             {cmsShellText[p.locale].notifications}
           </div>
@@ -78,7 +85,7 @@ export function CmsShellHeader(p: { group: string; title: string; locale: "de" |
             </button>
           </Show>
         </div>
-      </details>
+      </div>
     </header>
   )
 }
