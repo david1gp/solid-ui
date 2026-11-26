@@ -1,5 +1,7 @@
 import { Show } from "solid-js"
 import { CmsDataTable } from "../../ui/CmsDataTable.js"
+import { cmsButtonClass } from "../../ui/cmsButtonClass.js"
+import { cmsCardClass } from "../../ui/cmsCardClass.js"
 import { cmsDangerPillClass } from "../../ui/cmsDangerPillClass.js"
 import { cmsInputClass } from "../../ui/cmsInputClass.js"
 import { CmsSaveBar } from "../../ui/CmsSaveBar.js"
@@ -24,66 +26,106 @@ export function CmsUsersView(props: { id?: string }) {
         when={!props.id}
         fallback={
           <div class="space-y-5">
-            <button type="button" class={button} onClick={state.back}>
-              ← {state.text().back}
-            </button>
-            <PageHeader title={state.user()?.name ?? state.text().details} />
+            <PageHeader
+              title={state.user()?.name ?? state.text().details}
+              description={state.user()?.email}
+              actions={
+                <button type="button" class={cmsButtonClass} onClick={state.back}>
+                  {state.text().back}
+                </button>
+              }
+            />
             <Show when={state.user()}>
               {(user) => (
                 <form
-                  class="flex flex-col gap-4 rounded-2xl border p-4 text-sm dark:border-gray-700"
+                  class="grid items-start gap-4 lg:grid-cols-[1fr_16rem]"
                   onSubmit={(event) => {
                     event.preventDefault()
                     state.submit()
                   }}
                 >
-                  <p>
-                    <strong>{state.text().email}:</strong> {user().email}
-                  </p>
-                  <label class="flex items-center gap-4">
-                    <span>{state.text().role}</span>
-                    <select
-                      class={cmsInputClass}
-                      value={state.draftRole()}
-                      onChange={(event) => state.draftRoleSet(event.currentTarget.value)}
-                    >
-                      <option>Administrator</option>
-                      <option disabled={state.lastAdmin()}>Editor</option>
-                      <option disabled={state.lastAdmin()}>Author</option>
-                    </select>
-                  </label>
-                  <label class="flex items-center gap-4">
-                    <span>{state.text().status}</span>
-                    <select
-                      class={cmsInputClass}
-                      value={state.draftStatus()}
-                      onChange={(event) => state.draftStatusSet(event.currentTarget.value as CmsUserStatus)}
-                    >
-                      <option value="Aktiv">{state.text().active}</option>
-                      <option value="Deaktiviert" disabled={state.lastAdmin()}>
-                        {state.text().deactivated}
-                      </option>
-                      <Show when={user().status === "Eingeladen"}>
-                        <option value="Eingeladen">{state.text().invited}</option>
+                  <div class={`${cmsCardClass} space-y-6`}>
+                    <div class="flex items-center gap-4">
+                      <span
+                        aria-hidden="true"
+                        class="flex size-12 shrink-0 items-center justify-center rounded-full bg-neutral-200 text-sm font-medium dark:bg-neutral-700"
+                      >
+                        {user()
+                          .name.split(/\s+/)
+                          .map((part) => part.charAt(0))
+                          .join("")
+                          .slice(0, 2)
+                          .toUpperCase()}
+                      </span>
+                      <div class="min-w-0 space-y-1">
+                        <h2 class="font-semibold">{user().name}</h2>
+                        <p class="break-all text-sm text-neutral-500 dark:text-neutral-400">{user().email}</p>
+                        <div class="flex flex-wrap gap-2">
+                          <span class={cmsPillClass}>{user().role}</span>
+                          <span
+                            class={
+                              user().status === "Eingeladen"
+                                ? cmsPillClass
+                                : user().status === "Deaktiviert"
+                                  ? cmsDangerPillClass
+                                  : cmsSuccessPillClass
+                            }
+                          >
+                            {state.statusLabel(user().status)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="space-y-4">
+                      <h2 class="font-semibold">{state.text().access}</h2>
+                      <div class="grid gap-4 sm:grid-cols-2">
+                        <label class="block space-y-1 text-sm">
+                          <span>{state.text().role}</span>
+                          <select
+                            class={`w-full ${cmsInputClass}`}
+                            value={state.draftRole()}
+                            onChange={(event) => state.draftRoleSet(event.currentTarget.value)}
+                          >
+                            <option>Administrator</option>
+                            <option disabled={state.lastAdmin()}>Editor</option>
+                            <option disabled={state.lastAdmin()}>Author</option>
+                          </select>
+                        </label>
+                        <label class="block space-y-1 text-sm">
+                          <span>{state.text().status}</span>
+                          <select
+                            class={`w-full ${cmsInputClass}`}
+                            value={state.draftStatus()}
+                            onChange={(event) => state.draftStatusSet(event.currentTarget.value as CmsUserStatus)}
+                          >
+                            <option value="Aktiv">{state.text().active}</option>
+                            <option value="Deaktiviert" disabled={state.lastAdmin()}>
+                              {state.text().deactivated}
+                            </option>
+                            <Show when={user().status === "Eingeladen"}>
+                              <option value="Eingeladen">{state.text().invited}</option>
+                            </Show>
+                          </select>
+                        </label>
+                      </div>
+                      <Show when={state.lastAdmin()}>
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400">{state.text().guard}</p>
                       </Show>
-                    </select>
-                  </label>
-                  <div>
-                    <span
-                      class={
-                        user().status === "Eingeladen"
-                          ? cmsPillClass
-                          : user().status === "Deaktiviert"
-                            ? cmsDangerPillClass
-                            : cmsSuccessPillClass
-                      }
-                    >
-                      {state.statusLabel(user().status)}
-                    </span>
+                    </div>
                   </div>
-                  <Show when={state.lastAdmin()}>
-                    <p>{state.text().guard}</p>
-                  </Show>
+                  <aside class={`${cmsCardClass} space-y-3 text-sm`}>
+                    <h2 class="font-semibold">{state.text().sectionDetails}</h2>
+                    <dl class="space-y-3">
+                      <div>
+                        <dt class="text-neutral-500 dark:text-neutral-400">{state.text().name}</dt>
+                        <dd class="break-words">{user().name}</dd>
+                      </div>
+                      <div>
+                        <dt class="text-neutral-500 dark:text-neutral-400">{state.text().email}</dt>
+                        <dd class="break-all">{user().email}</dd>
+                      </div>
+                    </dl>
+                  </aside>
                   <Show when={state.dirty()}>
                     <CmsSaveBar dirty={state.dirty()} onDiscard={state.discard} />
                   </Show>
