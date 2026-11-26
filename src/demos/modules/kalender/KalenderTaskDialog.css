@@ -4,7 +4,8 @@
     width: 100%;
     max-width: none;
     max-height: 90dvh;
-    translate: none;
+    /* Keep !important: the production minifier otherwise removes this reset. */
+    translate: none !important;
     transform: none;
     border-radius: 1rem 1rem 0 0;
     padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
