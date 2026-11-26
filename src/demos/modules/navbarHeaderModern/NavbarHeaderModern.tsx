@@ -81,10 +81,7 @@ export function NavbarHeaderModern(p: NavbarHeaderModernProps) {
           <Icon path={state.mobileOpen.get() ? mdiClose : mdiMenu} class={"size-5"} />
         </NavbarHeaderModernButton>
         <div id={state.panelId} class={classArr("col-span-2 pb-4 lg:contents", !state.mobileOpen.get() && "hidden")}>
-          <nav
-            aria-label={"Main navigation"}
-            class={"flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-center"}
-          >
+          <nav aria-label={"Main navigation"} class={"flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-end"}>
             <For each={p.items}>{(item) => <NavbarHeaderModernLink item={item} onSelect={state.closeMobile} />}</For>
           </nav>
           <div
