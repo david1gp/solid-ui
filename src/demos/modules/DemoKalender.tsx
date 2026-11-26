@@ -1,0 +1,124 @@
+import { mdiChevronLeft } from "@adaptive-ds/mdi/mdiChevronLeft.js"
+import { mdiChevronRight } from "@adaptive-ds/mdi/mdiChevronRight.js"
+import { mdiClockOutline } from "@adaptive-ds/mdi/mdiClockOutline.js"
+import { mdiFilterOutline } from "@adaptive-ds/mdi/mdiFilterOutline.js"
+import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
+import { For, Show } from "solid-js"
+import { AppSidebar } from "#ui/modules/app_sidebar/AppSidebar.jsx"
+import { AppSidebarCssAvatar } from "#ui/modules/app_sidebar/AppSidebarCssAvatar.jsx"
+import { Icon } from "#ui/static/icon/Icon.jsx"
+import { KalenderEvent } from "./kalender/KalenderEvent.jsx"
+import { kalenderStateCreate } from "./kalender/kalenderStateCreate.js"
+import "./DemoAppSidebar.css"
+
+export function DemoKalender() {
+  const state = kalenderStateCreate()
+  return (
+    <div
+      class="flex h-dvh w-full overflow-hidden bg-neutral-100 text-neutral-900 dark:bg-[#1e2023] dark:text-neutral-100"
+      data-viewport-shell
+    >
+      <AppSidebar
+        class="demo-app-sidebar-rail"
+        collapsed={state.collapsed}
+        logo={<span class="grid size-6 place-items-center rounded-md bg-violet-600 font-bold text-white">A</span>}
+        brand="Atlas."
+        groups={state.groups}
+        accentColor="#8b5cf6"
+        userName="Anne"
+        userInitials="A"
+        userAvatar={<AppSidebarCssAvatar />}
+      />
+      <main class="min-w-0 flex-1 overflow-auto p-5 lg:p-8">
+        <header class="mb-5 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 class="text-lg font-semibold">Task scheduling board</h1>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400">10 task scheduled for the day</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-4">
+            <div class="flex -space-x-2">
+              <For each={["#b88c77", "#947c76", "#9b785f", "#ad8d7b"]}>
+                {(color) => (
+                  <span
+                    class="grid size-8 place-items-center overflow-hidden rounded-full border-2 border-neutral-100 dark:border-[#1e2023]"
+                    style={{ background: color }}
+                  >
+                    <AppSidebarCssAvatar />
+                  </span>
+                )}
+              </For>
+              <span class="grid size-8 place-items-center rounded-full border-2 border-neutral-100 bg-neutral-600 text-[10px] text-white dark:border-[#1e2023]">
+                +4
+              </span>
+            </div>
+            <button type="button" aria-label="Filter" class="cursor-pointer text-neutral-500 dark:text-neutral-300">
+              <Icon path={mdiFilterOutline} class="size-5" />
+            </button>
+            <button type="button" aria-label="Search" class="cursor-pointer text-neutral-500 dark:text-neutral-300">
+              <Icon path={mdiMagnify} class="size-5" />
+            </button>
+            <div class="flex items-center gap-1 text-sm font-medium">
+              <span class="min-w-28 text-center">{state.monthLabel()}</span>
+              <button type="button" aria-label="Previous month" onClick={() => state.changeMonth(-1)}>
+                <Icon path={mdiChevronLeft} class="size-5" />
+              </button>
+              <button type="button" aria-label="Next month" onClick={() => state.changeMonth(1)}>
+                <Icon path={mdiChevronRight} class="size-5" />
+              </button>
+            </div>
+            <fieldset class="flex rounded-md bg-neutral-200 p-1 dark:bg-[#181a1d]" aria-label="Calendar view">
+              <For each={["Today", "Day", "Week", "Month"]}>
+                {(view) => (
+                  <button
+                    type="button"
+                    aria-pressed={state.view() === view ? "true" : "false"}
+                    onClick={() => state.selectView(view)}
+                    class={`rounded px-3 py-1.5 text-xs transition-colors ${state.view() === view ? "bg-violet-600 text-white shadow-lg shadow-violet-600/30" : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"}`}
+                  >
+                    {view}
+                  </button>
+                )}
+              </For>
+            </fieldset>
+          </div>
+        </header>
+        <div class="overflow-x-auto rounded border border-neutral-300 dark:border-black/50">
+          <div class="grid min-w-[1000px] grid-cols-[58px_repeat(7,minmax(0,1fr))] bg-white dark:bg-[#1b1d20]">
+            <div class="flex h-12 flex-col items-center justify-center border-r border-neutral-300 bg-neutral-100 text-neutral-500 dark:border-black/60 dark:bg-[#111315]">
+              <Icon path={mdiClockOutline} class="size-4" />
+              <span class="text-[9px]">PST</span>
+            </div>
+            <For each={["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}>
+              {(day) => (
+                <div
+                  class={`grid h-12 place-items-center bg-neutral-100 text-sm font-semibold dark:bg-[#111315] ${day === "Fri" ? "text-violet-500" : ""}`}
+                >
+                  {day}
+                </div>
+              )}
+            </For>
+            <For each={state.days()}>
+              {(cell) => (
+                <>
+                  <Show when={cell.index % 7 === 0}>
+                    <div class="min-h-28 border-r border-t border-neutral-300 px-2 pt-3 text-[10px] text-neutral-500 dark:border-black/60">
+                      Week {Math.floor(cell.index / 7) + 1}
+                    </div>
+                  </Show>
+                  <div class="min-h-28 border-r border-t border-neutral-300 p-1 last:border-r-0 dark:border-black/60">
+                    <Show when={cell.day}>
+                      <span class="inline-block rounded-sm bg-neutral-200 px-1 text-[10px] text-neutral-600 shadow-sm dark:bg-[#33363b] dark:text-neutral-300">
+                        {cell.day}
+                      </span>
+                    </Show>
+                    <KalenderEvent cell={cell} state={state} />
+                  </div>
+                </>
+              )}
+            </For>
+          </div>
+        </div>
+      </main>
+    </div>
+  )
+}

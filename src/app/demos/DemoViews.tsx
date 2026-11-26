@@ -1,8 +1,8 @@
 import { dynamic } from "@solidjs/web"
 import { type Component, createMemo, createSignal, Errored, For, Loading, onSettled, Show } from "solid-js"
+import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { demoGroupsCreate } from "#src/app/demos/demoGroupsCreate.js"
 import { demoList } from "#src/app/demos/demoList.js"
-import { DemoShapesBackdrop } from "#src/app/demos/DemoShapesBackdrop.jsx"
 import { demosOverviewStateCreate } from "#src/app/demos/demosOverviewStateCreate.js"
 import { FloatingGlowButton } from "#src/app/demos/FloatingGlowButton.jsx"
 import { floatingThemeStateCreate } from "#src/app/demos/floatingThemeStateCreate.js"
@@ -28,6 +28,7 @@ const fullscreenDemos = new Set([
   "DemoContact",
   "ContactModern",
   "DemoCMS",
+  "DemoKalender",
   "DemoNavHeader",
   "NavbarHeader-Modern",
   "Bottom-Mobile-Navbar",
@@ -38,6 +39,7 @@ const fullscreenDemos = new Set([
 /** Display labels overriding the name derived from the demo key (prefix "Demo" stripped). */
 const demoDisplayNames: Record<string, string> = {
   DemoAppSidebar: "Sidebar-Simple",
+  DemoKalender: "Kalender",
   DemoSidebarModern: "Sidebar-Modern",
   DemoCMS: "CMS-Simple",
   DemoNavHeader: "NavHeader-Simple",

@@ -95,6 +95,11 @@ const DemoAppSidebar = lazy(async () => {
   return { default: c.DemoAppSidebar }
 })
 
+const DemoKalender = lazy(async () => {
+  const c = await import("#src/demos/modules/DemoKalender.jsx")
+  return { default: c.DemoKalender }
+})
+
 const DemoCMS = lazy(async () => {
   const c = await import("#src/demos/modules/DemoCMS.jsx")
   return { default: c.DemoCMS }
@@ -289,6 +294,7 @@ export const demoList = {
     DemoContact: DemoContact,
     ContactModern: ContactModern,
     DemoAppSidebar: DemoAppSidebar,
+    DemoKalender: DemoKalender,
     DemoSidebarModern: DemoSidebarModern,
     DemoCMS: DemoCMS,
     DemoNavHeader: DemoNavHeader,
