@@ -19,7 +19,7 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
             <span
               class="group/marker absolute right-1.5 top-1.5"
               tabindex="0"
-              aria-label={`${task().name} color for ${task().title}`}
+              aria-label={`Farbe ${task().name} für ${task().title}`}
               role="img"
             >
               <span class="block size-2.5 rounded-[2px]" style={{ background: task().color }} />
@@ -27,7 +27,7 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
                 role="tooltip"
                 class="pointer-events-none absolute right-0 top-4 z-10 hidden w-max max-w-40 rounded bg-neutral-900 px-2 py-1 text-[10px] text-white shadow-lg group-hover/marker:block group-focus/marker:block dark:bg-white dark:text-neutral-900"
               >
-                {task().name} color for {task().title}
+                Farbe {task().name} für {task().title}
               </span>
             </span>
             <div class="truncate pr-3 text-xs font-medium">{task().title}</div>
@@ -39,17 +39,17 @@ export function KalenderEvent(props: { cell: Cell; state: State }) {
               class="px-0 py-0.5 text-[10px] hover:underline"
               buttonChildren={
                 <span>
-                  <span class="text-violet-500">●</span> {task().count} More
+                  <span class="text-violet-500">●</span> {task().count} weitere
                 </span>
               }
-              aria-label={`Tasks on ${props.state.weekday(props.cell.day!)} ${props.cell.day}`}
+              aria-label={`Aufgaben am ${props.state.dateLabel(props.cell.day!)}`}
               open={props.cell.day !== undefined && props.state.openDay() === props.cell.day}
               onOpenChange={(open) => props.state.setOpenDay(open ? props.cell.day : undefined)}
               innerClass="w-56 rounded border border-neutral-300 bg-white p-4 shadow-xl dark:border-neutral-700 dark:bg-[#25282c]"
             >
               <div class="flex items-center justify-between text-xs font-semibold">
-                {props.state.weekday(props.cell.day!)} {props.cell.day}
-                <button type="button" aria-label="Close tasks" onClick={() => props.state.setOpenDay(undefined)}>
+                {props.state.dateLabel(props.cell.day!)}
+                <button type="button" aria-label="Schließen" onClick={() => props.state.setOpenDay(undefined)}>
                   <Icon path={mdiClose} class="size-4" />
                 </button>
               </div>
