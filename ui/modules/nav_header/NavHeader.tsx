@@ -78,10 +78,7 @@ export function NavHeader(p: NavHeaderProps) {
           <Icon path={state.mobileOpen.get() ? mdiClose : mdiMenu} class={"size-5"} />
         </Button>
         <div id={state.panelId} class={classArr("col-span-2 pb-4 lg:contents", !state.mobileOpen.get() && "hidden")}>
-          <nav
-            aria-label={"Main navigation"}
-            class={"flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-center"}
-          >
+          <nav aria-label={"Main navigation"} class={"flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-end"}>
             <For each={p.items}>{(item) => <NavLink item={item} onSelect={state.closeMobile} />}</For>
           </nav>
           <div class={"flex flex-wrap items-center gap-2 border-t border-border pt-3 mt-3 lg:mt-0 lg:border-0 lg:pt-0"}>
