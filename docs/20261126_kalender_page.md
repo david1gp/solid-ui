@@ -10,9 +10,12 @@ A full-width demo page "Kalender" in the **Modules** catalog, category **Seiten*
 - Tailwind styling supports dark and light modes, with violet accents and a horizontally scrollable grid on narrow screens.
 - Local current date is resolved on mount to avoid server/client hydration differences. The initial server and client render has an empty calendar until mounting.
 - Generic appointments are generated deterministically using a year/month seed; returning to a month reproduces its appointments.
+- New appointments are kept in memory for the session, keyed by local date (`YYYY-MM-DD`), and merged into the generated ones sorted by time. They survive month navigation but not a reload.
+- The open "Neuer Termin" dialog is stored in the `termin` search param (`?termin=2026-11-26`, valibot-validated, `history.replaceState`); opening such a URL shows that month with the dialog.
 
 ## Features
 1. The header shows the number of today's appointments, a German month label and navigation. Heute returns to the current month.
 2. The Monday-first grid uses ISO calendar week labels and highlights today and its weekday in the current month.
 3. Event cards show a title, time, duration, and colored marker with a German tooltip. "N weitere" opens a closable popover with all appointments for that day.
 4. Previous/next changes month across years; the other view toggles retain the month grid.
+5. Clicking a day's free area or its "+" button (shown on hover, reachable by keyboard) opens the "Neuer Termin" dialog: choose a title from the presets or "Eigener Titel …", a time (15-minute steps) and duration, and select team members or add further people by name. Saved appointments show "mit …" in the card and the day popover.
